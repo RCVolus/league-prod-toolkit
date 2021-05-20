@@ -1,0 +1,15 @@
+{
+  "name": "rcv-pickban",
+  "version": "1.0.0",
+  "description": "Module that integrates pick-ban data from RCVolus/lol-pick-ban-ui",
+  "author": "Larce",
+  "license": "MIT",
+  "toolkit": {
+    "modes": [
+      "PLUGIN"
+    ],
+    "plugin": {
+      "main": "plugin.js"
+    }
+  }
+}

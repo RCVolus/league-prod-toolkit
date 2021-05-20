@@ -1,0 +1,49 @@
+<link rel="stylesheet" href="/pages/op-lol-game/style.css">
+<script src="/pages/op-lol-game/frontend.js"></script>
+
+<h1>League Game State: Operator Cockpit</h1>
+<div>Current State: <span class="status" id="status">UNKNOWN</span></div>
+
+<div class="setgame" id="setgame-container">
+  <hr />
+  <h2>You have not yet set up a game. </h2>
+  <h3>Set game by player name</h3>
+  <p>Only works if the game is currently running. Enter a summoner name, and load the live game.</p>
+  <form onsubmit="event.preventDefault(); formLoadByName();">
+    <input type="text" id="name" />
+    <input type="submit" value="Load game" />
+  </form>
+  <h3>Set game by game id</h3>
+  <p>Only works if the game is already finished.</p>
+  <form onsubmit="event.preventDefault(); formLoadByGameId();">
+    <input type="text" id="gameid" />
+    <input type="submit" value="Load game" />
+  </form>
+</div>
+
+<div class="gameinfo" id="gameinfo-container">
+  <hr />
+  <h2>Game is loaded: #<span data-jspath=".gameId"></span> (<span data-jspath=".platformId">PLATFORM</span>) via provider-webapi live</h2>
+  <ul>
+    <li>Game mode: <span data-jspath=".gameMode"></span></li>
+    <li>Game map: <span data-jspath=".mapConstants.mapName"></span> (<span data-jspath=".mapId"></span>)</li>
+    <li>Game queue: <span data-jspath=".gameQueueConstants.map"></span> - <span data-jspath=".gameQueueConstants.description"></span> (<span data-jspath=".gameQueueConfigId"></span>)</li>
+    <li>Game start: <span data-jspath=".gameStartTime" data-isdate></span></li>
+  </ul>
+
+  <h3>Bans</h3>
+  <div id="ban-table"></div>
+
+  <h3>Participants</h3>
+  <div id="participant-table"></div>
+
+  <hr />
+  <div style="display: flex">
+    <form onsubmit="event.preventDefault(); formUnsetGame();">
+      <input type="submit" value="Unset game" />
+    </form>
+    <form style="margin-left: 10px;" onsubmit="event.preventDefault(); formLoadMatchByLive();">
+      <input type="submit" value="Load match (postgame)" />
+    </form>
+  </div>
+</div>

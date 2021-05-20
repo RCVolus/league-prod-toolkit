@@ -1,0 +1,15 @@
+{
+  "name": "rcv-tent",
+  "version": "1.0.0",
+  "description": "Module that provides various GFX elements used by the RCV TenT tournament",
+  "author": "Himyu and Larce",
+  "license": "MIT",
+  "toolkit": {
+    "modes": [
+      "PLUGIN"
+    ],
+    "plugin": {
+      "main": "plugin.js"
+    }
+  }
+}

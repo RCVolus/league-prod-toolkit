@@ -1,0 +1,15 @@
+{
+  "name": "provider-ingameapi-spectator",
+  "version": "1.0.0",
+  "description": "An example Module for League Production Toolkit",
+  "author": "Larce",
+  "license": "MIT",
+  "toolkit": {
+    "modes": [
+      "STANDALONE"
+    ],
+    "plugin": {
+      "main": "plugin.js"
+    }
+  }
+}

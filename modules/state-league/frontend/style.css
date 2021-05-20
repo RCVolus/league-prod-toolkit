@@ -1,0 +1,18 @@
+.op-lol-game .status {
+  font-weight: bold;
+}
+
+.op-lol-game tr.collapse td {
+  padding-bottom: 20px;
+}
+
+.op-lol-game .collapse {
+  border: none;
+}
+
+/* disable animation because we're not fancy */
+.op-lol-game .collapsing {
+  -webkit-transition: none;
+  transition: none;
+  display: none;
+}

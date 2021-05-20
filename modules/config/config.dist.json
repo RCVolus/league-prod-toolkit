@@ -1,0 +1,8 @@
+{
+  "provider-webapi": {
+    "apiKey": "RGAPI-SECRETKEY"
+  },
+  "rcv-pickban": {
+    "backend": "ws://localhost:8999"
+  }
+}

@@ -1,0 +1,24 @@
+:root {
+  --blue: rgba(0, 183, 224, 1);
+  --red: rgba(255, 82, 51, 1);
+  --dark: #293756;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  line-height: 1;
+}
+
+body {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: none;
+  padding: 3rem;
+  font-family: "Bebas Neue", Courier, monospace;
+  color: var(--dark);
+}
