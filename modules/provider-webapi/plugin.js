@@ -1,4 +1,4 @@
-const LeagueJS = require('leagueJs');
+const LeagueJS = require('leaguejs');
 
 module.exports = async (ctx) => {
   let config = {};

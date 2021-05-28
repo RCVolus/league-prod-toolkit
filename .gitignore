@@ -4,3 +4,4 @@ dist/
 core-build/
 cache/
 modules/config/config.json
+modules/static-league/data

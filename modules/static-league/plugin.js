@@ -1,15 +1,70 @@
-const namespace = 'static-league';
+const path = require('path')
+const fs = require('fs')
+const express = require('express')
+const app = express()
+const getGameVersion = require("./functions/gameVersion")
+const getDDragon = require("./functions/ddragon")
 
-module.exports = (ctx) => {
+const namespace = 'static-league';
+let config = {}
+
+module.exports = async (ctx) => {
+  const response = await ctx.LPTE.request({
+    meta: {
+      type: 'request',
+      namespace: 'config',
+      version: 1
+    }
+  });
+  config = response.config;
+
+  let gameVersion
+  if (!config?.gameVersion) {
+    gameVersion = await getGameVersion(ctx)
+  } else {
+    gameVersion = config?.gameVersion
+  }
+
+  const dataPath = path.join(__dirname, 'data')
+
+  if (!fs.existsSync(dataPath)) {
+    fs.mkdir(dataPath, async (err) => {
+      if (err) {
+          return ctx.log.debug(`error: ${err}`);
+      }
+      ctx.log.debug('Directory created successfully!');
+      await getDDragon(gameVersion, dataPath)
+    })
+  } else {
+    await getDDragon(gameVersion, dataPath)
+  }
+
+  const champs = path.join(__dirname, `data/img/champion`)
+  app.use('/img/champions', express.static(champs));
+  const champSquare = path.join(__dirname, `data/${gameVersion}/img/champion`)
+  app.use('/img/champions/square', express.static(champSquare));
+
+  const perks = path.join(__dirname, `data/img/perk-images/Styles`)
+  app.use('/img/perks', express.static(perks));
+
+  const summonerSpells = path.join(__dirname, `img/summonerSpells`)
+  app.use('/img/summonerSpells', express.static(summonerSpells));
+
+  const port = config?.port || 5656
+  app.listen(port, () => {
+    ctx.log.debug(`static files get served at http://localhost:${port}`)
+  })
+
   const gameStatic = {
     constants: {
-      seasons: require('./constants/seasons.json'),
-      queues: require('./constants/queues.json'),
-      maps: require('./constants/maps.json'),
-      gameModes: require('./constants/gameModes.json'),
-      gameTypes: require('./constants/gameTypes.json'),
-      perksFlat: require('./constants/runes.json'),
-      champions: Object.values(require('./constants/champions.json').data)
+      seasons: require(`./constants/seasons.json`),
+      queues: require(`./constants/queues.json`),
+      maps: require(`./data/${gameVersion}/data/de_DE/map.json`),
+      gameModes: require(`./constants/gameModes.json`),
+      gameTypes: require(`./constants/gameTypes.json`),
+      perksFlat: require(`./data/${gameVersion}/data/de_DE/runesReforged.json`),
+      champions: Object.values(require(`./data/${gameVersion}/data/de_DE/champion.json`).data),
+      staticURL: `http://localhost:${port}`
     }
   };
 
