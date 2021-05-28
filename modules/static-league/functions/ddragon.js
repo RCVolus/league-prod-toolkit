@@ -1,6 +1,6 @@
 const { exec } = require("child_process");
 
-module.exports = async function getDDragon(version, path) {
+module.exports = function getDDragon(version, path, cb) {
   const fileName = `dragontail-${version}.tgz`
   const zipURI = `https://ddragon.leagueoflegends.com/cdn/${fileName}`
 
@@ -9,13 +9,13 @@ module.exports = async function getDDragon(version, path) {
   exec(cmd, (error, stdout, stderr) => {
     if (error) {
       ctx.log.debug(`error: ${error.message}`);
-      return Promise.reject();
+      return;
     }
     if (stderr) {
       ctx.log.debug(`stderr: ${stderr}`);
-      return Promise.reject();
+      return;
     }
     
-    return Promise.resolve()
+    return cb()
   });
 }

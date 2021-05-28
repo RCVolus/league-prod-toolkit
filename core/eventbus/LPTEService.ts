@@ -60,7 +60,7 @@ export class LPTEService implements LPTE {
     }
   }
 
-  async await(namespace: string, type: string, timeout = 1000): Promise<LPTEvent> {
+  async await(namespace: string, type: string, timeout = 500000): Promise<LPTEvent> {
     return new Promise((resolve, reject) => {
       let wasHandled = false;
 

@@ -28,65 +28,67 @@ module.exports = async (ctx) => {
   const dataPath = path.join(__dirname, 'data')
 
   if (!fs.existsSync(dataPath)) {
-    fs.mkdir(dataPath, async (err) => {
+    fs.mkdir(dataPath, (err) => {
       if (err) {
           return ctx.log.debug(`error: ${err}`);
       }
       ctx.log.debug('Directory created successfully!');
-      await getDDragon(gameVersion, dataPath)
+      getDDragon(gameVersion, dataPath, finishUp)
     })
   } else {
-    await getDDragon(gameVersion, dataPath)
+    getDDragon(gameVersion, dataPath, finishUp)
   }
 
-  const champs = path.join(__dirname, `data/img/champion`)
-  app.use('/img/champions', express.static(champs));
-  const champSquare = path.join(__dirname, `data/${gameVersion}/img/champion`)
-  app.use('/img/champions/square', express.static(champSquare));
+  function finishUp () {
+    const champs = path.join(__dirname, `data/img/champion`)
+    app.use('/img/champions', express.static(champs));
+    const champSquare = path.join(__dirname, `data/${gameVersion}/img/champion`)
+    app.use('/img/champions/square', express.static(champSquare));
+  
+    const perks = path.join(__dirname, `data/img/perk-images/Styles`)
+    app.use('/img/perks', express.static(perks));
+  
+    const summonerSpells = path.join(__dirname, `img/summonerSpells`)
+    app.use('/img/summonerSpells', express.static(summonerSpells));
+  
+    const port = config?.port || 5656
+    app.listen(port, () => {
+      ctx.log.debug(`static files get served at http://localhost:${port}`)
+    })
+  
+    const gameStatic = {
+      constants: {
+        seasons: require(`./constants/seasons.json`),
+        queues: require(`./constants/queues.json`),
+        maps: require(`./data/${gameVersion}/data/de_DE/map.json`),
+        gameModes: require(`./constants/gameModes.json`),
+        gameTypes: require(`./constants/gameTypes.json`),
+        perksFlat: require(`./data/${gameVersion}/data/de_DE/runesReforged.json`),
+        champions: Object.values(require(`./data/${gameVersion}/data/de_DE/champion.json`).data),
+        staticURL: `http://localhost:${port}`
+      }
+    };
+  
+    // Answer requests to get state
+    ctx.LPTE.on(namespace, 'request-constants', e => {
+      ctx.LPTE.emit({
+        meta: {
+          type: e.meta.reply,
+          namespace: 'reply',
+          version: 1
+        },
+        constants: gameStatic.constants
+      });
+    });
 
-  const perks = path.join(__dirname, `data/img/perk-images/Styles`)
-  app.use('/img/perks', express.static(perks));
-
-  const summonerSpells = path.join(__dirname, `img/summonerSpells`)
-  app.use('/img/summonerSpells', express.static(summonerSpells));
-
-  const port = config?.port || 5656
-  app.listen(port, () => {
-    ctx.log.debug(`static files get served at http://localhost:${port}`)
-  })
-
-  const gameStatic = {
-    constants: {
-      seasons: require(`./constants/seasons.json`),
-      queues: require(`./constants/queues.json`),
-      maps: require(`./data/${gameVersion}/data/de_DE/map.json`),
-      gameModes: require(`./constants/gameModes.json`),
-      gameTypes: require(`./constants/gameTypes.json`),
-      perksFlat: require(`./data/${gameVersion}/data/de_DE/runesReforged.json`),
-      champions: Object.values(require(`./data/${gameVersion}/data/de_DE/champion.json`).data),
-      staticURL: `http://localhost:${port}`
-    }
-  };
-
-  // Answer requests to get state
-  ctx.LPTE.on(namespace, 'request-constants', e => {
+    // Emit event that we're ready to operate
     ctx.LPTE.emit({
       meta: {
-        type: e.meta.reply,
-        namespace: 'reply',
+        type: 'plugin-status-change',
+        namespace: 'lpt',
         version: 1
       },
-      constants: gameStatic.constants
+      status: 'RUNNING'
     });
-  });
-
-  // Emit event that we're ready to operate
-  ctx.LPTE.emit({
-    meta: {
-      type: 'plugin-status-change',
-      namespace: 'lpt',
-      version: 1
-    },
-    status: 'RUNNING'
-  });
+  }
 };
