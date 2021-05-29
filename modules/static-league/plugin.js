@@ -1,5 +1,4 @@
 const path = require('path')
-const fs = require('fs')
 const express = require('express')
 const app = express()
 const getGameVersion = require("./functions/gameVersion")
@@ -24,7 +23,7 @@ module.exports = async (ctx) => {
     gameVersion = config.gameVersion
   }
 
-  getDDragon(gameVersion, ctx, () => finishUp())
+  getDDragon(gameVersion, ctx, finishUp)
 
   function finishUp () {
     const champs = path.join(__dirname, `data/img/champion`)

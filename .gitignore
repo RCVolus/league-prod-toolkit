@@ -4,4 +4,8 @@ dist/
 core-build/
 cache/
 modules/config/config.json
+
 modules/static-league/data/*
+!modules/static-league/data/img
+modules/static-league/data/img/*
+!modules/static-league/data/img/summonerSpells
