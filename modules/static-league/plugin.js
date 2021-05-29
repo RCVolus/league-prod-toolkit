@@ -39,7 +39,7 @@ module.exports = async (ctx) => {
   
     const port = config.port || 5656
     app.listen(port, () => {
-      ctx.log.debug(`static files get served at http://localhost:${port}`)
+      ctx.log.info(`static files get served at http://localhost:${port}`)
     })
   
     const gameStatic = {
