@@ -51,6 +51,7 @@ module.exports = async (ctx) => {
         gameTypes: require(`./constants/gameTypes.json`),
         perksFlat: require(`./data/${gameVersion}/data/de_DE/runesReforged.json`),
         champions: Object.values(require(`./data/${gameVersion}/data/de_DE/champion.json`).data),
+        version: gameVersion,
         staticURL: `http://localhost:${port}`
       }
     };
