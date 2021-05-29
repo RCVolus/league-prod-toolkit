@@ -6,7 +6,6 @@ const getGameVersion = require("./functions/gameVersion")
 const getDDragon = require("./functions/ddragon")
 
 const namespace = 'static-league';
-let config = {}
 
 module.exports = async (ctx) => {
   const response = await ctx.LPTE.request({
@@ -16,28 +15,16 @@ module.exports = async (ctx) => {
       version: 1
     }
   });
-  config = response.config;
+  const config = response.config;
 
   let gameVersion
-  if (!config?.gameVersion) {
+  if (!config.gameVersion) {
     gameVersion = await getGameVersion(ctx)
   } else {
-    gameVersion = config?.gameVersion
+    gameVersion = config.gameVersion
   }
 
-  const dataPath = path.join(__dirname, 'data')
-
-  if (!fs.existsSync(dataPath)) {
-    fs.mkdir(dataPath, (err) => {
-      if (err) {
-          return ctx.log.debug(`error: ${err}`);
-      }
-      ctx.log.debug('Directory created successfully!');
-      getDDragon(gameVersion, dataPath, finishUp)
-    })
-  } else {
-    getDDragon(gameVersion, dataPath, finishUp)
-  }
+  getDDragon(gameVersion, ctx, () => finishUp())
 
   function finishUp () {
     const champs = path.join(__dirname, `data/img/champion`)
@@ -51,7 +38,7 @@ module.exports = async (ctx) => {
     const summonerSpells = path.join(__dirname, `img/summonerSpells`)
     app.use('/img/summonerSpells', express.static(summonerSpells));
   
-    const port = config?.port || 5656
+    const port = config.port || 5656
     app.listen(port, () => {
       ctx.log.debug(`static files get served at http://localhost:${port}`)
     })
