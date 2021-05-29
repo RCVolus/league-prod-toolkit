@@ -23,6 +23,7 @@ module.exports = function getDDragon(version, ctx, cb) {
   ]
 
   const file = fs.createWriteStream(filePath);
+  ctx.log.info('start downloading')
   const request = https.get(zipURI, function(response) {
     response.pipe(file);
 
@@ -38,21 +39,22 @@ module.exports = function getDDragon(version, ctx, cb) {
     }
 
     file.on("finish", function () {
-      if (debug) ctx.log.debug('finish downloading')
+      ctx.log.info('finish downloading')
       file.close(unpack);
     })
   }).on('error', function(err) { // Handle errors
     fs.unlink(filePath);
-    ctx.log.debug(err.message)
+    ctx.log.error(err.message)
   });
 
   function unpack () {
+    ctx.log.info('start unpacking')
     fs.createReadStream(filePath)
     .on('error', ctx.log.debug)
     .pipe(
       tar.x({ cwd: dataPath, newer: true }, paths)
       .on('finish', function() {
-        if (debug) ctx.log.debug('finish unpacking')
+        ctx.log.info('finish unpacking')
         fs.unlink(filePath, cb);
       })
     )
