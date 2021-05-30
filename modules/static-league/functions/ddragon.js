@@ -7,9 +7,9 @@ module.exports = function getDDragon(version, ctx, cb) {
   const debug = process.env.LOGLEVEL == 'debug'
 
   const fileName = `dragontail-${version}.tgz`
-  const filePath = path.join(__dirname, '..', 'data', fileName)
+  const filePath = path.join(__dirname, '../..', 'data', fileName)
   const zipURI = `https://ddragon.leagueoflegends.com/cdn/${fileName}`
-  const dataPath = path.join(__dirname, '..', 'data')
+  const dataPath = path.join(__dirname, '../..', 'data')
 
   if (fs.existsSync(path.join(dataPath, version))) return cb()
 

@@ -6,7 +6,7 @@ const getDDragon = require("./functions/ddragon")
 
 const namespace = 'static-league';
 
-module.exports = async (ctx) => {
+module.exports = async (ctx: any) => {
   const response = await ctx.LPTE.request({
     meta: {
       type: 'request',
@@ -16,7 +16,7 @@ module.exports = async (ctx) => {
   });
   const config = response.config;
 
-  let gameVersion
+  let gameVersion: string
   if (!config.gameVersion) {
     gameVersion = await getGameVersion(ctx)
   } else {
@@ -26,15 +26,15 @@ module.exports = async (ctx) => {
   getDDragon(gameVersion, ctx, finishUp)
 
   function finishUp () {
-    const champs = path.join(__dirname, `data/img/champion`)
+    const champs = path.join(__dirname, `../data/img/champion`)
     app.use('/img/champions', express.static(champs));
-    const champSquare = path.join(__dirname, `data/${gameVersion}/img/champion`)
+    const champSquare = path.join(__dirname, `../data/${gameVersion}/img/champion`)
     app.use('/img/champions/square', express.static(champSquare));
   
-    const perks = path.join(__dirname, `data/img/perk-images/Styles`)
+    const perks = path.join(__dirname, `../data/img/perk-images/Styles`)
     app.use('/img/perks', express.static(perks));
   
-    const summonerSpells = path.join(__dirname, `img/summonerSpells`)
+    const summonerSpells = path.join(__dirname, `../img/summonerSpells`)
     app.use('/img/summonerSpells', express.static(summonerSpells));
   
     const port = config.port || 5656
@@ -44,20 +44,20 @@ module.exports = async (ctx) => {
   
     const gameStatic = {
       constants: {
-        seasons: require(`./constants/seasons.json`),
-        queues: require(`./constants/queues.json`),
-        maps: require(`./data/${gameVersion}/data/de_DE/map.json`),
-        gameModes: require(`./constants/gameModes.json`),
-        gameTypes: require(`./constants/gameTypes.json`),
-        perksFlat: require(`./data/${gameVersion}/data/de_DE/runesReforged.json`),
-        champions: Object.values(require(`./data/${gameVersion}/data/de_DE/champion.json`).data),
+        seasons: require(`../constants/seasons.json`),
+        queues: require(`../constants/queues.json`),
+        maps: require(`../data/${gameVersion}/data/de_DE/map.json`),
+        gameModes: require(`../constants/gameModes.json`),
+        gameTypes: require(`../constants/gameTypes.json`),
+        perksFlat: require(`../data/${gameVersion}/data/de_DE/runesReforged.json`),
+        champions: Object.values(require(`../data/${gameVersion}/data/de_DE/champion.json`).data),
         version: gameVersion,
         staticURL: `http://localhost:${port}`
       }
     };
   
     // Answer requests to get state
-    ctx.LPTE.on(namespace, 'request-constants', e => {
+    ctx.LPTE.on(namespace, 'request-constants', (e: any) => {
       ctx.LPTE.emit({
         meta: {
           type: e.meta.reply,

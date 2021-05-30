@@ -5,6 +5,7 @@ const { exec } = require('child_process');
 const console = require('console');
 
 const readdirPromise = promisify(fs.readdir);
+const readFilePromise = promisify(fs.readFile)
 const statPromise = promisify(fs.stat);
 const execPromise = promisify(exec);
 
@@ -30,6 +31,15 @@ const main = async () => {
             });
 
             console.log('installed ' + folderName);
+
+            const pkgJson = JSON.parse((await readFilePromise(packageJsonPath)).toString());
+            if (pkgJson['toolkit']['needsBuild']) {
+                // run build
+                await execPromise('npm run build', {
+                    cwd: currentModulePath
+                });
+                console.log('built ' + folderName);
+            }
         })
     );
 }
