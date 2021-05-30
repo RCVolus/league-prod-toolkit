@@ -5,6 +5,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc",
+    "build:modules": "node build/build-modules.js",
     "postbuild": "copyfiles core/web/views/**.* core/web/public/**.* dist",
     "start": "npm run build && node dist/core/app.js",
     "start:watch": "nodemon",
@@ -25,7 +26,6 @@
     "leaguejs": "^2.1.3",
     "morgan": "~1.9.1",
     "needle": "^2.4.0",
-    "node-fetch": "^2.6.1",
     "pug": "^2.0.4",
     "send": "^0.17.1",
     "tar": "^6.1.0",

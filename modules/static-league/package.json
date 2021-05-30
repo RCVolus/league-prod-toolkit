@@ -11,5 +11,8 @@
     "plugin": {
       "main": "plugin.js"
     }
+  },
+  "dependencies": {
+    "node-fetch": "^2.6.1"
   }
 }
