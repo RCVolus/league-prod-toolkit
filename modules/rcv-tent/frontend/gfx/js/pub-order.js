@@ -10,7 +10,7 @@ const blueBan = document.querySelector('#blueBan')
 const redTeam = document.querySelector('#redTeam .picks')
 const redBan = document.querySelector('#redBan')
 
-const basePath = 'http://' + document.location.hostname + ':8999';
+const basePath = 'http://' + document.location.hostname + ':3000';
 
 async function displayPUBOrder () {
   const pubData = await getPIBData();

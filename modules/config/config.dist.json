@@ -1,8 +1,10 @@
 {
-  "provider-webapi": {
-    "apiKey": "RGAPI-SECRETKEY"
-  },
-  "rcv-pickban": {
-    "backend": "ws://localhost:8999"
-  }
+    "provider-webapi": {
+        "apiKey": "RGAPI-SECRETKEY"
+    },
+    "rcv-pickban": {
+        "backend": "ws://localhost:8999"
+    },
+    "static-league": {
+    }
 }

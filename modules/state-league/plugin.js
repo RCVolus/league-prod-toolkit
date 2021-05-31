@@ -127,7 +127,7 @@ module.exports = (ctx) => {
       gameState.state = 'SET';
 
       // Overwrite participants from names
-      gameState.webLive.participants.forEach((participant, index) => {
+      gameState.webLive.participants?.forEach((participant, index) => {
         gameState.webMatch.participants[index].summonerName = participant.summonerName;
       })
 

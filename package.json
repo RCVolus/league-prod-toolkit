@@ -5,6 +5,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc",
+    "build:modules": "node build/build-modules.js",
     "postbuild": "copyfiles core/web/views/**.* core/web/public/**.* dist",
     "start": "npm run build && node dist/core/app.js",
     "start:watch": "nodemon",
@@ -14,7 +15,6 @@
     "lint": "eslint core/**"
   },
   "dependencies": {
-    "@types/send": "^0.14.5",
     "bootstrap": "^4.5.0",
     "cli-progress": "^3.3.1",
     "debug": "~2.6.9",
@@ -38,6 +38,7 @@
     "@types/minimist": "^1.2.0",
     "@types/needle": "^2.0.4",
     "@types/node": "^12.7.7",
+    "@types/send": "^0.14.5",
     "@types/ws": "^7.2.9",
     "@typescript-eslint/eslint-plugin": "^2.3.2",
     "@typescript-eslint/parser": "^2.3.2",

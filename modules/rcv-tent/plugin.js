@@ -1,11 +1,7 @@
 const namespace = 'rcv-tent';
 
-const initialState = {
-  postMatchShow: 'DAMAGE'
-}
-
 module.exports = (ctx) => {
-  const state = initialState;
+  let state = "ITEMS";
 
   // Register new UI page
   ctx.LPTE.emit({
@@ -19,6 +15,10 @@ module.exports = (ctx) => {
       frontend: 'frontend',
       id : 'op-rcv-tent'
     }]
+  });
+
+  ctx.LPTE.on(namespace, 'end-of-game', async e => {
+    state = e.state
   });
 
   // Answer requests to get state

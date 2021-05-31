@@ -1,6 +1,7 @@
 const red = 'rgba(255,82,51,1)'
 const blue = 'rgba(0,183,224,1'
-const dark = '#293756'
+const white = 'rgba(242,234,213,1)'
+const whiteTransparent = 'rgba(242,234,213,0.1)'
 
 // use data to create chart
 async function getData () {
@@ -46,9 +47,9 @@ async function displayGoldGraph () {
       labels: keys,
       datasets: [{
         yAxisID : 'y-axis-0',
-        strokeColor: dark,
-        pointColor: dark,
-        pointStrokeColor: dark,
+        strokeColor: white,
+        pointColor: white,
+        pointStrokeColor: white,
         data: values,
       }]
     },
@@ -59,22 +60,28 @@ async function displayGoldGraph () {
               autoskip: true,
               autoSkipPadding: 50,
               fontSize: 20,
-              fontColor: dark,
+              fontColor: white,
               callback: function(value, index, values) {
                 return value.toFixed(0).replace(/-/g,'');
               }
-            }
+            },
+            gridLines: {
+              color: whiteTransparent
+            },
           }],
           xAxes: [{
             ticks: {
               autoskip: true,
               autoSkipPadding: 50,
               fontSize: 20,
-              fontColor: dark,
+              fontColor: white,
               callback: function(value, index, values) {
                 return millisToMinutesAndSeconds(value)
               }
-            }, 
+            },
+            gridLines: {
+              color: whiteTransparent
+            },
           }], 
         },
         legend:
