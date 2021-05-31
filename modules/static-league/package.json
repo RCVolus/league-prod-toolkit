@@ -1,8 +1,8 @@
 {
   "name": "static-league",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Module that provides static data for League of Legends games",
-  "author": "Larce",
+  "author": "Larce & Himyu",
   "license": "MIT",
   "toolkit": {
     "modes": [
@@ -15,8 +15,11 @@
   },
   "dependencies": {
     "node-fetch": "^2.6.1",
-    "tsc": "^2.0.3",
+    "tar": "^6.1.0",
     "typescript": "^4.3.2"
+  },
+  "devDependencies": {
+    "@types/tar": "^4.0.4"
   },
   "scripts": {
     "build": "tsc"

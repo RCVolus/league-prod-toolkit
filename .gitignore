@@ -9,4 +9,4 @@ modules/config/config.json
 modules/static-league/data/*
 !modules/static-league/data/img
 modules/static-league/data/img/*
-!modules/static-league/data/img/summonerSpells
+!modules/static-league/data/img/summoner-spell

@@ -15,7 +15,6 @@
     "lint": "eslint core/**"
   },
   "dependencies": {
-    "@types/send": "^0.14.5",
     "bootstrap": "^4.5.0",
     "cli-progress": "^3.3.1",
     "debug": "~2.6.9",
@@ -28,7 +27,6 @@
     "needle": "^2.4.0",
     "pug": "^2.0.4",
     "send": "^0.17.1",
-    "tar": "^6.1.0",
     "toastr": "^2.1.4",
     "typescript": "^3.6.3",
     "winston": "^3.2.1",
@@ -40,6 +38,7 @@
     "@types/minimist": "^1.2.0",
     "@types/needle": "^2.0.4",
     "@types/node": "^12.7.7",
+    "@types/send": "^0.14.5",
     "@types/ws": "^7.2.9",
     "@typescript-eslint/eslint-plugin": "^2.3.2",
     "@typescript-eslint/parser": "^2.3.2",

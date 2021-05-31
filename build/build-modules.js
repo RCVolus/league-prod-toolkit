@@ -25,20 +25,31 @@ const main = async () => {
                 return;
             }
 
-            // run install
-            await execPromise('npm install', {
-                cwd: currentModulePath
-            });
-
-            console.log('installed ' + folderName);
-
             const pkgJson = JSON.parse((await readFilePromise(packageJsonPath)).toString());
-            if (pkgJson['toolkit']['needsBuild']) {
-                // run build
-                await execPromise('npm run build', {
+
+            if (pkgJson['dependencies'] || pkgJson['devDependencies']) {
+                // run install
+                await execPromise('npm install', {
                     cwd: currentModulePath
                 });
-                console.log('built ' + folderName);
+
+                console.log('installed ' + folderName);
+            }
+
+
+            if (pkgJson['toolkit']['needsBuild']) {
+                // run build
+                await new Promise(() => {
+                    exec('npm run build', {
+                        cwd: currentModulePath
+                    }, (error, stdout, stderr) => {
+                        console.log(stdout)
+                        if (error || stderr) {
+                            return
+                        }
+                        console.log('built ' + folderName);
+                    });
+                });
             }
         })
     );

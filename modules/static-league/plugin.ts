@@ -1,8 +1,8 @@
-const path = require('path')
-const express = require('express')
+import path from 'path'
+import express from 'express'
 const app = express()
-const getGameVersion = require("./functions/gameVersion")
-const getDDragon = require("./functions/ddragon")
+import getGameVersion from "./functions/gameVersion"
+import getDDragon from "./functions/ddragon"
 
 const namespace = 'static-league';
 
@@ -27,15 +27,22 @@ module.exports = async (ctx: any) => {
 
   function finishUp () {
     const champs = path.join(__dirname, `../data/img/champion`)
-    app.use('/img/champions', express.static(champs));
+    app.use('/img/champion', express.static(champs));
+
     const champSquare = path.join(__dirname, `../data/${gameVersion}/img/champion`)
-    app.use('/img/champions/square', express.static(champSquare));
+    app.use('/img/champion/square', express.static(champSquare));
   
     const perks = path.join(__dirname, `../data/img/perk-images/Styles`)
-    app.use('/img/perks', express.static(perks));
+    app.use('/img/perk', express.static(perks));
+
+    const items = path.join(__dirname, `../data/${gameVersion}/img/item`)
+    app.use('/img/item', express.static(items));
   
     const summonerSpells = path.join(__dirname, `../img/summonerSpells`)
-    app.use('/img/summonerSpells', express.static(summonerSpells));
+    app.use('/img/summoner-spell', express.static(summonerSpells));
+
+    const profileIcons = path.join(__dirname, `../data/${gameVersion}/img/item`)
+    app.use('/img/profileicon', express.static(profileIcons));
   
     const port = config.port || 5656
     app.listen(port, () => {

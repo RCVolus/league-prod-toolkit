@@ -1,11 +1,9 @@
-const fs = require('fs');
-const path = require('path');
-const tar = require('tar');
-const https = require('https');
+import fs from 'fs';
+import path from 'path';
+import tar from 'tar';
+import https from 'https';
 
-module.exports = function getDDragon(version, ctx, cb) {
-  const debug = process.env.LOGLEVEL == 'debug'
-
+export default function getDDragon(version: string, ctx: any, cb: () => void) {
   const fileName = `dragontail-${version}.tgz`
   const filePath = path.join(__dirname, '../..', 'data', fileName)
   const zipURI = `https://ddragon.leagueoflegends.com/cdn/${fileName}`
@@ -15,6 +13,8 @@ module.exports = function getDDragon(version, ctx, cb) {
 
   const paths = [
     `${version}/img/champion`,
+    `${version}/img/item`,
+    `${version}/img/profileicon`,
     `${version}/data/de_DE/map.json`,
     `${version}/data/de_DE/runesReforged.json`,
     `${version}/data/de_DE/champion.json`,
@@ -24,15 +24,15 @@ module.exports = function getDDragon(version, ctx, cb) {
 
   const file = fs.createWriteStream(filePath);
   ctx.log.info('start downloading')
-  const request = https.get(zipURI, function(response) {
+  https.get(zipURI, function(response) {
     response.pipe(file);
 
-    if (debug) {
+    if (response.headers['content-length']) {
       var len = parseInt(response.headers['content-length'], 10);
       var cur = 0;
       var total = len / 1048576;
 
-      response.on("data", function(chunk) {
+      response.on("data", function(chunk: any) {
         cur += chunk.length;
         ctx.log.debug("Downloading " + (100.0 * cur / len).toFixed(2) + "% " + (cur / 1048576).toFixed(2) + " mb\r" + ".<br/> Total size: " + total.toFixed(2) + " mb");
       });
@@ -40,10 +40,13 @@ module.exports = function getDDragon(version, ctx, cb) {
 
     file.on("finish", function () {
       ctx.log.info('finish downloading')
-      file.close(unpack);
+      file.close();
+      unpack()
     })
   }).on('error', function(err) { // Handle errors
-    fs.unlink(filePath);
+    fs.unlink(filePath, () => {
+      ctx.log.debug(filePath + 'file unlinked')
+    });
     ctx.log.error(err.message)
   });
 
