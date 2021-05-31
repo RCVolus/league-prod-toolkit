@@ -1,21 +1,21 @@
-import { Router } from 'express';
+import { Router } from 'express'
 
-import moduleService from '../../modules/ModuleService';
+import moduleService from '../../modules/ModuleService'
 
 export default (globalContext: any) => {
-  const router = Router();
+  const router = Router()
 
   router.get('/', (req, res) => {
-    res.render('modules', 
-    {
-      ...globalContext,
-      title: 'Modules',
-      modules: moduleService.modules
-    });
-  });
+    res.render('modules',
+      {
+        ...globalContext,
+        title: 'Modules',
+        modules: moduleService.modules
+      })
+  })
   router.get('/api', (req, res) => {
-    res.json(moduleService.modules.map((module) => module.toJson()));
-  });
+    res.json(moduleService.modules.map((module) => module.toJson()))
+  })
 
-  return router;
+  return router
 }

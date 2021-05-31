@@ -1,13 +1,13 @@
-import { Router } from 'express';
+import { Router } from 'express'
 
-import lpte from '../../eventbus/LPTEService';
+import lpte from '../../eventbus/LPTEService'
 
-const router = Router();
+const router = Router()
 
 router.post('/events/ingest', (req, res) => {
-  lpte.emit(req.body);
-  res.status(200).send({});
-});
+  lpte.emit(req.body)
+  res.status(200).send({})
+})
 
 router.get('/events/shortcut/ingest/:namespace/:type', (req, res) => {
   lpte.emit({
@@ -16,20 +16,20 @@ router.get('/events/shortcut/ingest/:namespace/:type', (req, res) => {
       type: req.params.type,
       version: 1
     }
-  });
-  res.status(200).send({});
-});
+  })
+  res.status(200).send({})
+})
 
 router.post('/events/request', async (req, res) => {
-  const response = await lpte.request(req.body);
+  const response = await lpte.request(req.body)
 
   if (response) {
-    return res.status(200).send(response);
+    return res.status(200).send(response)
   }
   return res.status(500).send({
     error: 'request timed out'
-  });
-});
+  })
+})
 
 router.get('/events/shortcut/request/:namespace/:type', async (req, res) => {
   const response = await lpte.request({
@@ -38,14 +38,14 @@ router.get('/events/shortcut/request/:namespace/:type', async (req, res) => {
       type: req.params.type,
       version: 1
     }
-  });
+  })
 
   if (response) {
-    return res.status(200).send(response);
+    return res.status(200).send(response)
   }
   return res.status(500).send({
     error: 'request timed out'
-  });
-});
+  })
+})
 
-export default router;
+export default router

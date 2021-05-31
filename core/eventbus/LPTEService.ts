@@ -1,19 +1,19 @@
-import { LPTE, LPTEvent, LPTEventInput, EventType } from './LPTE';
+import { LPTE, LPTEvent, LPTEventInput, EventType } from './LPTE'
 import logger from '../logging'
-import { Plugin, ModuleType } from '../modules/Module';
-import { wsClients } from '../web/server';
+import { Plugin, ModuleType } from '../modules/Module'
+import { wsClients } from '../web/server'
 
-const log = logger('lpte-svc');
+const log = logger('lpte-svc')
 
 class Registration {
-  type: string;
-  namespace: string;
-  handle: (event: LPTEvent) => void;
+  type: string
+  namespace: string
+  handle: (event: LPTEvent) => void
 
-  constructor(namespace: string, type: string, handler: (event: LPTEvent) => void) {
-    this.namespace = namespace;
-    this.type = type;
-    this.handle = handler;
+  constructor (namespace: string, type: string, handler: (event: LPTEvent) => void) {
+    this.namespace = namespace
+    this.type = type
+    this.handle = handler
   }
 }
 
@@ -22,108 +22,108 @@ export const isValidEvent = (event: LPTEvent): boolean => {
     return false
   }
 
-  return true;
+  return true
 }
 
 export class LPTEService implements LPTE {
-  registrations: Array<Registration> = [];
-  eventHistory: Array<LPTEvent> = [];
-  counter = 0;
+  registrations: Registration[] = []
+  eventHistory: LPTEvent[] = []
+  counter = 0
 
-  constructor() {
-    this.await = this.await.bind(this);
+  constructor () {
+    this.await = this.await.bind(this)
   }
 
-  initialize(): void {
+  initialize (): void {
     log.info('Initialized event bus.')
   }
 
-  on(namespace: string, type: string, handler: (e: LPTEvent) => void): void {
-    const registration = new Registration(namespace, type, handler);
-    this.registrations.push(registration);
+  on (namespace: string, type: string, handler: (e: LPTEvent) => void): void {
+    const registration = new Registration(namespace, type, handler)
+    this.registrations.push(registration)
 
-    log.debug(`New event handler registered: namespace=${namespace}, type=${type}`);
+    log.debug(`New event handler registered: namespace=${namespace}, type=${type}`)
   }
 
-  async request(event: LPTEvent, timeout = 1000): Promise<LPTEvent> {
-    const reply = event.meta.type + '-' + this.counter++;
-    event.meta.reply = reply;
-    event.meta.channelType = EventType.REQUEST;
+  async request (event: LPTEvent, timeout = 1000): Promise<LPTEvent> {
+    const reply = event.meta.type + '-' + this.counter++
+    event.meta.reply = reply
+    event.meta.channelType = EventType.REQUEST
 
-    this.emit(event);
+    this.emit(event)
 
     try {
-      return await this.await('reply', reply, timeout);
+      return await this.await('reply', reply, timeout)
     } catch {
-      log.error(`Request timed out. Request meta=${JSON.stringify(event.meta)}`);
-      return null;
+      log.error(`Request timed out. Request meta=${JSON.stringify(event.meta)}`)
+      return null
     }
   }
 
-  async await(namespace: string, type: string, timeout = 1000): Promise<LPTEvent> {
-    return new Promise((resolve, reject) => {
-      let wasHandled = false;
+  async await (namespace: string, type: string, timeout = 1000): Promise<LPTEvent> {
+    return await new Promise((resolve, reject) => {
+      let wasHandled = false
 
       const handler = (e: LPTEvent): void => {
         if (wasHandled) {
-          return;
+          return
         }
-        wasHandled = true;
-        this.unregisterHandler(handler);
+        wasHandled = true
+        this.unregisterHandler(handler)
 
-        resolve(e);
+        resolve(e)
       }
       // Register handler
-      this.on(namespace, type, handler);
+      this.on(namespace, type, handler)
 
       setTimeout(() => {
         if (wasHandled) {
-          return;
+          return
         }
-        wasHandled = true;
-        this.unregisterHandler(handler);
+        wasHandled = true
+        this.unregisterHandler(handler)
 
-        log.warn(`Awaiting event timed out. namespace=${namespace}, type=${type}, timeout=${timeout}`);
-        reject('request timed out');
-      }, timeout);
-    });
+        log.warn(`Awaiting event timed out. namespace=${namespace}, type=${type}, timeout=${timeout}`)
+        reject('request timed out')
+      }, timeout)
+    })
   }
 
-  unregister(namespace: string, type: string): void {
-    this.registrations = this.registrations.filter(registration => registration.namespace !== namespace && registration.type !== type);
+  unregister (namespace: string, type: string): void {
+    this.registrations = this.registrations.filter(registration => registration.namespace !== namespace && registration.type !== type)
   }
 
-  unregisterHandler(handler: (event: LPTEvent) => void): void {
-    this.registrations = this.registrations.filter(registration => registration.handle !== handler);
+  unregisterHandler (handler: (event: LPTEvent) => void): void {
+    this.registrations = this.registrations.filter(registration => registration.handle !== handler)
   }
 
-  emit(event: LPTEvent): void {
+  emit (event: LPTEvent): void {
     if (!isValidEvent(event)) {
-      return;
+      return
     }
 
     setTimeout(() => {
       // Find matching handlers
-      const handlers = this.registrations.filter(registration => registration.namespace === event.meta.namespace && registration.type === event.meta.type);
-      handlers.forEach(handler => handler.handle(event));
+      const handlers = this.registrations.filter(registration => registration.namespace === event.meta.namespace && registration.type === event.meta.type)
+      handlers.forEach(handler => handler.handle(event))
 
       if (handlers.length === 0 && event.meta.channelType === EventType.REQUEST) {
-        log.warn(`Request was sent, but no handler was executed. This will result in a timeout. Meta=${JSON.stringify(event.meta)}`);
+        log.warn(`Request was sent, but no handler was executed. This will result in a timeout. Meta=${JSON.stringify(event.meta)}`)
       }
 
       // Push to websockets (currently only for logs)
       if (event.meta.namespace === 'log') {
         wsClients.forEach(socket => {
-          socket.send(JSON.stringify(event));
-        });
+          socket.send(JSON.stringify(event))
+        })
       }
 
       // Push to history
-      this.eventHistory.push(event);
-    }, 0);
+      this.eventHistory.push(event)
+    }, 0)
   }
 
-  forPlugin(plugin: Plugin): LPTE {
+  forPlugin (plugin: Plugin): LPTE {
     const enrichEvent = (event: LPTEventInput): LPTEvent => {
       return {
         ...event,
@@ -137,24 +137,24 @@ export class LPTEService implements LPTE {
             path: plugin.getModule().getFolder()
           }
         }
-      };
+      }
     }
 
     return {
       ...this,
       emit: (event: LPTEventInput): void => {
         // Enrich with sender information
-        this.emit(enrichEvent(event));
+        this.emit(enrichEvent(event))
       },
       on: this.on,
-      request: (event: LPTEventInput): Promise<LPTEvent> => {
+      request: async (event: LPTEventInput): Promise<LPTEvent> => {
         // Enrich with sender information
-        return this.request(enrichEvent(event));
+        return await this.request(enrichEvent(event))
       },
       await: this.await
     }
   }
 }
 
-const svc = new LPTEService();
-export default svc;
+const svc = new LPTEService()
+export default svc

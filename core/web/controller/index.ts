@@ -1,9 +1,9 @@
-import modules from './modules';
-import home from './home';
-import plugins from './plugins';
-import events from './events';
-import api from './api';
-import pages from './pages';
+import modules from './modules'
+import home from './home'
+import plugins from './plugins'
+import events from './events'
+import api from './api'
+import pages from './pages'
 
 export default (globalContext: any) => ({
   '/': home(globalContext),
@@ -12,4 +12,4 @@ export default (globalContext: any) => ({
   '/events': events(globalContext),
   '/pages': pages(globalContext),
   '/api': api
-});
+})
