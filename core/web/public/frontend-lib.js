@@ -1,3 +1,4 @@
+/* eslint-disable */
 // Setup toasts
 if (window.toastr) {
   window.toastr.options = {
