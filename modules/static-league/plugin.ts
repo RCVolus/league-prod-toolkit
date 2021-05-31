@@ -38,7 +38,7 @@ module.exports = async (ctx: any) => {
     const items = path.join(__dirname, `../data/${gameVersion}/img/item`)
     app.use('/img/item', express.static(items));
   
-    const summonerSpells = path.join(__dirname, `../img/summonerSpells`)
+    const summonerSpells = path.join(__dirname, `../data/img/summoner-spell`)
     app.use('/img/summoner-spell', express.static(summonerSpells));
 
     const profileIcons = path.join(__dirname, `../data/${gameVersion}/img/item`)
@@ -50,17 +50,15 @@ module.exports = async (ctx: any) => {
     })
   
     const gameStatic = {
-      constants: {
-        seasons: require(`../constants/seasons.json`),
-        queues: require(`../constants/queues.json`),
-        maps: require(`../data/${gameVersion}/data/de_DE/map.json`),
-        gameModes: require(`../constants/gameModes.json`),
-        gameTypes: require(`../constants/gameTypes.json`),
-        perksFlat: require(`../data/${gameVersion}/data/de_DE/runesReforged.json`),
-        champions: Object.values(require(`../data/${gameVersion}/data/de_DE/champion.json`).data),
-        version: gameVersion,
-        staticURL: `http://localhost:${port}`
-      }
+      seasons: require(`../constants/seasons.json`),
+      queues: require(`../constants/queues.json`),
+      maps: require(`../data/${gameVersion}/data/de_DE/map.json`),
+      gameModes: require(`../constants/gameModes.json`),
+      gameTypes: require(`../constants/gameTypes.json`),
+      perksFlat: require(`../data/${gameVersion}/data/de_DE/runesReforged.json`),
+      champions: Object.values(require(`../data/${gameVersion}/data/de_DE/champion.json`).data),
+      version: gameVersion,
+      staticURL: `http://localhost:${port}`
     };
   
     // Answer requests to get state
@@ -69,9 +67,10 @@ module.exports = async (ctx: any) => {
         meta: {
           type: e.meta.reply,
           namespace: 'reply',
-          version: 1
+          version: 1,
+          reply: e.meta.reply
         },
-        constants: gameStatic.constants
+        constants: gameStatic
       });
     });
 
