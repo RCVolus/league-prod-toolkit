@@ -1,33 +1,33 @@
-const version = '11.4.1'
-var championsData = {}
+var championsData = []
 var gameData = {}
 var participants = []
+var staticURL = "http://localhost:3000"
 
 async function getGameData () {
   // TODO Change data source here
   const gameReq = await fetch('/api/events/shortcut/request/state-league/request')
+
   return (await gameReq.json()).state.webMatch
 }
 
-async function getChampData () {
-  const championsUrl = `http://ddragon.leagueoflegends.com/cdn/${version}/data/en_US/champion.json`
-  const championsReq = await fetch(championsUrl)
-  const championsJson = await championsReq.json()
-  return championsJson.data
+async function getConstants () {
+  const constantsRes = await fetch('/api/events/shortcut/request/static-league/request-constants')
+  const constantsJson = await constantsRes.json()
+  const constants = constantsJson.constants
+  staticURL = constants.staticURL
+  championsData = constants.champions
 }
 
 const itemUrl = id => {
-  return `http://ddragon.leagueoflegends.com/cdn/${version}/img/item/${id}.png`
+  return `${staticURL}/img/item/${id}.png`
 }
 const champUrl = id => {
-  const champ = Object.values(championsData).find(c => c.key == id)
-  return `http://ddragon.leagueoflegends.com/cdn/${version}/img/champion/${champ.id}.png`
+  const champ = championsData.find(c => c.key == id)
+  return `${staticURL}/img/champion/square/${champ.id}.png`
 }
 const spellUrl = id => {
-  return `/pages/op-rcv-tent/gfx/img/spells/${id}-min.png`
+  return `${staticURL}/img/summoner-spell/${id}.png`
 }
-
-const showDmg = location.href.split('?').length === 2 && location.href.split('?')[1] === 'damage';
 
 // Team Blue
 const blueTeamKDA = document.querySelector('#blueTeam .stats .kda')
@@ -91,7 +91,7 @@ function displaySpells () {
   }
 }
 
-function displayData () {
+function renderItems () {
   for (const participant of gameData.participants) {
     // const participantInfo = participants.find(p => p.participantId == participant.participantId)
 
@@ -102,7 +102,6 @@ function displayData () {
     const name = document.createElement('h3')
     name.classList.add('name')
     name.innerHTML = participant.summonerName
-    console.log(participant.summonerName)
 
     const kills = participant.stats.kills
     const deaths = participant.stats.deaths
@@ -217,14 +216,24 @@ function displayData () {
 
   blueTeamSecondStat.innerHTML = calcK(blueTeamStats.gold)
   redTeamSecondStat.innerHTML = calcK(redTeamStats.gold)
+
+  showItems()
 }
 
-function displayDmg () {
+function showItems() {
+  blueTeamData.style.display = 'block'
+  blueTeamDmg.style.display = 'none'
+  redTeamData.style.display = 'block'
+  redTeamDmg.style.display = 'none'
+}
+function showDmg() {
   blueTeamData.style.display = 'none'
   blueTeamDmg.style.display = 'block'
   redTeamData.style.display = 'none'
   redTeamDmg.style.display = 'block'
+}
 
+function renderDmg () {
   const dmgArray = gameData.participants.map(p => p.stats.totalDamageDealtToChampions)
   const dmgMax = Math.max.apply(null,dmgArray)
 
@@ -237,7 +246,7 @@ function displayDmg () {
 
     const dmgBar = document.createElement('div')
     dmgBar.classList.add('dmgBar')
-    dmgBar.style.width = `calc(${ratio}% - 6rem)`
+    dmgBar.style.setProperty("--bar-width", `calc(${ratio}% - 6rem)`)
 
     const dmgText = document.createElement('h3')
     dmgText.innerHTML = calcK(dmg)
@@ -264,13 +273,13 @@ function displayDmg () {
 }
 
 async function start () {
+  await getConstants()
   gameData = await getGameData()
-  championsData = await getChampData()
   participants = gameData.participantIdentities
   displayChamps()
   displaySpells()
-  displayData()
-  showDmg && displayDmg()
+  renderItems()
+  renderDmg()
 }
 start()
 
@@ -282,3 +291,27 @@ function calcK (amount) {
       return amount
   }
 }
+
+let previousState = 'ITEMS'
+
+const tick = async () => {
+  const data = await this.LPTE.request({
+    meta: {
+      namespace: 'rcv-tent',
+      type: 'request',
+      version: 1
+    }
+  });
+
+  if (previousState == data.state) return
+  previousState = data.state
+
+  if (data.state === "ITEMS") {
+    showItems()
+  } else if (data.state === "DAMAGE") {
+    showDmg()
+  }
+}
+
+tick();
+setInterval(tick, 1000);
