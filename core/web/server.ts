@@ -70,7 +70,7 @@ for (const [key, value] of Object.entries(getController(globalContext))) {
 /**
  * Run server
  */
-export const runServer = () => {
+export const runServer = (): void => {
   server.listen(port, () => {
     log.info(`Listening for requests on http://localhost:${port}`)
   })
