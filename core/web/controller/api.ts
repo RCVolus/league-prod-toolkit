@@ -38,7 +38,7 @@ router.get('/events/shortcut/request/:namespace/:type', async (req, res) => {
       type: req.params.type,
       version: 1
     }
-  });
+  }, parseInt(req.query.timeout as string) || 1000);
 
   if (response) {
     return res.status(200).send(response);
