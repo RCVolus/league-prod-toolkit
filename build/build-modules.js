@@ -11,10 +11,19 @@ const execPromise = promisify(exec);
 
 const modulePath = './modules';
 
+let filter = ""
+if (process.argv.length === 3) {
+    filter = process.argv[2]
+}
+
 const main = async () => {
     const data = await readdirPromise(modulePath);
     await Promise.all(
         data.map(async (folderName) => {
+            if (filter !== "" && folderName !== filter) {
+                return;
+            }
+
             const currentModulePath = path.join(modulePath, folderName)
             const packageJsonPath = path.join(currentModulePath, 'package.json')
 
@@ -39,15 +48,16 @@ const main = async () => {
 
             if (pkgJson['toolkit']['needsBuild']) {
                 // run build
-                await new Promise(() => {
+                await new Promise((resolve, reject) => {
                     exec('npm run build', {
                         cwd: currentModulePath
                     }, (error, stdout, stderr) => {
                         console.log(stdout)
                         if (error || stderr) {
-                            return
+                            reject(error || stderr)
                         }
                         console.log('built ' + folderName);
+                        resolve();
                     });
                 });
             }
