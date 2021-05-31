@@ -6,5 +6,6 @@
         "backend": "ws://localhost:8999"
     },
     "static-league": {
+        "port": 5656
     }
 }
