@@ -6,29 +6,27 @@ export enum EventType {
   REPLY = 'REPLY'
 }
 
-export type LPTEventInput = any & {
-  meta: {
-    type: string
-    namespace: string
-    version: number
-    /* sender: {
-      name: string,
-      version: string,
-      mode: ModuleType
-    } */
+export interface LPTEventMeta {
+  type: string
+  namespace: string
+  version: number
+
+  sender?: {
+    name: string
+    version: string
+    mode: ModuleType
+    path?: string
   }
+  channelType?: EventType
+  reply?: string
+
+  [name: string]: any
 }
 
-export type LPTEvent = LPTEventInput & {
-  meta: {
-    sender?: {
-      name: string
-      version: string
-      mode: ModuleType
-    }
-    channelType?: EventType
-    reply?: string
-  }
+export interface LPTEvent {
+  meta: LPTEventMeta
+
+  [name: string]: any
 }
 
 export interface LPTE {
@@ -52,5 +50,5 @@ export interface LPTE {
    * Emits an event to the event handler
    * @param e the event to emit
    */
-  emit: (event: LPTEventInput) => void
+  emit: (event: LPTEvent) => void
 }

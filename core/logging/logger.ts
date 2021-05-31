@@ -5,7 +5,7 @@ import { LPTE } from '../eventbus/LPTE'
 
 const customFormat = winston.format.printf(
   ({ level, message, label, timestamp }) =>
-    `${timestamp} [${level.padEnd(15)}] ${`\u001b[95m${label}\u001b[39m`.padEnd(
+    `${timestamp as string} [${level.padEnd(15)}] ${`\u001b[95m${label as string}\u001b[39m`.padEnd(
       22
     )}: ${message}`
 )
@@ -19,8 +19,8 @@ export class EventbusTransport extends Transport {
     this.log = this.log.bind(this)
   }
 
-  log (info: any, callback: () => void) {
-    if (info.level.includes('error') && (this.lpte != null)) {
+  log (info: any, callback: () => void): void {
+    if (info.level.includes('error') as boolean && (this.lpte != null)) {
       this.lpte.emit({
         meta: {
           namespace: 'log',
@@ -40,7 +40,7 @@ eventbusTransport.setMaxListeners(100)
 
 const createLogger = (label: string): Logger =>
   winston.createLogger({
-    level: process.env.LOGLEVEL || 'info',
+    level: process.env.LOGLEVEL !== null ? process.env.LOGLEVEL : 'info',
     format: winston.format.combine(
       winston.format.timestamp(),
       winston.format.colorize(),

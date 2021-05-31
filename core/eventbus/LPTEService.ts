@@ -1,4 +1,4 @@
-import { LPTE, LPTEvent, LPTEventInput, EventType } from './LPTE'
+import { LPTE, LPTEvent, EventType } from './LPTE'
 import logger from '../logging'
 import { Plugin, ModuleType } from '../modules/Module'
 import { wsClients } from '../web/server'
@@ -18,7 +18,7 @@ class Registration {
 }
 
 export const isValidEvent = (event: LPTEvent): boolean => {
-  if (!event.meta || !event.meta.namespace || !event.meta.type) {
+  if (event.meta === undefined || event.meta.namespace === undefined || event.meta.type === undefined) {
     return false
   }
 
@@ -45,8 +45,8 @@ export class LPTEService implements LPTE {
     log.debug(`New event handler registered: namespace=${namespace}, type=${type}`)
   }
 
-  async request (event: LPTEvent, timeout = 1000): Promise<LPTEvent> {
-    const reply = event.meta.type + '-' + this.counter++
+  async request (event: LPTEvent, timeout = 1000): Promise<LPTEvent | null> {
+    const reply = `${event.meta.type}-${this.counter}`
     event.meta.reply = reply
     event.meta.channelType = EventType.REQUEST
 
@@ -84,7 +84,7 @@ export class LPTEService implements LPTE {
         this.unregisterHandler(handler)
 
         log.warn(`Awaiting event timed out. namespace=${namespace}, type=${type}, timeout=${timeout}`)
-        reject('request timed out')
+        reject(new Error('request timed out'))
       }, timeout)
     })
   }
@@ -124,7 +124,7 @@ export class LPTEService implements LPTE {
   }
 
   forPlugin (plugin: Plugin): LPTE {
-    const enrichEvent = (event: LPTEventInput): LPTEvent => {
+    const enrichEvent = (event: LPTEvent): LPTEvent => {
       return {
         ...event,
         meta: {
@@ -142,12 +142,12 @@ export class LPTEService implements LPTE {
 
     return {
       ...this,
-      emit: (event: LPTEventInput): void => {
+      emit: (event: LPTEvent): void => {
         // Enrich with sender information
         this.emit(enrichEvent(event))
       },
       on: this.on,
-      request: async (event: LPTEventInput): Promise<LPTEvent> => {
+      request: async (event: LPTEvent): Promise<LPTEvent | null> => {
         // Enrich with sender information
         return await this.request(enrichEvent(event))
       },
