@@ -1,5 +1,5 @@
 import { promisify } from 'util'
-import { readdir, stat } from 'fs'
+import { readdir, stat, Stats } from 'fs'
 import path from 'path'
 
 import LPTEService from '../eventbus/LPTEService'
@@ -120,14 +120,17 @@ export class ModuleService {
   private async handleModule (folder: string): Promise<Module | null> {
     const packageJsonPath = path.join(folder, 'package.json')
 
-    if (await statPromise(packageJsonPath) === undefined) {
+    let packageJsonStat: Stats
+    try {
+      packageJsonStat = await statPromise(packageJsonPath)
+    } catch {
       log.debug(
         `Expected ${packageJsonPath} to exist, but it didn't. Skipping.`
       )
       return null
     }
 
-    if (!(await statPromise(packageJsonPath)).isFile()) {
+    if (!packageJsonStat.isFile()) {
       log.debug(
         `Expected ${packageJsonPath} to be a file, but it wasn't. Skipping.`
       )
