@@ -1,5 +1,4 @@
-import logger from './logger';
-import { eventbusTransport } from './logger';
+import logger, { eventbusTransport } from './logger'
 
-export default logger;
-export { eventbusTransport };
+export default logger
+export { eventbusTransport }

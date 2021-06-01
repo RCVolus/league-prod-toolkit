@@ -1,26 +1,26 @@
-import winston, { Logger } from 'winston';
-import Transport from 'winston-transport';
+import winston, { Logger } from 'winston'
+import Transport from 'winston-transport'
 
-import { LPTE } from '../eventbus/LPTE';
+import { LPTE } from '../eventbus/LPTE'
 
 const customFormat = winston.format.printf(
   ({ level, message, label, timestamp }) =>
-    `${timestamp} [${level.padEnd(15)}] ${`\u001b[95m${label}\u001b[39m`.padEnd(
+    `${timestamp as string} [${level.padEnd(15)}] ${`\u001b[95m${label as string}\u001b[39m`.padEnd(
       22
     )}: ${message}`
-);
+)
 
 export class EventbusTransport extends Transport {
-  lpte?: LPTE;
+  lpte?: LPTE
 
-  constructor(opts: any = {}) {
-    super(opts);
+  constructor (opts: any = {}) {
+    super(opts)
 
-    this.log = this.log.bind(this);
+    this.log = this.log.bind(this)
   }
 
-  log(info: any, callback: () => void) {
-    if (info.level.includes('error') && this.lpte) {
+  log (info: any, callback: () => void): void {
+    if (info.level.includes('error') as boolean && (this.lpte != null)) {
       this.lpte.emit({
         meta: {
           namespace: 'log',
@@ -28,19 +28,19 @@ export class EventbusTransport extends Transport {
           version: 1
         },
         log: info
-      });
+      })
     }
 
-    callback();
+    callback()
   }
 }
 
-export const eventbusTransport = new EventbusTransport();
+export const eventbusTransport = new EventbusTransport()
 eventbusTransport.setMaxListeners(100)
 
 const createLogger = (label: string): Logger =>
   winston.createLogger({
-    level: process.env.LOGLEVEL || 'debug',
+    level: process.env.LOGLEVEL !== null ? process.env.LOGLEVEL : 'info',
     format: winston.format.combine(
       winston.format.timestamp(),
       winston.format.colorize(),
@@ -57,6 +57,6 @@ const createLogger = (label: string): Logger =>
       new winston.transports.Console(),
       eventbusTransport
     ]
-  });
+  })
 
-export default (label: string): Logger => createLogger(label);
+export default (label: string): Logger => createLogger(label)

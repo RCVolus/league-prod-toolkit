@@ -1,0 +1,5 @@
+#!/bin/sh
+# This file should be platform independant
+
+echo Git pre-commit hook: Linting and running tests. If this is message is displayed in VS Code, it probably failed. Please check the git log.
+yarn run hooks:pre-commit

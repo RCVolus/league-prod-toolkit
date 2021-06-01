@@ -1,28 +1,37 @@
-import minimist from 'minimist';
+import minimist from 'minimist'
 
-import logger, { eventbusTransport } from './logging';
-import { runServer } from './web/server';
-import moduleService from './modules/ModuleService';
-import lpteService from './eventbus/LPTEService';
+const argv = minimist(process.argv.slice(2))
 
-const argv = minimist(process.argv.slice(2));
+if (argv.loglevel !== undefined) {
+  process.env.LOGLEVEL = argv.loglevel
+}
 
-const log = logger('main');
+// This is needed so the logger can be set up in correct loglevel from the very beginning
+/* eslint-disable */
+import logger, { eventbusTransport } from './logging'
+import { runServer } from './web/server'
+import moduleService from './modules/ModuleService'
+import lpteService from './eventbus/LPTEService'
+/* eslint-enable */
 
-log.info(' _          _       _____           _ _    _ _   ');
-log.info('| |    ___ | |     |_   _|__   ___ | | | _(_) |_ ');
-log.info('| |   / _ \\| |       | |/ _ \\ / _ \\| | |/ / | __|');
-log.info('| |__| (_) | |___    | | (_) | (_) | |   <| | |_ ');
-log.info('|_____\\___/|_____|   |_|\\___/ \\___/|_|_|\\_\\_|\\__|');
-log.info('');
+const log = logger('main')
 
-const main = async () => {
-  await lpteService.initialize();
-  eventbusTransport.lpte = lpteService;
+log.info(' _          _       _____           _ _    _ _   ')
+log.info('| |    ___ | |     |_   _|__   ___ | | | _(_) |_ ')
+log.info('| |   / _ \\| |       | |/ _ \\ / _ \\| | |/ / | __|')
+log.info('| |__| (_) | |___    | | (_) | (_) | |   <| | |_ ')
+log.info('|_____\\___/|_____|   |_|\\___/ \\___/|_|_|\\_\\_|\\__|')
+log.info('')
 
-  await moduleService.initialize();
+const main = async (): Promise<void> => {
+  await lpteService.initialize()
+  eventbusTransport.lpte = lpteService
 
-  runServer();
-};
+  await moduleService.initialize()
 
-main();
+  runServer()
+}
+
+main()
+  .then(() => log.info('LoL Toolkit started up successfully.'))
+  .catch(e => log.error(`Critical error in startup: ${JSON.stringify(e)}`))
