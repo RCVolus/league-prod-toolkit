@@ -3,6 +3,7 @@ import express from 'express'
 const app = express()
 import getGameVersion from "./functions/gameVersion"
 import getDDragon from "./functions/ddragon"
+import centeredImg from "./functions/centeredImg"
 
 const namespace = 'static-league';
 
@@ -23,7 +24,9 @@ module.exports = async (ctx: any) => {
     gameVersion = config.gameVersion
   }
 
-  getDDragon(gameVersion, ctx, finishUp)
+  getDDragon(gameVersion, ctx, function () {
+    centeredImg(ctx, gameVersion, finishUp)
+  }, finishUp)
 
   function finishUp () {
     const champs = path.join(__dirname, `../data/img/champion`)

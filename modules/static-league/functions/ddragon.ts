@@ -3,13 +3,20 @@ import path from 'path';
 import tar from 'tar';
 import https from 'https';
 
-export default function getDDragon(version: string, ctx: any, cb: () => void) {
+/**
+ * downloads and extracts the dragontail.tgs for a given version
+ * @param version version of the dragontail
+ * @param ctx ctx object
+ * @param cb callback if data has to be downloaded
+ * @param cb2 callback if data already exists cb will be skipped
+*/
+export default function getDDragon(version: string, ctx: any, cb: () => void, cb2 : () => void ) {
   const fileName = `dragontail-${version}.tgz`
-  const filePath = path.join(__dirname, '../..', 'data', fileName)
+  const filePath = path.join(__dirname, '..', '..', 'data', fileName)
   const zipURI = `https://ddragon.leagueoflegends.com/cdn/${fileName}`
-  const dataPath = path.join(__dirname, '../..', 'data')
+  const dataPath = path.join(__dirname, '..', '..', 'data')
 
-  if (fs.existsSync(path.join(dataPath, version))) return cb()
+  if (fs.existsSync(path.join(dataPath, version))) return cb2()
 
   const paths = [
     `${version}/img/champion`,
@@ -23,12 +30,12 @@ export default function getDDragon(version: string, ctx: any, cb: () => void) {
   ]
 
   const file = fs.createWriteStream(filePath);
-  ctx.log.info('start downloading')
+  ctx.log.info('start downloading dragontail.tgz')
   https.get(zipURI, function(response) {
     response.pipe(file);
 
-    if (response.headers['content-length']) {
-      var len = parseInt(response.headers['content-length'], 10);
+    if (response.headers['content-language']) {
+      var len = parseInt(response.headers['content-language'], 10);
       var cur = 0;
       var total = len / 1048576;
 
@@ -39,7 +46,7 @@ export default function getDDragon(version: string, ctx: any, cb: () => void) {
     }
 
     file.on("finish", function () {
-      ctx.log.info('finish downloading')
+      ctx.log.info('finish downloading dragontail.tgz')
       file.close();
       unpack()
     })
@@ -51,13 +58,13 @@ export default function getDDragon(version: string, ctx: any, cb: () => void) {
   });
 
   function unpack () {
-    ctx.log.info('start unpacking')
+    ctx.log.info('start unpacking dragontail.tgz')
     fs.createReadStream(filePath)
     .on('error', ctx.log.debug)
     .pipe(
       tar.x({ cwd: dataPath, newer: true }, paths)
       .on('finish', function() {
-        ctx.log.info('finish unpacking')
+        ctx.log.info('finish unpacking dragontail.tgz')
         fs.unlink(filePath, cb);
       })
     )
