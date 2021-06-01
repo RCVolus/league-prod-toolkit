@@ -45,7 +45,7 @@ export class LPTEService implements LPTE {
     log.debug(`New event handler registered: namespace=${namespace}, type=${type}`)
   }
 
-  async request (event: LPTEvent, timeout = 1000): Promise<LPTEvent | null> {
+  async request (event: LPTEvent, timeout = 5000): Promise<LPTEvent | null> {
     const reply = `${event.meta.type}-${this.counter}`
     event.meta.reply = reply
     event.meta.channelType = EventType.REQUEST
@@ -60,7 +60,7 @@ export class LPTEService implements LPTE {
     }
   }
 
-  async await (namespace: string, type: string, timeout = 1000): Promise<LPTEvent> {
+  async await (namespace: string, type: string, timeout = 5000): Promise<LPTEvent> {
     return await new Promise((resolve, reject) => {
       let wasHandled = false
 
@@ -94,7 +94,9 @@ export class LPTEService implements LPTE {
   }
 
   unregisterHandler (handler: (event: LPTEvent) => void): void {
-    this.registrations = this.registrations.filter(registration => registration.handle !== handler)
+    setTimeout(() => {
+      this.registrations = this.registrations.filter(registration => registration.handle !== handler)
+    }, 1000)
   }
 
   emit (event: LPTEvent): void {

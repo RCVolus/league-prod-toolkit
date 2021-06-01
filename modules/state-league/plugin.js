@@ -1,4 +1,5 @@
 const extendLiveGameWithStatic = require('./extendLiveGameWithStatic');
+const convertChampselect = require('./champselect')
 
 const namespace = 'state-league';
 
@@ -8,7 +9,14 @@ module.exports = (ctx) => {
     webLive: {},
     webMatch: {},
     timeline: {},
-    lcu: {},
+    lcu: {
+      lobby: {},
+      isLobbyAvailable: false,
+      champselect: {},
+      isChampselectAvailable: false,
+      eog: {},
+      isEogAvailable: false
+    },
     ingameSpectator: {}
   };
 
@@ -119,7 +127,7 @@ module.exports = (ctx) => {
       gameState.state = 'SET';
 
       // Overwrite participants from names
-      gameState.webLive.participants.forEach((participant, index) => {
+      gameState.webLive.participants?.forEach((participant, index) => {
         gameState.webMatch.participants[index].summonerName = participant.summonerName;
       })
 
@@ -140,6 +148,54 @@ module.exports = (ctx) => {
         version: 1
       }
     });
+  });
+
+  // Listen to external events
+  // LCU
+  ctx.LPTE.on('lcu', 'Lobby-create', () => {
+    gameState.lcu.isLobbyAvailable = true;
+  });
+  ctx.LPTE.on('lcu', 'Lobby-update', e => {
+    gameState.lcu.isLobbyAvailable = true;
+    gameState.lcu.lobby = e.data;
+  });
+  ctx.LPTE.on('lcu', 'Lobby-delete', () => {
+    gameState.lcu.isLobbyAvailable = false;
+  });
+  ctx.LPTE.on('lcu', 'Champselect-create', () => {
+    gameState.lcu.isChampselectAvailable = true;
+  });
+  ctx.LPTE.on('lcu', 'Champselect-update', e => {
+    gameState.lcu.isChampselectAvailable = true;
+    gameState.lcu.champselect = convertChampselect(gameState, e.data);
+
+    ctx.LPTE.emit({
+      meta: {
+        namespace,
+        type: 'champselect-update'
+      },
+      data: gameState.lcu.champselect,
+      isActive: gameState.lcu.isChampselectAvailable
+    });
+  });
+  ctx.LPTE.on('lcu', 'Champselect-delete', () => {
+    gameState.lcu.isChampselectAvailable = false;
+    
+    ctx.LPTE.emit({
+      meta: {
+        namespace,
+        type: 'champselect-update'
+      },
+      data: gameState.lcu.champselect,
+      isActive: gameState.lcu.isChampselectAvailable
+    });
+  });
+  ctx.LPTE.on('lcu', 'End of Game-create', e => {
+    gameState.lcu.isEogAvailable = true;
+    gameState.lcu.eog = e.data;
+  });
+  ctx.LPTE.on('lcu', 'End of Game-delete', () => {
+    gameState.lcu.isEogAvailable = false;
   });
 
   // Emit event that we're ready to operate

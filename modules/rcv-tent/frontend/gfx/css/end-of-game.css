@@ -38,7 +38,12 @@ h5 {
 }
 
 #blueTeam .stats .secondStat {
+  color: var(--blue);
   margin-left: auto;
+}
+
+#redTeam .stats .secondStat {
+  color: var(--red);
 }
 
 #redTeam .stats .kda {
@@ -98,12 +103,8 @@ h5 {
   margin-bottom: 40px;
 }
 
-#blueTeam .dataContainer h5 {
-  color: var(--blue);
-}
-
-#redTeam .dataContainer h5 {
-  color: var(--red);
+.dataContainer h5 {
+  color: var(--orange);
 }
 
 .dataContainer h3.kda {
@@ -161,6 +162,11 @@ h5 {
   height: 80px;
   display: flex;
   align-items: center;
+  position: relative;
+}
+
+.dmgContainer h3 {
+  animation: fade-in 0.25s;
 }
 
 #redTeam .dmgContainer {
@@ -169,6 +175,7 @@ h5 {
 
 .dmgContainer .dmgBar {
   height: 60px;
+  width: var(--bar-width);
   animation: scale 0.5s ease;
 }
 
@@ -190,9 +197,14 @@ h5 {
 
 @keyframes scale {
   0% {
-    transform: scaleX(0);
+    width: 0;
   }
   100% {
-    transform: scaleX(1);
+    width: var(--bar-width);
   }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
 }

@@ -23,7 +23,7 @@ router.get('/events/shortcut/ingest/:namespace/:type', (req, res) => {
 router.post('/events/request', async (req, res) => {
   const response = await lpte.request(req.body)
 
-  if (response) {
+  if (response != null) {
     return res.status(200).send(response)
   }
   return res.status(500).send({
@@ -38,9 +38,9 @@ router.get('/events/shortcut/request/:namespace/:type', async (req, res) => {
       type: req.params.type,
       version: 1
     }
-  })
+  }, isNaN(parseInt(req.query.timeout as string)) ? 1000 : parseInt(req.query.timeout as string))
 
-  if (response) {
+  if (response != null) {
     return res.status(200).send(response)
   }
   return res.status(500).send({
