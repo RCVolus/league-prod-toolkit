@@ -1,0 +1,15 @@
+{
+  "name": "rcv-teams",
+  "version": "1.0.0",
+  "description": "Module that provides GFX elements for the current teams",
+  "author": "Himyu",
+  "license": "MIT",
+  "toolkit": {
+    "modes": [
+      "PLUGIN"
+    ],
+    "plugin": {
+      "main": "plugin.js"
+    }
+  }
+}
