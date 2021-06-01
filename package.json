@@ -12,7 +12,9 @@
     "ui": "browser-sync start --proxy=localhost:3003 --files='dist/core/**/*.css, dist/core/**/*.pug, dist/core/**/*.js' --ignore=node_modules --reload-delay 10 --no-ui --no-notify --no-open",
     "dev": "concurrently \"npm:start:watch\" \"npm:ui\"",
     "tsc": "tsc",
-    "lint": "eslint core/**"
+    "lint": "eslint core/**",
+    "setuphooks": "git config --local core.hooksPath .hooks",
+    "hooks:pre-commit": "npm run lint && npm run build"
   },
   "dependencies": {
     "bootstrap": "^4.5.0",
