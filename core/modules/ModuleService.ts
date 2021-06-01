@@ -1,5 +1,5 @@
 import { promisify } from 'util'
-import { readdir, stat, exists } from 'fs'
+import { readdir, stat } from 'fs'
 import path from 'path'
 
 import LPTEService from '../eventbus/LPTEService'
@@ -9,14 +9,13 @@ import { EventType } from '../eventbus/LPTE'
 
 const readdirPromise = promisify(readdir)
 const statPromise = promisify(stat)
-const existsPromise = promisify(exists)
 const log = logging('module-svc')
 
 export class ModuleService {
   modules: Module[] = []
   activePlugins: Plugin[] = []
 
-  public async initialize () {
+  public async initialize (): Promise<void> {
     log.info('Initializing module service.')
 
     // Register event handlers
@@ -26,7 +25,7 @@ export class ModuleService {
 
       // Check if we need to adapt the status here
       if (plugin.status !== event.status) {
-        log.info(`Plugin status changed: plugin=${plugin.getModule().getName()}, old=${plugin.status}, new=${event.status}`)
+        log.info(`Plugin status changed: plugin=${plugin.getModule().getName()}, old=${plugin.status}, new=${event.status as string}`)
         plugin.status = event.status
       }
 
@@ -105,7 +104,7 @@ export class ModuleService {
     return plugin
   }
 
-  private async handleFolder (folder: string) {
+  private async handleFolder (folder: string): Promise<Module | null> {
     const statData = await statPromise(folder)
 
     if (!statData.isDirectory()) {
@@ -121,7 +120,7 @@ export class ModuleService {
   private async handleModule (folder: string): Promise<Module | null> {
     const packageJsonPath = path.join(folder, 'package.json')
 
-    if (!(await existsPromise(packageJsonPath))) {
+    if (await statPromise(packageJsonPath) === undefined) {
       log.debug(
         `Expected ${packageJsonPath} to exist, but it didn't. Skipping.`
       )
@@ -135,6 +134,7 @@ export class ModuleService {
       return null
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
     const packageJson = require(packageJsonPath)
 
     return new Module(packageJson, folder)

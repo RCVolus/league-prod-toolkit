@@ -2,7 +2,7 @@ import { Router } from 'express'
 
 import moduleService from '../../modules/ModuleService'
 
-export default (globalContext: any) => {
+export default (globalContext: any): Router => {
   const router = Router()
 
   router.get('/', (req, res) => {

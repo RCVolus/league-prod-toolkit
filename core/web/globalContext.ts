@@ -1,4 +1,3 @@
-import { EventType } from '../eventbus/LPTE'
 import lpte from '../eventbus/LPTEService'
 
 export interface PageDefintion {

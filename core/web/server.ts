@@ -13,7 +13,7 @@ import { handleClient } from './ws'
  */
 const log = logging('server')
 const app = express()
-const port = process.env.PORT || '3003'
+const port = process.env.PORT === undefined ? '3003' : process.env.PORT
 
 const server = http.createServer(app)
 

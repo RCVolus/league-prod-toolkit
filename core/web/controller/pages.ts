@@ -8,13 +8,13 @@ import { GlobalContext } from '../globalContext'
 
 const readFile = util.promisify(fs.readFile)
 
-export default (globalContext: GlobalContext) => {
+export default (globalContext: GlobalContext): Router => {
   const router = Router()
 
   router.get('/:page*', async (req, res) => {
     const page = globalContext.module_pages.filter(p => p.id === req.params.page)[0]
 
-    const relativePath = req.params[0] || '/'
+    const relativePath = req.params[0] !== '' ? req.params[0] : '/'
     const absolutePath = path.join(page.sender.path, page.frontend, relativePath)
 
     if (relativePath === '/') {

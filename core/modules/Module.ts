@@ -60,11 +60,11 @@ export default class Module {
     return this.plugin !== undefined
   }
 
-  public getPlugin () {
+  public getPlugin (): Plugin | undefined {
     return this.plugin
   }
 
-  public getFolder () {
+  public getFolder (): string {
     return this.folder
   }
 
@@ -110,7 +110,7 @@ export class Plugin {
     this.isLoaded = true
   }
 
-  getModule () {
+  getModule (): Module {
     return this.module
   }
 
@@ -132,11 +132,13 @@ export class Plugin {
     }
   }
 
-  initialize (svc: ModuleService) {
+  initialize (svc: ModuleService): void {
     // Craft context
     this.context = new PluginContext(this)
 
     const mainFile = this.getMain()
+
+    // eslint-disable-next-line
     const main = require(path.join(this.getModule().getFolder(), mainFile))
 
     // Execute main

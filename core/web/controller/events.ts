@@ -2,7 +2,7 @@ import { Router } from 'express'
 
 import lpteService from '../../eventbus/LPTEService'
 
-export default (globalContext: any) => {
+export default (globalContext: any): Router => {
   const router = Router()
 
   router.get('/', (req, res) => {

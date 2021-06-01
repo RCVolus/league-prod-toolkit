@@ -1,6 +1,6 @@
 import { Router } from 'express'
 
-export default (globalContext: any) => {
+export default (globalContext: any): Router => {
   const router = Router()
 
   router.get('/', (req, res) => {
