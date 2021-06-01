@@ -152,20 +152,21 @@ module.exports = (ctx) => {
 
   // Listen to external events
   // LCU
-  ctx.LPTE.on('lcu', 'Lobby-create', () => {
-    gameState.lcu.isLobbyAvailable = true;
-  });
-  ctx.LPTE.on('lcu', 'Lobby-update', e => {
+  ctx.LPTE.on('lcu', 'lcu-lobby-create', () => {
     gameState.lcu.isLobbyAvailable = true;
     gameState.lcu.lobby = e.data;
   });
-  ctx.LPTE.on('lcu', 'Lobby-delete', () => {
+  ctx.LPTE.on('lcu', 'lcu-lobby-update', e => {
+    gameState.lcu.isLobbyAvailable = true;
+    gameState.lcu.lobby = e.data;
+  });
+  ctx.LPTE.on('lcu', 'lcu-lobby-delete', () => {
     gameState.lcu.isLobbyAvailable = false;
   });
-  ctx.LPTE.on('lcu', 'Champselect-create', () => {
+  ctx.LPTE.on('lcu', 'lcu-champ-select-create', () => {
     gameState.lcu.isChampselectAvailable = true;
   });
-  ctx.LPTE.on('lcu', 'Champselect-update', e => {
+  ctx.LPTE.on('lcu', 'lcu-champ-select-update', e => {
     gameState.lcu.isChampselectAvailable = true;
     gameState.lcu.champselect = convertChampselect(gameState, e.data);
 
@@ -178,7 +179,7 @@ module.exports = (ctx) => {
       isActive: gameState.lcu.isChampselectAvailable
     });
   });
-  ctx.LPTE.on('lcu', 'Champselect-delete', () => {
+  ctx.LPTE.on('lcu', 'lcu-champ-select-delete', () => {
     gameState.lcu.isChampselectAvailable = false;
     
     ctx.LPTE.emit({
@@ -190,11 +191,15 @@ module.exports = (ctx) => {
       isActive: gameState.lcu.isChampselectAvailable
     });
   });
-  ctx.LPTE.on('lcu', 'End of Game-create', e => {
+  ctx.LPTE.on('lcu', 'lcu-end-of-game-create', e => {
     gameState.lcu.isEogAvailable = true;
     gameState.lcu.eog = e.data;
   });
-  ctx.LPTE.on('lcu', 'End of Game-delete', () => {
+  ctx.LPTE.on('lcu', 'lcu-end-of-game-update', e => {
+    gameState.lcu.isEogAvailable = true;
+    gameState.lcu.eog = e.data;
+  });
+  ctx.LPTE.on('lcu', 'lcu-end-of-game-delete', () => {
     gameState.lcu.isEogAvailable = false;
   });
 
