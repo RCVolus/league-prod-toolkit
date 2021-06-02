@@ -53,7 +53,7 @@ const main = async () => {
           }, (error, stdout, stderr) => {
             console.log(stdout)
             if (error || stderr) {
-              reject(error || stderr)
+              console.log(error || stderr)
             }
             console.log('built ' + folderName)
             resolve()
