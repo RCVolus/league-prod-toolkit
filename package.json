@@ -10,7 +10,7 @@
     "start": "npm run build && node dist/core/app.js",
     "start:watch": "nodemon",
     "ui": "browser-sync start --proxy=localhost:3003 --files='dist/core/**/*.css, dist/core/**/*.pug, dist/core/**/*.js' --ignore=node_modules --reload-delay 10 --no-ui --no-notify --no-open",
-    "dev": "concurrently \"npm:start:watch\" \"npm:ui\"",
+    "dev": "concurrently \"docker-compose up\" \"npm:start:watch\" \"npm:ui\"",
     "tsc": "tsc",
     "lint": "eslint core/**",
     "setuphooks": "git config --local core.hooksPath .hooks",
