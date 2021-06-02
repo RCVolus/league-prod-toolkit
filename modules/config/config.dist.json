@@ -7,5 +7,9 @@
     },
     "static-league": {
         "port": 5656
+    },
+    "rcv-teams": {
+        "user": "root",
+        "password": "rootpassword"
     }
 }
