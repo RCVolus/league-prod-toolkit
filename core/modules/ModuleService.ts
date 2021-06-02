@@ -4,7 +4,8 @@ import path from 'path'
 
 import LPTEService from '../eventbus/LPTEService'
 import logging from '../logging'
-import Module, { ModuleType, Plugin, PluginStatus } from './Module'
+import Module, { Plugin, PluginStatus } from './Module'
+import ModuleType from './ModuleType'
 import { EventType } from '../eventbus/LPTE'
 
 const readdirPromise = promisify(readdir)

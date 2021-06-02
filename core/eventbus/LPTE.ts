@@ -1,4 +1,4 @@
-import { ModuleType } from '../modules/Module'
+import ModuleType from '../modules/ModuleType'
 
 export enum EventType {
   BROADCAST = 'BROADCAST',

@@ -1,14 +1,11 @@
 import path from 'path'
-import { ModuleService } from './ModuleService'
 import { Logger } from 'winston'
+
+import ModuleType from './ModuleType'
+import { ModuleService } from './ModuleService'
 import lpteService from '../eventbus/LPTEService'
 import logger from '../logging'
 import { LPTE } from '../eventbus/LPTE'
-
-export enum ModuleType {
-  STANDALONE = 'STANDALONE',
-  PLUGIN = 'PLUGIN',
-}
 
 export interface PackageJson {
   name: string

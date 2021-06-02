@@ -1,6 +1,7 @@
 import { LPTE, LPTEvent, EventType } from './LPTE'
 import logger from '../logging'
-import { Plugin, ModuleType } from '../modules/Module'
+import { Plugin } from '../modules/Module'
+import ModuleType from '../modules/ModuleType'
 import { wsClients } from '../web/server'
 
 const log = logger('lpte-svc')
