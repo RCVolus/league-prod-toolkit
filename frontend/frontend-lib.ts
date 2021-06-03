@@ -56,6 +56,9 @@ class LPTEService implements LPTE {
 
   _onSocketOpen (): void {
     this._log('Websocket connected')
+
+    // redo any registrations, in case this is a reconnect
+    this.registrations.forEach(reg => this.websocket.send(JSON.stringify(reg.getSubscribeEvent())))
   }
 
   _onSocketClose (): void {
@@ -102,6 +105,10 @@ class LPTEService implements LPTE {
 
   emit (event: LPTEvent): void {
     this.websocket.send(JSON.stringify(event))
+  }
+
+  async request (event: LPTEvent, timeout: number = 5000): Promise<LPTEvent> {
+    throw new Error('method request on client library not supported yet')
   }
 }
 

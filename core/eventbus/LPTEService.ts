@@ -34,7 +34,7 @@ export class LPTEService implements LPTE {
     log.debug(`New event handler registered: namespace=${namespace}, type=${type}`)
   }
 
-  async request (event: LPTEvent, timeout = 5000): Promise<LPTEvent | null> {
+  async request (event: LPTEvent, timeout = 5000): Promise<LPTEvent> {
     const reply = `${event.meta.type}-${this.counter}`
     event.meta.reply = reply
     event.meta.channelType = EventType.REQUEST
@@ -45,7 +45,7 @@ export class LPTEService implements LPTE {
       return await this.await('reply', reply, timeout)
     } catch {
       log.error(`Request timed out. Request meta=${JSON.stringify(event.meta)}`)
-      return null
+      throw new Error('request timed out')
     }
   }
 

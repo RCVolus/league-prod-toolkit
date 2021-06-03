@@ -48,9 +48,16 @@ export interface LPTE {
 
   /**
    * Emits an event to the event handler
-   * @param e the event to emit
+   * @param event the event to emit
    */
   emit: (event: LPTEvent) => void
+
+  /**
+   * Emits a request event, and waits for a response (or until timeout)
+   * @param event the request event to send
+   * @param timeout the amount of ms to wait until rejecting the promise because of timeout
+   */
+  request: (event: LPTEvent, timeout?: number) => Promise<LPTEvent>
 }
 
 export class Registration {
