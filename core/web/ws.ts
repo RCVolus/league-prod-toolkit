@@ -8,7 +8,6 @@ const logger = log('ws')
 export const handleClient = (socket: WebSocket): void => {
   socket.on('message', e => {
     const event = JSON.parse(e as string) as LPTEvent
-    // console.log(event);
 
     if (!isValidEvent(event)) {
       logger.debug('received invalid event: ' + JSON.stringify(event))

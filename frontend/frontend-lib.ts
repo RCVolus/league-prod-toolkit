@@ -1,4 +1,4 @@
-import { LPTE, LPTEvent } from '../core/eventbus/LPTE'
+import { LPTE, LPTEvent, Registration } from '../core/eventbus/LPTE'
 
 // Setup toasts
 if ((window as any).toastr !== undefined) {
@@ -11,12 +11,29 @@ if ((window as any).toastr !== undefined) {
   }
 }
 
+class FrontendRegistration extends Registration {
+  getSubscribeEvent (): LPTEvent {
+    return {
+      meta: {
+        namespace: 'lpte',
+        type: 'subscribe',
+        version: 1
+      },
+      to: {
+        namespace: this.namespace,
+        type: this.type
+      }
+    }
+  }
+}
+
 /**
  * This is the frontend library that is compatible with the backend syntax. It connects via websocket.
  */
 class LPTEService implements LPTE {
   backend: string
   websocket: WebSocket
+  registrations: FrontendRegistration[] = []
 
   constructor (backend: string) {
     this.backend = backend
@@ -26,6 +43,7 @@ class LPTEService implements LPTE {
     this._onSocketOpen = this._onSocketOpen.bind(this)
     this._onSocketClose = this._onSocketClose.bind(this)
     this._onSocketError = this._onSocketError.bind(this)
+    this._onSocketMessage = this._onSocketMessage.bind(this)
     this._reconnect = this._reconnect.bind(this)
     this._connect = this._connect.bind(this)
 
@@ -49,6 +67,15 @@ class LPTEService implements LPTE {
     this._log(`Websocket error: ${JSON.stringify(e)}`)
   }
 
+  _onSocketMessage (e: any): void {
+    console.log(e)
+    const event: LPTEvent = JSON.parse(e.data)
+
+    this.registrations.filter(reg => reg.namespace === event.meta.namespace && reg.type === event.meta.type).forEach(reg => {
+      reg.handle(event)
+    })
+  }
+
   _reconnect (): void {
     this.websocket = new WebSocket(this.backend)
     this._connect()
@@ -58,28 +85,23 @@ class LPTEService implements LPTE {
     this.websocket.onopen = this._onSocketOpen
     this.websocket.onclose = this._onSocketClose
     this.websocket.onerror = this._onSocketError
+    this.websocket.onmessage = this._onSocketMessage
   }
 
-  on (namespace: string, type: string, handler: (e: LPTEvent) => void): void {
-    const subscribeEvent: LPTEvent = {
-      meta: {
-        namespace: 'lpt',
-        type: 'subscribe',
-        version: 1
-      },
-      to: {
-        namespace,
-        type
-      }
-    }
+  on (namespace: string, type: string, handler: (event: LPTEvent) => void): void {
+    const registration = new FrontendRegistration(namespace, type, handler)
 
-    this.websocket.send(JSON.stringify(subscribeEvent))
+    this.registrations.push(registration)
+
+    this.websocket.send(JSON.stringify(registration.getSubscribeEvent()))
   }
 
   unregister (namespace: string, type: string): void {
+    this._log('Unregister is currently not supported')
   }
 
   emit (event: LPTEvent): void {
+    this.websocket.send(JSON.stringify(event))
   }
 }
 

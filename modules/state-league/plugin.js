@@ -152,7 +152,7 @@ module.exports = (ctx) => {
 
   // Listen to external events
   // LCU
-  ctx.LPTE.on('lcu', 'lcu-lobby-create', () => {
+  ctx.LPTE.on('lcu', 'lcu-lobby-create', e => {
     gameState.lcu.isLobbyAvailable = true;
     gameState.lcu.lobby = e.data;
   });
@@ -169,6 +169,7 @@ module.exports = (ctx) => {
   ctx.LPTE.on('lcu', 'lcu-champ-select-update', e => {
     gameState.lcu.isChampselectAvailable = true;
     gameState.lcu.champselect = convertChampselect(gameState, e.data);
+    console.log('champselect update')
 
     ctx.LPTE.emit({
       meta: {

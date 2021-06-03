@@ -1,22 +1,10 @@
-import { LPTE, LPTEvent, EventType } from './LPTE'
+import { LPTE, LPTEvent, EventType, Registration } from './LPTE'
 import logger from '../logging'
 import { Plugin } from '../modules/Module'
 import ModuleType from '../modules/ModuleType'
 import { wsClients } from '../web/server'
 
 const log = logger('lpte-svc')
-
-class Registration {
-  type: string
-  namespace: string
-  handle: (event: LPTEvent) => void
-
-  constructor (namespace: string, type: string, handler: (event: LPTEvent) => void) {
-    this.namespace = namespace
-    this.type = type
-    this.handle = handler
-  }
-}
 
 export const isValidEvent = (event: LPTEvent): boolean => {
   if (event.meta === undefined || event.meta.namespace === undefined || event.meta.type === undefined) {
