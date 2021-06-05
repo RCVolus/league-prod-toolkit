@@ -58,6 +58,11 @@ export interface LPTE {
    * @param timeout the amount of ms to wait until rejecting the promise because of timeout
    */
   request: (event: LPTEvent, timeout?: number) => Promise<LPTEvent>
+
+  /**
+   * Awaits until an event is emitted to the given namespace and type, or until timeout
+   */
+  await: (namespace: string, type: string, timeout?: number) => Promise<LPTEvent>
 }
 
 export class Registration {

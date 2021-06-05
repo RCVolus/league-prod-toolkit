@@ -77,6 +77,20 @@ module.exports = async (ctx: any) => {
       });
     });
 
+    // Add static serve
+    ctx.LPTE.emit({
+      meta: {
+        type: 'add-serves',
+        namespace: 'ui',
+        version: 1
+      },
+      serves: [{
+        
+        frontend: 'data',
+        id: 'static-league'
+      }]
+    });
+
     // Emit event that we're ready to operate
     ctx.LPTE.emit({
       meta: {

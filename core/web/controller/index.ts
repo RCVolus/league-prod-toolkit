@@ -6,6 +6,7 @@ import plugins from './plugins'
 import events from './events'
 import api from './api'
 import pages from './pages'
+import serve from './serve'
 
 export default (globalContext: any): {
   [name: string]: Router
@@ -15,5 +16,6 @@ export default (globalContext: any): {
   '/plugins': plugins(globalContext),
   '/events': events(globalContext),
   '/pages': pages(globalContext),
-  '/api': api
+  '/api': api,
+  '/serve': serve(globalContext)
 })

@@ -1,4 +1,4 @@
-import { LPTE, LPTEvent, Registration } from '../core/eventbus/LPTE'
+import { EventType, LPTE, LPTEvent, Registration } from '../core/eventbus/LPTE'
 
 // Setup toasts
 if ((window as any).toastr !== undefined) {
@@ -12,11 +12,13 @@ if ((window as any).toastr !== undefined) {
 }
 
 class FrontendRegistration extends Registration {
+  isOnce: boolean = false
+
   getSubscribeEvent (): LPTEvent {
     return {
       meta: {
         namespace: 'lpte',
-        type: 'subscribe',
+        type: this.isOnce ? 'subscribe-once' : 'subscribe',
         version: 1
       },
       to: {
@@ -25,6 +27,11 @@ class FrontendRegistration extends Registration {
       }
     }
   }
+}
+
+function randomId (): string {
+  const uint32 = window.crypto.getRandomValues(new Uint32Array(1))[0]
+  return uint32.toString(16)
 }
 
 /**
@@ -71,7 +78,6 @@ class LPTEService implements LPTE {
   }
 
   _onSocketMessage (e: any): void {
-    console.log(e)
     const event: LPTEvent = JSON.parse(e.data)
 
     this.registrations.filter(reg => reg.namespace === event.meta.namespace && reg.type === event.meta.type).forEach(reg => {
@@ -91,8 +97,15 @@ class LPTEService implements LPTE {
     this.websocket.onmessage = this._onSocketMessage
   }
 
-  on (namespace: string, type: string, handler: (event: LPTEvent) => void): void {
+  unregisterHandler (handler: (event: LPTEvent) => void): void {
+    setTimeout(() => {
+      this.registrations = this.registrations.filter(registration => registration.handle !== handler)
+    }, 1000)
+  }
+
+  on (namespace: string, type: string, handler: (event: LPTEvent) => void, isOnce = false): void {
     const registration = new FrontendRegistration(namespace, type, handler)
+    registration.isOnce = isOnce
 
     this.registrations.push(registration)
 
@@ -108,7 +121,44 @@ class LPTEService implements LPTE {
   }
 
   async request (event: LPTEvent, timeout: number = 5000): Promise<LPTEvent> {
-    throw new Error('method request on client library not supported yet')
+    const reply = `${event.meta.type}-${randomId()}`
+    event.meta.reply = reply
+    event.meta.channelType = EventType.REQUEST
+
+    this.emit(event)
+
+    try {
+      return await this.await('reply', reply, timeout)
+    } catch {
+      throw new Error('request timed out')
+    }
+  }
+
+  async await (namespace: string, type: string, timeout: number = 5000): Promise<LPTEvent> {
+    return await new Promise((resolve, reject) => {
+      let wasHandled = false
+
+      const handler = (e: LPTEvent): void => {
+        if (wasHandled) {
+          return
+        }
+        wasHandled = true
+        this.unregisterHandler(handler)
+
+        resolve(e)
+      }
+      // Register handler
+      this.on(namespace, type, handler)
+
+      setTimeout(() => {
+        if (wasHandled) {
+          return
+        }
+        wasHandled = true
+        this.unregisterHandler(handler)
+        reject(new Error('request timed out'))
+      }, timeout)
+    })
   }
 }
 

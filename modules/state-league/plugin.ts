@@ -7,6 +7,8 @@ import { LCUDataReaderController } from './controller/LCUDataReaderController';
 
 const namespace = 'state-league';
 
+export let leagueStatic: any;
+
 module.exports = async (ctx: PluginContext) => {
   // Register new UI page
   ctx.LPTE.emit({
@@ -48,16 +50,16 @@ module.exports = async (ctx: PluginContext) => {
   ctx.LPTE.on('lcu', 'lcu-lobby-update', e => {
     lcuDataReaderController.handle(e)
   });
-  ctx.LPTE.on('lcu', 'lcu-lobby-delete', () => {
+  ctx.LPTE.on('lcu', 'lcu-lobby-delete', e => {
     lcuDataReaderController.handle(e)
   });
-  ctx.LPTE.on('lcu', 'lcu-champ-select-create', () => {
+  ctx.LPTE.on('lcu', 'lcu-champ-select-create', e => {
     lcuDataReaderController.handle(e)
   });
   ctx.LPTE.on('lcu', 'lcu-champ-select-update', e => {
     lcuDataReaderController.handle(e)
   });
-  ctx.LPTE.on('lcu', 'lcu-champ-select-delete', () => {
+  ctx.LPTE.on('lcu', 'lcu-champ-select-delete', e => {
     lcuDataReaderController.handle(e)
   });
   ctx.LPTE.on('lcu', 'lcu-end-of-game-create', e => {
@@ -66,7 +68,7 @@ module.exports = async (ctx: PluginContext) => {
   ctx.LPTE.on('lcu', 'lcu-end-of-game-update', e => {
     lcuDataReaderController.handle(e)
   });
-  ctx.LPTE.on('lcu', 'lcu-end-of-game-delete', () => {
+  ctx.LPTE.on('lcu', 'lcu-end-of-game-delete', e => {
     lcuDataReaderController.handle(e)
   });
 
@@ -79,4 +81,14 @@ module.exports = async (ctx: PluginContext) => {
     },
     status: 'RUNNING'
   });
+
+  await ctx.LPTE.await('lpt', 'ready', 120000);
+
+  leagueStatic = (await ctx.LPTE.request({
+    meta: {
+      namespace: 'static-league',
+      type: 'request-constants',
+      version: 1
+    }
+  })).constants
 };

@@ -23,6 +23,23 @@ export const handleClient = (socket: WebSocket): void => {
         return
       }
     }
+    if (event.meta.namespace === 'lpte' && event.meta.type === 'subscribe-once') {
+      if (event.to.type !== undefined && event.to.namespace !== undefined) {
+        LPTEService.once(event.to.namespace, event.to.type, listenedEvent => {
+          socket.send(JSON.stringify(listenedEvent))
+        })
+        return
+      }
+    }
+
+    /* / Check if it's a request event
+    if (event.meta.channelType === EventType.REQUEST) {
+      // if it is, make sure the reply will be forwarded
+      LPTEService.once('reply', event.meta.reply as string, (listenedEvent: LPTEvent) => {
+        console.log(listenedEvent)
+        socket.send(JSON.stringify(listenedEvent))
+      })
+    } */
 
     LPTEService.emit(event)
   })

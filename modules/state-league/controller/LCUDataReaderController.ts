@@ -1,9 +1,17 @@
 import { LPTEvent } from 'league-prod-toolkit/core/eventbus/LPTE'
+import { PluginContext } from 'league-prod-toolkit/core/modules/Module'
 import { Controller } from './Controller'
 import { state } from '../LeagueState'
-import convertChampselect from '../champselect'
+import { convertState } from '../champselect/convertState'
+import { leagueStatic } from '../plugin'
 
 export class LCUDataReaderController extends Controller {
+  leagueStatic: any
+
+  constructor (pluginContext: PluginContext) {
+    super(pluginContext)
+  }
+
   emitChampSelectUpdate (): void {
     this.pluginContext.LPTE.emit({
       meta: {
@@ -11,7 +19,7 @@ export class LCUDataReaderController extends Controller {
         type: 'champselect-update',
         version: 1
       },
-      data: convertChampselect(state.lcu.champselect),
+      data: convertState(state, state.lcu.champselect as any, leagueStatic),
       isActive: state.lcu.champselect._available
     });
   }

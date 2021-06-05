@@ -34,6 +34,15 @@ export class LPTEService implements LPTE {
     log.debug(`New event handler registered: namespace=${namespace}, type=${type}`)
   }
 
+  once (namespace: string, type: string, handler: (e: LPTEvent) => void): void {
+    const wrappedHandler = (e: LPTEvent): void => {
+      this.unregisterHandler(wrappedHandler)
+      handler(e)
+    }
+
+    this.on(namespace, type, wrappedHandler)
+  }
+
   async request (event: LPTEvent, timeout = 5000): Promise<LPTEvent> {
     const reply = `${event.meta.type}-${this.counter}`
     event.meta.reply = reply
