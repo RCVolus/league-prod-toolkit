@@ -7,9 +7,12 @@ import { leagueStatic } from '../plugin'
 
 export class LCUDataReaderController extends Controller {
   leagueStatic: any
+  refreshTask?: NodeJS.Timeout
 
   constructor (pluginContext: PluginContext) {
     super(pluginContext)
+
+    this.emitChampSelectUpdate = this.emitChampSelectUpdate.bind(this)
   }
 
   emitChampSelectUpdate (): void {
@@ -43,16 +46,28 @@ export class LCUDataReaderController extends Controller {
       state.lcu.champselect = event.data
       state.lcu.champselect._available = true
 
+      if (!this.refreshTask) {
+        this.refreshTask = setInterval(this.emitChampSelectUpdate, 500);
+      }
+
       this.emitChampSelectUpdate()
     }
     if (event.meta.type === 'lcu-champ-select-update') {
       state.lcu.champselect = event.data
       state.lcu.champselect._available = true
 
+      if (!this.refreshTask) {
+        this.refreshTask = setInterval(this.emitChampSelectUpdate, 500);
+      }
+
       this.emitChampSelectUpdate()
     }
     if (event.meta.type === 'lcu-champ-select-delete') {
       state.lcu.champselect._available = false
+
+      if (this.refreshTask) {
+        clearInterval(this.refreshTask)
+      }
 
       this.emitChampSelectUpdate()
     }
