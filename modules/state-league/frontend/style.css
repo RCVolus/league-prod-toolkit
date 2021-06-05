@@ -16,3 +16,10 @@
   transition: none;
   display: none;
 }
+
+.op-lol-game .green {
+  color: green;
+}
+.op-lol-game .orange {
+  color: orange;
+}
