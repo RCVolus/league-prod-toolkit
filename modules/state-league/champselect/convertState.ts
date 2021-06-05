@@ -18,8 +18,6 @@ const convertTeam = ({ team, actions, gameState, leagueStatic }: { team: Array<C
       icon: cell.spell2Id ? `/serve/static-league/img/summoner-spell/${cell.spell2Id}.png` : '',
     };
 
-    console.log(cell)
-
     const championSearch = leagueStatic.champions.filter((c: any) => c.key === cell.championId.toString())
     let champion: any
     if (championSearch.length > 0) {
