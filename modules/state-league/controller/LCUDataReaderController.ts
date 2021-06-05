@@ -34,6 +34,8 @@ export class LCUDataReaderController extends Controller {
       state.lcu.lobby._available = true
       state.lcu.lobby._created = new Date()
       state.lcu.lobby._updated = new Date()
+
+      this.pluginContext.log.info('Flow: lobby - active')
     }
     if (event.meta.type === 'lcu-lobby-update') {
       state.lcu.lobby = { ...state.lcu.lobby, ...event.data }
@@ -43,6 +45,8 @@ export class LCUDataReaderController extends Controller {
     if (event.meta.type === 'lcu-lobby-delete') {
       state.lcu.lobby._available = false
       state.lcu.lobby._deleted = new Date()
+
+      this.pluginContext.log.info('Flow: lobby - inactive')
     }
 
     // Champ select
@@ -84,7 +88,15 @@ export class LCUDataReaderController extends Controller {
       this.pluginContext.log.info('Flow: champselect - inactive')
 
       // Continue in flow
-      this.pluginContext.log.info('')
+      this.pluginContext.LPTE.emit({
+        meta: {
+          namespace: 'state-league',
+          type: 'set-game',
+          version: 1
+        },
+        by: 'summonerName',
+        summonerName: state.lcu.lobby.members[0].summonerName
+      })
     }
 
     // End of game

@@ -20,8 +20,9 @@ export class SetGameController extends Controller {
           type: 'fetch-livegame',
           version: 1
         },
-        summonerName: event.summonerName
-      });
+        summonerName: event.summonerName,
+        retries: 10
+      }, 30000);
 
       if (!gameResponse || gameResponse.failed) {
         this.pluginContext.log.info(`Loading livegame failed for summoner=${event.summonerName}`);
