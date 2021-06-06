@@ -36,9 +36,10 @@ module.exports = (ctx) => {
   });
 
   ctx.LPTE.on('state-league', 'game-loaded', e => {
-    gfxState.participants = e.webLive.participants;
+    gfxState.participants = e.data.participants;
+    // console.log(e)
     gfxState.dataState = 'READY'
-  });
+  }); 
 
   // Move a step forward in animation
   ctx.LPTE.on(namespace, 'next-step', async e => {

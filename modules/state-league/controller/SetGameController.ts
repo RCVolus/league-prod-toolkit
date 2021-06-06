@@ -41,6 +41,9 @@ export class SetGameController extends Controller {
       });
 
       state.web.live = extendLiveGameWithStatic(gameResponse.game, staticData.constants);
+      state.web.live._available = true
+      state.web.live._created = new Date();
+      state.web.live._updated = new Date();
 
       this.pluginContext.LPTE.emit({
         meta: {

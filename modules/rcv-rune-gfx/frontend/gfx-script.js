@@ -81,5 +81,7 @@ const tick = async () => {
   updateUi(data.state);
 }
 
-tick();
-setInterval(tick, 1000);
+window.LPTE.onready(() => {
+  tick()
+  setInterval(tick, 1000)
+})
