@@ -27,7 +27,7 @@ function App() {
         }
     });
     useEffect(() => {
-        const connect = () => {
+        /* const connect = () => {
             websocket = new WebSocket((window.location.protocol === 'http:' ? 'ws' : 'wss') + '://' + window.location.host + '/eventbus');
     
             websocket.onopen = () => {
@@ -62,7 +62,12 @@ function App() {
             };
         };
     
-        connect();
+        connect(); */
+        window.LPTE.on('state-league', 'champselect-update', e => {
+            console.log(e);
+            e.data.isActive = e.isActive;
+            setGlobalState(e.data);
+        })
         
         /* Window.PB.on('newState', state => {
             setGlobalState(state.state);
@@ -83,7 +88,7 @@ function App() {
 
         return (
             <div className="App">
-                <Overlay state={convertState(globalState, Window.PB.backend)} config={config}/>
+                <Overlay state={convertState(globalState)} config={config}/>
             </div>
         );
     } else {

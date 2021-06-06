@@ -1,4 +1,4 @@
-import { ModuleType } from '../modules/Module'
+import ModuleType from '../modules/ModuleType'
 
 export enum EventType {
   BROADCAST = 'BROADCAST',
@@ -48,7 +48,31 @@ export interface LPTE {
 
   /**
    * Emits an event to the event handler
-   * @param e the event to emit
+   * @param event the event to emit
    */
   emit: (event: LPTEvent) => void
+
+  /**
+   * Emits a request event, and waits for a response (or until timeout)
+   * @param event the request event to send
+   * @param timeout the amount of ms to wait until rejecting the promise because of timeout
+   */
+  request: (event: LPTEvent, timeout?: number) => Promise<LPTEvent>
+
+  /**
+   * Awaits until an event is emitted to the given namespace and type, or until timeout
+   */
+  await: (namespace: string, type: string, timeout?: number) => Promise<LPTEvent>
+}
+
+export class Registration {
+  type: string
+  namespace: string
+  handle: (event: LPTEvent) => void
+
+  constructor (namespace: string, type: string, handler: (event: LPTEvent) => void) {
+    this.namespace = namespace
+    this.type = type
+    this.handle = handler
+  }
 }
