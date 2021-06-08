@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "incremental": true,
+    "target": "ES2018",
+    "module": "commonjs",
+    "sourceMap": true,   
+    "allowJs": true,
+    "outDir": "./dist",
+    "rootDir": "./",
+    "tsBuildInfoFile": "dist/.tsbuildinfo",
+    "strict": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true
+  }
+}
+  

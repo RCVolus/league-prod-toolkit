@@ -8,8 +8,10 @@
     "static-league": {
         "port": 5656
     },
-    "rcv-teams": {
+    "database": {
         "user": "root",
-        "password": "rootpassword"
+        "password": "rootpassword",
+        "clusterUrl": "localhost",
+        "port": 27017
     }
 }
