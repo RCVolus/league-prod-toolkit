@@ -1,0 +1,88 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  width: 1920px;
+  height: 1080px;
+  overflow: hidden;
+  font-family: interstate, sans-serif;
+  color: #f2ead5;
+  font-size: 50px;
+  display: flex;
+  justify-content: center;
+}
+
+.container {
+  height: fit-content;
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  margin-top: 20px;
+  position: relative;
+}
+
+.blue {
+  color: #0099e0 !important;
+}
+
+.red {
+  color: #fd0000 !important;
+}
+
+.team {
+  display: none;
+  align-items: center;
+  position: absolute;
+}
+
+#blue-team {
+  right: 55%;
+}
+
+#red-team {
+  flex-direction: row-reverse;
+  left: 55%;
+}
+
+.vs {
+  color: #fafafa;
+  font-size: 150px;
+  font-family: bebas-neue, sans-serif;
+  margin: 0 50px;
+}
+
+.tag {
+  font-size: 100px;
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+.tag.outline {
+  -webkit-text-stroke-width: 3px;
+}
+
+.outline {
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke-width: 2px;
+  -webkit-text-stroke-color: inherit;
+}
+
+.name {
+  line-height: 1;
+  text-transform: uppercase;
+  font-family: bebas-neue, sans-serif;
+  font-size: 65px;
+}
+
+#blue-name {
+  margin-right: 40px;
+  text-align: right;
+}
+
+#red-name {
+  margin-left: 40px;
+}

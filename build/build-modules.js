@@ -51,9 +51,11 @@ const main = async () => {
           exec('npm run build', {
             cwd: currentModulePath
           }, (error, stdout, stderr) => {
+            console.log("=".repeat(20))
+            console.log('building ' + folderName)
             console.log(stdout)
             if (error || stderr) {
-              console.log(error || stderr)
+              return console.log(error || stderr)
             }
             console.log('built ' + folderName)
             resolve()
