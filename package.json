@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc",
+    "build": "tsc && webpack",
     "build:modules": "node build/build-modules.js",
     "postbuild": "copyfiles core/web/views/**.* core/web/public/**.* dist",
     "start": "npm run build && node dist/core/app.js",
@@ -19,6 +19,7 @@
   "dependencies": {
     "bootstrap": "^4.5.0",
     "cli-progress": "^3.3.1",
+    "copy-webpack-plugin": "^9.0.0",
     "debug": "~2.6.9",
     "express": "^4.17.1",
     "jquery": "^3.5.1",
@@ -55,7 +56,10 @@
     "eslint-plugin-node": "11",
     "eslint-plugin-promise": "4",
     "eslint-plugin-standard": "4",
-    "nodemon": "^2.0.4"
+    "nodemon": "^2.0.4",
+    "ts-loader": "^9.2.2",
+    "webpack": "^5.38.1",
+    "webpack-cli": "^4.7.0"
   },
   "nodemonConfig": {
     "watch": [

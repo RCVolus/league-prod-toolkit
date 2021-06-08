@@ -1,21 +1,10 @@
-import { LPTE, LPTEvent, EventType } from './LPTE'
+import { LPTE, LPTEvent, EventType, Registration } from './LPTE'
 import logger from '../logging'
-import { Plugin, ModuleType } from '../modules/Module'
+import { Plugin } from '../modules/Module'
+import ModuleType from '../modules/ModuleType'
 import { wsClients } from '../web/server'
 
 const log = logger('lpte-svc')
-
-class Registration {
-  type: string
-  namespace: string
-  handle: (event: LPTEvent) => void
-
-  constructor (namespace: string, type: string, handler: (event: LPTEvent) => void) {
-    this.namespace = namespace
-    this.type = type
-    this.handle = handler
-  }
-}
 
 export const isValidEvent = (event: LPTEvent): boolean => {
   if (event.meta === undefined || event.meta.namespace === undefined || event.meta.type === undefined) {
@@ -45,7 +34,16 @@ export class LPTEService implements LPTE {
     log.debug(`New event handler registered: namespace=${namespace}, type=${type}`)
   }
 
-  async request (event: LPTEvent, timeout = 5000): Promise<LPTEvent | null> {
+  once (namespace: string, type: string, handler: (e: LPTEvent) => void): void {
+    const wrappedHandler = (e: LPTEvent): void => {
+      this.unregisterHandler(wrappedHandler)
+      handler(e)
+    }
+
+    this.on(namespace, type, wrappedHandler)
+  }
+
+  async request (event: LPTEvent, timeout = 5000): Promise<LPTEvent> {
     const reply = `${event.meta.type}-${this.counter}`
     event.meta.reply = reply
     event.meta.channelType = EventType.REQUEST
@@ -56,7 +54,7 @@ export class LPTEService implements LPTE {
       return await this.await('reply', reply, timeout)
     } catch {
       log.error(`Request timed out. Request meta=${JSON.stringify(event.meta)}`)
-      return null
+      throw new Error('request timed out')
     }
   }
 

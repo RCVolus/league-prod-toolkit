@@ -7,7 +7,7 @@ import supSplash from "./assets/sup_splash_placeholder.svg";
 
 const pickSplashes = [topSplash, jungSplash, midSplash, botSplash, supSplash];
 
-const makeUrlAbsolute = (url, backendUrl) => {
+/* const makeUrlAbsolute = (url, backendUrl) => {
   if (!url || !url.startsWith('/cache')) {
     return url;
   }
@@ -16,7 +16,9 @@ const makeUrlAbsolute = (url, backendUrl) => {
   const components = httpBackendUrl.split('/')
 
   return components[0] + '//' + components[2] + url;
-};
+}; */
+
+// const getSummonerSpellFromKey = (key, )
 
 const putPlaceholders = (team,  backendUrl) => {
   for (let i = 0; i < 5; i++) {
@@ -41,14 +43,14 @@ const putPlaceholders = (team,  backendUrl) => {
       }
 
       if (pick.spell1) {
-        pick.spell1.icon = makeUrlAbsolute(pick.spell1.icon, backendUrl);
+        pick.spell1.icon = pick.spell1.icon;
       }
       if (pick.spell2) {
-        pick.spell2.icon = makeUrlAbsolute(pick.spell2.icon, backendUrl);
+        pick.spell2.icon = pick.spell2.icon;
       }
-      pick.champion.loadingImg = makeUrlAbsolute(pick.champion.loadingImg, backendUrl);
-      pick.champion.splashImg = makeUrlAbsolute(pick.champion.splashImg, backendUrl);
-      pick.champion.squareImg = makeUrlAbsolute(pick.champion.squareImg, backendUrl);
+      pick.champion.loadingImg = pick.champion.loadingImg;
+      pick.champion.splashImg = pick.champion.splashImg;
+      pick.champion.squareImg = pick.champion.squareImg;
     }
 
     // Bans
@@ -67,15 +69,15 @@ const putPlaceholders = (team,  backendUrl) => {
         }
       }
 
-      ban.champion.squareImg = makeUrlAbsolute(ban.champion.squareImg, backendUrl);
+      ban.champion.squareImg = ban.champion.squareImg;
     }
   }
 };
 
-export default (state, backendUrl) => {
+export default (state) => {
   if (Object.keys(state).length !== 0) {
-    putPlaceholders(state.blueTeam, backendUrl);
-    putPlaceholders(state.redTeam, backendUrl);
+    putPlaceholders(state.blueTeam);
+    putPlaceholders(state.redTeam);
   }
   return state;
 }

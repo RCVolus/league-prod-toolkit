@@ -1,15 +1,23 @@
 {
   "name": "state-league",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Module that provides state integration for League of Legends games",
-  "author": "Larce",
+  "author": "RCVolus",
   "license": "MIT",
   "toolkit": {
     "modes": [
       "PLUGIN"
     ],
     "plugin": {
-      "main": "plugin.js"
-    }
+      "main": "dist/plugin.js"
+    },
+    "needsBuild": true
+  },
+  "dependencies": {
+    "typescript": "^4.3.2",
+    "league-prod-toolkit": "file:../.."
+  },
+  "scripts": {
+    "build": "tsc"
   }
 }
