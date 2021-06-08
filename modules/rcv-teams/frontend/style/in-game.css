@@ -1,0 +1,82 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  width: 1920px;
+  height: 1080px;
+  overflow: hidden;
+  position: relative;
+  font-family: interstate, sans-serif;
+  color: #f2ead5;
+  font-size: 50px;
+}
+
+.blue {
+  color: #0099e0 !important;
+}
+
+.red {
+  color: #fd0000 !important;
+}
+
+#tag-container {
+  position: absolute;
+  background-image: url(../img/tags.png);
+  font-size: 45px;
+  line-height: 1;
+  text-transform: uppercase;
+  background-position: center top;
+  width: 100%;
+  height: 100%;
+  display: none;
+  justify-content: center;
+  text-align: center;
+  z-index: 5;
+}
+
+#blue-tag, #red-tag {
+  z-index: 10;
+  margin-top: 0.5rem;
+  position: absolute;
+}
+
+#blue-tag {
+  right: 72.5%;
+  transform: translateX(50%);
+}
+
+#red-tag {
+  left: 73%;
+  transform: translateX(-50%);
+}
+
+
+#point-container {
+  position: absolute;
+  background-image: url(../img/scores.png);
+  background-position: center top;
+  width: 100%;
+  height: 100%;
+  font-family: bebas-neue, sans-serif;
+  font-size: 30px;
+  display: none;
+  justify-content: center;
+  text-align: center;
+  z-index: 1;
+}
+
+#blue-score, #red-score {
+  z-index: 10;
+  margin-top: 0.3rem;
+}
+
+#blue-score {
+  transform: translateX(-520px);
+}
+
+#red-score {
+  transform: translateX(530px);
+}
