@@ -47,13 +47,21 @@ function unset() {
       version: 1
     },
   });
+
+  $('#blue-team-name').val(""),
+  $('#blue-team-tag').val(""),
+  $('#blue-team-score').val(0)
+  $('#red-team-name').val(""),
+  $('#red-team-tag').val(""),
+  $('#red-team-score').val(0)
+  $('#best-of').val(1)
 }
 
 async function initUi () {
   const data = await this.LPTE.request({
     meta: {
       namespace: 'rcv-teams',
-      type: 'request',
+      type: 'request-current',
       version: 1
     }
   });

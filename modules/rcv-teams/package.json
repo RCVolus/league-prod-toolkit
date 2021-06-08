@@ -9,7 +9,18 @@
       "PLUGIN"
     ],
     "plugin": {
-      "main": "plugin.js"
-    }
+      "main": "dist/plugin.js"
+    },
+    "needsBuild": true
+  },
+  "dependencies": {
+    "mongodb": "^3.6.9"
+  },
+  "devDependencies": {
+    "@types/mongodb": "^3.6.17",
+    "typescript": "^4.3.2"
+  },
+  "scripts": {
+    "build": "tsc"
   }
 }
