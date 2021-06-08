@@ -3,6 +3,7 @@ import logger from '../logging'
 import { Plugin } from '../modules/Module'
 import ModuleType from '../modules/ModuleType'
 import { wsClients } from '../web/server'
+import uniqid from 'uniqid'
 
 const log = logger('lpte-svc')
 
@@ -17,7 +18,6 @@ export const isValidEvent = (event: LPTEvent): boolean => {
 export class LPTEService implements LPTE {
   registrations: Registration[] = []
   eventHistory: LPTEvent[] = []
-  counter = 0
 
   constructor () {
     this.await = this.await.bind(this)
@@ -44,7 +44,7 @@ export class LPTEService implements LPTE {
   }
 
   async request (event: LPTEvent, timeout = 5000): Promise<LPTEvent> {
-    const reply = `${event.meta.type}-${this.counter}`
+    const reply = `${event.meta.type}-${uniqid()}`
     event.meta.reply = reply
     event.meta.channelType = EventType.REQUEST
 
