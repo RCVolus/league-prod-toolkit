@@ -10,7 +10,7 @@ const tick = async () => {
   const data = await this.LPTE.request({
     meta: {
       namespace: 'rcv-teams',
-      type: 'request',
+      type: 'request-current',
       version: 1
     }
   });
@@ -23,8 +23,7 @@ const tick = async () => {
   }
 }
 
-tick();
-setInterval(tick, 1000);
+setTimeout(tick, 1000)
 
 function displayTeams(teams, bestOf) {
   tagContainer.style.display = 'flex'

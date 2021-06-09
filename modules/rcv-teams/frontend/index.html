@@ -2,19 +2,27 @@
 <div style="display: flex; margin-bottom: 2rem;">
   <div>
     <h2>Preview for talk</h2>
-    <div style="width: 480px; height: 270px; overflow: hidden; margin-bottom: 1rem;">
-      <iframe src="/pages/op-rcv-teams/talk-gfx.html" width="1920" height="1080" style="transform: scale(0.25); transform-origin: 0 0;"></iframe>
+    <div style="width: 369px; height: 208px; overflow: hidden; margin-bottom: 1rem;">
+      <iframe src="/pages/op-rcv-teams/talk-gfx.html" width="1920" height="1080" style="transform: scale(0.2); transform-origin: 0 0;"></iframe>
     </div>
     <h3>Embed</h3>
     <input style="width: 100%;" readonly id="embed-copy-talk" />
   </div>
   <div style="margin-left: 3rem;">
     <h2>Preview for In-Game</h2>
-    <div style="width: 480px; height: 270px; overflow: hidden; margin-bottom: 1rem;">
-      <iframe src="/pages/op-rcv-teams/in-game-gfx.html" width="1920" height="1080" style="transform: scale(0.25); transform-origin: 0 0;"></iframe>
+    <div style="width: 369px; height: 208px; overflow: hidden; margin-bottom: 1rem;">
+      <iframe src="/pages/op-rcv-teams/in-game-gfx.html" width="1920" height="1080" style="transform: scale(0.2); transform-origin: 0 0;"></iframe>
     </div>
     <h3>Embed</h3>
     <input style="width: 100%;" readonly id="embed-copy-in-game" />
+  </div>
+  <div style="margin-left: 3rem;">
+    <h2>Preview for In-Game</h2>
+    <div style="width: 369px; height: 208px; overflow: hidden; margin-bottom: 1rem;">
+      <iframe src="/pages/op-rcv-teams/pause-gfx.html" width="1920" height="1080" style="transform: scale(0.2); transform-origin: 0 0;"></iframe>
+    </div>
+    <h3>Embed</h3>
+    <input style="width: 100%;" readonly id="embed-copy-pause" />
   </div>
 </div>
 
@@ -46,7 +54,9 @@
   <div style="display: flex; width: 100%; justify-content: center; margin-top: 1rem;">
     <button class="btn btn-secondary" style="width: 100px; margin-right: 1rem;">Save</button>
     <button type="button" class="btn btn-secondary" style="width: 100px; margin-right: 1rem;" onclick="swop()">Swop</button>
-    <button type="button" class="btn btn-secondary" style="width: 100px;" onclick="unset()">Unset</button>
+    <button type="button" class="btn btn-secondary" style="width: 100px; margin-right: 1rem;" onclick="unset()">Unset</button>
+
+    <button type="button" class="btn btn-danger" onclick="clearMatches()">Clear Matches</button>
   </div>
 </form>
 

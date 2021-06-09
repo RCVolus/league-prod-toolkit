@@ -1,4 +1,5 @@
 import type { GfxState } from './types/GfxState'
+import util from 'util';
 
 const namespace = 'rcv-teams';
 
@@ -40,13 +41,9 @@ module.exports = async (ctx: any) => {
   });
 
   ctx.LPTE.on(namespace, 'set', async (e: any) => {
-    gfxState.state = 'READY';
-    gfxState.teams = e.teams
-    gfxState.bestOf = e.bestOf
+    if (util.isDeepStrictEqual(gfxState.teams, e.teams)) return
 
-    if (gfxState.teams == e.teams) return
-
-    if (gfxState.teams.blueTeam == e.teams.redTeam && gfxState.teams.redTeam == e.teams.blueTeam) {
+    if (gfxState.teams.blueTeam?.name == e.teams.redTeam.name && gfxState.teams.redTeam?.name == e.teams.blueTeam.name) {
       ctx.LPTE.request({
         meta: {
           type: 'updateOne',
@@ -63,24 +60,45 @@ module.exports = async (ctx: any) => {
           bestOf: e.bestOf
         }
       });
+    } else if (gfxState.teams.blueTeam?.name == e.teams.blueTeam.name && gfxState.teams.redTeam?.name == e.teams.redTeam.name) {
+      ctx.LPTE.request({
+        meta: {
+          type: 'updateOne',
+          namespace: 'database',
+          version: 1
+        },
+        collection: 'match',
+        id: gfxState.id,
+        data: {
+          teams: {
+            blueTeam: e.teams.blueTeam,
+            redTeam: e.teams.redTeam
+          },
+          bestOf: e.bestOf
+        }
+      });
+    } else {
+      const response = await ctx.LPTE.request({
+        meta: {
+          type: 'insertOne',
+          namespace: 'database',
+          version: 1
+        },
+        collection: 'match',
+        data: {
+          teams: {
+            blueTeam: e.teams.blueTeam,
+            redTeam: e.teams.redTeam
+          },
+          bestOf: e.bestOf
+        }
+      });
+      gfxState.id = response.id
     }
 
-    const response = await ctx.LPTE.request({
-      meta: {
-        type: 'insertOne',
-        namespace: 'database',
-        version: 1
-      },
-      collection: 'match',
-      data: {
-        teams: {
-          blueTeam: e.teams.blueTeam,
-          redTeam: e.teams.redTeam
-        },
-        bestOf: e.bestOf
-      }
-    });
-    gfxState.id = response.id
+    gfxState.state = 'READY';
+    gfxState.teams = e.teams
+    gfxState.bestOf = e.bestOf
   });
 
   ctx.LPTE.on(namespace, 'swop', (e: any) => {

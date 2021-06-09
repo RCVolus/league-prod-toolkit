@@ -1,5 +1,6 @@
 $('#embed-copy-talk').val(`${location.href}/talk-gfx.html`);
 $('#embed-copy-in-game').val(`${location.href}/in-game-gfx.html`);
+$('#embed-copy-pause').val(`${location.href}/pause-gfx.html`);
 
 $('#team-form').on('submit', (e) => {
   e.preventDefault()
@@ -36,6 +37,18 @@ function swop() {
       type: 'swop',
       version: 1
     },
+  });
+}
+
+function clearMatches() {
+  LPTE.emit({
+    meta: {
+      namespace: 'database',
+      type: 'delete',
+      version: 1
+    },
+    collection: 'match',
+    filter: {}
   });
 }
 
@@ -78,4 +91,4 @@ async function initUi () {
 
   $('#best-of').val(data.bestOf)
 }
-initUi();
+setTimeout(initUi, 1000)
