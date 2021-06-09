@@ -14,51 +14,43 @@ module.exports = async (ctx: any) => {
   const config = response.config as Config;
 
   const uri =
-  `mongodb://${config.user}:${config.password}@${config.clusterUrl}:${config.port}?retryWrites=true&writeConcern=majority`;
+  `mongodb://${config.user}:${config.password}@${config.clusterUrl}:${config.port}/league-prod-toolkit?authSource=admin`;
 
   const client = new MongoClient(uri, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
+
   });
 
-  async function connect() {
+  async function init () {
     try {
       await client.connect();
+      await client.db().createCollection('match')
     } catch (e) {
       ctx.log.error(e);
     }
   }
+  init()
 
   // Answer requests to get state
   ctx.LPTE.on(namespace, 'request', async (e: any) => {
     if (!e.collection) {
-      return ctx.LPTE.emit({
-        meta: {
-          type: e.meta.reply,
-          namespace: 'reply',
-          version: 1
-        },
-      });
+      return ctx.log.warn('no collection passed for request')
     }
 
-    await connect()
-
-    const db = client.db('league-prod-toolkit');
-    db.collection(e.collection).find({}).toArray(function(err, data) {
-      if (err) {
-        return ctx.log.error(err.message);
-      };
-
+    try {
+      const data = await client.db().collection(e.collection).find({}).toArray()
       ctx.LPTE.emit({
         meta: {
           type: e.meta.reply,
           namespace: 'reply',
           version: 1
         },
-        data 
+        data
       });
-      client.close();
-    });
+    } catch (err: any) {
+      ctx.log.error(err.message);
+    }
   });
 
   ctx.LPTE.on(namespace, 'insertOne', async (e: any) => {
@@ -66,25 +58,19 @@ module.exports = async (ctx: any) => {
       return ctx.log.warn('no collection passed for insertOne')
     }
 
-    await connect()
-
-    const db = client.db('league-prod-toolkit');
-    db.collection(e.collection).insertOne(e.data, function(err, res) {
-      if (err) {
-        return ctx.log.error(err.message);
-      };
-
+    try {
+      const insert = await client.db().collection(e.collection).insertOne(e.data)
       ctx.LPTE.emit({
         meta: {
           type: e.meta.reply,
           namespace: 'reply',
           version: 1
         },
-        id: res.insertedId
+        id: insert.insertedId
       });
-
-      client.close();
-    });
+    } catch (err: any) {
+      ctx.log.error(err.message);
+    }
   });
 
   ctx.LPTE.on(namespace, 'updateOne', async (e: any) => {
@@ -92,17 +78,42 @@ module.exports = async (ctx: any) => {
       return ctx.log.warn('no collection or id passed for updateOne')
     }
 
-    await connect()
+    try {
+      const query = { '_id': e.id };
+      const values = { $set: e.data };
 
-    const db = client.db('league-prod-toolkit');
-    var query = { _id: e.id };
-    var values = { $set: e.data };
-    db.collection(e.collection).updateOne(query, values, function(err, res) {
-      if (err) {
-        return ctx.log.error(err.message);
-      }
-      client.close();
-    });
+      await client.db().collection(e.collection).updateOne(query, values)
+      ctx.LPTE.emit({
+        meta: {
+          type: e.meta.reply,
+          namespace: 'reply',
+          version: 1
+        }
+      });
+    } catch (err: any) {
+      ctx.log.error(err.message);
+    }
+  });
+
+  ctx.LPTE.on(namespace, 'delete', async (e: any) => {
+    if (!e.collection || !e.filter) {
+      return ctx.log.warn('no collection or id passed for delete')
+    }
+
+    try {
+      const filter = e.filter;
+
+      await client.db().collection(e.collection).deleteMany(filter)
+      ctx.LPTE.emit({
+        meta: {
+          type: e.meta.reply,
+          namespace: 'reply',
+          version: 1
+        }
+      });
+    } catch (err: any) {
+      ctx.log.error(err.message);
+    }
   });
 
   // Emit event that we're ready to operate
