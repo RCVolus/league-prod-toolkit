@@ -111,6 +111,7 @@ export const convertState = (gameState: LeagueState, champselect: Session, leagu
   return {
     blueTeam,
     redTeam,
-    timer
+    timer,
+    phase: champselect.timer.phase
   }
 }

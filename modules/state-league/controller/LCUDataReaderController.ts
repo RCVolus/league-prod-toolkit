@@ -5,6 +5,10 @@ import { state } from '../LeagueState'
 import { convertState } from '../champselect/convertState'
 import { leagueStatic } from '../plugin'
 
+export enum PickBanPhase {
+  GAMESTARTED = 'GAMESTARTED'
+}
+
 export class LCUDataReaderController extends Controller {
   leagueStatic: any
   refreshTask?: NodeJS.Timeout
@@ -65,6 +69,25 @@ export class LCUDataReaderController extends Controller {
       this.pluginContext.log.info('Flow: champselect - active')
     }
     if (event.meta.type === 'lcu-champ-select-update') {
+      // Only trigger if event changes, to only load game once
+      if (state.lcu.champselect.timer.phase !== PickBanPhase.GAMESTARTED && event.data.timer.phase === PickBanPhase.GAMESTARTED) {
+        this.pluginContext.log.info('Flow: champselect - game started (spectator delay)')
+        state.lcu.champselect.showSummoners = true;
+
+        // Continue in flow
+        this.pluginContext.LPTE.emit({
+          meta: {
+            namespace: 'state-league',
+            type: 'set-game',
+            version: 1
+          },
+          by: 'summonerName',
+          summonerName: state.lcu.lobby.members[0].summonerName
+        })
+      } else {
+        state.lcu.champselect.showSummoners = false;
+      }
+
       state.lcu.champselect = { ...state.lcu.champselect, ...event.data }
       state.lcu.champselect._available = true
       state.lcu.champselect._updated = new Date()
@@ -86,17 +109,6 @@ export class LCUDataReaderController extends Controller {
       this.emitChampSelectUpdate()
 
       this.pluginContext.log.info('Flow: champselect - inactive')
-
-      // Continue in flow
-      this.pluginContext.LPTE.emit({
-        meta: {
-          namespace: 'state-league',
-          type: 'set-game',
-          version: 1
-        },
-        by: 'summonerName',
-        summonerName: state.lcu.lobby.members[0].summonerName
-      })
     }
 
     // End of game
