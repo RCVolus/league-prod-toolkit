@@ -6,7 +6,7 @@ import { convertState } from '../champselect/convertState'
 import { leagueStatic } from '../plugin'
 
 export enum PickBanPhase {
-  GAMESTARTED = 'GAMESTARTED'
+  GAME_STARTING = 'GAME_STARTING'
 }
 
 export class LCUDataReaderController extends Controller {
@@ -70,7 +70,7 @@ export class LCUDataReaderController extends Controller {
     }
     if (event.meta.type === 'lcu-champ-select-update') {
       // Only trigger if event changes, to only load game once
-      if (state.lcu.champselect.timer.phase !== PickBanPhase.GAMESTARTED && event.data.timer.phase === PickBanPhase.GAMESTARTED) {
+      if (state.lcu.champselect.timer.phase !== PickBanPhase.GAME_STARTING && event.data.timer.phase === PickBanPhase.GAME_STARTING) {
         this.pluginContext.log.info('Flow: champselect - game started (spectator delay)')
         state.lcu.champselect.showSummoners = true;
 
