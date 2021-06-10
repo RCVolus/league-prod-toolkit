@@ -39,7 +39,17 @@ module.exports = async (ctx: any) => {
     }
 
     try {
-      const data = await client.db().collection(e.collection).find({}).toArray()
+      const filter = e.filter ?? {};
+      const sort = e.sort ?? {};
+      const limit = e.limit ?? 10;
+
+      const data = await client.db()
+        .collection(e.collection)
+        .find(filter)
+        .sort(sort)
+        .limit(limit)
+        .toArray()
+
       ctx.LPTE.emit({
         meta: {
           type: e.meta.reply,
@@ -59,7 +69,10 @@ module.exports = async (ctx: any) => {
     }
 
     try {
-      const insert = await client.db().collection(e.collection).insertOne(e.data)
+      const insert = await client.db()
+        .collection(e.collection)
+        .insertOne(e.data)
+
       ctx.LPTE.emit({
         meta: {
           type: e.meta.reply,
@@ -82,7 +95,10 @@ module.exports = async (ctx: any) => {
       const query = { '_id': e.id };
       const values = { $set: e.data };
 
-      await client.db().collection(e.collection).updateOne(query, values)
+      await client.db()
+        .collection(e.collection)
+        .updateOne(query, values)
+
       ctx.LPTE.emit({
         meta: {
           type: e.meta.reply,
@@ -96,14 +112,17 @@ module.exports = async (ctx: any) => {
   });
 
   ctx.LPTE.on(namespace, 'delete', async (e: any) => {
-    if (!e.collection || !e.filter) {
+    if (!e.collection) {
       return ctx.log.warn('no collection or id passed for delete')
     }
 
     try {
-      const filter = e.filter;
+      const filter = e.filter ?? {};
 
-      await client.db().collection(e.collection).deleteMany(filter)
+      await client.db()
+        .collection(e.collection)
+        .deleteMany(filter)
+        
       ctx.LPTE.emit({
         meta: {
           type: e.meta.reply,
