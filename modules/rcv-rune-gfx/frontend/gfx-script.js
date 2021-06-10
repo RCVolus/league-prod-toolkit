@@ -1,4 +1,4 @@
-let previousState = 'NONE'
+let previousState = 'HIDDEN'
 
 const updateUi = data => {
   console.log(data);
@@ -91,7 +91,8 @@ window.LPTE.onready(() => {
   // setInterval(tick, 1000)
 
   window.LPTE.on('rcv-rune-gfx', 'update', data => {
+    const timeout = previousState === 'HIDDEN' ? 1 : 1000
     updateUi(data.state)
-    setTimeout(() => updateUi(data.state), 1000)
+    setTimeout(() => updateUi(data.state), timeout)
   })
 })
