@@ -43,12 +43,10 @@ function swop() {
 function clearMatches() {
   LPTE.emit({
     meta: {
-      namespace: 'database',
-      type: 'delete',
+      namespace: 'rcv-teams',
+      type: 'clear-matches',
       version: 1
     },
-    collection: 'match',
-    filter: {}
   });
 }
 
@@ -71,7 +69,7 @@ function unset() {
 }
 
 async function initUi () {
-  const data = await this.LPTE.request({
+  const data = await window.LPTE.request({
     meta: {
       namespace: 'rcv-teams',
       type: 'request-current',
@@ -79,16 +77,30 @@ async function initUi () {
     }
   });
 
-  if (data.state !== "READY") return
+  $('#blue-team-name').val(data.teams.blueTeam?.name)
+  $('#blue-team-tag').val(data.teams.blueTeam?.tag)
+  $('#blue-team-score').val(data.teams.blueTeam?.score || 0)
 
-  $('#blue-team-name').val(data.teams.blueTeam.name)
-  $('#blue-team-tag').val(data.teams.blueTeam.tag)
-  $('#blue-team-score').val(data.teams.blueTeam.score)
-
-  $('#red-team-name').val(data.teams.redTeam.name)
-  $('#red-team-tag').val(data.teams.redTeam.tag)
-  $('#red-team-score').val(data.teams.redTeam.score)
+  $('#red-team-name').val(data.teams.redTeam?.name)
+  $('#red-team-tag').val(data.teams.redTeam?.tag)
+  $('#red-team-score').val(data.teams.redTeam?.score || 0)
 
   $('#best-of').val(data.bestOf)
 }
-setTimeout(initUi, 1000)
+
+async function updateUi (data) {
+  $('#blue-team-name').val(data.teams.blueTeam.name)
+  $('#blue-team-tag').val(data.teams.blueTeam.tag)
+  $('#blue-team-score').val(data.teams.blueTeam.score || 0)
+
+  $('#red-team-name').val(data.teams.redTeam.name)
+  $('#red-team-tag').val(data.teams.redTeam.tag)
+  $('#red-team-score').val(data.teams.redTeam.score || 0)
+
+  $('#best-of').val(data.bestOf)
+}
+
+setTimeout(() => {
+  initUi()
+  window.LPTE.on('rcv-teams', 'update', updateUi);
+}, 1000)

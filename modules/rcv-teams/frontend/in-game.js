@@ -23,7 +23,19 @@ const tick = async () => {
   }
 }
 
-setTimeout(tick, 1000)
+const update = (data) => {
+  if (data.state === "READY") {
+    displayTeams(data.teams, data.bestOf)
+  } else {
+    tagContainer.style.display = 'none'
+    pointContainer.style.display = 'none'
+  }
+}
+
+setTimeout(() => {
+  tick()
+  window.LPTE.on('rcv-teams', 'update', tick);
+}, 1000)
 
 function displayTeams(teams, bestOf) {
   tagContainer.style.display = 'flex'

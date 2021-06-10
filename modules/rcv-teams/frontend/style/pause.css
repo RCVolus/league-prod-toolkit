@@ -1,0 +1,112 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  width: 1920px;
+  height: 1080px;
+  overflow: hidden;
+  font-family: interstate, sans-serif;
+  color: #fafafa;
+  position: relative;
+}
+
+h1 {
+  font-size: 115px;
+}
+h2 {
+  font-size: 75px;
+}
+
+#container {
+  position: absolute;
+  right: 100px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.match {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 500px;
+}
+
+.match:not(:last-child) {
+  margin-bottom: 15px;
+}
+
+.blue {
+  color: #0099e0 !important;
+}
+
+.red {
+  color: #fd0000 !important;
+}
+
+
+.vs {
+  color: #fafafa;
+  font-family: bebas-neue, sans-serif;
+  font-weight: normal;
+  margin: 0 50px;
+}
+
+.tag {
+  text-transform: uppercase;
+  font-weight: bold;
+  line-height: 1;
+  width: 155px;
+}
+
+.tag.blue {
+  text-align: right;
+}
+
+.tag.outline {
+  -webkit-text-stroke-width: 3px;
+}
+
+.outline {
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke-width: 2px;
+  -webkit-text-stroke-color: inherit;
+}
+
+.shards {
+  margin-top: 10px;
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.shard {
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  border: 3px solid #051c2c;
+}
+
+.shards.blue .shard.full {
+  background-color: #0099e0;
+  border-color: #0099e0;
+}
+
+.shards.red .shard.full {
+  background-color: #fd0000;
+  border-color: #fd0000;
+}
+
+.shards.red {
+  flex-direction: row-reverse;
+}
+
+.shards.outline .shard {
+  background: transparent !important;
+}
