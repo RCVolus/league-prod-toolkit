@@ -14,6 +14,7 @@
     "needsBuild": true
   },
   "dependencies": {
+    "date-fns": "^2.22.1",
     "mongodb": "^3.6.9"
   },
   "devDependencies": {

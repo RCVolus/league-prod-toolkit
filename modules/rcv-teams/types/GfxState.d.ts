@@ -1,7 +1,7 @@
 import type { Team } from './Team'
 
 export interface GfxState {
-  state: "NO_TEAMS" | "READY"
+  state: "NO_MATCH" | "READY"
   teams: {
     blueTeam?: Team
     redTeam?: Team

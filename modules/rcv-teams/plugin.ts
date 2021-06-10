@@ -1,9 +1,13 @@
 import type { GfxState } from './types/GfxState'
+import util from 'util';
+import endOfDay from 'date-fns/endOfDay'
+import startOfDay from 'date-fns/startOfDay'
+import { setTextRange } from 'typescript';
 
 const namespace = 'rcv-teams';
 
 const initialState : GfxState = {
-  state: "NO_TEAMS",
+  state: "NO_MATCH",
   teams: {},
   bestOf: 1
 }
@@ -26,7 +30,7 @@ module.exports = async (ctx: any) => {
   });
 
   // Answer requests to get state
-  ctx.LPTE.on(namespace, 'request-current', (e: any) => {
+  ctx.LPTE.on(namespace, 'request-current', async (e: any) => {
     ctx.LPTE.emit({
       meta: {
         type: e.meta.reply,
@@ -39,14 +43,37 @@ module.exports = async (ctx: any) => {
     });
   });
 
+  ctx.LPTE.on(namespace, 'request-matches-of-the-day', async (e: any) => {
+    const res = await ctx.LPTE.request({
+      meta: {
+        type: 'request',
+        namespace: 'database',
+        version: 1
+      },
+      collection: 'match',
+      filter: {
+        "date": {
+          $gte: startOfDay(new Date()),
+          $lte: endOfDay(new Date())
+        }
+      },
+      sort: {"date": -1},
+    })
+
+    ctx.LPTE.emit({
+      meta: {
+        type: e.meta.reply,
+        namespace: 'reply',
+        version: 1
+      },
+      matches: res
+    });
+  });
+
   ctx.LPTE.on(namespace, 'set', async (e: any) => {
-    gfxState.state = 'READY';
-    gfxState.teams = e.teams
-    gfxState.bestOf = e.bestOf
+    if (util.isDeepStrictEqual(gfxState.teams, e.teams) && gfxState.bestOf == e.bestOf) return
 
-    if (gfxState.teams == e.teams) return
-
-    if (gfxState.teams.blueTeam == e.teams.redTeam && gfxState.teams.redTeam == e.teams.blueTeam) {
+    if (gfxState.teams.blueTeam?.name == e.teams.redTeam.name && gfxState.teams.redTeam?.name == e.teams.blueTeam.name) {
       ctx.LPTE.request({
         meta: {
           type: 'updateOne',
@@ -63,24 +90,55 @@ module.exports = async (ctx: any) => {
           bestOf: e.bestOf
         }
       });
+    } else if (gfxState.teams.blueTeam?.name == e.teams.blueTeam.name && gfxState.teams.redTeam?.name == e.teams.redTeam.name) {
+      ctx.LPTE.request({
+        meta: {
+          type: 'updateOne',
+          namespace: 'database',
+          version: 1
+        },
+        collection: 'match',
+        id: gfxState.id,
+        data: {
+          teams: {
+            blueTeam: e.teams.blueTeam,
+            redTeam: e.teams.redTeam
+          },
+          bestOf: e.bestOf
+        }
+      });
+    } else {
+      const response = await ctx.LPTE.request({
+        meta: {
+          type: 'insertOne',
+          namespace: 'database',
+          version: 1
+        },
+        collection: 'match',
+        data: {
+          teams: {
+            blueTeam: e.teams.blueTeam,
+            redTeam: e.teams.redTeam
+          },
+          bestOf: e.bestOf,
+          date: new Date()
+        }
+      });
+      gfxState.id = response.id
     }
 
-    const response = await ctx.LPTE.request({
+    gfxState.state = 'READY';
+    gfxState.teams = e.teams
+    gfxState.bestOf = e.bestOf
+
+    ctx.LPTE.emit({
       meta: {
-        type: 'insertOne',
-        namespace: 'database',
+        type: 'update',
+        namespace,
         version: 1
       },
-      collection: 'match',
-      data: {
-        teams: {
-          blueTeam: e.teams.blueTeam,
-          redTeam: e.teams.redTeam
-        },
-        bestOf: e.bestOf
-      }
+      data: gfxState
     });
-    gfxState.id = response.id
   });
 
   ctx.LPTE.on(namespace, 'swop', (e: any) => {
@@ -91,14 +149,59 @@ module.exports = async (ctx: any) => {
       blueTeam: gfxState.teams.redTeam,
       redTeam: gfxState.teams.blueTeam
     }
+
+    ctx.LPTE.emit({
+      meta: {
+        type: 'update',
+        namespace,
+        version: 1
+      },
+      data: gfxState
+    });
   });
 
   ctx.LPTE.on(namespace, 'unset', (e: any) => {
     gfxState = {
-      state: "NO_TEAMS",
+      state: "NO_MATCH",
       teams: {},
       bestOf: 1
     }
+
+    ctx.LPTE.emit({
+      meta: {
+        type: 'update',
+        namespace,
+        version: 1
+      },
+      data: gfxState
+    });
+  });
+
+  ctx.LPTE.on(namespace, 'clear-matches', (e: any) => {
+    ctx.LPTE.emit({
+      meta: {
+        namespace: 'database',
+        type: 'delete',
+        version: 1
+      },
+      collection: 'match',
+      filter: {}
+    });
+
+    gfxState = {
+      state: "NO_MATCH",
+      teams: {},
+      bestOf: 1
+    }
+
+    ctx.LPTE.emit({
+      meta: {
+        type: 'update',
+        namespace,
+        version: 1
+      },
+      data: gfxState
+    });
   });
 
   // Emit event that we're ready to operate
@@ -112,4 +215,30 @@ module.exports = async (ctx: any) => {
   });
 
   await ctx.LPTE.await('lpt', 'ready', 120000);
+
+  if (gfxState.state == "NO_MATCH") {
+    const res = await ctx.LPTE.request({
+      meta: {
+        type: 'request',
+        namespace: 'database',
+        version: 1
+      },
+      collection: 'match',
+      filter: {
+        "date": {
+          $gte: startOfDay(new Date()),
+          $lte: endOfDay(new Date())
+        }
+      },
+      sort: {"date":1},
+      limit: 1
+    })
+
+    if (res.data[0]) {
+      gfxState.state = "READY"
+      gfxState.teams = res.data[0].teams
+      gfxState.bestOf = res.data[0].bestOf
+      gfxState.id = res.data[0]._id
+    } 
+  }
 };

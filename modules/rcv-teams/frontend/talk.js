@@ -8,7 +8,7 @@ const tick = async () => {
   const data = await this.LPTE.request({
     meta: {
       namespace: 'rcv-teams',
-      type: 'request',
+      type: 'request-current',
       version: 1
     }
   });
@@ -22,8 +22,19 @@ const tick = async () => {
   }
 }
 
-tick();
-setInterval(tick, 1000);
+const update = (data) => {
+  if (data.state === "READY") {
+    displayTeams(data.teams, data.bestOf)
+  } else {
+    tagContainer.style.display = 'none'
+    pointContainer.style.display = 'none'
+  }
+}
+
+setTimeout(() => {
+  tick()
+  window.LPTE.on('rcv-teams', 'update', tick);
+}, 1000)
 
 function displayTeams(teams, bestOf) {
   teamsContainer.forEach(t => {

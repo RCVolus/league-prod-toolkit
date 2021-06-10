@@ -1,5 +1,6 @@
 $('#embed-copy-talk').val(`${location.href}/talk-gfx.html`);
 $('#embed-copy-in-game').val(`${location.href}/in-game-gfx.html`);
+$('#embed-copy-pause').val(`${location.href}/pause-gfx.html`);
 
 $('#team-form').on('submit', (e) => {
   e.preventDefault()
@@ -39,6 +40,16 @@ function swop() {
   });
 }
 
+function clearMatches() {
+  LPTE.emit({
+    meta: {
+      namespace: 'rcv-teams',
+      type: 'clear-matches',
+      version: 1
+    },
+  });
+}
+
 function unset() {
   LPTE.emit({
     meta: {
@@ -58,7 +69,7 @@ function unset() {
 }
 
 async function initUi () {
-  const data = await this.LPTE.request({
+  const data = await window.LPTE.request({
     meta: {
       namespace: 'rcv-teams',
       type: 'request-current',
@@ -66,16 +77,30 @@ async function initUi () {
     }
   });
 
-  if (data.state !== "READY") return
+  $('#blue-team-name').val(data.teams.blueTeam?.name)
+  $('#blue-team-tag').val(data.teams.blueTeam?.tag)
+  $('#blue-team-score').val(data.teams.blueTeam?.score || 0)
 
-  $('#blue-team-name').val(data.teams.blueTeam.name)
-  $('#blue-team-tag').val(data.teams.blueTeam.tag)
-  $('#blue-team-score').val(data.teams.blueTeam.score)
-
-  $('#red-team-name').val(data.teams.redTeam.name)
-  $('#red-team-tag').val(data.teams.redTeam.tag)
-  $('#red-team-score').val(data.teams.redTeam.score)
+  $('#red-team-name').val(data.teams.redTeam?.name)
+  $('#red-team-tag').val(data.teams.redTeam?.tag)
+  $('#red-team-score').val(data.teams.redTeam?.score || 0)
 
   $('#best-of').val(data.bestOf)
 }
-initUi();
+
+async function updateUi (data) {
+  $('#blue-team-name').val(data.teams.blueTeam.name)
+  $('#blue-team-tag').val(data.teams.blueTeam.tag)
+  $('#blue-team-score').val(data.teams.blueTeam.score || 0)
+
+  $('#red-team-name').val(data.teams.redTeam.name)
+  $('#red-team-tag').val(data.teams.redTeam.tag)
+  $('#red-team-score').val(data.teams.redTeam.score || 0)
+
+  $('#best-of').val(data.bestOf)
+}
+
+setTimeout(() => {
+  initUi()
+  window.LPTE.on('rcv-teams', 'update', updateUi);
+}, 1000)
