@@ -9,6 +9,17 @@ const initialState = {
 module.exports = (ctx) => {
   const gfxState = initialState;
 
+  const emitUpdate = () => {
+    ctx.LPTE.emit({
+      meta: {
+        type: 'update',
+        namespace,
+        version: 1
+      },
+      state: gfxState
+    });
+  }
+
   // Register new UI page
   ctx.LPTE.emit({
     meta: {
@@ -19,7 +30,7 @@ module.exports = (ctx) => {
     pages: [{
       name: 'OP: rcv-rune-gfx',
       frontend: 'frontend',
-      id : 'op-rcv-rune-gfx'
+      id: 'op-rcv-rune-gfx'
     }]
   });
 
@@ -39,6 +50,7 @@ module.exports = (ctx) => {
     gfxState.participants = e.data.participants;
     // console.log(e)
     gfxState.dataState = 'READY'
+    emitUpdate()
   }); 
 
   // Move a step forward in animation
@@ -58,6 +70,7 @@ module.exports = (ctx) => {
       number++;
       gfxState.state = number.toString();
     }
+    emitUpdate()
   });
 
   // Move a step backward in animation
@@ -77,6 +90,7 @@ module.exports = (ctx) => {
       number--;
       gfxState.state = number.toString();
     }
+    emitUpdate()
   });
 
   ctx.LPTE.on(namespace, 'reset', e => {
@@ -89,6 +103,7 @@ module.exports = (ctx) => {
         version: 1
       }
     });
+    emitUpdate()
   });
 
   // Emit event that we're ready to operate
