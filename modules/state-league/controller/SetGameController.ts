@@ -48,10 +48,10 @@ export class SetGameController extends Controller {
       this.pluginContext.LPTE.emit({
         meta: {
           namespace: 'state-league',
-          type: 'game-loaded',
+          type: 'live-game-loaded',
           version: 1
         },
-        data: state.web.live
+        state
       });
 
       this.pluginContext.LPTE.emit({
@@ -85,10 +85,32 @@ export class SetGameController extends Controller {
       state.web.match = gameResponse.match;
       state.web.timeline = gameResponse.timeline;
 
+      state.web.match._available = true
+      state.web.match._created = new Date();
+      state.web.match._updated = new Date();
+      state.web.timeline._available = true
+      state.web.timeline._created = new Date();
+      state.web.timeline._updated = new Date();
+
       // Overwrite participants from names (this is because of a custom game limitation)
-      state.web.live.participants?.forEach((participant: any, index: number) => {
-        state.web.match.participants[index].summonerName = participant.summonerName;
-      })
+      if (state.web.live.participants !== undefined) {
+        state.web.live.participants.forEach((participant: any, index: number) => {
+          state.web.match.participants[index].summonerName = participant.summonerName;
+        });
+      } else {
+        state.web.match.participantIdentities.forEach((participant: any, index: number) => {
+          state.web.match.participants[index].summonerName = participant.player.summonerName;
+        });
+      }
+
+      this.pluginContext.LPTE.emit({
+        meta: {
+          namespace: 'state-league',
+          type: 'match-game-loaded',
+          version: 1
+        },
+        state
+      });
 
       this.pluginContext.LPTE.emit({
         meta: replyMeta,

@@ -4,13 +4,9 @@ const white = 'rgba(242,234,213,1)'
 const whiteTransparent = 'rgba(242,234,213,0.1)'
 
 // use data to create chart
-async function getData () {
-  // TODO Change data source here
-  const dataReq = await fetch('/api/events/shortcut/request/state-league/request')
-  const data = await dataReq.json()
-
-  const gameData = data.state.webMatch
-  const timelineData = data.state.timeline
+async function getData (data) {
+  const gameData = data.state.web.match
+  const timelineData = data.state.web.timeline
 
   const participants = gameData.participants
   const blueTeam = participants
@@ -38,8 +34,8 @@ async function getData () {
   return {keys: goldPerFrame.map(f => f.timestamp), values: goldPerFrame.map(f => f.value)}
 }
 
-async function displayGoldGraph () {
-  const {keys, values} = await getData();
+async function displayGoldGraph (data) {
+  const {keys, values} = await getData(data);
   var ctx = document.getElementById('goldGraph').getContext('2d');
   var chart = new Chart(ctx, {
     type: 'NegativeTransparentLine',
@@ -92,7 +88,22 @@ async function displayGoldGraph () {
   });
 }
 
-displayGoldGraph()
+window.LPTE.onready(async () => {
+  const leagueState = await window.LPTE.request({
+    meta: {
+      namespace: 'state-league',
+      type: 'request',
+      version: 1
+    }
+  })
+  displayGoldGraph(leagueState)
+  console.log(leagueState)
+
+  window.LPTE.on('state-league', 'match-game-loaded', e => {
+    console.log(e)
+    displayGoldGraph(e)
+  })
+})
 
 // Helper to calc milliseconds to minutes and seconds
 function millisToMinutesAndSeconds(millis) {

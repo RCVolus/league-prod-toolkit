@@ -6,7 +6,8 @@ import { convertState } from '../champselect/convertState'
 import { leagueStatic } from '../plugin'
 
 export enum PickBanPhase {
-  GAME_STARTING = 'GAME_STARTING'
+  GAME_STARTING = 'GAME_STARTING',
+  FINALIZATION = 'FINALIZATION'
 }
 
 export class LCUDataReaderController extends Controller {
@@ -27,6 +28,7 @@ export class LCUDataReaderController extends Controller {
         version: 1
       },
       data: convertState(state, state.lcu.champselect as any, leagueStatic),
+      order: state.lcu.champselect.order !== undefined ? convertState(state, state.lcu.champselect.order as any, leagueStatic) : undefined,
       isActive: state.lcu.champselect._available
     });
   }
@@ -86,6 +88,11 @@ export class LCUDataReaderController extends Controller {
         })
       } else {
         state.lcu.champselect.showSummoners = false;
+      }
+
+      // Only trigger if we're now in finalization, save order
+      if (state.lcu.champselect.timer.phase !== PickBanPhase.FINALIZATION && event.data.timer.phase === PickBanPhase.FINALIZATION) {
+        state.lcu.champselect.order = event.data;
       }
 
       state.lcu.champselect = { ...state.lcu.champselect, ...event.data }

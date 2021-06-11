@@ -23,6 +23,7 @@ const updateUi = (state) => {
   setStatus('lcu-end-of-game', state.lcu.eog)
   setStatus('web-live', state.web.live)
   setStatus('web-match', state.web.match)
+  setStatus('web-timeline', state.web.timeline)
 
   /* $('#status').text(state.state);
 

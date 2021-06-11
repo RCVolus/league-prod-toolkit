@@ -1,32 +1,25 @@
-async function getPIBData () {
-  // TODO Change data source here
-  const gameReq = await fetch('/api/events/shortcut/request/rcv-pickban/request')
-  return await gameReq.json()
-}
-
 const blueTeam = document.querySelector('#blueTeam .picks')
 const blueBan = document.querySelector('#blueBan')
 
 const redTeam = document.querySelector('#redTeam .picks')
 const redBan = document.querySelector('#redBan')
 
-const basePath = 'http://' + document.location.hostname + ':3000';
-
-async function displayPUBOrder () {
-  const pubData = await getPIBData();
-  const data = pubData.state.data
+async function displayPUBOrder (data) {
+  if (!data) {
+    return
+  }
 
   // Bans
   for (const ban of data.blueTeam.bans) {
     const img = document.createElement('img')
-    img.src = basePath + ban.champion.squareImg
+    img.src = ban.champion.squareImg
 
     blueBan.appendChild(img)
   }
 
   for (const ban of data.redTeam.bans) {
     const img = document.createElement('img')
-    img.src = basePath + ban.champion.squareImg
+    img.src = ban.champion.squareImg
 
     redBan.appendChild(img)
   }
@@ -34,17 +27,34 @@ async function displayPUBOrder () {
   // Picks
   for (const pick of data.blueTeam.picks) {
     const img = document.createElement('img')
-    img.src = basePath + pick.champion.squareImg
+    img.src = pick.champion.squareImg
 
     blueTeam.appendChild(img)
   }
 
   for (const pick of data.redTeam.picks) {
     const img = document.createElement('img')
-    img.src = basePath + pick.champion.squareImg
+    img.src = pick.champion.squareImg
 
     redTeam.appendChild(img)
   }
 }
+
+window.LPTE.onready(async () => {
+  const leagueState = await window.LPTE.request({
+    meta: {
+      namespace: 'state-league',
+      type: 'request',
+      version: 1
+    }
+  })
+  displayPUBOrder(leagueState.state.lcu.champselect.order)
+  console.log(leagueState)
+
+  window.LPTE.on('state-league', 'champselect-update', e => {
+    console.log(e)
+    displayPUBOrder(e.data.order)
+  })
+})
 
 displayPUBOrder()

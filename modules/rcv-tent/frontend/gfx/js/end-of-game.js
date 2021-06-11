@@ -1,19 +1,31 @@
 var championsData = []
 var gameData = {}
 var participants = []
-var staticURL = "http://localhost:3000"
+var staticURL = ''
 
 async function getGameData () {
   // TODO Change data source here
-  const gameReq = await fetch('/api/events/shortcut/request/state-league/request')
+  const gameReq = await window.LPTE.request({
+    meta: {
+      namespace: 'state-league',
+      type: 'request',
+      version: 1
+    }
+  })
 
-  return (await gameReq.json()).state.webMatch
+  return gameReq.state.web.match
 }
 
 async function getConstants () {
-  const constantsRes = await fetch('/api/events/shortcut/request/static-league/request-constants')
-  const constantsJson = await constantsRes.json()
-  const constants = constantsJson.constants
+  const constantsRes = await window.LPTE.request({
+    meta: {
+      namespace: 'static-league',
+      type: 'request-constants',
+      version: 1
+    }
+  })
+  console.log(constantsRes)
+  const constants = constantsRes.constants
   staticURL = constants.staticURL
   championsData = constants.champions
 }
@@ -81,7 +93,7 @@ function displaySpells () {
     const secondSpell = document.createElement('img')
     secondSpell.src = spellUrl(participant.spell2Id)
 
-    if (participant.teamId == 100) {
+    if (participant.teamId === 100) {
       blueTeamSpells.appendChild(firstSpell)
       blueTeamSpells.appendChild(secondSpell)
     } else {
@@ -280,8 +292,11 @@ async function start () {
   displaySpells()
   renderItems()
   renderDmg()
+
+  tick()
+  setInterval(tick, 1000)
 }
-start()
+window.LPTE.onready(start)
 
 function calcK (amount) {
   switch (true) {
@@ -312,6 +327,3 @@ const tick = async () => {
     showDmg()
   }
 }
-
-tick();
-setInterval(tick, 1000);
