@@ -41,6 +41,7 @@ class LPTEService implements LPTE {
   backend: string
   websocket: WebSocket
   registrations: FrontendRegistration[] = []
+  readyHandler?: () => void
 
   constructor (backend: string) {
     this.backend = backend
@@ -66,6 +67,10 @@ class LPTEService implements LPTE {
 
     // redo any registrations, in case this is a reconnect
     this.registrations.forEach(reg => this.websocket.send(JSON.stringify(reg.getSubscribeEvent())))
+
+    if (this.readyHandler !== undefined) {
+      this.readyHandler()
+    }
   }
 
   _onSocketClose (): void {
@@ -97,6 +102,14 @@ class LPTEService implements LPTE {
     this.websocket.onmessage = this._onSocketMessage
   }
 
+  onready (handler: () => void): void {
+    if (this.websocket.readyState === this.websocket.OPEN) {
+      handler()
+    } else {
+      this.readyHandler = handler
+    }
+  }
+
   unregisterHandler (handler: (event: LPTEvent) => void): void {
     setTimeout(() => {
       this.registrations = this.registrations.filter(registration => registration.handle !== handler)
@@ -125,7 +138,9 @@ class LPTEService implements LPTE {
     event.meta.reply = reply
     event.meta.channelType = EventType.REQUEST
 
-    this.emit(event)
+    setTimeout(() => {
+      this.emit(event)
+    }, 0)
 
     try {
       return await this.await('reply', reply, timeout)

@@ -1,5 +1,7 @@
 const LeagueJS = require('leaguejs');
 
+const sleep = async (ms) => new Promise((resolve) => setTimeout(resolve, ms))
+
 module.exports = async (ctx) => {
   let config = {};
   let riotApi;
@@ -18,6 +20,9 @@ module.exports = async (ctx) => {
 
   ctx.LPTE.on('provider-webapi', 'fetch-livegame', async e => {
     ctx.log.info(`Fetching livegame data for summoner=${e.summonerName}`);
+
+    let retries = 0
+    const desiredRetries = e.retries !== undefined ? e.retries : 3
 
     const replyMeta = {
       type: e.meta.reply,
@@ -38,24 +43,33 @@ module.exports = async (ctx) => {
     }
 
     let gameInfo;
-    try {
-      gameInfo = await riotApi.Spectator.gettingActiveGame(summonerInfo.id);
-    } catch (error) {
-      ctx.log.error(`Failed to get spectator game information for summoner=${e.summonerName}, encryptedId=${summonerInfo.id}. Maybe this summoner is not ingame currently? error=${error}`);
+
+    while (retries <= desiredRetries) {
+      retries++
+      try {
+        gameInfo = await riotApi.Spectator.gettingActiveGame(summonerInfo.id)
+      } catch (error) {
+        ctx.log.warn(`Failed to get spectator game information for summoner=${e.summonerName}, encryptedId=${summonerInfo.id}. Maybe this summoner is not ingame currently? Retrying. error=${error}`)
+        await sleep(2000)
+      }
+    }
+
+    if (gameInfo === undefined) {
+      ctx.log.error(`Failed to get spectator game information for summoner=${e.summonerName}, encryptedId=${summonerInfo.id}, after retries.`)
       ctx.LPTE.emit({
         meta: replyMeta,
         failed: true
-      });
-      return;
+      })
+      return
     }
 
-    ctx.log.info(`Fetched livegame for summoner=${e.summonerName}, gameId=${gameInfo.gameId}`);
+    ctx.log.info(`Fetched livegame for summoner=${e.summonerName}, gameId=${gameInfo.gameId}`)
     ctx.LPTE.emit({
       meta: replyMeta,
       game: gameInfo,
       failed: false
-    });
-  });
+    })
+  })
 
   ctx.LPTE.on('provider-webapi', 'fetch-match', async e => {
     ctx.log.info(`Fetching match data for matchid=${e.matchId}`);

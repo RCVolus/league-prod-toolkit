@@ -1,8 +1,58 @@
 <link rel="stylesheet" href="/pages/op-lol-game/style.css">
 <script src="/pages/op-lol-game/frontend.js"></script>
 
-<h1>League Game State: Operator Cockpit</h1>
-<div>Current State: <span class="status" id="status">UNKNOWN</span></div>
+<h1>League Game State</h1>
+This page contains configuration and operation elements for the <code>state-league</code> module.
+
+<h2>Flow</h2>
+<table class="table">
+  <thead>
+    <tr>
+      <th>Component</th>
+      <th>Status</th>
+      <th>Available since</th>
+      <th>Last update</th>
+      <th>Unavailable since</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>lcu-lobby</td>
+      <td id="lcu-lobby-status">Unknown</td>
+      <td id="lcu-lobby-available">Unknown</td>
+      <td id="lcu-lobby-update">Unknown</td>
+      <td id="lcu-lobby-unavailable">Unknown</td>
+    </tr>
+    <tr>
+      <td>lcu-champ-select</td>
+      <td id="lcu-champ-select-status">Unknown</td>
+      <td id="lcu-champ-select-available">Unknown</td>
+      <td id="lcu-champ-select-update">Unknown</td>
+      <td id="lcu-champ-select-unavailable">Unknown</td>
+    </tr>
+    <tr>
+      <td>lcu-end-of-game</td>
+      <td id="lcu-end-of-game-status">Unknown</td>
+      <td id="lcu-end-of-game-available">Unknown</td>
+      <td id="lcu-end-of-game-update">Unknown</td>
+      <td id="lcu-end-of-game-unavailable">Unknown</td>
+    </tr>
+    <tr>
+      <td>web-live</td>
+      <td id="web-live-status">Unknown</td>
+      <td id="web-live-available">Unknown</td>
+      <td id="web-live-update">Unknown</td>
+      <td id="web-live-unavailable">Unknown</td>
+    </tr>
+    <tr>
+      <td>web-match</td>
+      <td id="web-match-status">Unknown</td>
+      <td id="web-match-available">Unknown</td>
+      <td id="web-match-update">Unknown</td>
+      <td id="web-match-unavailable">Unknown</td>
+    </tr>
+  </tbody>
+</table>
 
 <div class="setgame" id="setgame-container">
   <hr />

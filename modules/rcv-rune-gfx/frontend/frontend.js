@@ -28,5 +28,15 @@ const nextStep = () => {
   })
 }
 
+const prevStep = () => {
+  LPTE.emit({
+    meta: {
+      namespace: 'rcv-rune-gfx',
+      type: 'previous-step',
+      version: 1
+    }
+  })
+}
+
 updateState();
 setInterval(updateState, 1000);

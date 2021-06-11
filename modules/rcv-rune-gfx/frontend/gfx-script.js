@@ -1,6 +1,8 @@
 let previousState = 'HIDDEN'
 
 const updateUi = data => {
+  console.log(data);
+
   if (data.state === 'HIDDEN') {
     $('.blue-box').addClass('hidden');
     $('.red-box').addClass('hidden');
@@ -24,23 +26,25 @@ const updateUi = data => {
       5: [5, 10]
     }
 
-    const getDDragonPath = clientPath => `https://ddragon.leagueoflegends.com/cdn/img/${clientPath.split('/v1/')[1]}`
+    const getDDragonPath = clientPath => `/serve/static-league/img/${clientPath}`
 
     const getDDragonPathsFromRunes = runes => ({
-      primary: getDDragonPath(runes[0].iconPath),
-      primary1: getDDragonPath(runes[1].iconPath),
-      primary2: getDDragonPath(runes[2].iconPath),
-      primary3: getDDragonPath(runes[3].iconPath),
-      secondary1: getDDragonPath(runes[4].iconPath),
-      secondary2: getDDragonPath(runes[5].iconPath)
+      primary: getDDragonPath(runes[0].icon),
+      primary1: getDDragonPath(runes[1].icon),
+      primary2: getDDragonPath(runes[2].icon),
+      primary3: getDDragonPath(runes[3].icon),
+      secondary1: getDDragonPath(runes[4].icon),
+      secondary2: getDDragonPath(runes[5].icon)
     })
+
+    console.log(data.participants[championMapping[num][0] - 1].perks.perkConstants)
 
     const championLeft = data.participants[championMapping[num][0] - 1].champion
     const championRight = data.participants[championMapping[num][1] - 1].champion
     const runesLeft = data.participants[championMapping[num][0] - 1].perks.perkConstants
     const runesRight = data.participants[championMapping[num][1] - 1].perks.perkConstants
-    const splashLinkLeft = `https://cdn.communitydragon.org/11.4.1/champion/${championLeft.id}/splash-art/centered/skin/0`
-    const splashLinkRight = `https://cdn.communitydragon.org/11.4.1/champion/${championRight.id}/splash-art/centered/skin/0`
+    const splashLinkLeft = `/serve/static-league/img/champion/centered/${championLeft.key}.jpg`
+    const splashLinkRight = `/serve/static-league/img/champion/centered/${championRight.key}.jpg`
     // const splashLinkLeft = `https://ddragon.leagueoflegends.com/cdn/img/champion/splash/${championLeft.id}_0.jpg`
     // const splashLinkRight = `https://ddragon.leagueoflegends.com/cdn/img/champion/splash/${championRight.id}_0.jpg`
 
@@ -81,5 +85,14 @@ const tick = async () => {
   updateUi(data.state);
 }
 
-tick();
-setInterval(tick, 1000);
+window.LPTE.onready(() => {
+  tick()
+  setTimeout(tick, 100)
+  // setInterval(tick, 1000)
+
+  window.LPTE.on('rcv-rune-gfx', 'update', data => {
+    const timeout = previousState === 'HIDDEN' ? 1 : 1000
+    updateUi(data.state)
+    setTimeout(() => updateUi(data.state), timeout)
+  })
+})

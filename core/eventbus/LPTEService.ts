@@ -53,7 +53,7 @@ export class LPTEService implements LPTE {
     try {
       return await this.await('reply', reply, timeout)
     } catch {
-      log.error(`Request timed out. Request meta=${JSON.stringify(event.meta)}`)
+      log.error(`Request timed out after ${timeout}ms. Request meta=${JSON.stringify(event.meta)}`)
       throw new Error('request timed out')
     }
   }
@@ -147,9 +147,9 @@ export class LPTEService implements LPTE {
         this.emit(enrichEvent(event))
       },
       on: this.on,
-      request: async (event: LPTEvent): Promise<LPTEvent | null> => {
+      request: async (event: LPTEvent, timeout?: number): Promise<LPTEvent> => {
         // Enrich with sender information
-        return await this.request(enrichEvent(event))
+        return await this.request(enrichEvent(event), timeout)
       },
       await: this.await
     }

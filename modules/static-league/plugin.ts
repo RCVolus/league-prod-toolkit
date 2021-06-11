@@ -58,7 +58,7 @@ module.exports = async (ctx: any) => {
       maps: require(`../data/${gameVersion}/data/de_DE/map.json`),
       gameModes: require(`../constants/gameModes.json`),
       gameTypes: require(`../constants/gameTypes.json`),
-      perksFlat: require(`../data/${gameVersion}/data/de_DE/runesReforged.json`),
+      perks: require(`../data/${gameVersion}/data/de_DE/runesReforged.json`),
       champions: Object.values(require(`../data/${gameVersion}/data/de_DE/champion.json`).data),
       version: gameVersion,
       staticURL: `http://localhost:${port}`

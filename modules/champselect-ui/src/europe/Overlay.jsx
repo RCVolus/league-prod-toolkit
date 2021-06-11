@@ -55,7 +55,7 @@ export default class Overlay extends React.Component {
         const renderTeam = (teamName, teamConfig, teamState) => (
             <div className={cx(css.Team, teamName)}>
                 <div className={cx(css.Picks)}>
-                    {teamState.picks.map((pick, idx) => <Pick key={`pick-${idx}`} config={this.props.config} {...pick} />)}
+                    {teamState.picks.map((pick, idx) => <Pick key={`pick-${idx}`} config={this.props.config} {...pick} showSummoners={state.showSummoners} />)}
                 </div>
                 <div className={css.BansWrapper}>
                     <div className={cx(css.Bans, {[css.WithScore]: config.frontend.scoreEnabled})}>

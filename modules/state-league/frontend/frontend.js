@@ -1,7 +1,30 @@
 const e = React.createElement;
 
+const setStatus = (componentName, component) => {
+  // Status
+  if (component._available) {
+    $(`#${componentName}-status`).html('<span class="green">Live</span>')
+    $(`#${componentName}-available`).text(new Date(component._created).toLocaleString())
+    $(`#${componentName}-update`).text(new Date(component._updated).toLocaleString())
+  } else {
+    $(`#${componentName}-status`).html('<span class="orange">Not Live</span>')
+    if (component._deleted) {
+      $(`#${componentName}-unavailable`).text(new Date(component._deleted).toLocaleString())
+    }
+  }
+}
+
 const updateUi = (state) => {
-  $('#status').text(state.state);
+  console.log(state)
+
+  // Flow
+  setStatus('lcu-lobby', state.lcu.lobby)
+  setStatus('lcu-champ-select', state.lcu.champselect)
+  setStatus('lcu-end-of-game', state.lcu.eog)
+  setStatus('web-live', state.web.live)
+  setStatus('web-match', state.web.match)
+
+  /* $('#status').text(state.state);
 
   if (state.state === 'SET') {
     $('#gameinfo-container').css('display', 'block');
@@ -11,14 +34,14 @@ const updateUi = (state) => {
     $('#setgame-container').css('display', 'block')
   }
 
-  oneWayBinding('gameinfo-container', state.webLive);
+  // oneWayBinding('gameinfo-container', state.webLive);
   ReactDOM.render(e(ParticipantTable, { participants: state.webLive.participants || [] }), document.getElementById('participant-table'));
   ReactDOM.render(e(BanTable, { bans: state.webLive.bannedChampions || [] }), document.getElementById('ban-table'));
 
   /* $('.data--game_id').text(state.webLive.gameId);
   $('.data--game_start').text(new Date(state.webLive.gameStartTime).toLocaleString());
   $('.data--game_platform').text(state.webLive.platformId); */
-};
+}
 
 const formLoadByName = async () => {
   const name = $('#name').val();
@@ -86,7 +109,6 @@ const updateState = async () => {
     }
   });
 
-  console.log(response);
   updateUi(response.state);
 }
 
@@ -144,7 +166,8 @@ const BanTable = ({ bans }) =>
   ]);
 
 const start = async () => {
-  await updateState();
-};
+  setInterval(updateState, 1000)
+  updateState()
+}
 
-start();
+window.LPTE.onready(start)
