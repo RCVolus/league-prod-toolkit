@@ -2,7 +2,6 @@ import type { GfxState } from './types/GfxState'
 import util from 'util';
 import endOfDay from 'date-fns/endOfDay'
 import startOfDay from 'date-fns/startOfDay'
-import { setTextRange } from 'typescript';
 
 const namespace = 'rcv-teams';
 
@@ -137,7 +136,9 @@ module.exports = async (ctx: any) => {
         namespace,
         version: 1
       },
-      data: gfxState
+      state: gfxState.state,
+      teams: gfxState.teams,
+      bestOf: gfxState.bestOf,
     });
   });
 
@@ -156,7 +157,9 @@ module.exports = async (ctx: any) => {
         namespace,
         version: 1
       },
-      data: gfxState
+      state: gfxState.state,
+      teams: gfxState.teams,
+      bestOf: gfxState.bestOf,
     });
   });
 
@@ -173,7 +176,9 @@ module.exports = async (ctx: any) => {
         namespace,
         version: 1
       },
-      data: gfxState
+      state: gfxState.state,
+      teams: gfxState.teams,
+      bestOf: gfxState.bestOf,
     });
   });
 
@@ -200,7 +205,9 @@ module.exports = async (ctx: any) => {
         namespace,
         version: 1
       },
-      data: gfxState
+      state: gfxState.state,
+      teams: gfxState.teams,
+      bestOf: gfxState.bestOf,
     });
   });
 

@@ -8,12 +8,12 @@ $('#team-form').on('submit', (e) => {
   const blueTeam = {
     name: $('#blue-team-name').val(),
     tag: $('#blue-team-tag').val(),
-    score: $('#blue-team-score').val()
+    score: parseInt($('#blue-team-score').val())
   }
   const redTeam = {
     name: $('#red-team-name').val(),
     tag: $('#red-team-tag').val(),
-    score: $('#red-team-score').val()
+    score: parseInt($('#red-team-score').val())
   }
 
   LPTE.emit({
@@ -26,7 +26,7 @@ $('#team-form').on('submit', (e) => {
       blueTeam,
       redTeam
     },
-    bestOf: $('#best-of').val()
+    bestOf: parseInt($('#best-of').val())
   });
 })
 
@@ -77,30 +77,22 @@ async function initUi () {
     }
   });
 
-  $('#blue-team-name').val(data.teams.blueTeam?.name)
-  $('#blue-team-tag').val(data.teams.blueTeam?.tag)
-  $('#blue-team-score').val(data.teams.blueTeam?.score || 0)
-
-  $('#red-team-name').val(data.teams.redTeam?.name)
-  $('#red-team-tag').val(data.teams.redTeam?.tag)
-  $('#red-team-score').val(data.teams.redTeam?.score || 0)
-
-  $('#best-of').val(data.bestOf)
+  displayData(data)
 }
 
-async function updateUi (data) {
-  $('#blue-team-name').val(data.teams.blueTeam.name)
-  $('#blue-team-tag').val(data.teams.blueTeam.tag)
-  $('#blue-team-score').val(data.teams.blueTeam.score || 0)
+async function displayData (data) {
+  $('#blue-team-name').val(data.teams.blueTeam?.name ?? "")
+  $('#blue-team-tag').val(data.teams.blueTeam?.tag ?? "")
+  $('#blue-team-score').val(data.teams.blueTeam?.score ?? 0)
 
-  $('#red-team-name').val(data.teams.redTeam.name)
-  $('#red-team-tag').val(data.teams.redTeam.tag)
-  $('#red-team-score').val(data.teams.redTeam.score || 0)
+  $('#red-team-name').val(data.teams.redTeam?.name ?? "")
+  $('#red-team-tag').val(data.teams.redTeam?.tag ?? "")
+  $('#red-team-score').val(data.teams.redTeam?.score ?? 0)
 
   $('#best-of').val(data.bestOf)
 }
 
 setTimeout(() => {
   initUi()
-  window.LPTE.on('rcv-teams', 'update', updateUi);
+  window.LPTE.on('rcv-teams', 'update', displayData);
 }, 1000)
