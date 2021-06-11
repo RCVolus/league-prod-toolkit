@@ -4,8 +4,18 @@ const namespace = 'rcv-tournament-tree';
 
 const initialState : GfxState = {
   state: "NO_MATCHES",
-  matches: []
+  matches: [],
+  rounds: {}
 }
+
+const gameMatrix : [number, number | null][] = [
+  [4, null],
+  [4, null],
+  [5, null],
+  [5, null],
+  [6, 7],
+  [6, 7],
+]
 
 module.exports = async (ctx: any) => {
   let gfxState = initialState;
@@ -33,12 +43,94 @@ module.exports = async (ctx: any) => {
         version: 1
       },
       state: gfxState.state,
-      matches: gfxState.matches
+      matches: gfxState.matches,
+      rounds: gfxState.rounds
     });
   });
 
   ctx.LPTE.on(namespace, 'set', async (e: any) => {
     gfxState.state = 'READY';
+    gfxState.matches = [...e.matches]
+    gfxState.rounds = e.rounds
+
+    for (const match of Object.values(gfxState.matches)) {
+      if (match.current_match) {
+        ctx.LPTE.emit({
+          meta: {
+            type: 'set',
+            namespace: 'rcv-teams',
+            version: 1
+          },
+          teams: match.teams,
+          bestOf: match.bestOf
+        });
+      }
+
+      if (match.matchId > 5) continue
+
+      const [winGame, loseGame] = gameMatrix[match.matchId]
+      if (match.teams.blueTeam.score > match.bestOf / 2) {
+        if (match.matchId % 2 == 0) {
+          gfxState.matches[winGame].teams.blueTeam = {
+            name: match.teams.blueTeam.name,
+            tag: match.teams.blueTeam.tag,
+            score: gfxState.matches[winGame].teams.blueTeam.score
+          }
+        } else {
+          gfxState.matches[winGame].teams.redTeam = {
+            name: match.teams.blueTeam.name,
+            tag: match.teams.blueTeam.tag,
+            score: gfxState.matches[winGame].teams.redTeam.score
+          }
+        }
+
+        if (!loseGame) continue
+
+        if (match.matchId % 2 == 0) {
+          gfxState.matches[loseGame].teams.blueTeam = {
+            name: match.teams.redTeam.name,
+            tag: match.teams.redTeam.tag,
+            score: gfxState.matches[loseGame].teams.blueTeam.score
+          }
+        } else {
+          gfxState.matches[loseGame].teams.redTeam = {
+            name: match.teams.redTeam.name,
+            tag: match.teams.redTeam.tag,
+            score: gfxState.matches[loseGame].teams.redTeam.score
+          }
+        }
+      } else if (match.teams.redTeam.score > match.bestOf / 2) {
+        if (match.matchId % 2 == 0) {
+          gfxState.matches[winGame].teams.blueTeam = {
+            name: match.teams.redTeam.name,
+            tag: match.teams.redTeam.tag,
+            score: gfxState.matches[winGame].teams.blueTeam.score
+          }
+        } else {
+          gfxState.matches[winGame].teams.redTeam = {
+            name: match.teams.redTeam.name,
+            tag: match.teams.redTeam.tag,
+            score: gfxState.matches[winGame].teams.redTeam.score
+          }
+        }
+
+        if (!loseGame) continue
+
+        if (match.matchId % 2 == 0) {
+          gfxState.matches[loseGame].teams.blueTeam = {
+            name: match.teams.blueTeam.name,
+            tag: match.teams.blueTeam.tag,
+            score: gfxState.matches[loseGame].teams.blueTeam.score
+          }
+        } else {
+          gfxState.matches[loseGame].teams.redTeam = {
+            name: match.teams.blueTeam.name,
+            tag: match.teams.blueTeam.tag,
+            score: gfxState.matches[loseGame].teams.redTeam.score
+          }
+        }
+      }
+    }
 
     ctx.LPTE.emit({
       meta: {
@@ -46,13 +138,16 @@ module.exports = async (ctx: any) => {
         namespace,
         version: 1
       },
-      data: gfxState
+      state: gfxState.state,
+      matches: gfxState.matches,
+      rounds: gfxState.rounds
     });
   });
 
   ctx.LPTE.on(namespace, 'unset', (e: any) => {
     gfxState.state = 'NO_MATCHES';
     gfxState.matches = []
+    gfxState.rounds = {}
 
     ctx.LPTE.emit({
       meta: {
@@ -60,7 +155,9 @@ module.exports = async (ctx: any) => {
         namespace,
         version: 1
       },
-      data: gfxState
+      state: gfxState.state,
+      matches: gfxState.matches,
+      rounds: gfxState.rounds
     });
   });
 

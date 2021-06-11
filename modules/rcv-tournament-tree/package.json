@@ -20,6 +20,6 @@
   "scripts": {
     "compile-sass": "sass frontend/style/tournament_tree.scss frontend/style/tournament_tree.css",
     "watch-sass": "sass --watch frontend/style/:frontend/style/",
-    "build": "npm run compile-less && tsc"
+    "build": "npm run compile-sass && tsc"
   }
 }

@@ -1,12 +1,11 @@
+import type { Team } from './Team'
+
 export interface Match {
   matchId: number
-  blueTeam: {
-    tag: string
-    score: number
-  }
-  redTeam: {
-    tag: string
-    score: number
+  teams: {
+    blueTeam: Team
+    redTeam: Team
   }
   bestOf: 1 | 3 | 5
+  current_match: boolean
 }
