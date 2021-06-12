@@ -56,7 +56,7 @@ module.exports = async (ctx: any) => {
           $lte: endOfDay(new Date())
         }
       },
-      sort: {"date": -1},
+      sort: {"date": 1},
     })
 
     ctx.LPTE.emit({
