@@ -7,17 +7,17 @@ function displayData (data) {
     
     const blueTeam = element.querySelector('.tt_team.blue')
     const redTeam = element.querySelector('.tt_team.red')
-    blueTeam.querySelector('.tt_tag').innerHTML = match ? match.teams.blueTeam.tag : '' // ?? ""
-    blueTeam.querySelector('.tt_name').innerHTML = match ? match.teams.blueTeam.name : '' // ?? ""
+    blueTeam.querySelector('.tt_tag').innerHTML = match ? match.teams.blueTeam.tag : ''
+    blueTeam.querySelector('.tt_name').innerHTML = match ? match.teams.blueTeam.name : ''
     resizeText(blueTeam.querySelector('.tt_name'))
     if (match ? match.teams.blueTeam.tag : false)
-    blueTeam.querySelector('.tt_score').innerHTML = match ? match.teams.blueTeam.score : '' // ?? 0
+    blueTeam.querySelector('.tt_score').innerHTML = match ? match.teams.blueTeam.score : ''
 
-    redTeam.querySelector('.tt_tag').innerHTML = match ? match.teams.redTeam.tag : '' // ?? ""
-    redTeam.querySelector('.tt_name').innerHTML = match ? match.teams.redTeam.name : '' // ?? ""
+    redTeam.querySelector('.tt_tag').innerHTML = match ? match.teams.redTeam.tag : ''
+    redTeam.querySelector('.tt_name').innerHTML = match ? match.teams.redTeam.name : ''
     resizeText(redTeam.querySelector('.tt_name'))
     if (match ? match.teams.redTeam.tag : false)
-    redTeam.querySelector('.tt_score').innerHTML = match ? match.teams.redTeam.score : '' // ?? 0
+    redTeam.querySelector('.tt_score').innerHTML = match ? match.teams.redTeam.score : ''
   });
 }
 
