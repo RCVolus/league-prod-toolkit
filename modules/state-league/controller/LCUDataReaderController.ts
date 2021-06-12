@@ -27,8 +27,11 @@ export class LCUDataReaderController extends Controller {
         type: 'champselect-update',
         version: 1
       },
-      data: convertState(state, state.lcu.champselect as any, leagueStatic),
-      order: state.lcu.champselect.order !== undefined ? convertState(state, state.lcu.champselect.order as any, leagueStatic) : undefined,
+      data: {
+        ...convertState(state, state.lcu.champselect as any, leagueStatic),
+        showSummoners: state.lcu.champselect.showSummoners
+      },
+      order: state.lcu.champselect.order !== undefined ? { ...convertState(state, state.lcu.champselect.order as any, leagueStatic) } : undefined,
       isActive: state.lcu.champselect._available
     });
   }

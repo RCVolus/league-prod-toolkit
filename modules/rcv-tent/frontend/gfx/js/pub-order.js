@@ -9,6 +9,12 @@ async function displayPUBOrder (data) {
     return
   }
 
+  // Reset
+  blueTeam.innerHTML = ''
+  redTeam.innerHtml = ''
+  blueBan.innerHTML = ''
+  redBan.innerHTML = ''
+
   // Bans
   for (const ban of data.blueTeam.bans) {
     const img = document.createElement('img')
@@ -53,7 +59,7 @@ window.LPTE.onready(async () => {
 
   window.LPTE.on('state-league', 'champselect-update', e => {
     console.log(e)
-    displayPUBOrder(e.data.order)
+    displayPUBOrder(e.order)
   })
 })
 

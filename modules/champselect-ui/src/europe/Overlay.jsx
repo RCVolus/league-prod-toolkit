@@ -44,18 +44,18 @@ export default class Overlay extends React.Component {
             this.setState({currentAnimationState: css.TheAbsoluteVoid});
         }
 
-        // console.log(state);
+        console.log(state);
 
         const renderBans = (teamState) =>{
-            const list =  teamState.bans.map((ban, idx) => <Ban key={`ban-${idx}`} {...ban} />);
-            list.splice(3, 0, <div key="ban-spacer" className={css.Spacing} />);
+            const list =  teamState.bans.map(ban => <Ban {...ban} />);
+            list.splice(3, 0, <div className={css.Spacing} />);
             return <div className={cx(css.BansBox)}>{list}</div>;
         };
 
         const renderTeam = (teamName, teamConfig, teamState) => (
             <div className={cx(css.Team, teamName)}>
                 <div className={cx(css.Picks)}>
-                    {teamState.picks.map((pick, idx) => <Pick key={`pick-${idx}`} config={this.props.config} {...pick} showSummoners={state.showSummoners} />)}
+                    {teamState.picks.map(pick => <Pick config={this.props.config} {...pick} showSummoners={state.showSummoners} />)}
                 </div>
                 <div className={css.BansWrapper}>
                     <div className={cx(css.Bans, {[css.WithScore]: config.frontend.scoreEnabled})}>
@@ -99,7 +99,7 @@ export default class Overlay extends React.Component {
                             <div className={cx(css.Background, css.Blue)} />
                             <div className={cx(css.Background, css.Red)} />
                             {state.timer < 100 && <div className={cx(css.TimerChars)}>
-                                {state.timer.toString().split('').map((char, idx) => <div key={`div-${idx}`}
+                                {state.timer.toString().split('').map(char => <div
                                     className={cx(css.TimerChar)}>{char}</div>)}
                             </div>}
                             {state.timer >= 100 && <div className={cx(css.TimerChars)}>

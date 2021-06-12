@@ -13,8 +13,14 @@ module.exports = async (ctx: any) => {
   });
   const config = response.config as Config;
 
-  const uri =
-  `mongodb://${config.user}:${config.password}@${config.clusterUrl}:${config.port}/league-prod-toolkit?authSource=admin`;
+  let uri: string;
+  if (config.password === '') {
+    uri =
+      `mongodb://${config.clusterUrl}:${config.port}/league-prod-toolkit`;
+  } else {
+    uri =
+      `mongodb://${config.user}:${config.password}@${config.clusterUrl}:${config.port}/league-prod-toolkit?authSource=admin`;
+  }
 
   const client = new MongoClient(uri, {
     useNewUrlParser: true,
