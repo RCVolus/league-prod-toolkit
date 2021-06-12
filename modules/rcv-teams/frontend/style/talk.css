@@ -13,6 +13,7 @@ body {
   font-size: 50px;
   display: flex;
   justify-content: center;
+  background: #333;
 }
 
 .container {
@@ -76,6 +77,9 @@ body {
   text-transform: uppercase;
   font-family: bebas-neue, sans-serif;
   font-size: 65px;
+  width: 600px;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 #blue-name {
