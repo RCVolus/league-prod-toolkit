@@ -43,9 +43,11 @@ function displayTeams(teams, bestOf) {
 
   blueTag.innerHTML = teams.blueTeam.tag
   blueName.innerHTML = teams.blueTeam.name
+  resizeText(blueName)
 
   redTag.innerHTML = teams.redTeam.tag
   redName.innerHTML = teams.redTeam.name
+  resizeText(redName)
 
   redTag.classList.remove('outline')
   redName.classList.remove('outline')
@@ -70,4 +72,21 @@ function displayTeams(teams, bestOf) {
       blueName.classList.add('outline')
     }
   }
+}
+
+const isOverflown = ({ clientWidth, scrollWidth }) => scrollWidth > clientWidth
+
+const resizeText = ( parent ) => {
+  let i = 25 // let's start with 12px
+  let overflow = false
+  const maxSize = 65 // very huge text size
+
+  while (!overflow && i < maxSize) {
+    parent.style.fontSize = `${i}px`
+    overflow = isOverflown(parent)
+    if (!overflow) i++
+  }
+
+  // revert to last state where no overflow happened:
+  parent.style.fontSize = `${i - 1}px`
 }
