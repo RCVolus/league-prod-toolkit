@@ -4,7 +4,7 @@ $white: rgba(#fafafa, 0.5);
 
 .tournament_tree {
   display: flex;
-  width: 80%;
+  width: 85%;
   color: #f2ead5;
   font-family: interstate, sans-serif;
 }
@@ -85,7 +85,7 @@ $white: rgba(#fafafa, 0.5);
 }
 
 .tt_team {
-  width: 100%;
+  width: 409px;
   background: #051c2c;
   position: relative;
   display: flex;
@@ -143,6 +143,11 @@ $white: rgba(#fafafa, 0.5);
     text-transform: capitalize;
     position: relative;
     z-index: 5;
+  }
+
+  .tt_name {
+    white-space: nowrap;
+    overflow: hidden;
   }
 
   .tt_score {

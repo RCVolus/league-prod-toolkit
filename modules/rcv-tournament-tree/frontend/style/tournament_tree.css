@@ -1,6 +1,6 @@
 .tournament_tree {
   display: flex;
-  width: 80%;
+  width: 85%;
   color: #f2ead5;
   font-family: interstate, sans-serif;
 }
@@ -64,7 +64,7 @@
 }
 
 .tt_team {
-  width: 100%;
+  width: 409px;
   background: #051c2c;
   position: relative;
   display: flex;
@@ -115,6 +115,10 @@
   text-transform: capitalize;
   position: relative;
   z-index: 5;
+}
+.tt_team .tt_name {
+  white-space: nowrap;
+  overflow: hidden;
 }
 .tt_team .tt_score {
   width: 35px;
