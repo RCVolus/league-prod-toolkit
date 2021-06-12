@@ -114,6 +114,7 @@ export class LCUDataReaderController extends Controller {
 
       if (this.refreshTask) {
         clearInterval(this.refreshTask)
+        this.refreshTask = undefined;
       }
 
       this.emitChampSelectUpdate()

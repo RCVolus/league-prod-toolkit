@@ -1,7 +1,8 @@
 var championsData = []
 var gameData = {}
 var participants = []
-var staticURL = ''
+var staticURL = '/serve/static-league'
+var version = ''
 
 async function getGameData () {
   // TODO Change data source here
@@ -26,16 +27,17 @@ async function getConstants () {
   })
   console.log(constantsRes)
   const constants = constantsRes.constants
-  staticURL = constants.staticURL
+  // staticURL = constants.staticURL
+  version = constants.version
   championsData = constants.champions
 }
 
 const itemUrl = id => {
-  return `${staticURL}/img/item/${id}.png`
+  return `${staticURL}/${version}/img/item/${id}.png`
 }
 const champUrl = id => {
   const champ = championsData.find(c => c.key == id)
-  return `${staticURL}/img/champion/square/${champ.id}.png`
+  return `${staticURL}/img/champion/tiles/${champ.id}_0.jpg`
 }
 const spellUrl = id => {
   return `${staticURL}/img/summoner-spell/${id}.png`
