@@ -1,0 +1,22 @@
+{
+  "name": "league-replay",
+  "version": "1.0.0",
+  "description": "Module to sync league-replays",
+  "author": "Himyu",
+  "license": "MIT",
+  "toolkit": {
+    "modes": [
+      "PLUGIN"
+    ],
+    "plugin": {
+      "main": "dist/plugin.js"
+    },
+    "needsBuild": true
+  },
+  "devDependencies": {
+    "typescript": "^4.3.2"
+  },
+  "scripts": {
+    "build": "tsc"
+  }
+}

@@ -105,13 +105,13 @@ function displayData (data) {
     
     const blueTeam = element.querySelector('.tt_team.blue')
     const redTeam = element.querySelector('.tt_team.red')
-    blueTeam.querySelector('.tt_tag').value = match?.teams.blueTeam.tag ?? ""
-    blueTeam.querySelector('.tt_name').value = match?.teams.blueTeam.name ?? ""
-    blueTeam.querySelector('.tt_score').value = match?.teams.blueTeam.score ?? 0
+    blueTeam.querySelector('.tt_tag').value = match?.teams.blueTeam.tag || ""
+    blueTeam.querySelector('.tt_name').value = match?.teams.blueTeam.name || ""
+    blueTeam.querySelector('.tt_score').value = match?.teams.blueTeam.score || 0
 
-    redTeam.querySelector('.tt_tag').value = match?.teams.redTeam.tag ?? ""
-    redTeam.querySelector('.tt_name').value = match?.teams.redTeam.name ?? ""
-    redTeam.querySelector('.tt_score').value = match?.teams.redTeam.score ?? 0
+    redTeam.querySelector('.tt_tag').value = match?.teams.redTeam.tag || ""
+    redTeam.querySelector('.tt_name').value = match?.teams.redTeam.name || ""
+    redTeam.querySelector('.tt_score').value = match?.teams.redTeam.score || 0
 
     element.querySelector('.tt_current_match').checked = match?.current_match
   });

@@ -81,13 +81,13 @@ async function initUi () {
 }
 
 async function displayData (data) {
-  $('#blue-team-name').val(data.teams.blueTeam?.name ?? "")
-  $('#blue-team-tag').val(data.teams.blueTeam?.tag ?? "")
-  $('#blue-team-score').val(data.teams.blueTeam?.score ?? 0)
+  $('#blue-team-name').val(data.teams.blueTeam?.name || "")
+  $('#blue-team-tag').val(data.teams.blueTeam?.tag || "")
+  $('#blue-team-score').val(data.teams.blueTeam?.score || 0)
 
-  $('#red-team-name').val(data.teams.redTeam?.name ?? "")
-  $('#red-team-tag').val(data.teams.redTeam?.tag ?? "")
-  $('#red-team-score').val(data.teams.redTeam?.score ?? 0)
+  $('#red-team-name').val(data.teams.redTeam?.name || "")
+  $('#red-team-tag').val(data.teams.redTeam?.tag || "")
+  $('#red-team-score').val(data.teams.redTeam?.score || 0)
 
   $('#best-of').val(data.bestOf)
 }
