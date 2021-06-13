@@ -63,12 +63,12 @@ export default class Overlay extends React.Component {
                             {teamConfig.score}
                         </div>}
                         {teamName === css.TeamRed && renderBans(teamState)}
-                        <div className={cx(css.TeamName, {[css.WithoutCoaches]: !config.frontend.coachesEnabled})}>
+                       { /* <div className={cx(css.TeamName, {[css.WithoutCoaches]: !config.frontend.coachesEnabled})}>
                             {teamConfig.name}
                             {config.frontend.coachesEnabled && <div className={css.CoachName}>
                                 Coach: {teamConfig.coach}
                             </div>}
-                        </div>
+        </div> */}
                         {teamName === css.TeamBlue && renderBans(teamState)}
                         {teamName === css.TeamRed && config.frontend.scoreEnabled && <div className={css.TeamScore}>
                             {teamConfig.score}
@@ -79,7 +79,7 @@ export default class Overlay extends React.Component {
         );
 
         return (
-            <div className={cx(css.Overlay, css.Europe, this.state.currentAnimationState)} style={{"--color-red": config.frontend.redTeam.color, "--color-blue": config.frontend.blueTeam.color}}>
+            <div className={cx(css.Overlay, css.Europe, this.state.currentAnimationState)} /* style={{"--color-red": config.frontend.redTeam.color, "--color-blue": config.frontend.blueTeam.color}} */>
                 {Object.keys(state).length === 0 && <div className={cx(css.infoBox)}>Not connected to backend service!</div>}
                 {Object.keys(state).length !== 0 &&
                 <div className={cx(css.ChampSelect)}>
