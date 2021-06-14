@@ -126,6 +126,17 @@ export class LCUDataReaderController extends Controller {
     if (event.meta.type === 'lcu-end-of-game-create') {
       state.lcu.eog = event.data
       state.lcu.eog._available = true
+
+      this.pluginContext.log.info('Flow: end of game - active')
+      // Also make sure post game is loaded
+      this.pluginContext.LPTE.emit({
+        meta: {
+          namespace: 'state-league',
+          type: 'set-game',
+          version: 1
+        },
+        by: 'gameId'
+      })
     }
     if (event.meta.type === 'lcu-end-of-game-delete') {
       state.lcu.eog._available = false
