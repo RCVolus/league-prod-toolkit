@@ -4,20 +4,22 @@ function displayData (data) {
   dataDiv.forEach(element => {
     const matchId = parseInt(element.dataset.matchid)
     const match = data.matches[matchId]
-    
+
     const blueTeam = element.querySelector('.tt_team.blue')
     const redTeam = element.querySelector('.tt_team.red')
     blueTeam.querySelector('.tt_tag').innerHTML = match ? match.teams.blueTeam.tag : ''
     blueTeam.querySelector('.tt_name').innerHTML = match ? match.teams.blueTeam.name : ''
     resizeText(blueTeam.querySelector('.tt_name'))
-    if (match ? match.teams.blueTeam.tag : false)
-    blueTeam.querySelector('.tt_score').innerHTML = match ? match.teams.blueTeam.score : ''
+    if (match ? match.teams.blueTeam.tag : false) {
+      blueTeam.querySelector('.tt_score').innerHTML = match ? match.teams.blueTeam.score : ''
+    }
 
     redTeam.querySelector('.tt_tag').innerHTML = match ? match.teams.redTeam.tag : ''
     redTeam.querySelector('.tt_name').innerHTML = match ? match.teams.redTeam.name : ''
     resizeText(redTeam.querySelector('.tt_name'))
-    if (match ? match.teams.redTeam.tag : false)
-    redTeam.querySelector('.tt_score').innerHTML = match ? match.teams.redTeam.score : ''
+    if (match ? match.teams.redTeam.tag : false) {
+      redTeam.querySelector('.tt_score').innerHTML = match ? match.teams.redTeam.score : ''
+    }
   });
 }
 
@@ -39,7 +41,7 @@ const resizeText = ( parent ) => {
 }
 
 const init = async () => {
-  const data = await this.LPTE.request({
+  const data = await window.LPTE.request({
     meta: {
       namespace: 'rcv-tournament-tree',
       type: 'request',
@@ -50,7 +52,7 @@ const init = async () => {
   displayData(data)
 }
 
-setTimeout(() => {
+window.LPTE.onready(() => {
   init()
   window.LPTE.on('rcv-tournament-tree', 'update', displayData);
-}, 1000)
+})

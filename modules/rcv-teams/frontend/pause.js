@@ -12,16 +12,16 @@ const tick = async () => {
   displayMatches(res.matches.data)
 }
 
-setTimeout(() => {
+window.LPTE.onready(() => {
   tick()
-  window.LPTE.on('rcv-teams', 'set', tick);
-  window.LPTE.on('rcv-teams', 'clear-matches', tick);
-}, 1000)
+  window.LPTE.on('rcv-teams', 'set', tick)
+  window.LPTE.on('rcv-teams', 'clear-matches', tick)
+})
 
 function displayMatches(matches) {
-  container.innerHTML = ""
+  container.innerHTML = ''
   for (const match of matches) {
-    if (parseInt(match.bestOf) == 1) displaySingle(match)
+    if (parseInt(match.bestOf) === 1) displaySingle(match)
     else displayBestOF(match)
   }
 }

@@ -1,3 +1,4 @@
+import WebSocket from 'ws'
 const namespace = 'league-replay';
 
 module.exports = async (ctx: any) => {
