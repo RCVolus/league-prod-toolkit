@@ -1,4 +1,3 @@
-import { couldStartTrivia } from 'typescript';
 import type { GfxState } from './types/GfxState'
 
 const namespace = 'rcv-caster';

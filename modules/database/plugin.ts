@@ -1,5 +1,5 @@
 import type { Config } from './types/Config'
-import { MongoClient, Collection } from 'mongodb';
+import { MongoClient, Collection, ObjectID } from 'mongodb';
 
 const namespace = 'database';
 
@@ -72,9 +72,9 @@ module.exports = async (ctx: any) => {
     }
 
     try {
-      const filter = e.filter ?? {};
-      const sort = e.sort ?? {};
-      const limit = e.limit ?? 10;
+      const filter = e.filter || {};
+      const sort = e.sort || {};
+      const limit = e.limit || 10;
 
       const data = await client.db()
         .collection(e.collection)
@@ -151,9 +151,6 @@ module.exports = async (ctx: any) => {
 
     try {
       const filter = e.filter || {};
-      ctx.log.warn(e.collection)
-      ctx.log.warn(JSON.stringify(filter))
-
       await client.db()
         .collection(e.collection)
         .deleteMany(filter)
@@ -168,7 +165,7 @@ module.exports = async (ctx: any) => {
     }
 
     try {
-      const query = { '_id': e.id };
+      const query = { '_id': new ObjectID(e.id) };
 
       await client.db()
         .collection(e.collection)
