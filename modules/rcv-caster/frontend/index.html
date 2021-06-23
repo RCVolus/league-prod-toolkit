@@ -1,0 +1,39 @@
+<h1>RCVolus Caster: Operator Cockpit</h1>
+
+<table class="table mb-5">
+  <thead>
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Platform</th>
+      <th scope="col">Handle</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody id="caster-table"></tbody>
+</table>
+
+<form id="caster-form">
+  <div class="d-flex">
+    <div class="form-group w-50 mr-3">
+      <label for="name">Name</label>
+      <input type="text" class="form-control" id="name" aria-describedby="Name" placeholder="Name">
+    </div>
+    <div class="form-group w-25 mr-3">
+      <label for="platform">Social Platform</label>
+      <select class="form-control" id="platform" aria-describedby="Platform">
+        <option>Twitch</option>
+        <option>Twitter</option>
+      </select>
+    </div>
+    <div class="form-group w-50">
+      <label for="username">Handle</label>
+      <input type="text" class="form-control" id="handle" placeholder="Handle">
+    </div>
+  </div>
+  <button type="submit" class="btn btn-success btn-block">Add</button>
+</form>
+
+<script src="/pages/op-rcv-caster/frontend.js" defer></script>
+
+
+

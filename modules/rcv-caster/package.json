@@ -1,7 +1,7 @@
 {
-  "name": "rcv-teams",
+  "name": "rcv-caster",
   "version": "1.0.0",
-  "description": "Module that provides GFX elements for the current teams",
+  "description": "Module that provides GFX elements for the current caster",
   "author": "Himyu",
   "license": "MIT",
   "toolkit": {
@@ -12,9 +12,6 @@
       "main": "dist/plugin.js"
     },
     "needsBuild": true
-  },
-  "dependencies": {
-    "date-fns": "^2.22.1"
   },
   "devDependencies": {
     "typescript": "^4.3.2"
