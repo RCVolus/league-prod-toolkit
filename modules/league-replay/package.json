@@ -18,5 +18,8 @@
   },
   "scripts": {
     "build": "tsc"
+  },
+  "dependencies": {
+    "ws": "^7.5.0"
   }
 }

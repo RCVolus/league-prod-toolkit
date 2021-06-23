@@ -32,10 +32,10 @@ const update = (data) => {
   }
 }
 
-setTimeout(() => {
+window.LPTE.onready(() => {
   tick()
   window.LPTE.on('rcv-teams', 'update', tick);
-}, 1000)
+})
 
 function displayTeams(teams, bestOf) {
   tagContainer.style.display = 'flex'

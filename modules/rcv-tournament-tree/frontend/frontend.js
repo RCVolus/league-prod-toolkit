@@ -1,13 +1,13 @@
 function addCss(fileName) {
 
   var head = document.head;
-  var link = document.createElement("link");
+  var link = document.createElement('link');
 
-  link.type = "text/css";
-  link.rel = "stylesheet";
-  link.href = fileName;
+  link.type = 'text/css'
+  link.rel = 'stylesheet'
+  link.href = fileName
 
-  head.appendChild(link);
+  head.appendChild(link)
 }
 
 addCss('/pages/op-rcv-tournament-tree/style/tournament_tree_op.css');
@@ -19,17 +19,17 @@ const dataDiv = document.querySelectorAll('[data-matchId]');
 const roundsSelect = document.querySelectorAll('[data-round]');
 
 function save () {
-  let matches = []
-  let rounds = []
+  const matches = []
+  const rounds = []
 
   roundsSelect.forEach(element => {
-    let round = {}
+    const round = {}
     round.bestOf = parseInt(element.value)
     rounds.push(round)
   })
 
   dataDiv.forEach(element => {
-    let match = {}
+    const match = {}
     const blueTeam = element.querySelector('.tt_team.blue')
     const redTeam = element.querySelector('.tt_team.red')
 
@@ -59,7 +59,7 @@ function save () {
     matches.push(match)
   });
 
-  LPTE.emit({
+  window.LPTE.emit({
     meta: {
       namespace: 'rcv-tournament-tree',
       type: 'set',
@@ -67,17 +67,17 @@ function save () {
     },
     matches,
     rounds
-  });
+  })
 }
 
 function unset() {
-  LPTE.emit({
+  window.LPTE.emit({
     meta: {
       namespace: 'rcv-tournament-tree',
       type: 'unset',
       version: 1
     }
-  });
+  })
 }
 
 async function init () {
@@ -102,22 +102,22 @@ function displayData (data) {
   dataDiv.forEach(element => {
     const matchId = parseInt(element.dataset.matchid)
     const match = data.matches[matchId]
-    
+
     const blueTeam = element.querySelector('.tt_team.blue')
     const redTeam = element.querySelector('.tt_team.red')
-    blueTeam.querySelector('.tt_tag').value = match?.teams.blueTeam.tag || ""
-    blueTeam.querySelector('.tt_name').value = match?.teams.blueTeam.name || ""
+    blueTeam.querySelector('.tt_tag').value = match?.teams.blueTeam.tag || ''
+    blueTeam.querySelector('.tt_name').value = match?.teams.blueTeam.name || ''
     blueTeam.querySelector('.tt_score').value = match?.teams.blueTeam.score || 0
 
-    redTeam.querySelector('.tt_tag').value = match?.teams.redTeam.tag || ""
-    redTeam.querySelector('.tt_name').value = match?.teams.redTeam.name || ""
+    redTeam.querySelector('.tt_tag').value = match?.teams.redTeam.tag || ''
+    redTeam.querySelector('.tt_name').value = match?.teams.redTeam.name || ''
     redTeam.querySelector('.tt_score').value = match?.teams.redTeam.score || 0
 
     element.querySelector('.tt_current_match').checked = match?.current_match
-  });
+  })
 }
 
-setTimeout(() => {
+window.LPTE.onready(() => {
   init()
   window.LPTE.on('rcv-tournament-tree', 'update', displayData);
-}, 1000)
+})
