@@ -1,5 +1,5 @@
 import type { Config } from './types/Config'
-import { MongoClient, Collection, ObjectID } from 'mongodb';
+import { MongoClient, Collection, ObjectID, ObjectId } from 'mongodb';
 
 const namespace = 'database';
 
@@ -75,6 +75,16 @@ module.exports = async (ctx: any) => {
       const filter = e.filter || {};
       const sort = e.sort || {};
       const limit = e.limit || 10;
+
+      if (e.id !== undefined) {
+        if (Array.isArray(e.id)) {
+          filter['_id'] = {
+            $in: e.id.map((id : any) => new ObjectId(id))
+          }
+        } else {
+          filter['_id'] = new ObjectId(e.id)
+        }
+      }
 
       const data = await client.db()
         .collection(e.collection)

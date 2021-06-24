@@ -1,0 +1,58 @@
+:root {
+  --white: #fafafa;
+  --beige: #f2ead5;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  height: 1080px;
+  width: 1920px;
+  overflow: hidden;
+  position: relative;
+  background-image: url(./img/binden.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  font-family: "Bebas Neue", Courier, monospace;
+  font-weight: bold;
+  font-size: 35px;
+  color: var(--white);
+}
+
+.container {
+  position: absolute;
+  top: 686px;
+  left: 128px;
+  width: 1667px;
+  height: 71px;
+  display: flex;
+}
+
+.caster-box {
+  width: 400px;
+  height: 71px;
+  padding-left: 100px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+#caster-two {
+  text-align: right;
+  margin-left: 867px;
+  padding-left: 0px;
+  padding-right: 100px;
+}
+
+.social {
+  color: var(--beige);
+  font-size: 20px;
+  font-family: "Interstate", Courier, monospace;
+}
+
+.social span i {
+  margin-right: 10px;
+}

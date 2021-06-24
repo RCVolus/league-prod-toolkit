@@ -1,9 +1,10 @@
+import { couldStartTrivia } from 'typescript';
 import type { GfxState } from './types/GfxState'
 
 const namespace = 'rcv-caster';
 
 const initialState : GfxState = {
-  state: "NO_MATCH",
+  state: "NO_CASTER",
   caster: []
 }
 
@@ -33,13 +34,23 @@ module.exports = async (ctx: any) => {
         version: 1
       },
       state: gfxState.state,
-      teams: gfxState.caster
+      caster: gfxState.caster
     });
   });
 
   ctx.LPTE.on(namespace, 'set', async (e: any) => {
+    const casterRes = await ctx.LPTE.request({
+      meta: {
+        type: 'request',
+        namespace: 'database',
+        version: 1
+      },
+      collection: 'caster',
+      id: e.caster
+    })
+
     gfxState.state = 'READY';
-    gfxState.caster = e.caster
+    gfxState.caster = casterRes.data
 
     ctx.LPTE.emit({
       meta: {
@@ -69,8 +80,7 @@ module.exports = async (ctx: any) => {
         namespace: 'database',
         version: 1
       },
-      collection: 'caster',
-      sort: {"date":1}
+      collection: 'caster'
     })
 
     ctx.LPTE.emit({
@@ -104,9 +114,7 @@ module.exports = async (ctx: any) => {
         namespace: 'database',
         version: 1
       },
-      collection: 'caster',
-      sort: {"date":1},
-      limit: 1
+      collection: 'caster'
     })
 
     ctx.LPTE.emit({
@@ -126,9 +134,7 @@ module.exports = async (ctx: any) => {
         namespace: 'database',
         version: 1
       },
-      collection: 'caster',
-      sort: {"date":1},
-      limit: 1
+      collection: 'caster'
     })
 
     ctx.LPTE.emit({
@@ -161,7 +167,7 @@ module.exports = async (ctx: any) => {
 
   ctx.LPTE.on(namespace, 'unset', (e: any) => {
     gfxState = {
-      state: "NO_MATCH",
+      state: "NO_CASTER",
       caster: []
     }
 
