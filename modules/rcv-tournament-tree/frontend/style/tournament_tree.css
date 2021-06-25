@@ -145,6 +145,9 @@
   left: 0;
   line-height: 0.7;
   z-index: 0;
+  font-family: poppins, sans-serif;
+  font-weight: 700;
+  font-style: normal;
 }
 .tt_team.blue .tt_tag {
   color: #00b7e0;

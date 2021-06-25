@@ -8,7 +8,9 @@ body {
   width: 1920px;
   height: 1080px;
   overflow: hidden;
-  font-family: interstate, sans-serif;
+  font-family: poppins, sans-serif;
+  font-weight: 700;
+  font-style: normal;
   color: #f2ead5;
   font-size: 50px;
   display: flex;

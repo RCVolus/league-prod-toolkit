@@ -108,8 +108,8 @@ h5 {
 }
 
 .dataContainer h3.kda {
-  font-family: "Interstate", Courier, monospace;
-  font-weight: bold;
+  font-family: poppins, sans-serif;
+  font-weight: 700;
   line-height: 0.7;
 }
 
