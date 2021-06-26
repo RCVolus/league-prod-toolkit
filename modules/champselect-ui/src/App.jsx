@@ -32,13 +32,13 @@ function App() {
             setGlobalState(e.data);
         });
 
-        window.LPTE.emit({
+        /* window.LPTE.emit({
             meta: {
                 namespace: 'lcu',
                 type: 'lcu-champ-select-create',
                 version: 1
             }
-        });
+        }); */
     }, []);
 
     console.log(globalState);
