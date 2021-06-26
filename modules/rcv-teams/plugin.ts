@@ -223,6 +223,15 @@ module.exports = async (ctx: any) => {
 
   await ctx.LPTE.await('lpt', 'ready', 120000);
 
+  ctx.LPTE.emit({
+    meta: {
+      type: 'createCollection',
+      namespace: 'database',
+      version: 1
+    },
+    collection: 'match'
+  });
+
   if (gfxState.state == "NO_MATCH") {
     const res = await ctx.LPTE.request({
       meta: {

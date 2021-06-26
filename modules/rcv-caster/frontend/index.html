@@ -1,0 +1,66 @@
+<h1>RCVolus Caster: Operator Cockpit</h1>
+
+<div style="width: 480px; height: 270px; overflow: hidden;">
+  <iframe src="/pages/op-rcv-caster/gfx.html" width="1920" height="1080" style="transform: scale(0.25); transform-origin: 0 0;"></iframe>
+</div>
+<input class="w-100 my-3" readonly id="caster-embed" />
+
+<form id="update-caster-form">
+  <div class="d-flex">
+    <div class="form-group w-50 mr-3">
+      <label for="caster-one">Caster 1</label>
+      <select class="form-control" id="caster-one" required aria-describedby="Caster 1">
+        <option selected disabled value="">Select a Caster/Analyst</option>
+      </select>
+    </div>
+    <div class="form-group w-50">
+      <label for="caster-two">Caster 2</label>
+      <select class="form-control" id="caster-two" required aria-describedby="Caster 2">
+        <option selected disabled value="">Select a Caster/Analyst</option>
+      </select>
+    </div>
+  </div>
+  <div class="d-flex">
+    <button type="submit" class="btn btn-primary w-75 mr-3">Update</button>
+    <button type="button" class="btn btn-secondary w-25 mr-3" onclick="swop()">Swop</button>
+    <button type="button" class="btn btn-danger w-25" onclick="unset()">Unset</button>
+  </div>
+</form>
+
+<table class="table mb-3 mt-5">
+  <thead>
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Platform</th>
+      <th scope="col">Handle</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody id="caster-table"></tbody>
+</table>
+
+<form id="add-caster-form">
+  <div class="d-flex">
+    <div class="form-group w-50 mr-3">
+      <label for="name">Name</label>
+      <input type="text" class="form-control" id="name" required aria-describedby="Name" placeholder="Name">
+    </div>
+    <div class="form-group w-25 mr-3">
+      <label for="platform">Social Platform</label>
+      <select class="form-control" id="platform" required aria-describedby="Platform">
+        <option>Twitch</option>
+        <option>Twitter</option>
+      </select>
+    </div>
+    <div class="form-group w-50">
+      <label for="username">Handle</label>
+      <input type="text" class="form-control" id="handle" required placeholder="Handle">
+    </div>
+  </div>
+  <button type="submit" class="btn btn-success btn-block">Add</button>
+</form>
+
+<script src="/pages/op-rcv-caster/frontend.js" defer></script>
+
+
+
