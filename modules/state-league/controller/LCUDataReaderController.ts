@@ -65,9 +65,9 @@ export class LCUDataReaderController extends Controller {
       state.lcu.champselect._created = new Date()
       state.lcu.champselect._updated = new Date()
 
-      if (!this.refreshTask) {
+/*       if (!this.refreshTask) {
         this.refreshTask = setInterval(this.emitChampSelectUpdate, 500);
-      }
+      } */
 
       this.emitChampSelectUpdate()
 
@@ -102,9 +102,9 @@ export class LCUDataReaderController extends Controller {
       state.lcu.champselect._available = true
       state.lcu.champselect._updated = new Date()
 
-      if (!this.refreshTask) {
+      /* if (!this.refreshTask) {
         this.refreshTask = setInterval(this.emitChampSelectUpdate, 500);
-      }
+      } */
 
       this.emitChampSelectUpdate()
     }
@@ -112,10 +112,10 @@ export class LCUDataReaderController extends Controller {
       state.lcu.champselect._available = false
       state.lcu.champselect._deleted = new Date()
 
-      if (this.refreshTask) {
+      /* if (this.refreshTask) {
         clearInterval(this.refreshTask)
         this.refreshTask = undefined;
-      }
+      } */
 
       this.emitChampSelectUpdate()
 

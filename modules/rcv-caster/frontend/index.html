@@ -1,9 +1,19 @@
 <h1>RCVolus Caster: Operator Cockpit</h1>
 
-<div style="width: 480px; height: 270px; overflow: hidden;">
-  <iframe src="/pages/op-rcv-caster/gfx.html" width="1920" height="1080" style="transform: scale(0.25); transform-origin: 0 0;"></iframe>
+<div class="d-flex">
+  <div>
+    <div style="width: 480px; height: 270px; overflow: hidden;">
+      <iframe src="/pages/op-rcv-caster/gfx.html?set=1" width="1920" height="1080" style="transform: scale(0.25); transform-origin: 0 0;"></iframe>
+    </div>
+    <input class="w-100 my-3" readonly id="caster-embed-1" />
+  </div>
+  <div>
+    <div style="width: 480px; height: 270px; overflow: hidden;">
+      <iframe src="/pages/op-rcv-caster/gfx.html?set=2" width="1920" height="1080" style="transform: scale(0.25); transform-origin: 0 0;"></iframe>
+    </div>
+    <input class="w-100 my-3" readonly id="caster-embed-2" />
+  </div>
 </div>
-<input class="w-100 my-3" readonly id="caster-embed" />
 
 <form id="update-caster-form">
   <div class="d-flex">
@@ -24,6 +34,28 @@
     <button type="submit" class="btn btn-primary w-75 mr-3">Update</button>
     <button type="button" class="btn btn-secondary w-25 mr-3" onclick="swop()">Swop</button>
     <button type="button" class="btn btn-danger w-25" onclick="unset()">Unset</button>
+  </div>
+</form>
+
+<form id="update-caster-2-form">
+  <div class="d-flex">
+    <div class="form-group w-50 mr-3">
+      <label for="caster-2-one">Caster 1</label>
+      <select class="form-control" id="caster-2-one" required aria-describedby="Caster 1">
+        <option selected disabled value="">Select a Caster/Analyst</option>
+      </select>
+    </div>
+    <div class="form-group w-50">
+      <label for="caster-2-two">Caster 2</label>
+      <select class="form-control" id="caster-2-two" required aria-describedby="Caster 2">
+        <option selected disabled value="">Select a Caster/Analyst</option>
+      </select>
+    </div>
+  </div>
+  <div class="d-flex">
+    <button type="submit" class="btn btn-primary w-75 mr-3">Update</button>
+    <button type="button" class="btn btn-secondary w-25 mr-3" onclick="swop(2)">Swop</button>
+    <button type="button" class="btn btn-danger w-25" onclick="unset(2)">Unset</button>
   </div>
 </form>
 

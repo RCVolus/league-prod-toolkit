@@ -1,8 +1,7 @@
-import WebSocket from 'ws'
 const namespace = 'league-replay';
 
 module.exports = async (ctx: any) => {
-  ctx.LPTE.emit({
+  /* ctx.LPTE.emit({
     meta: {
       type: 'add-pages',
       namespace: 'ui',
@@ -17,7 +16,7 @@ module.exports = async (ctx: any) => {
 
   ctx.LPTE.on(namespace, 'set-render', async (e: any) => {
     // TODO handle data and show on map
-  });
+  }); */
 
   // Emit event that we're ready to operate
   ctx.LPTE.emit({

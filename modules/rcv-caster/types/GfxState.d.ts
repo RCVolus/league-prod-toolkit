@@ -1,6 +1,8 @@
 import type { Caster } from './Caster'
 
 export interface GfxState {
-  state: "NO_CASTER" | "READY"
-  caster: Caster[]
+  casterSets: {
+    1: Caster[],
+    2: Caster[]
+  }
 }

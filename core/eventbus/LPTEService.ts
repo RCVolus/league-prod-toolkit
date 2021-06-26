@@ -43,7 +43,7 @@ export class LPTEService implements LPTE {
     this.on(namespace, type, wrappedHandler)
   }
 
-  async request (event: LPTEvent, timeout = 5000): Promise<LPTEvent> {
+  async request (event: LPTEvent, timeout = 5000): Promise<LPTEvent | undefined> {
     const reply = `${event.meta.type}-${uniqid()}`
     event.meta.reply = reply
     event.meta.channelType = EventType.REQUEST
@@ -54,7 +54,7 @@ export class LPTEService implements LPTE {
       return await this.await('reply', reply, timeout)
     } catch {
       log.error(`Request timed out after ${timeout}ms. Request meta=${JSON.stringify(event.meta)}`)
-      throw new Error('request timed out')
+      return undefined
     }
   }
 
@@ -147,7 +147,7 @@ export class LPTEService implements LPTE {
         this.emit(enrichEvent(event))
       },
       on: this.on,
-      request: async (event: LPTEvent, timeout?: number): Promise<LPTEvent> => {
+      request: async (event: LPTEvent, timeout?: number): Promise<LPTEvent | undefined> => {
         // Enrich with sender information
         return await this.request(enrichEvent(event), timeout)
       },

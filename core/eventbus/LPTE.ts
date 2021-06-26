@@ -57,7 +57,7 @@ export interface LPTE {
    * @param event the request event to send
    * @param timeout the amount of ms to wait until rejecting the promise because of timeout
    */
-  request: (event: LPTEvent, timeout?: number) => Promise<LPTEvent>
+  request: (event: LPTEvent, timeout?: number) => Promise<LPTEvent | undefined>
 
   /**
    * Awaits until an event is emitted to the given namespace and type, or until timeout
