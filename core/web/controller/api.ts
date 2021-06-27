@@ -15,7 +15,8 @@ router.get('/events/shortcut/ingest/:namespace/:type', (req, res) => {
       namespace: req.params.namespace,
       type: req.params.type,
       version: 1
-    }
+    },
+    ...req.query
   })
   res.status(200).send({})
 })
