@@ -32,7 +32,15 @@ function App() {
                 e.data.isActive = true;
                 setGlobalState(e.data);
             });
-        })
+        });
+
+        /* window.LPTE.emit({
+            meta: {
+                namespace: 'lcu',
+                type: 'lcu-champ-select-create',
+                version: 1
+            }
+        }); */
     }, []);
 
     console.log(globalState);
