@@ -78,8 +78,6 @@ async function initUi () {
     }
   })
 
-  displayData(data)
-
   const casterData = await window.LPTE.request({
     meta: {
       namespace: 'rcv-caster',
@@ -90,6 +88,8 @@ async function initUi () {
 
   displayCasterTable(casterData)
   displayCasterSelects(casterData)
+
+  displayData(data)
 }
 
 function displayData (data) {
