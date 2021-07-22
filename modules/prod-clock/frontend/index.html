@@ -1,0 +1,54 @@
+<script>
+const getLocalTimeOffset = async () => {
+  // Get before time to measure roundtrip time to server
+  const beforeTime = new Date().getTime();
+
+  // Send request
+  const response = await LPTE.request({
+    meta: {
+      namespace: 'prod-clock',
+      type: 'request-sync',
+      version: 1
+    }
+  });
+
+  const afterTime = new Date().getTime();
+  const serverTime = response.time;
+
+  // Calculate roundtrip time (ping)
+  const ping = afterTime - beforeTime;
+
+  // We assume that the packet had the same time to travel client -> server, as it travels server -> client. Thus we have to remove half of the ping time from the server time to justify it correctly
+
+  const justifiedServerTime = serverTime - (ping / 2);
+
+  // Now we can use the justified server time to calculate the offset to the local clock.
+  // This localOffset variable should be saved for a longer time
+  const localOffset = justifiedServerTime - new Date().getTime();
+
+  // Now whenever you need to get the current server time, do the following:
+  // const currentServerTime = new Date(new Date().getTime() + localOffset);
+
+  return [localOffset, ping];
+}
+
+LPTE.onready(async () => {
+  const [offset, ping] = await getLocalTimeOffset();
+  console.log('Offset: ', offset);
+  console.log('Ping: ', ping);
+
+  const timeDocument = document.getElementById('server-time');
+  document.getElementById('ping').innerText = ping;
+  document.getElementById('offset').innerText = offset;
+
+  setInterval(() => {
+    timeDocument.innerText = new Date(new Date().getTime() + offset);
+  }, 100);
+})
+</script>
+
+<h1>Server time: <span id="server-time">%SYNCING%</span></h1>
+<ul>
+  <li>Ping (ms): <span id="ping">%SYNCING%</span></li>
+  <li>Offset (ms): <span id="offset">%SYNCING%</span></li>
+</ul>

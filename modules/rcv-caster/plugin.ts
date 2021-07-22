@@ -39,19 +39,27 @@ module.exports = async (ctx: any) => {
   });
 
   ctx.LPTE.on(namespace, 'set', async (e: any) => {
-    const casterRes = await ctx.LPTE.request({
+    const casterRes1 = await ctx.LPTE.request({
       meta: {
         type: 'request',
         namespace: 'database',
         version: 1
       },
       collection: 'caster',
-      id: e.caster
+      id: e.caster[0]
+    })
+    const casterRes2 = await ctx.LPTE.request({
+      meta: {
+        type: 'request',
+        namespace: 'database',
+        version: 1
+      },
+      collection: 'caster',
+      id: e.caster[1]
     })
 
-    const set : 1 | 2 = e.set || 1
-
-    gfxState.casterSets[set] = casterRes.data
+    gfxState.state = 'READY';
+    gfxState.caster = [casterRes1.data[0], casterRes2.data[0]]
 
     ctx.LPTE.emit({
       meta: {
