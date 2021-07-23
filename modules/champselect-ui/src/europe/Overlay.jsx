@@ -46,7 +46,7 @@ export default class Overlay extends React.Component {
 
         console.log(state);
 
-        const renderBans = (teamState) =>{
+        const renderBans = (teamState) => {
             const list =  teamState.bans.map(ban => <Ban {...ban} />);
             list.splice(3, 0, <div className={css.Spacing} />);
             return <div className={cx(css.BansBox)}>{list}</div>;
