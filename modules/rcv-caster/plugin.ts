@@ -1,3 +1,4 @@
+import type { PluginContext } from 'league-prod-toolkit/core/modules/Module'
 import type { GfxState } from './types/GfxState'
 
 const namespace = 'rcv-caster';
@@ -9,7 +10,7 @@ const initialState : GfxState = {
   }
 }
 
-module.exports = async (ctx: any) => {
+module.exports = async (ctx: PluginContext) => {
   let gfxState = initialState;
 
   // Register new UI page
@@ -60,6 +61,10 @@ module.exports = async (ctx: any) => {
       id: e.caster[1]
     })
 
+    if (casterRes1 === undefined || casterRes2 === undefined) {
+      return ctx.log.warn('one or more of the selected casters could not be found')
+    }
+
     gfxState.casterSets[set] = [casterRes1.data[0], casterRes2.data[0]]
 
     ctx.LPTE.emit({
@@ -91,6 +96,10 @@ module.exports = async (ctx: any) => {
       },
       collection: 'caster'
     })
+
+    if (res === undefined) {
+      return ctx.log.warn('casters could not be loaded')
+    }
 
     ctx.LPTE.emit({
       meta: {
@@ -126,6 +135,10 @@ module.exports = async (ctx: any) => {
       collection: 'caster'
     })
 
+    if (res === undefined) {
+      return ctx.log.warn('casters could not be loaded')
+    }
+
     ctx.LPTE.emit({
       meta: {
         type: 'update-caster-set',
@@ -145,6 +158,10 @@ module.exports = async (ctx: any) => {
       },
       collection: 'caster'
     })
+
+    if (res === undefined) {
+      return ctx.log.warn('casters could not be loaded')
+    }
 
     ctx.LPTE.emit({
       meta: {

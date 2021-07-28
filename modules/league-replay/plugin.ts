@@ -1,6 +1,8 @@
+import { PluginContext } from 'league-prod-toolkit/core/modules/Module'
+
 const namespace = 'league-replay';
 
-module.exports = async (ctx: any) => {
+module.exports = async (ctx: PluginContext) => {
   /* ctx.LPTE.emit({
     meta: {
       type: 'add-pages',

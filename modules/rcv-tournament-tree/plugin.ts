@@ -1,3 +1,4 @@
+import type { PluginContext } from 'league-prod-toolkit/core/modules/Module'
 import type { GfxState } from './types/GfxState'
 
 const namespace = 'rcv-tournament-tree';
@@ -17,7 +18,7 @@ const gameMatrix : [number, number | null][] = [
   [6, 7],
 ]
 
-module.exports = async (ctx: any) => {
+module.exports = async (ctx: PluginContext) => {
   let gfxState = initialState;
 
   // Register new UI page
