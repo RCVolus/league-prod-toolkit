@@ -1,3 +1,4 @@
+import type { PluginContext } from 'league-prod-toolkit/core/modules/Module'
 import fs from 'fs';
 import path from 'path';
 import tar from 'tar';
@@ -10,7 +11,7 @@ import https from 'https';
  * @param cb callback if data has to be downloaded
  * @param cb2 callback if data already exists cb will be skipped
 */
-export default function getDDragon(version: string, ctx: any, cb: () => void, cb2 : () => void ) {
+export default function getDDragon(version: string, ctx: PluginContext, cb: () => void, cb2 : () => void ) {
   const fileName = `dragontail-${version}.tgz`
   const filePath = path.join(__dirname, '..', '..', 'data', fileName)
   const zipURI = `https://ddragon.leagueoflegends.com/cdn/${fileName}`
@@ -18,6 +19,7 @@ export default function getDDragon(version: string, ctx: any, cb: () => void, cb
 
   if (fs.existsSync(path.join(dataPath, version))) return cb2()
 
+  // TODO Item data
   const paths = [
     `${version}/img/champion`,
     `${version}/img/item`,
@@ -25,6 +27,7 @@ export default function getDDragon(version: string, ctx: any, cb: () => void, cb
     `${version}/data/de_DE/map.json`,
     `${version}/data/de_DE/runesReforged.json`,
     `${version}/data/de_DE/champion.json`,
+    `${version}/data/de_DE/item.json`,
     `img/champion`,
     `img/perk-images/Styles`,
   ]
