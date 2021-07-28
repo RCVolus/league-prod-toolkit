@@ -1,4 +1,6 @@
 const config = require('./config.json');
+const fs = require('fs');
+const path = require('path');
 
 module.exports = (ctx) => {
   ctx.LPTE.on('config', 'request', e => {
@@ -9,6 +11,15 @@ module.exports = (ctx) => {
         version: 1
       },
       config: config[e.meta.sender.name]
+    });
+  });
+
+  ctx.LPTE.on('config', 'set', e => {
+    config[e.meta.sender.name] = e.config
+
+    fs.writeFile(path.join(__dirname, './config.json'), JSON.stringify(config, null, 2), function (err) {
+      if (err) return ctx.log.error(err);
+      ctx.log.info('config for ' + e.meta.sender.name + ' saved!');
     });
   });
 

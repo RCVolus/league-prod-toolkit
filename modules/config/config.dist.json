@@ -13,5 +13,9 @@
         "password": "rootpassword",
         "clusterUrl": "localhost",
         "port": 27017
+    },
+    "league-in-game": {
+        "items": [],
+        "level": []
     }
 }
