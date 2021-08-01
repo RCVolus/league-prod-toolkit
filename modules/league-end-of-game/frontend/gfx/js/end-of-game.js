@@ -314,7 +314,7 @@ let previousState = 'ITEMS'
 const tick = async () => {
   const data = await this.LPTE.request({
     meta: {
-      namespace: 'rcv-tent',
+      namespace: 'league-end-of-game',
       type: 'request',
       version: 1
     }

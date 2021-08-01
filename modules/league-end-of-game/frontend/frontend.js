@@ -1,3 +1,5 @@
+const namespace = 'league-end-of-game';
+
 const updateUi = (state) => {
   $('#gold-embed').val(`${location.href}/gfx/gold.html`);
   $('#damage-embed').val(`${location.href}/gfx/end-of-game.html?damage`);
@@ -12,7 +14,7 @@ const updateState = async () => {
 const showItems = () => {
   LPTE.emit({
     meta: {
-      namespace: 'rcv-tent',
+      namespace,
       type: 'end-of-game',
       version: 1
     },
@@ -23,7 +25,7 @@ const showItems = () => {
 const showDmg = () => {
   LPTE.emit({
     meta: {
-      namespace: 'rcv-tent',
+      namespace,
       type: 'end-of-game',
       version: 1
     },

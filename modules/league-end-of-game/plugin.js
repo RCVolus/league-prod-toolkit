@@ -1,4 +1,4 @@
-const namespace = 'rcv-tent';
+const namespace = 'league-end-of-game';
 
 module.exports = (ctx) => {
   let state = "ITEMS";
@@ -11,9 +11,9 @@ module.exports = (ctx) => {
       version: 1
     },
     pages: [{
-      name: 'OP: rcv-tent',
+      name: 'OP: league-end-of-game',
       frontend: 'frontend',
-      id : 'op-rcv-tent'
+      id : 'op-league-end-of-game'
     }]
   });
 
