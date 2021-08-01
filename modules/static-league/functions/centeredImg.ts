@@ -1,10 +1,11 @@
+import type { PluginContext } from 'league-prod-toolkit/core/modules/Module'
 import https from 'https';
 import fs from 'fs';
 import path from 'path';
 
 const base = path.join(__dirname, '..', '..', 'data', 'img', 'champion', 'centered')
 
-export default async function (ctx : any, gameVersion : string, cb : () => void) {
+export default async function (ctx : PluginContext, gameVersion : string, cb : () => void) {
   if (!fs.existsSync(base)) {
     fs.mkdirSync(base, { recursive: true })
   }
@@ -21,7 +22,7 @@ export default async function (ctx : any, gameVersion : string, cb : () => void)
   cb()
 }
 
-async function downloadImg (ctx : any, id : number) {
+async function downloadImg (ctx : PluginContext, id : number) {
   const dest = path.join(base, id.toString()) + '.jpg'
   const url = `https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/champion-splashes/${id}/${id}000.jpg`
 
