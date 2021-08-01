@@ -1,0 +1,142 @@
+:root {
+  --blue: #00b7e0;
+  --red: #ff5233;
+  --white: #fafafa;
+  --dark: #051c2c;
+}
+
+*, *::before, *::after {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  width: 1920px;
+  height: 1080px;
+  overflow: hidden;
+  display: flex;
+  background-size: contain;
+  background-repeat: no-repeat;
+  margin-top: 154px;
+  font-family: poppins, sans-serif;
+  font-weight: 700;
+}
+
+.player {
+  width: 74px;
+  height: 71px;
+  overflow: hidden;
+  position: relative;
+  transform-origin: center bottom;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transform: scaleY(0);
+}
+
+.level {
+  display: none;
+  transform-origin: center;
+  font-size: 50px;
+  transform: translateY(-100%)
+}
+
+.levelUp {
+  animation: backgroundUp 0.4s ease-out forwards,
+              backgroundDown 0.4s ease-out 2.85s forwards;
+}
+
+.levelUp .level {
+  display: block;
+  animation: levelIn 0.4s ease-in 0.05s forwards,
+              levelOut 0.4s ease-in 2.6s forwards;
+}
+
+.item {
+  display: none;
+  object-fit: contain;
+  width: 60px;
+  height: 60px;
+  transform: translateY(-100%)
+}
+
+.itemBuy {
+  animation: backgroundUp 0.4s ease-out forwards,
+              backgroundDown 0.4s ease-out 3.45s forwards;
+}
+
+.itemBuy .item {
+  display: block;
+  animation: levelIn 0.4s ease-in 0.1s forwards,
+              levelOut 0.4s ease-in 3.15s forwards;
+}
+
+.player:not(:last-child) {
+  margin-bottom: 32px;
+}
+
+#blue {
+  margin-left: 2px;
+}
+
+#blue .player {
+  background: var(--blue);
+  background: linear-gradient(180deg, var(--blue) 0%, var(--dark) 250%);
+  -webkit-mask-image: radial-gradient(circle 18px at 70px 9px, transparent 0, transparent 12px, black 13px);
+}
+
+#blue .player .level {
+  color: var(--dark);
+}
+
+#red {
+  margin-right: 2px;
+  margin-left: auto;
+}
+
+#red .player {
+  background: var(--red);
+  background: linear-gradient(180deg, var(--red) 0%, var(--dark) 250%);
+  -webkit-mask-image: radial-gradient(circle 18px at 4px 9px, transparent 0, transparent 12px, black 13px);
+}
+
+#red .player .level {
+  color: var(--white);
+}
+
+@keyframes backgroundUp {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+
+@keyframes backgroundDown {
+  from {
+    transform: scaleY(1);
+  }
+  to {
+    transform: scaleY(0);
+  }
+}
+
+@keyframes levelIn {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes levelOut {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-100%);
+  }
+}
