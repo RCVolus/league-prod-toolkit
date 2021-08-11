@@ -5,8 +5,3 @@ core-build/
 cache/
 modules/config/config.json
 .DS_Store
-
-modules/static-league/data/*
-!modules/static-league/data/img
-modules/static-league/data/img/*
-!modules/static-league/data/img/summoner-spell

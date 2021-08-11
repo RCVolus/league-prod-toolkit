@@ -50,6 +50,9 @@ module.exports = async (ctx: PluginContext) => {
     const summonerSpells = path.join(__dirname, `../data/img/summoner-spell`)
     app.use('/img/summoner-spell', express.static(summonerSpells));
 
+    const drakes = path.join(__dirname, `../data/img/drakes`)
+    app.use('/img/drakes', express.static(drakes));
+
     const profileIcons = path.join(__dirname, `../data/${gameVersion}/img/item`)
     app.use('/img/profileicon', express.static(profileIcons));
   

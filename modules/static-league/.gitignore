@@ -1,0 +1,5 @@
+data/*
+!data/img
+data/img/*
+!data/img/summoner-spell
+!data/img/drakes
