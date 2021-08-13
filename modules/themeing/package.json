@@ -14,11 +14,15 @@
     "needsBuild": true
   },
   "dependencies": {
+    "fs-extra": "^10.0.0",
     "league-prod-toolkit": "file:../..",
     "node-sass": "^6.0.1",
     "typescript": "^4.3.2"
   },
   "scripts": {
     "build": "tsc"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "^9.0.12"
   }
 }

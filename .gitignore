@@ -10,3 +10,5 @@ modules/static-league/data/*
 !modules/static-league/data/img
 modules/static-league/data/img/*
 !modules/static-league/data/img/summoner-spell
+
+modules/themeing/frontend/active
