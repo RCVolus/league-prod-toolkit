@@ -134,17 +134,23 @@ export class Plugin {
     // Craft context
     this.context = new PluginContext(this)
 
-    const mainFile = this.getMain()
-
-    // eslint-disable-next-line
-    const main = require(path.join(this.getModule().getFolder(), mainFile))
-
     const handleError = (e: any): void => {
       (this.context as PluginContext).log.error(`Uncaught error in ${this.module.getName()}: `, e)
       console.error(e)
 
       // Set plugin status to degraded, maybe functionality will not work anymore
       this.status = PluginStatus.DEGRADED
+    }
+
+    const mainFile = this.getMain()
+
+    let main
+    try {
+      // eslint-disable-next-line
+      main = require(path.join(this.getModule().getFolder(), mainFile))
+    } catch (e) {
+      handleError(e)
+      return
     }
 
     // Execute main (and wrap it in a try / catch, so there cannot be an exception bubbling up)

@@ -14,8 +14,9 @@
     "needsBuild": true
   },
   "dependencies": {
-    "typescript": "^4.3.2",
-    "league-prod-toolkit": "file:../.."
+    "league-prod-toolkit": "file:../..",
+    "node-sass": "^6.0.1",
+    "typescript": "^4.3.2"
   },
   "scripts": {
     "build": "tsc"
