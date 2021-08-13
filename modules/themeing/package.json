@@ -1,8 +1,8 @@
 {
-  "name": "prod-clock",
+  "name": "themeing",
   "version": "1.0.0",
-  "description": "Module that provides technology to synchronise client clocks",
-  "author": "Larce",
+  "description": "Module that provides themeing to web graphical elements, like WebGFX",
+  "author": "RCVolus",
   "license": "MIT",
   "toolkit": {
     "modes": [
@@ -13,8 +13,9 @@
     },
     "needsBuild": true
   },
-  "devDependencies": {
-    "typescript": "^4.3.2"
+  "dependencies": {
+    "typescript": "^4.3.2",
+    "league-prod-toolkit": "file:../.."
   },
   "scripts": {
     "build": "tsc"

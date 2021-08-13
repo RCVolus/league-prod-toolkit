@@ -25,4 +25,4 @@ This allows to specifically only change one component in the global CSS.
 ## For theme creators
 If you want to create a theme, there are a few tricks and tipps:
 - use CSS variables to define and apply things like colours, margins, borders, etc. https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties
-- use the wrapper class if you only want to style a specific components, but set all things globally that you want to have set globally (e.g. fonts, colours).
+- use the wrapper class if you only want to style a specific component, but set all things globally that you want to have set globally (e.g. fonts, colours).
