@@ -2,6 +2,7 @@ import { PluginContext } from 'league-prod-toolkit/core/modules/Module'
 import path from 'path'
 import fs from 'fs'
 import fse from 'fs-extra'
+import sass from 'node-sass'
 
 const namespace = 'themeing';
 
@@ -130,11 +131,26 @@ module.exports = async (ctx: PluginContext) => {
     const idFilePath = path.join(activePath, 'id')
     const gitKeepFilePath = path.join(activePath, '.gitkeep')
 
-    await fse.emptyDir(activePath)
-    await fse.copy(themePath, activePath)
+    try {
+      await fse.emptyDir(activePath)
+      await fse.copy(themePath, activePath)
 
-    fs.writeFile(idFilePath, activeTheme, () => {})
-    fs.writeFile(gitKeepFilePath, '', () => {})
+      fs.writeFile(idFilePath, activeTheme, () => {})
+      fs.writeFile(gitKeepFilePath, '', () => {})
+    } catch (e) {
+      ctx.log.error('Applying theme failed', e)
+    }
+
+    sass.render({
+      file: path.join(activePath, 'index.scss')
+    }, async (err, result) => {
+      if (err) {
+        ctx.log.error('Failed to compile scss', err)
+        return;
+      }
+
+      fs.writeFile(path.join(activePath, 'index.css'), result.css, () => {})
+    });
 
     ctx.LPTE.emit({
       meta: {

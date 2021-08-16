@@ -1,0 +1,25 @@
+.rcv-teams-ingame-gfx {
+  #tag-container {
+    background-image: url(/pages/op-themeing/active/images/rcv-teams-ingame.png)
+  }
+
+  #red-tag, #blue-tag {
+    display: block;
+    // background-color: green;
+    width: 200px;
+    text-align: center;
+    font-size: 20px;
+
+    margin-top: 2.45rem;
+  }
+
+  #blue-tag {
+    right: 83%;
+    color: white !important;
+  }
+
+  #red-tag {
+    left: 83%;
+    color: white !important;
+  }
+}

@@ -23,6 +23,7 @@
     "build": "tsc"
   },
   "devDependencies": {
-    "@types/fs-extra": "^9.0.12"
+    "@types/fs-extra": "^9.0.12",
+    "@types/node-sass": "^4.11.2"
   }
 }
