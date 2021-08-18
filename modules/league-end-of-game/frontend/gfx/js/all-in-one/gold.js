@@ -1,43 +1,14 @@
+const goldGraphCTX = document.getElementById('goldGraphCTX').getContext('2d');
 const red = 'rgba(255,82,51,1)'
 const blue = 'rgba(0,183,224,1'
-const white = 'rgba(242,234,213,1)'
+const white = 'rgba(250,250,250,1)'
 const whiteTransparent = 'rgba(242,234,213,0.1)'
 
-// use data to create chart
-async function getData (data) {
-  const gameData = data.state.web.match
-  const timelineData = data.state.web.timeline
+function displayGoldGraph (frames) {
+  const keys = Object.keys(frames)
+  const values = Object.values(frames)
 
-  const participants = gameData.participants
-  const blueTeam = participants
-  .map(p => {
-    if (p.teamId == 100) return p.participantId
-  })
-  .filter(p => p !== undefined)
-
-  const frames = timelineData.frames
-  const goldPerFrame = frames.map(frame => {
-    var blue = 0
-    var red = 0
-
-    for (const participant of Object.values(frame.participantFrames)) {
-      const team = blueTeam.includes(participant.participantId) ? 100 : 200
-
-      if (team == 100) blue += participant.totalGold;
-      else if (team == 200) red += participant.totalGold;
-    }
-
-    const timestamp = frame.timestamp
-    return {timestamp, value: blue - red}
-  })
-
-  return {keys: goldPerFrame.map(f => f.timestamp), values: goldPerFrame.map(f => f.value)}
-}
-
-async function displayGoldGraph (data) {
-  const {keys, values} = await getData(data);
-  var ctx = document.getElementById('goldGraph').getContext('2d');
-  var chart = new Chart(ctx, {
+  var chart = new Chart(goldGraphCTX, {
     type: 'NegativeTransparentLine',
     data: {
       labels: keys,
@@ -55,7 +26,7 @@ async function displayGoldGraph (data) {
             ticks: {
               autoskip: true,
               autoSkipPadding: 50,
-              fontSize: 20,
+              fontSize: 16,
               fontColor: white,
               callback: function(value, index, values) {
                 return value.toFixed(0).replace(/-/g,'');
@@ -68,11 +39,11 @@ async function displayGoldGraph (data) {
           xAxes: [{
             ticks: {
               autoskip: true,
-              autoSkipPadding: 50,
-              fontSize: 20,
+              autoSkipPadding: 25,
+              fontSize: 16,
               fontColor: white,
               callback: function(value, index, values) {
-                return millisToMinutesAndSeconds(value)
+                return milliSecsToMinutesAndSeconds(value)
               }
             },
             gridLines: {
@@ -86,31 +57,7 @@ async function displayGoldGraph (data) {
         },
     }
   });
-}
-
-window.LPTE.onready(async () => {
-  const leagueState = await window.LPTE.request({
-    meta: {
-      namespace: 'state-league',
-      type: 'request',
-      version: 1
-    }
-  })
-  displayGoldGraph(leagueState)
-  console.log(leagueState)
-
-  window.LPTE.on('state-league', 'match-game-loaded', e => {
-    console.log(e)
-    displayGoldGraph(e)
-  })
-})
-
-// Helper to calc milliseconds to minutes and seconds
-function millisToMinutesAndSeconds(millis) {
-  var minutes = Math.floor(millis / 60000);
-  var seconds = ((millis % 60000) / 1000).toFixed(0);
-  return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
-}
+} 
 
 // Add new type of chart to chart.js
 Chart.defaults.NegativeTransparentLine = Chart.helpers.clone(Chart.defaults.line);
@@ -147,3 +94,10 @@ Chart.controllers.NegativeTransparentLine = Chart.controllers.line.extend({
     return Chart.controllers.line.prototype.update.apply(this, arguments);
   }
 });
+
+// Helper to calc milliseconds to minutes and seconds
+function milliSecsToMinutesAndSeconds(milliSecs) {
+  var minutes = Math.floor(milliSecs / 60000);
+  var seconds = ((milliSecs % 60000) / 1000).toFixed(0);
+  return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
+}

@@ -14,8 +14,10 @@
 }
 
 body {
-  width: 100%;
-  height: 100vh;
+  /* background: var(--dark); */
+  width: 1920px;
+  height: 1080px;
+  overflow: hidden;
   display: flex;
   justify-content: center;
   align-items: center;

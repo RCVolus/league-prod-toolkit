@@ -42,6 +42,10 @@ h5 {
   margin-left: auto;
 }
 
+.stats .secondStatDmg {
+  display: none;
+}
+
 #redTeam .stats .secondStat {
   color: var(--red);
 }
