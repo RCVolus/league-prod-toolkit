@@ -5,6 +5,7 @@ const updateUi = (state) => {
   $('#damage-embed').val(`${location.href}/gfx/end-of-game.html?damage`);
   $('#items-embed').val(`${location.href}/gfx/end-of-game.html`);
   $('#pickban-embed').val(`${location.href}/gfx/pick-ban-order.html`);
+  $('#all-in-one-embed').val(`${location.href}/gfx/all-in-one.html`);
 }
 
 const updateState = async () => {

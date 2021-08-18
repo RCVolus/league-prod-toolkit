@@ -46,8 +46,8 @@ async function displayPUBOrder (data) {
   }
 }
 
-window.LPTE.onready(async () => {
-  const leagueState = await window.LPTE.request({
+LPTE.onready(async () => {
+  const leagueState = await LPTE.request({
     meta: {
       namespace: 'state-league',
       type: 'request',
@@ -57,7 +57,7 @@ window.LPTE.onready(async () => {
   displayPUBOrder(leagueState.state.lcu.champselect.order)
   console.log(leagueState)
 
-  window.LPTE.on('state-league', 'champselect-update', e => {
+  LPTE.on('state-league', 'champselect-update', e => {
     console.log(e)
     displayPUBOrder(e.order)
   })

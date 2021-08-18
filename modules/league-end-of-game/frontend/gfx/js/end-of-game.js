@@ -1,42 +1,20 @@
-var championsData = []
-var gameData = {}
-var participants = []
-var staticURL = '/serve/static-league'
-var version = ''
+const namespace = 'league-end-of-game';
 
-async function getGameData () {
-  // TODO Change data source here
-  const gameReq = await window.LPTE.request({
-    meta: {
-      namespace: 'state-league',
-      type: 'request',
-      version: 1
-    }
-  })
-
-  return gameReq.state.web.match
-}
-
-async function getConstants () {
-  const constantsRes = await window.LPTE.request({
-    meta: {
-      namespace: 'static-league',
-      type: 'request-constants',
-      version: 1
-    }
-  })
-  console.log(constantsRes)
-  const constants = constantsRes.constants
-  // staticURL = constants.staticURL
-  version = constants.version
-  championsData = constants.champions
-}
+let previousState = 'ITEMS'
+let staticURL = 'http://localhost:5656'
+let champions = []
+let version = ''
 
 const itemUrl = id => {
-  return `${staticURL}/${version}/img/item/${id}.png`
+  return `${staticURL}/img/item/${id}.png`
 }
-const champUrl = id => {
-  const champ = championsData.find(c => c.key == id)
+const champUrl = championId => {
+  const champ = champions.find(c => {
+    return c.key === championId.toString()
+  })
+
+  if (champ === undefined) return ''
+
   return `${staticURL}/img/champion/tiles/${champ.id}_0.jpg`
 }
 const spellUrl = id => {
@@ -45,7 +23,8 @@ const spellUrl = id => {
 
 // Team Blue
 const blueTeamKDA = document.querySelector('#blueTeam .stats .kda')
-const blueTeamSecondStat = document.querySelector('#blueTeam .stats .secondStat')
+const blueTeamSecondStatDmg = document.querySelector('#blueTeam .stats .secondStatDmg')
+const blueTeamSecondStatGold = document.querySelector('#blueTeam .stats .secondStatGold')
 const blueTeamCampions = document.querySelector('#blueTeam .campions')
 const blueTeamSpells = document.querySelector('#blueTeam .spells')
 const blueTeamData = document.querySelector('#blueTeam .data')
@@ -53,32 +32,17 @@ const blueTeamDmg = document.querySelector('#blueTeam .dmg')
 
 // Team Red
 const redTeamKDA = document.querySelector('#redTeam .stats .kda')
-const redTeamSecondStat = document.querySelector('#redTeam .stats .secondStat')
+const redTeamSecondStatDmg = document.querySelector('#redTeam .stats .secondStatDmg')
+const redTeamSecondStatGold = document.querySelector('#redTeam .stats .secondStatGold')
 const redTeamCampions = document.querySelector('#redTeam .campions')
 const redTeamSpells = document.querySelector('#redTeam .spells')
 const redTeamData = document.querySelector('#redTeam .data')
 const redTeamDmg = document.querySelector('#redTeam .dmg')
 
-var blueTeamStats = {
-  kills: 0,
-  deaths: 0,
-  assists: 0,
-  gold: 0,
-  dmg: 0
-}
-var redTeamStats = {
-  kills: 0,
-  deaths: 0,
-  assists: 0,
-  gold: 0,
-  dmg: 0
-}
-
-function displayChamps () {
-  console.log(gameData)
-  for (const participant of gameData.participants) {
+function displayChamps (participants) {
+  for (const participant of Object.values(participants)) {
     const img = document.createElement('img')
-    img.src = champUrl(participant.championId)
+    img.src = champUrl(participant.champion)
     if (participant.teamId == 100) {
       blueTeamCampions.appendChild(img)
     } else {
@@ -87,13 +51,13 @@ function displayChamps () {
   }
 }
 
-function displaySpells () {
-  for (const participant of gameData.participants) {
+function displaySpells (participants) {
+  for (const participant of Object.values(participants)) {
     const firstSpell = document.createElement('img')
-    firstSpell.src = spellUrl(participant.spell1Id)
+    firstSpell.src = spellUrl(participant.summonerSpell1)
 
     const secondSpell = document.createElement('img')
-    secondSpell.src = spellUrl(participant.spell2Id)
+    secondSpell.src = spellUrl(participant.summonerSpell2)
 
     if (participant.teamId === 100) {
       blueTeamSpells.appendChild(firstSpell)
@@ -105,10 +69,8 @@ function displaySpells () {
   }
 }
 
-function renderItems () {
-  for (const participant of gameData.participants) {
-    // const participantInfo = participants.find(p => p.participantId == participant.participantId)
-
+function renderItems (participants, teams) {
+  for (const participant of Object.values(participants)) {
     const data = document.createElement('div')
     data.classList.add('dataContainer')
 
@@ -130,19 +92,10 @@ function renderItems () {
     // item row
     const itemRow = document.createElement('div')
     itemRow.classList.add('itemRow')
-    const items = [
-      participant.stats.item0,
-      participant.stats.item1,
-      participant.stats.item2,
-      participant.stats.item3,
-      participant.stats.item4,
-      participant.stats.item5,
-      participant.stats.item6,
-    ]
 
     // other stats
-    const cs = participant.stats.totalMinionsKilled
-    const gold = participant.stats.goldEarned
+    const cs = participant.stats.cs
+    const gold = participant.stats.gold
 
     const csDiv = document.createElement('div')
     csDiv.classList.add('info')
@@ -162,20 +115,14 @@ function renderItems () {
     goldDiv.appendChild(goldHeading)
     goldDiv.appendChild(goldText)
 
-    if (participant.teamId == 100) {
-      // teamStats
-      blueTeamStats.kills += kills
-      blueTeamStats.deaths += deaths
-      blueTeamStats.assists += assists
-      blueTeamStats.gold += gold
-      
+    if (participant.teamId == 100) {      
       firstRow.appendChild(name)
       firstRow.appendChild(kda)
 
       data.appendChild(firstRow)
 
       // item row
-      for (const item of items) {
+      for (const item of participant.items) {
         if (item > 0) {
           const itemImg = document.createElement('img')
           itemImg.src = itemUrl(item)
@@ -193,12 +140,6 @@ function renderItems () {
 
       blueTeamData.appendChild(data)
     } else {
-      // teamStats
-      redTeamStats.kills += kills
-      redTeamStats.deaths += deaths
-      redTeamStats.assists += assists
-      redTeamStats.gold += gold
-
       firstRow.appendChild(kda)
       firstRow.appendChild(name)
 
@@ -208,7 +149,7 @@ function renderItems () {
       data.appendChild(csDiv)
 
       // item row
-      for (const item of items.reverse()) {
+      for (const item of participant.items.reverse()) {
         if (item > 0) {
           const itemImg = document.createElement('img')
           itemImg.src = itemUrl(item)
@@ -225,11 +166,11 @@ function renderItems () {
     }
   }
 
-  blueTeamKDA.innerHTML = `${blueTeamStats.kills} / ${blueTeamStats.deaths} / ${blueTeamStats.assists}`
-  redTeamKDA.innerHTML = `${redTeamStats.kills} / ${redTeamStats.deaths} / ${redTeamStats.assists}`
+  blueTeamKDA.innerHTML = `${teams[100].stats.kills} / ${teams[100].stats.deaths} / ${teams[100].stats.assists}`
+  redTeamKDA.innerHTML = `${teams[200].stats.kills} / ${teams[200].stats.deaths} / ${teams[200].stats.assists}`
 
-  blueTeamSecondStat.innerHTML = calcK(blueTeamStats.gold)
-  redTeamSecondStat.innerHTML = calcK(redTeamStats.gold)
+  blueTeamSecondStatGold.innerHTML = calcK(teams[100].stats.gold)
+  redTeamSecondStatGold.innerHTML = calcK(teams[200].stats.gold)
 
   showItems()
 }
@@ -237,22 +178,37 @@ function renderItems () {
 function showItems() {
   blueTeamData.style.display = 'block'
   blueTeamDmg.style.display = 'none'
+
   redTeamData.style.display = 'block'
   redTeamDmg.style.display = 'none'
+
+  blueTeamSecondStatGold.style.display = 'block'
+  blueTeamSecondStatDmg.style.display = 'none'
+
+  redTeamSecondStatGold.style.display = 'block'
+  redTeamSecondStatDmg.style.display = 'none'
 }
 function showDmg() {
   blueTeamData.style.display = 'none'
   blueTeamDmg.style.display = 'block'
+
   redTeamData.style.display = 'none'
   redTeamDmg.style.display = 'block'
+
+  blueTeamSecondStatGold.style.display = 'none'
+  blueTeamSecondStatDmg.style.display = 'block'
+
+  redTeamSecondStatGold.style.display = 'none'
+  redTeamSecondStatDmg.style.display = 'block'
 }
 
-function renderDmg () {
-  const dmgArray = gameData.participants.map(p => p.stats.totalDamageDealtToChampions)
+function renderDmg (participants, teams) {
+  const participantsArray = Object.values(participants)
+  const dmgArray = participantsArray.map(p => p.stats.damage)
   const dmgMax = Math.max.apply(null,dmgArray)
 
-  for (const participant of gameData.participants) {
-    const dmg = participant.stats.totalDamageDealtToChampions
+  for (const participant of participantsArray) {
+    const dmg = participant.stats.damage
     const ratio = Math.round((dmg / dmgMax) * 100)
 
     const dmgContainer = document.createElement('div')
@@ -260,21 +216,17 @@ function renderDmg () {
 
     const dmgBar = document.createElement('div')
     dmgBar.classList.add('dmgBar')
-    dmgBar.style.setProperty("--bar-width", `calc(${ratio}% - 6rem)`)
+    dmgBar.style.setProperty("--bar-width", `calc(${ratio}% - 5rem)`)
 
     const dmgText = document.createElement('h3')
     dmgText.innerHTML = calcK(dmg)
 
     if (participant.teamId == 100) {
-      blueTeamStats.dmg += dmg
-
       dmgContainer.appendChild(dmgBar)
       dmgContainer.appendChild(dmgText)
 
       blueTeamDmg.appendChild(dmgContainer)
     } else {
-      redTeamStats.dmg += dmg
-
       dmgContainer.appendChild(dmgText)
       dmgContainer.appendChild(dmgBar)
 
@@ -282,50 +234,63 @@ function renderDmg () {
     }
   }
 
-  blueTeamSecondStat.innerHTML = calcK(blueTeamStats.dmg)
-  redTeamSecondStat.innerHTML = calcK(redTeamStats.dmg)
+  blueTeamSecondStatDmg.innerHTML = calcK(teams[100].stats.damage)
+  redTeamSecondStatDmg.innerHTML = calcK(teams[100].stats.damage)
 }
 
-async function start () {
-  await getConstants()
-  gameData = await getGameData()
-  participants = gameData.participantIdentities
-  displayChamps()
-  displaySpells()
-  renderItems()
-  renderDmg()
+async function start (emdOfGameData) {
+  const state = emdOfGameData.state
 
-  tick()
-  setInterval(tick, 1000)
+  const participants = state.participants
+  const teams = state.teams
+
+  displayChamps(participants)
+  displaySpells(participants)
+  renderItems(participants, teams)
+  renderDmg(participants, teams)
 }
-window.LPTE.onready(start)
 
 function calcK (amount) {
   switch (true) {
     case amount > 1000:
-      return `${Math.floor(amount / 1000)} k`
+      return `${(amount / 1000).toFixed(1)} K`
     default:
       return amount
   }
 }
 
-let previousState = 'ITEMS'
-
-const tick = async () => {
-  const data = await this.LPTE.request({
+LPTE.onready(async () => {
+  const constantsRes = await LPTE.request({
     meta: {
-      namespace: 'league-end-of-game',
+      namespace: 'static-league',
+      type: 'request-constants',
+      version: 1
+    }
+  })
+  const constants = constantsRes.constants
+  version = constants.version
+  champions = constants.champions
+  staticURL = constants.staticURL
+
+  const emdOfGameData = await LPTE.request({
+    meta: {
+      namespace,
       type: 'request',
       version: 1
     }
-  });
+  })
+  start(emdOfGameData)
+  
+  LPTE.on(namespace, 'update', start)
 
-  if (previousState == data.state) return
-  previousState = data.state
+  LPTE.on(namespace, 'end-of-game', (e) => {
+    if (previousState == e.state) return
+    previousState = e.state
 
-  if (data.state === "ITEMS") {
-    showItems()
-  } else if (data.state === "DAMAGE") {
-    showDmg()
-  }
-}
+    if (e.state === "ITEMS") {
+      showItems()
+    } else if (e.state === "DAMAGE") {
+      showDmg()
+    }
+  })
+})

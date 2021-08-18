@@ -1,17 +1,14 @@
-const namespace = 'league-end-of-game';
-
+const goldGraphCTX = document.getElementById('goldGraphCTX').getContext('2d');
 const red = 'rgba(255,82,51,1)'
 const blue = 'rgba(0,183,224,1'
 const white = 'rgba(250,250,250,1)'
-const whiteTransparent = 'rgba(250,250,250,0.1)'
+const whiteTransparent = 'rgba(242,234,213,0.1)'
 
-async function displayGoldGraph (data) {
-  const frames = data.state.goldFrames
+function displayGoldGraph (frames) {
   const keys = Object.keys(frames)
   const values = Object.values(frames)
 
-  var ctx = document.getElementById('goldGraph').getContext('2d');
-  var chart = new Chart(ctx, {
+  var chart = new Chart(goldGraphCTX, {
     type: 'NegativeTransparentLine',
     data: {
       labels: keys,
@@ -29,7 +26,7 @@ async function displayGoldGraph (data) {
             ticks: {
               autoskip: true,
               autoSkipPadding: 50,
-              fontSize: 20,
+              fontSize: 16,
               fontColor: white,
               callback: function(value, index, values) {
                 return value.toFixed(0).replace(/-/g,'');
@@ -42,11 +39,11 @@ async function displayGoldGraph (data) {
           xAxes: [{
             ticks: {
               autoskip: true,
-              autoSkipPadding: 50,
-              fontSize: 20,
+              autoSkipPadding: 25,
+              fontSize: 16,
               fontColor: white,
               callback: function(value, index, values) {
-                return millisToMinutesAndSeconds(value)
+                return milliSecsToMinutesAndSeconds(value)
               }
             },
             gridLines: {
@@ -60,27 +57,7 @@ async function displayGoldGraph (data) {
         },
     }
   });
-}
-
-LPTE.onready(async () => {
-  const emdOfGameData = await LPTE.request({
-    meta: {
-      namespace,
-      type: 'request',
-      version: 1
-    }
-  })
-  displayGoldGraph(emdOfGameData)
-  
-  LPTE.on(namespace, 'update', displayGoldGraph)
-})
-
-// Helper to calc milliseconds to minutes and seconds
-function millisToMinutesAndSeconds(millis) {
-  var minutes = Math.floor(millis / 60000);
-  var seconds = ((millis % 60000) / 1000).toFixed(0);
-  return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
-}
+} 
 
 // Add new type of chart to chart.js
 Chart.defaults.NegativeTransparentLine = Chart.helpers.clone(Chart.defaults.line);
@@ -117,3 +94,10 @@ Chart.controllers.NegativeTransparentLine = Chart.controllers.line.extend({
     return Chart.controllers.line.prototype.update.apply(this, arguments);
   }
 });
+
+// Helper to calc milliseconds to minutes and seconds
+function milliSecsToMinutesAndSeconds(milliSecs) {
+  var minutes = Math.floor(milliSecs / 60000);
+  var seconds = ((milliSecs % 60000) / 1000).toFixed(0);
+  return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
+}

@@ -9,7 +9,17 @@
       "PLUGIN"
     ],
     "plugin": {
-      "main": "plugin.js"
-    }
+      "main": "dist/plugin.js"
+    },
+    "needsBuild": true
+  },
+  "dependencies": {
+    "league-prod-toolkit": "file:../.."
+  },
+  "devDependencies": {
+    "typescript": "^4.3.2"
+  },
+  "scripts": {
+    "build": "tsc"
   }
 }
