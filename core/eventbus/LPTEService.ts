@@ -105,7 +105,15 @@ export class LPTEService implements LPTE {
     setTimeout(() => {
       // Find matching handlers
       const handlers = this.registrations.filter(registration => registration.namespace === event.meta.namespace && registration.type === event.meta.type)
-      handlers.forEach(handler => handler.handle(event))
+      handlers.forEach(handler => {
+        try {
+          handler.handle(event)
+        } catch (e) {
+          log.error('Uncaught error in handler: ', e)
+          console.error(e)
+        }
+        handler.handle(event)
+      })
 
       if (handlers.length === 0 && event.meta.channelType === EventType.REQUEST) {
         log.warn(`Request was sent, but no handler was executed. This will result in a timeout. Meta=${JSON.stringify(event.meta)}`)

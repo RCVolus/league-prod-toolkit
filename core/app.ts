@@ -34,4 +34,8 @@ const main = async (): Promise<void> => {
 
 main()
   .then(() => log.info('LoL Toolkit started up successfully.'))
-  .catch(e => log.error(`Critical error in startup: ${JSON.stringify(e)}`))
+  .catch(e => {
+    log.error('Startup failed, critical error: ', e)
+
+    process.exit(1)
+  })
