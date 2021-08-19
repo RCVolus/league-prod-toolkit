@@ -1,3 +1,4 @@
+import type { PluginContext } from 'league-prod-toolkit/core/modules/Module'
 import type { GfxState } from './types/GfxState'
 import util from 'util';
 import endOfDay from 'date-fns/endOfDay'
@@ -11,7 +12,7 @@ const initialState : GfxState = {
   bestOf: 1
 }
 
-module.exports = async (ctx: any) => {
+module.exports = async (ctx: PluginContext) => {
   let gfxState = initialState;
 
   // Register new UI page
@@ -73,7 +74,7 @@ module.exports = async (ctx: any) => {
     if (util.isDeepStrictEqual(gfxState.teams, e.teams) && gfxState.bestOf == e.bestOf) return
 
     if (gfxState.teams.blueTeam?.name == e.teams.redTeam.name && gfxState.teams.redTeam?.name == e.teams.blueTeam.name) {
-      ctx.LPTE.request({
+      ctx.LPTE.emit({
         meta: {
           type: 'updateOne',
           namespace: 'database',
@@ -90,7 +91,7 @@ module.exports = async (ctx: any) => {
         }
       });
     } else if (gfxState.teams.blueTeam?.name == e.teams.blueTeam.name && gfxState.teams.redTeam?.name == e.teams.redTeam.name) {
-      ctx.LPTE.request({
+      ctx.LPTE.emit({
         meta: {
           type: 'updateOne',
           namespace: 'database',
@@ -123,6 +124,10 @@ module.exports = async (ctx: any) => {
           date: new Date()
         }
       });
+
+      if (response === undefined) {
+        return ctx.log.warn('match cloud not be inserted')
+      }
       gfxState.id = response.id
     }
 
@@ -249,6 +254,10 @@ module.exports = async (ctx: any) => {
       sort: {"date":1},
       limit: 1
     })
+
+    if (res === undefined) {
+      return ctx.log.warn('matches cloud not be loaded')
+    }
 
     if (res.data[0]) {
       gfxState.state = "READY"

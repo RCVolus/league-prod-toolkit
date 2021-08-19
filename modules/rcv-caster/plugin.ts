@@ -1,14 +1,16 @@
-import { couldStartTrivia } from 'typescript';
+import type { PluginContext } from 'league-prod-toolkit/core/modules/Module'
 import type { GfxState } from './types/GfxState'
 
 const namespace = 'rcv-caster';
 
 const initialState : GfxState = {
-  state: "NO_CASTER",
-  caster: []
+  casterSets: {
+    1: [],
+    2: []
+  }
 }
 
-module.exports = async (ctx: any) => {
+module.exports = async (ctx: PluginContext) => {
   let gfxState = initialState;
 
   // Register new UI page
@@ -33,24 +35,37 @@ module.exports = async (ctx: any) => {
         namespace: 'reply',
         version: 1
       },
-      state: gfxState.state,
-      caster: gfxState.caster
+      casterSets: gfxState.casterSets
     });
   });
 
   ctx.LPTE.on(namespace, 'set', async (e: any) => {
-    const casterRes = await ctx.LPTE.request({
+    const set : 1 | 2 = e.set || 1
+
+    const casterRes1 = await ctx.LPTE.request({
       meta: {
         type: 'request',
         namespace: 'database',
         version: 1
       },
       collection: 'caster',
-      id: e.caster
+      id: e.caster[0]
+    })
+    const casterRes2 = await ctx.LPTE.request({
+      meta: {
+        type: 'request',
+        namespace: 'database',
+        version: 1
+      },
+      collection: 'caster',
+      id: e.caster[1]
     })
 
-    gfxState.state = 'READY';
-    gfxState.caster = casterRes.data
+    if (casterRes1 === undefined || casterRes2 === undefined) {
+      return ctx.log.warn('one or more of the selected casters could not be found')
+    }
+
+    gfxState.casterSets[set] = [casterRes1.data[0], casterRes2.data[0]]
 
     ctx.LPTE.emit({
       meta: {
@@ -58,8 +73,7 @@ module.exports = async (ctx: any) => {
         namespace,
         version: 1
       },
-      state: gfxState.state,
-      caster: gfxState.caster
+      casterSets: gfxState.casterSets
     });
   });
 
@@ -82,6 +96,10 @@ module.exports = async (ctx: any) => {
       },
       collection: 'caster'
     })
+
+    if (res === undefined) {
+      return ctx.log.warn('casters could not be loaded')
+    }
 
     ctx.LPTE.emit({
       meta: {
@@ -117,6 +135,10 @@ module.exports = async (ctx: any) => {
       collection: 'caster'
     })
 
+    if (res === undefined) {
+      return ctx.log.warn('casters could not be loaded')
+    }
+
     ctx.LPTE.emit({
       meta: {
         type: 'update-caster-set',
@@ -137,6 +159,10 @@ module.exports = async (ctx: any) => {
       collection: 'caster'
     })
 
+    if (res === undefined) {
+      return ctx.log.warn('casters could not be loaded')
+    }
+
     ctx.LPTE.emit({
       meta: {
         type: e.meta.reply,
@@ -148,11 +174,12 @@ module.exports = async (ctx: any) => {
   });
 
   ctx.LPTE.on(namespace, 'swop', (e: any) => {
-    if (gfxState.state !== 'READY') return
-    if (!gfxState.caster[0] || !gfxState.caster[1]) return
+    const set : 1 | 2 = e.set || 1
+    
+    if (!gfxState.casterSets[set][0] || !gfxState.casterSets[set][1]) return
 
-    const newCaster = [gfxState.caster[1], gfxState.caster[0]]
-    gfxState.caster = newCaster
+    const newCaster = [gfxState.casterSets[set][1], gfxState.casterSets[set][0]]
+    gfxState.casterSets[set] = newCaster
 
     ctx.LPTE.emit({
       meta: {
@@ -160,16 +187,13 @@ module.exports = async (ctx: any) => {
         namespace,
         version: 1
       },
-      state: gfxState.state,
-      caster: gfxState.caster
+      casterSets: gfxState.casterSets
     });
   });
 
   ctx.LPTE.on(namespace, 'unset', (e: any) => {
-    gfxState = {
-      state: "NO_CASTER",
-      caster: []
-    }
+    const set : 1 | 2 = e.set || 1
+    gfxState.casterSets[set] = []
 
     ctx.LPTE.emit({
       meta: {
@@ -177,8 +201,7 @@ module.exports = async (ctx: any) => {
         namespace,
         version: 1
       },
-      state: gfxState.state,
-      caster: gfxState.caster
+      casterSets: gfxState.casterSets
     });
   });
 

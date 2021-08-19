@@ -1,0 +1,28 @@
+:root {
+  --blue: rgba(0, 183, 224, 1);
+  --red: rgba(255, 82, 51, 1);
+  --orange: rgba(241, 148, 60, 1);
+  --white: rgba(242, 234, 213, 1);
+  --dark: rgb(5, 28, 44, 1);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  line-height: 1;
+}
+
+body {
+  /* background: var(--dark); */
+  width: 1920px;
+  height: 1080px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: none;
+  padding: 3rem;
+  font-family: "Bebas Neue", Courier, monospace;
+  color: var(--white);
+}

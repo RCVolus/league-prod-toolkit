@@ -1,4 +1,5 @@
-$('#caster-embed').val(`${location.href}/gfx.html`);
+$('#caster-embed-1').val(`${location.href}/gfx.html?set=1`);
+$('#caster-embed-2').val(`${location.href}/gfx.html?set=2`);
 
 $('#add-caster-form').on('submit', (e) => {
   e.preventDefault()
@@ -28,14 +29,29 @@ $('#update-caster-form').on('submit', (e) => {
       type: 'set',
       version: 1
     },
+    set: 1,
     caster: [
       $('#caster-one').val(),
       $('#caster-two').val()
     ]
   })
+})
 
-  $('#caster-one').val(''),
-  $('#caster-two').val('')
+$('#update-caster-2-form').on('submit', (e) => {
+  e.preventDefault()
+
+  window.LPTE.emit({
+    meta: {
+      namespace: 'rcv-caster',
+      type: 'set',
+      version: 1
+    },
+    set: 2,
+    caster: [
+      $('#caster-2-one').val(),
+      $('#caster-2-two').val()
+    ]
+  })
 })
 
 function deleteCaster (_id) {
@@ -49,23 +65,25 @@ function deleteCaster (_id) {
   })
 }
 
-function swop () {
+function swop (set = 1) {
   window.LPTE.emit({
     meta: {
       namespace: 'rcv-caster',
-      type: 'swop',
+      type: `swop`,
       version: 1
-    }
+    },
+    set
   })
 }
 
-function unset () {
+function unset (set = 1) {
   window.LPTE.emit({
     meta: {
       namespace: 'rcv-caster',
       type: 'unset',
       version: 1
-    }
+    },
+    set
   })
 }
 
@@ -78,8 +96,6 @@ async function initUi () {
     }
   })
 
-  displayData(data)
-
   const casterData = await window.LPTE.request({
     meta: {
       namespace: 'rcv-caster',
@@ -90,6 +106,8 @@ async function initUi () {
 
   displayCasterTable(casterData)
   displayCasterSelects(casterData)
+
+  displayData(data)
 }
 
 function displayData (data) {
@@ -98,8 +116,10 @@ function displayData (data) {
 
   if (data.state !== 'READY') return
 
-  $('#caster-one').val(data.caster[0]._id),
-  $('#caster-two').val(data.caster[1]._id)
+  $('#caster-one').val(data.casterSets[1][0]._id || '')
+  $('#caster-two').val(data.casterSets[1][1]._id || '')
+  $('#caster-2-one').val(data.casterSets[2][0]._id || '')
+  $('#caster-2-two').val(data.casterSets[2][1]._id || '')
 }
 
 const casterTableBody = document.querySelector('#caster-table')
@@ -140,6 +160,8 @@ function displayCasterTable (data) {
 
 const casterOne = document.querySelector('#caster-one')
 const casterTwo = document.querySelector('#caster-two')
+const casterThree = document.querySelector('#caster-2-one')
+const casterFour = document.querySelector('#caster-2-two')
 
 function displayCasterSelects (data) {
   var length = casterOne.options.length;
@@ -147,11 +169,15 @@ function displayCasterSelects (data) {
   for (i = length-1; i >= 1; i--) {
     casterOne.options[i] = null;
     casterTwo.options[i] = null;
+    casterThree.options[i] = null;
+    casterFour.options[i] = null;
   }
 
   data.caster.forEach((c, i) => {
     casterOne.options.add(new Option(c.name, c._id), [i+1])
     casterTwo.options.add(new Option(c.name, c._id), [i+1])
+    casterThree.options.add(new Option(c.name, c._id), [i+1])
+    casterFour.options.add(new Option(c.name, c._id), [i+1])
   })
 }
 

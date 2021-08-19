@@ -1,30 +1,36 @@
+import type { PluginContext } from 'league-prod-toolkit/core/modules/Module'
 import path from 'path'
 import express from 'express'
 const app = express()
 import getGameVersion from "./functions/gameVersion"
 import getDDragon from "./functions/ddragon"
 import centeredImg from "./functions/centeredImg"
+import additionalFiles from "./functions/additionalFiles"
 
 const namespace = 'static-league';
 
-module.exports = async (ctx: any) => {
-  const response = await ctx.LPTE.request({
+module.exports = async (ctx: PluginContext) => {
+  const configRes = await ctx.LPTE.request({
     meta: {
       type: 'request',
       namespace: 'config',
       version: 1
     }
   });
-  const config = response.config;
+  if (configRes === undefined) {
+    return ctx.log.warn(`${namespace} config could not be loaded`)
+  }
+  const config = configRes.config;
 
   let gameVersion: string
   if (!config.gameVersion) {
-    gameVersion = await getGameVersion(ctx)
+    gameVersion = await getGameVersion()
   } else {
     gameVersion = config.gameVersion
   }
 
   getDDragon(gameVersion, ctx, function () {
+    additionalFiles(ctx, gameVersion)
     centeredImg(ctx, gameVersion, finishUp)
   }, finishUp)
 
@@ -44,6 +50,9 @@ module.exports = async (ctx: any) => {
     const summonerSpells = path.join(__dirname, `../data/img/summoner-spell`)
     app.use('/img/summoner-spell', express.static(summonerSpells));
 
+    const drakes = path.join(__dirname, `../data/img/drakes`)
+    app.use('/img/drakes', express.static(drakes));
+
     const profileIcons = path.join(__dirname, `../data/${gameVersion}/img/item`)
     app.use('/img/profileicon', express.static(profileIcons));
   
@@ -60,6 +69,8 @@ module.exports = async (ctx: any) => {
       gameTypes: require(`../constants/gameTypes.json`),
       perks: require(`../data/${gameVersion}/data/de_DE/runesReforged.json`),
       champions: Object.values(require(`../data/${gameVersion}/data/de_DE/champion.json`).data),
+      items: Object.values(require(`../data/${gameVersion}/data/de_DE/item.json`).data),
+      itemBin: Object.values(require(`../data/${gameVersion}/data/de_DE/item.bin.json`)),
       version: gameVersion,
       staticURL: `http://localhost:${port}`
     };

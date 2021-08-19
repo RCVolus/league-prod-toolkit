@@ -13,6 +13,9 @@
     },
     "needsBuild": true
   },
+  "dependencies": {
+    "league-prod-toolkit": "file:../.."
+  },
   "devDependencies": {
     "typescript": "^4.3.2",
     "sass": "^1.34.1"

@@ -14,6 +14,7 @@ export class SetGameController extends Controller {
     if (event.by === 'summonerName') {
       // Load game using provider-webapi
       this.pluginContext.log.debug(`Loading livegame for summoner=${event.summonerName}`);
+
       const gameResponse = await this.pluginContext.LPTE.request({
         meta: {
           namespace: 'provider-webapi',
@@ -23,6 +24,8 @@ export class SetGameController extends Controller {
         summonerName: event.summonerName,
         retries: 10
       }, 30000);
+
+      if (!gameResponse) return
 
       if (!gameResponse || gameResponse.failed) {
         this.pluginContext.log.info(`Loading livegame failed for summoner=${event.summonerName}`);
@@ -39,6 +42,8 @@ export class SetGameController extends Controller {
           version: 1
         }
       });
+
+      if (!staticData) return
 
       state.web.live = extendLiveGameWithStatic(gameResponse.game, staticData.constants);
       state.web.live._available = true

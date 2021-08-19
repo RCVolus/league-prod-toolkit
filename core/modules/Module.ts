@@ -79,7 +79,8 @@ export default class Module {
 
 export enum PluginStatus {
   RUNNING = 'RUNNING',
-  UNAVAILABLE = 'UNAVAILABLE'
+  UNAVAILABLE = 'UNAVAILABLE',
+  DEGRADED = 'DEGRADED'
 }
 
 export class PluginContext {
@@ -133,12 +134,34 @@ export class Plugin {
     // Craft context
     this.context = new PluginContext(this)
 
+    const handleError = (e: any): void => {
+      (this.context as PluginContext).log.error(`Uncaught error in ${this.module.getName()}: `, e)
+      console.error(e)
+
+      // Set plugin status to degraded, maybe functionality will not work anymore
+      this.status = PluginStatus.DEGRADED
+    }
+
     const mainFile = this.getMain()
 
-    // eslint-disable-next-line
-    const main = require(path.join(this.getModule().getFolder(), mainFile))
+    let main
+    try {
+      // eslint-disable-next-line
+      main = require(path.join(this.getModule().getFolder(), mainFile))
+    } catch (e) {
+      handleError(e)
+      return
+    }
 
-    // Execute main
-    main(this.context)
+    // Execute main (and wrap it in a try / catch, so there cannot be an exception bubbling up)
+    try {
+      const response = main(this.context)
+
+      if (response !== undefined && typeof response.catch === 'function') {
+        response.catch((e: any) => handleError(e))
+      }
+    } catch (e) {
+      handleError(e)
+    }
   }
 }

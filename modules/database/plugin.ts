@@ -4,14 +4,17 @@ import { MongoClient, Collection, ObjectID, ObjectId } from 'mongodb';
 const namespace = 'database';
 
 module.exports = async (ctx: any) => {
-  const response = await ctx.LPTE.request({
+  const configRes = await ctx.LPTE.request({
     meta: {
       type: 'request',
       namespace: 'config',
       version: 1
     }
   });
-  const config = response.config as Config;
+  if (configRes === undefined) {
+    return ctx.log.warn(`${namespace} config could not be loaded`)
+  }
+  const config = configRes.config as unknown as Config;
 
   let collections : Collection<any>[] = []
 
@@ -36,7 +39,7 @@ module.exports = async (ctx: any) => {
       await client.connect();
       collections = await client.db().collections()
     } catch (e) {
-      ctx.log.error(e);
+      ctx.log.error(JSON.stringify(e));
     }
   }
   init()

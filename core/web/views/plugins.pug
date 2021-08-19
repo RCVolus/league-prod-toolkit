@@ -23,4 +23,6 @@ block layout-content
             td.table-success= pluginStatus
           if pluginStatus === 'UNAVAILABLE'
             td.table-danger= pluginStatus
+          if pluginStatus === 'DEGRADED'
+            td.table-danger= pluginStatus
       

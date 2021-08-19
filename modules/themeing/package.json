@@ -1,0 +1,29 @@
+{
+  "name": "themeing",
+  "version": "1.0.0",
+  "description": "Module that provides themeing to web graphical elements, like WebGFX",
+  "author": "RCVolus",
+  "license": "MIT",
+  "toolkit": {
+    "modes": [
+      "PLUGIN"
+    ],
+    "plugin": {
+      "main": "dist/plugin.js"
+    },
+    "needsBuild": true
+  },
+  "dependencies": {
+    "fs-extra": "^10.0.0",
+    "league-prod-toolkit": "file:../..",
+    "node-sass": "^6.0.1",
+    "typescript": "^4.3.2"
+  },
+  "scripts": {
+    "build": "tsc"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "^9.0.12",
+    "@types/node-sass": "^4.11.2"
+  }
+}

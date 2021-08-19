@@ -1,3 +1,8 @@
+const urlSearchParams = new URLSearchParams(window.location.search);
+const params = Object.fromEntries(urlSearchParams.entries());
+
+const set = params.set || 1
+
 const casterOne = document.querySelector('#caster-one')
 const casterOneName = casterOne.querySelector('.name')
 const casterOneSocial = casterOne.querySelector('.social')
@@ -11,13 +16,13 @@ function displayCaster (data) {
   casterTwoName.innerHTML = ''
   casterTwoSocial.innerHTML = ''
 
-  if (data.state !== 'READY') return
+  if (!data.casterSets[set] || data.casterSets[set].length <= 0) return
 
-  casterOneName.innerHTML = data.caster[0].name
-  casterOneSocial.appendChild(getSocial(data.caster[0].platform, data.caster[0].handle))
+  casterOneName.innerHTML = data.casterSets[set][0].name
+  casterOneSocial.appendChild(getSocial(data.casterSets[set][0].platform, data.casterSets[set][0].handle))
 
-  casterTwoName.innerHTML = data.caster[1].name
-  casterTwoSocial.appendChild(getSocial(data.caster[1].platform, data.caster[1].handle))
+  casterTwoName.innerHTML = data.casterSets[set][1].name
+  casterTwoSocial.appendChild(getSocial(data.casterSets[set][1].platform, data.casterSets[set][1].handle))
 }
 
 function getSocial(platform, handle) {

@@ -84,11 +84,13 @@ module.exports = async (ctx: PluginContext) => {
 
   await ctx.LPTE.await('lpt', 'ready', 120000);
 
-  leagueStatic = (await ctx.LPTE.request({
+  const leagueStaticReq = await ctx.LPTE.request({
     meta: {
       namespace: 'static-league',
       type: 'request-constants',
       version: 1
     }
-  })).constants
+  })
+
+  leagueStatic = leagueStaticReq?.constants
 };

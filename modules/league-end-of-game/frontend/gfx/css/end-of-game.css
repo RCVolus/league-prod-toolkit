@@ -1,0 +1,214 @@
+.team {
+  width: 50%;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+#blueTeam {
+  padding-right: 3rem;
+}
+
+#redTeam {
+  padding-left: 3rem;
+  flex-wrap: wrap-reverse;
+}
+
+.stats {
+  width: 100%;
+  display: flex;
+  margin-bottom: 40px;
+}
+
+h2 {
+  font-weight: bold;
+  font-size: 40pt;
+}
+h3 {
+  font-size: 20pt;
+}
+h4 {
+  font-size: 20pt;
+}
+h5 {
+  font-size: 20pt;
+}
+
+#blueTeam .stats .kda {
+  color: var(--blue);
+}
+
+#blueTeam .stats .secondStat {
+  color: var(--blue);
+  margin-left: auto;
+}
+
+.stats .secondStatDmg {
+  display: none;
+}
+
+#redTeam .stats .secondStat {
+  color: var(--red);
+}
+
+#redTeam .stats .kda {
+  margin-left: auto;
+  color: var(--red);
+}
+
+/* Champion */
+.campions {
+  width: fit-content;
+  display: flex;
+  flex-direction: column;
+}
+
+.campions img {
+  width: 80px;
+}
+
+.campions img:not(:last-child) {
+  margin-bottom: 40px;
+}
+
+/* Spells */
+.spells {
+  display: flex;
+  flex-direction: column;
+  margin: 0 1rem;
+}
+
+.spells img {
+  width: 37px;
+}
+
+.spells img:nth-child(even):not(:last-child) {
+  margin-bottom: 40px;
+}
+
+.spells img:nth-child(odd):not(:last-child) {
+  margin-bottom: 6px;
+}
+
+/* Data */
+.dmg,
+.data {
+  flex: 4;
+}
+
+.dataContainer {
+  width: 100%;
+  height: 80px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.dataContainer:not(:last-child) {
+  margin-bottom: 40px;
+}
+
+.dataContainer h5 {
+  color: var(--orange);
+}
+
+.dataContainer h3.kda {
+  font-family: poppins, sans-serif;
+  font-weight: 700;
+  line-height: 0.7;
+}
+
+#blueTeam .dataContainer h3.kda {
+  margin-left: auto;
+  color: var(--blue);
+}
+#redTeam .dataContainer h3.kda {
+  margin-right: auto;
+  color: var(--red);
+}
+
+.firstRow {
+  width: 100%;
+  display: flex;
+}
+
+#blueTeam .dataContainer .firstRow {
+  padding-right: 35%;
+}
+
+#redTeam .dataContainer .firstRow {
+  padding-left: 35%;
+}
+
+.itemRow {
+  width: 65%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.dataContainer .itemRow img,
+.dataContainer .itemRow .emptyImg {
+  width: 48px;
+}
+
+.dataContainer .info {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+/* Damage */
+.dmg {
+  display: none;
+}
+
+.dmgContainer {
+  width: 100%;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.dmgContainer h3 {
+  animation: fade-in 0.25s;
+}
+
+#redTeam .dmgContainer {
+  justify-content: flex-end;
+}
+
+.dmgContainer .dmgBar {
+  height: 60px;
+  width: var(--bar-width);
+  animation: scale 0.5s ease;
+}
+
+#blueTeam .dmgBar {
+  background-color: var(--blue);
+  transform-origin: left;
+  margin-right: 1rem;
+}
+
+#redTeam .dmgBar {
+  background-color: var(--red);
+  transform-origin: right;
+  margin-left: 1rem;
+}
+
+.dmgContainer:not(:last-child) {
+  margin-bottom: 40px;
+}
+
+@keyframes scale {
+  0% {
+    width: 0;
+  }
+  100% {
+    width: var(--bar-width);
+  }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}

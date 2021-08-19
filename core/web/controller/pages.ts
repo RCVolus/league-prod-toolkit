@@ -18,7 +18,14 @@ export default (globalContext: GlobalContext): Router => {
     const absolutePath = path.join(page.sender.path, page.frontend, relativePath)
 
     if (relativePath === '/') {
-      const fileContent = await readFile(path.join(absolutePath, 'index.html'), { encoding: 'utf8' })
+      let fileContent
+      try {
+        fileContent = await readFile(path.join(absolutePath, 'index.html'), { encoding: 'utf8' })
+      } catch (e) {
+        res.status(500).send(e)
+        console.error(e)
+        return
+      }
       res.render('page_template',
         {
           ...globalContext,
