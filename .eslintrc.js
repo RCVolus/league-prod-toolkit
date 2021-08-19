@@ -3,5 +3,8 @@ module.exports = {
   parserOptions: {
     project: './tsconfig.json'
   },
-  ignorePatterns: ['*.pug']
+  ignorePatterns: ['*.pug'],
+  rules: {
+    "@typescript-eslint/no-misused-promises": "off"
+  }
 }

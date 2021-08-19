@@ -12,9 +12,10 @@ export default (globalContext: GlobalContext): Router => {
   const router = Router()
 
   router.get('/:page*', async (req, res) => {
-    const page = globalContext.module_pages.filter(p => p.id === req.params.page)[0]
+    const anyParams = req.params as any
+    const page = globalContext.module_pages.filter(p => p.id === anyParams.page)[0]
 
-    const relativePath = req.params[0] !== '' ? req.params[0] : '/'
+    const relativePath = anyParams[0] !== '' ? anyParams[0] : '/'
     const absolutePath = path.join(page.sender.path, page.frontend, relativePath)
 
     if (relativePath === '/') {
