@@ -119,7 +119,7 @@ export class LPTEService implements LPTE {
       }
 
       // Push to history
-      this.eventHistory.push(event)
+      // this.eventHistory.push(event)
     }, 0)
   }
 

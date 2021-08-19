@@ -74,6 +74,11 @@ export class LCUDataReaderController extends Controller {
       this.pluginContext.log.info('Flow: champselect - active')
     }
     if (event.meta.type === 'lcu-champ-select-update') {
+      if (event.data.timer.phase !== PickBanPhase.GAME_STARTING) {
+        state.lcu.champselect.showSummoners = false;
+        this.pluginContext.log.info('Flow: champselect - reset summoners to not show')
+      }
+
       // Only trigger if event changes, to only load game once
       if (state.lcu.champselect.timer.phase !== PickBanPhase.GAME_STARTING && event.data.timer.phase === PickBanPhase.GAME_STARTING) {
         this.pluginContext.log.info('Flow: champselect - game started (spectator delay)')
@@ -90,7 +95,8 @@ export class LCUDataReaderController extends Controller {
           summonerName: state.lcu.lobby.members[0].summonerName
         })
       } else {
-        state.lcu.champselect.showSummoners = false;
+        // this.pluginContext.log.info('Flow: champselect - reset summoners to now show')
+        // state.lcu.champselect.showSummoners = false;
       }
 
       // Only trigger if we're now in finalization, save order
@@ -98,7 +104,9 @@ export class LCUDataReaderController extends Controller {
         state.lcu.champselect.order = event.data;
       }
 
+      let summonerState = state.lcu.champselect.showSummoners;
       state.lcu.champselect = { ...state.lcu.champselect, ...event.data }
+      state.lcu.champselect.showSummoners = summonerState;
       state.lcu.champselect._available = true
       state.lcu.champselect._updated = new Date()
 
