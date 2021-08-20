@@ -14,7 +14,8 @@
     "needsBuild": true
   },
   "dependencies": {
-    "mongodb": "^3.6.9"
+    "mongodb": "^3.6.9",
+    "league-prod-toolkit": "file:../.."
   },
   "devDependencies": {
     "@types/mongodb": "^3.6.17",

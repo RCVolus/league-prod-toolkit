@@ -1,9 +1,10 @@
+import { PluginContext } from 'league-prod-toolkit/core/modules/Module'
 import type { Config } from './types/Config'
 import { MongoClient, Collection, ObjectID, ObjectId } from 'mongodb';
 
 const namespace = 'database';
 
-module.exports = async (ctx: any) => {
+module.exports = async (ctx: PluginContext) => {
   const configRes = await ctx.LPTE.request({
     meta: {
       type: 'request',
