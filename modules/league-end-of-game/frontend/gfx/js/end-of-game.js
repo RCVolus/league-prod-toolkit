@@ -1,9 +1,8 @@
 const namespace = 'league-end-of-game';
 
 let previousState = 'ITEMS'
-let staticURL = 'http://localhost:5656'
+let staticURL = '/serve/static-league'
 let champions = []
-let version = ''
 
 const itemUrl = id => {
   return `${staticURL}/img/item/${id}.png`
@@ -268,9 +267,7 @@ LPTE.onready(async () => {
     }
   })
   const constants = constantsRes.constants
-  version = constants.version
   champions = constants.champions
-  staticURL = constants.staticURL
 
   const emdOfGameData = await LPTE.request({
     meta: {

@@ -25,9 +25,8 @@ module.exports = async (ctx: PluginContext) => {
       version: 1
     },
     serves: [{
-      name: 'League Static Files',
       frontend: 'frontend',
-      id: 'op-static-league'
+      id: 'static-league'
     }]
   });
 

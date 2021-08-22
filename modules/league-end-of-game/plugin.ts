@@ -3,6 +3,9 @@ import { EndOfGameData } from './handleData';
 import { EndOfGame } from './types/EndOfGame';
 const namespace = 'league-end-of-game';
 
+import match from './data/EUW1_5390789952.json';
+import timeline from './data/timeline.json';
+
 module.exports = async (ctx: PluginContext) => {
   let state : {
     status: "NO_GAME" | "GAME_LOADED"
@@ -86,6 +89,27 @@ module.exports = async (ctx: PluginContext) => {
         }, 
         state
       })
+    })
+  })
+
+  const matchData = match as any
+  const timelineData = timeline
+
+  const emdOfGameData = new EndOfGameData(matchData, timelineData)
+
+  emdOfGameData.onReady(() => {
+    state.status = "GAME_LOADED"
+    state.teams = emdOfGameData.teams
+    state.participants = emdOfGameData.participants
+    state.goldFrames = emdOfGameData.goldFrames
+
+    ctx.LPTE.emit({
+      meta: {
+        namespace,
+        type: 'update',
+        version: 1
+      }, 
+      state
     })
   })
 };

@@ -1,4 +1,3 @@
-import { json } from 'express'
 import type { PluginContext } from 'league-prod-toolkit/core/modules/Module'
 import { AllGameData, Player } from '../types/AllGameData'
 import { Config } from '../types/Config'
@@ -77,7 +76,7 @@ export class InGameState {
         },
         team: currentPlayerState.team,
         player: id,
-        item: this.statics.staticURL + "/img/item/" + itemID + ".png"
+        item: itemID
       })
     }
   }

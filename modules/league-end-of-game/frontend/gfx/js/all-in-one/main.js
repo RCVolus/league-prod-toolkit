@@ -1,5 +1,5 @@
 const namespace = 'league-end-of-game';
-let staticURL = 'http://localhost:5656'
+let staticURL = '/serve/static-league'
 let champions = []
 
 const champUrl = championId => {
@@ -24,8 +24,6 @@ function calcK (amount) {
 function displayData (emdOfGameData) {
   const state = emdOfGameData.state
 
-  console.log(state)
-
   if (state.status !== "GAME_LOADED") return
 
   const teams = state.teams
@@ -47,7 +45,6 @@ LPTE.onready(async () => {
     }
   })
   const constants = constantsRes.constants
-  staticURL = constants.staticURL
   champions = constants.champions
 
   const emdOfGameData = await LPTE.request({
