@@ -37,6 +37,8 @@ export default class StaticData {
       this._finishedCenteredImg = true
       this._finishedAdditionalFileDownloading = true
       this._finishedDragonTail = true
+      
+      if (this.readyHandler) this.readyHandler()
     }
   }
 
