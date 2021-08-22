@@ -22,14 +22,7 @@ export default class StaticData {
    */
   constructor (private ctx: PluginContext, private config: any) {
     this.version = this.config.gameVersion
-
-    if (!this.config['last-downloaded-version'] || this.config['last-downloaded-version'] !== this.version) {
-      this._startUp()
-    } else {
-      this._finishedCenteredImg = true
-      this._finishedAdditionalFileDownloading = true
-      this._finishedDragonTail = true
-    }
+    this._startUp()
   }
 
   private async _startUp () {
@@ -37,8 +30,14 @@ export default class StaticData {
       await this.setCurrentVersion()
     }
 
-    this.getDDragon()
-    this.getAdditionalFiles()
+    if (!this.config['last-downloaded-version'] || this.config['last-downloaded-version'] !== this.version) {
+      this.getDDragon()
+      this.getAdditionalFiles()
+    } else {
+      this._finishedCenteredImg = true
+      this._finishedAdditionalFileDownloading = true
+      this._finishedDragonTail = true
+    }
   }
 
   public onReady (handler: () => void) : void {
