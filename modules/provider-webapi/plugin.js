@@ -120,7 +120,7 @@ module.exports = async (ctx) => {
   });
 
   // Wait for all plugins to load
-  await ctx.LPTE.await('lpt', 'ready', 120000);
+  await ctx.LPTE.await('lpt', 'ready', 150000);
 
   const response = await ctx.LPTE.request({
     meta: {

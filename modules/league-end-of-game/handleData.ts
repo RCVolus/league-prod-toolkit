@@ -41,9 +41,9 @@ export class EndOfGameData {
   private _readyCheck () {
     if (!this.readyHandler) return
 
-      if (!this._goldFramesAvailable || !this._participantsAvailable || !this._teamsAvailable) return
+    if (!this._goldFramesAvailable || !this._participantsAvailable || !this._teamsAvailable) return
 
-      this.readyHandler()
+    this.readyHandler()
   }
 
   private handleParticipants () {

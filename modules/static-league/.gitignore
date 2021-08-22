@@ -1,5 +1,5 @@
-data/*
-!data/img
-data/img/*
-!data/img/summoner-spell
-!data/img/drakes
+frontend/data/*
+!frontend/data/constants
+frontend/img/*
+!frontend/img/summoner-spell
+!frontend/img/drakes

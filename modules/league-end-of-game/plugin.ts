@@ -64,7 +64,7 @@ module.exports = async (ctx: PluginContext) => {
     status: 'RUNNING'
   });
 
-  await ctx.LPTE.await('lpt', 'ready', 120000);
+  await ctx.LPTE.await('lpt', 'ready', 150000);
 
   ctx.LPTE.on('state-league', 'match-game-loaded', e => {
     const matchData = e.web.match

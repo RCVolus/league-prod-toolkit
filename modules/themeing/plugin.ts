@@ -163,5 +163,5 @@ module.exports = async (ctx: PluginContext) => {
     })
   })
 
-  await ctx.LPTE.await('lpt', 'ready', 120000);
+  await ctx.LPTE.await('lpt', 'ready', 150000);
 };

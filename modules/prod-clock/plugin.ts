@@ -37,5 +37,5 @@ module.exports = async (ctx: any) => {
     status: 'RUNNING'
   });
 
-  await ctx.LPTE.await('lpt', 'ready', 120000);
+  await ctx.LPTE.await('lpt', 'ready', 150000);
 }
