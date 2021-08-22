@@ -15,7 +15,9 @@ module.exports = (ctx) => {
   });
 
   ctx.LPTE.on('config', 'set', e => {
-    config[e.meta.sender.name] = e.config
+    for (const key of Object.keys(e.config)) {
+      config[e.meta.sender.name][key] = e.config[key]
+    }
 
     fs.writeFile(path.join(__dirname, './config.json'), JSON.stringify(config, null, 2), function (err) {
       if (err) return ctx.log.error(err);
