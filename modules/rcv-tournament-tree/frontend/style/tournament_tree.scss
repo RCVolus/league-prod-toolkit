@@ -2,6 +2,21 @@ $blue: #00b7e0;
 $red: #ff5233;
 $white: rgba(#fafafa, 0.5);
 
+*, *::before, *::after {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.rcv-tournament-tree-gfx {
+  width: 1920px;
+  height: 1080px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .tournament_tree {
   display: flex;
   width: 85%;

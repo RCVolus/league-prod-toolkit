@@ -1,0 +1,29 @@
+.rcv-teams-talk-gfx {
+  color: white;
+
+  .container {
+    margin-top: 105px;
+  }
+
+  .blue, .red {
+    color: white;
+  }
+
+  .vs {
+    display: none;
+  }
+
+  .tag {
+    display: none;
+  }
+
+  #blue-name {
+    margin-right: auto;
+    text-align: center;
+  }
+
+  #red-name {
+    margin-left: auto;
+    text-align: center;
+  }
+}

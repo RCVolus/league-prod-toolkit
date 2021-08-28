@@ -4,7 +4,7 @@
   box-sizing: border-box;
 }
 
-body {
+.rcv-teams-ingame-gfx {
   width: 1920px;
   height: 1080px;
   overflow: hidden;
