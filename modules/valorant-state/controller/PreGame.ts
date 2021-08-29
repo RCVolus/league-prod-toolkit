@@ -27,7 +27,7 @@ export class PreGame {
     this._updated = new Date().getTime()
     this.phase = data.PregameState
 
-
+    // TODO
   }
 
   public delete () {

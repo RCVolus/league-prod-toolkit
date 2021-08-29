@@ -14,11 +14,16 @@ module.exports = async (ctx: PluginContext) => {
     pages: [{
       name: 'OP Valorant Game State',
       frontend: 'frontend',
-      id: 'op-valo-game'
+      id: 'op-valorant-game'
     }]
   });
 
   const state = new ValoState(ctx)
+
+  /**
+   * TODO
+   * Add a possibility to update ths loopState via the obs tool outside of pregame
+  */
 
   // Answer requests to get state
   ctx.LPTE.on(namespace, 'request', e => {
