@@ -163,7 +163,7 @@ class LPTEService implements LPTE {
         resolve(e)
       }
       // Register handler
-      this.on(namespace, type, handler)
+      this.on(namespace, type, handler, true)
 
       setTimeout(() => {
         if (wasHandled) {

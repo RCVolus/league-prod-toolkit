@@ -36,10 +36,10 @@ export class LPTEService implements LPTE {
 
   once (namespace: string, type: string, handler: (e: LPTEvent) => void): void {
     const wrappedHandler = (e: LPTEvent): void => {
+      log.debug(`Wrapped handler called for ${namespace}/${type}`)
       this.unregisterHandler(wrappedHandler)
       handler(e)
     }
-
     this.on(namespace, type, wrappedHandler)
   }
 
@@ -105,6 +105,7 @@ export class LPTEService implements LPTE {
     setTimeout(() => {
       // Find matching handlers
       const handlers = this.registrations.filter(registration => registration.namespace === event.meta.namespace && registration.type === event.meta.type)
+      log.debug(`Found ${handlers.length} matching handlers for ${event.meta.namespace}/${event.meta.type}`)
       handlers.forEach(handler => {
         try {
           handler.handle(event)
@@ -112,7 +113,6 @@ export class LPTEService implements LPTE {
           log.error('Uncaught error in handler: ', e)
           console.error(e)
         }
-        handler.handle(event)
       })
 
       if (handlers.length === 0 && event.meta.channelType === EventType.REQUEST) {

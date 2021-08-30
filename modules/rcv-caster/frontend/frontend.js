@@ -113,9 +113,10 @@ async function initUi () {
 function displayData (data) {
   $('#caster-one').val(''),
   $('#caster-two').val('')
+  $('#caster-2-one').val(''),
+  $('#caster-2-two').val('')
 
-  if (data.state !== 'READY') return
-
+  console.log(data)
   $('#caster-one').val(data.casterSets[1][0]._id || '')
   $('#caster-two').val(data.casterSets[1][1]._id || '')
   $('#caster-2-one').val(data.casterSets[2][0]._id || '')

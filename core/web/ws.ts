@@ -18,6 +18,7 @@ export const handleClient = (socket: WebSocket): void => {
     if (event.meta.namespace === 'lpte' && event.meta.type === 'subscribe') {
       if (event.to.type !== undefined && event.to.namespace !== undefined) {
         LPTEService.on(event.to.namespace, event.to.type, listenedEvent => {
+          logger.debug(`Proxy response to WS for ${event.to.namespace as string} / ${event.to.type as string}`)
           socket.send(JSON.stringify(listenedEvent))
         })
         return
@@ -26,6 +27,7 @@ export const handleClient = (socket: WebSocket): void => {
     if (event.meta.namespace === 'lpte' && event.meta.type === 'subscribe-once') {
       if (event.to.type !== undefined && event.to.namespace !== undefined) {
         LPTEService.once(event.to.namespace, event.to.type, listenedEvent => {
+          logger.debug(`Proxy response to WS for ${event.to.namespace as string}/${event.to.type as string}`)
           socket.send(JSON.stringify(listenedEvent))
         })
         return

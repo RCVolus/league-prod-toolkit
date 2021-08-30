@@ -1,6 +1,10 @@
-@import url(/pages/op-themeing/active/font/Tungsten-Bold.ttf);
-@import url(/pages/op-themeing/active/font/D-DIN-Bold.ttf);
-@import url(/pages/op-themeing/active/font/D-DIN.ttf);
+@font-face {
+  font-family: Tungsten;
+  src: url(/pages/op-themeing/active/font/Tungsten-Bold.ttf);
+  font-weight: bold
+}
+@import url(/pages/op-themeing/active/font/D-DIN-Bold.otf);
+@import url(/pages/op-themeing/active/font/D-DIN.otf);
 
 body {
   font-family: 'Tungsten';
@@ -8,3 +12,4 @@ body {
 }
 
 @import "rcv-teams/index";
+@import "rcv-caster/index";
