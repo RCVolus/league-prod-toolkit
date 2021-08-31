@@ -11,6 +11,10 @@ export default (globalContext: GlobalContext): Router => {
     const anyParams = req.params as any
     const serve = globalContext.module_serves.filter(p => p.id === anyParams.serve)[0]
 
+    if (serve === undefined) {
+      return res.status(404).send('No serve found with name ' + anyParams.serve)
+    }
+
     const relativePath = anyParams[0] !== '' ? anyParams[0] : '/'
     const absolutePath = path.join(serve.sender.path, serve.frontend, relativePath)
 

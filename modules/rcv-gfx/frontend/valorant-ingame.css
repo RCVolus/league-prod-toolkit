@@ -1,0 +1,18 @@
+body {
+    margin: 0;
+    overflow: hidden;
+}
+
+.box {
+    position: absolute;
+    right: 0;
+    top: 420px;
+    width: 322px;
+    height: 115px;
+}
+
+.patch {
+    color: white;
+    font-size: 24px;
+    letter-spacing: 1px;
+}
