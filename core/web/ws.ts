@@ -34,15 +34,6 @@ export const handleClient = (socket: WebSocket): void => {
       }
     }
 
-    /* / Check if it's a request event
-    if (event.meta.channelType === EventType.REQUEST) {
-      // if it is, make sure the reply will be forwarded
-      LPTEService.once('reply', event.meta.reply as string, (listenedEvent: LPTEvent) => {
-        console.log(listenedEvent)
-        socket.send(JSON.stringify(listenedEvent))
-      })
-    } */
-
     LPTEService.emit(event)
   })
 }
