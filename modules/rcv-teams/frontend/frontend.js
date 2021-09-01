@@ -26,7 +26,8 @@ $('#team-form').on('submit', (e) => {
       blueTeam,
       redTeam
     },
-    bestOf: parseInt($('#best-of').val())
+    bestOf: parseInt($('#best-of').val()),
+    roundOf: parseInt($('#round-of').val())
   })
 })
 
@@ -66,6 +67,7 @@ function unset() {
   $('#red-team-tag').val('')
   $('#red-team-score').val(0)
   $('#best-of').val(1)
+  $('#round-of').val(2)
 }
 
 async function initUi () {
@@ -90,6 +92,7 @@ async function displayData (data) {
   $('#red-team-score').val(data.teams.redTeam?.score || 0)
 
   $('#best-of').val(data.bestOf)
+  $('#round-of').val(data.roundOf)
 }
 
 window.LPTE.onready(() => {

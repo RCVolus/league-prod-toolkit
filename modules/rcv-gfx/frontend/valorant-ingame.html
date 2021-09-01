@@ -14,8 +14,9 @@
     <img src="/serve/rcv-gfx/valorant-ingame.png" class="background">
 
     <div class="box">
-        <div id="round"></div>
-        <div class="patch">Patch: <span id="patch"></span></div>
+        <div class="format"><span id="format"></span></div>
+        <div class="round"><span id="round"></span></div>
+        <div class="patch">CLIENT PATCH <span id="patch"></span></div>
     </div>
   <script>
       window.LPTE.onready(async () => {
@@ -26,9 +27,54 @@
                   version: 1
               }
           });
-          console.log(valorantStatic);
 
           document.getElementById('patch').innerText = valorantStatic.constants.versionData.niceVersion;
+
+          const activeTeamData = await LPTE.request({
+              meta: {
+                  namespace: 'rcv-teams',
+                  type: 'request-current',
+                  version: 1
+              }
+          });
+
+          const updateTeams = data => {
+            let textFormat;
+            switch (data.bestOf)  {
+                case 1:
+                    textFormat = "ONE"
+                    break
+                case 3:
+                    textFormat = "THREE"
+                    break
+                case 5:
+                    textFormat = "FIVE"
+                    break
+            }
+
+            let textRound;
+            switch (data.roundOf) {
+                case 2:
+                    textRound = "FINALS"
+                    break
+                case 4:
+                    textRound = "SEMI FINALS"
+                    break
+                case 8:
+                    textRound = "QUARTER FINALS"
+                    break
+                default:
+                    textRound = `ROUND OF ${data.roundOf}`
+                    break
+            }
+
+            document.getElementById('format').innerText = `BEST OF ${textFormat}`;
+            document.getElementById('round').innerText = textRound;
+          }
+
+          updateTeams(activeTeamData);
+
+          window.LPTE.on('rcv-teams', 'update', teamData => updateTeams(teamData));
       })
   </script>
 </body>

@@ -9,7 +9,8 @@ const namespace = 'rcv-teams';
 const initialState : GfxState = {
   state: "NO_MATCH",
   teams: {},
-  bestOf: 1
+  bestOf: 1,
+  roundOf: 2
 }
 
 module.exports = async (ctx: PluginContext) => {
@@ -40,6 +41,7 @@ module.exports = async (ctx: PluginContext) => {
       state: gfxState.state,
       teams: gfxState.teams,
       bestOf: gfxState.bestOf,
+      roundOf: gfxState.roundOf
     });
   });
 
@@ -71,7 +73,7 @@ module.exports = async (ctx: PluginContext) => {
   });
 
   ctx.LPTE.on(namespace, 'set', async (e: any) => {
-    if (util.isDeepStrictEqual(gfxState.teams, e.teams) && gfxState.bestOf == e.bestOf) return
+    if (util.isDeepStrictEqual(gfxState.teams, e.teams) && gfxState.bestOf == e.bestOf && gfxState.roundOf == e.roundOf) return
 
     if (gfxState.teams.blueTeam?.name == e.teams.redTeam.name && gfxState.teams.redTeam?.name == e.teams.blueTeam.name) {
       ctx.LPTE.emit({
@@ -87,7 +89,8 @@ module.exports = async (ctx: PluginContext) => {
             blueTeam: e.teams.redTeam,
             redTeam: e.teams.blueTeam
           },
-          bestOf: e.bestOf
+          bestOf: e.bestOf,
+          roundOf: e.roundOf
         }
       });
     } else if (gfxState.teams.blueTeam?.name == e.teams.blueTeam.name && gfxState.teams.redTeam?.name == e.teams.redTeam.name) {
@@ -104,7 +107,8 @@ module.exports = async (ctx: PluginContext) => {
             blueTeam: e.teams.blueTeam,
             redTeam: e.teams.redTeam
           },
-          bestOf: e.bestOf
+          bestOf: e.bestOf,
+          roundOf: e.roundOf
         }
       });
     } else {
@@ -121,12 +125,13 @@ module.exports = async (ctx: PluginContext) => {
             redTeam: e.teams.redTeam
           },
           bestOf: e.bestOf,
+          roundOf: e.roundOf,
           date: new Date()
         }
       });
 
       if (response === undefined) {
-        return ctx.log.warn('match cloud not be inserted')
+        return ctx.log.warn('match could not be inserted')
       }
       gfxState.id = response.id
     }
@@ -134,6 +139,7 @@ module.exports = async (ctx: PluginContext) => {
     gfxState.state = 'READY';
     gfxState.teams = e.teams
     gfxState.bestOf = e.bestOf
+    gfxState.roundOf = e.roundOf
 
     ctx.LPTE.emit({
       meta: {
@@ -144,6 +150,7 @@ module.exports = async (ctx: PluginContext) => {
       state: gfxState.state,
       teams: gfxState.teams,
       bestOf: gfxState.bestOf,
+      roundOf: gfxState.roundOf
     });
   });
 
@@ -165,6 +172,7 @@ module.exports = async (ctx: PluginContext) => {
       state: gfxState.state,
       teams: gfxState.teams,
       bestOf: gfxState.bestOf,
+      roundOf: gfxState.roundOf
     });
   });
 
@@ -172,7 +180,8 @@ module.exports = async (ctx: PluginContext) => {
     gfxState = {
       state: "NO_MATCH",
       teams: {},
-      bestOf: 1
+      bestOf: 1,
+      roundOf: 2
     }
 
     ctx.LPTE.emit({
@@ -184,6 +193,7 @@ module.exports = async (ctx: PluginContext) => {
       state: gfxState.state,
       teams: gfxState.teams,
       bestOf: gfxState.bestOf,
+      roundOf: gfxState.roundOf
     });
   });
 
@@ -201,7 +211,8 @@ module.exports = async (ctx: PluginContext) => {
     gfxState = {
       state: "NO_MATCH",
       teams: {},
-      bestOf: 1
+      bestOf: 1,
+      roundOf: 2
     }
 
     ctx.LPTE.emit({
@@ -213,6 +224,7 @@ module.exports = async (ctx: PluginContext) => {
       state: gfxState.state,
       teams: gfxState.teams,
       bestOf: gfxState.bestOf,
+      roundOf: gfxState.roundOf
     });
   });
 
@@ -256,7 +268,7 @@ module.exports = async (ctx: PluginContext) => {
     })
 
     if (res === undefined) {
-      return ctx.log.warn('matches cloud not be loaded')
+      return ctx.log.warn('matches could not be loaded')
     }
 
     if (res.data[0]) {
@@ -264,6 +276,7 @@ module.exports = async (ctx: PluginContext) => {
       gfxState.teams = res.data[0].teams
       gfxState.bestOf = res.data[0].bestOf
       gfxState.id = res.data[0]._id
+      gfxState.roundOf = res.data[0].roundOf
     } 
   }
 };

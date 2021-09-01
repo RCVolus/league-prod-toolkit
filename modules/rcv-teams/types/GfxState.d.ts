@@ -8,4 +8,5 @@ export interface GfxState {
   }
   bestOf: 1 | 3 | 5
   id?: any
+  roundOf: 1 | 2 | 4 | 8 | 16 | 32 | 64 | 128 | 256 | 512 | 1024 | 2048
 }
