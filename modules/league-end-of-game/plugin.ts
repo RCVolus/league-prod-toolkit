@@ -3,8 +3,8 @@ import { EndOfGameData } from './handleData';
 import { EndOfGame } from './types/EndOfGame';
 const namespace = 'league-end-of-game';
 
-import match from './data/EUW1_5390789952.json';
-import timeline from './data/timeline.json';
+/* import match from './data/EUW1_5390789952.json';
+import timeline from './data/timeline.json'; */
 
 module.exports = async (ctx: PluginContext) => {
   let state : {
@@ -92,7 +92,7 @@ module.exports = async (ctx: PluginContext) => {
     })
   })
 
-  const matchData = match as any
+  /* const matchData = match as any
   const timelineData = timeline
 
   const emdOfGameData = new EndOfGameData(matchData, timelineData)
@@ -111,5 +111,5 @@ module.exports = async (ctx: PluginContext) => {
       }, 
       state
     })
-  })
+  }) */
 };

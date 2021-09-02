@@ -1,7 +1,7 @@
 import { PluginContext } from 'league-prod-toolkit/core/modules/Module'
 import { GameMode, GameType, Map } from '../types/Enums'
 import { PlayerName } from '../types/Player'
-import { PreGameInit } from '../types/PreGame'
+import { PreGameInit, Team } from '../types/PreGame'
 
 export class MatchInfo {
   private _available = false
@@ -14,6 +14,7 @@ export class MatchInfo {
   private map ? : Map
   private gameMode ? : GameMode
   private gameType ? : GameType
+  private teams ? : Team[]
 
   constructor (private ctx: PluginContext) {}
 
@@ -24,6 +25,7 @@ export class MatchInfo {
 
     this.id = data.ID
     this.participants = data.participants
+    this.teams = data.teams
     this.map = data.map
     this.gameMode = data.gameMode
     this.gameType = data.gameType
@@ -37,6 +39,7 @@ export class MatchInfo {
       _deleted: this._deleted,
       id: this.id,
       participants: this.participants,
+      teams: this.teams,
       map: this.map,
       gameMode: this.gameMode,
       gameType: this.gameType,

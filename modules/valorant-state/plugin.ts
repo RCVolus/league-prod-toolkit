@@ -1,6 +1,8 @@
 import { PluginContext } from 'league-prod-toolkit/core/modules/Module'
 import { ValoState } from './controller/ValoState';
 
+//import preGameData from './data/Valo-Champselect-data.json'
+
 const namespace = 'valorant-state';
 
 module.exports = async (ctx: PluginContext) => {
@@ -41,9 +43,25 @@ module.exports = async (ctx: PluginContext) => {
     state.sessionLoopState = e.state
     state.matchInfo.init(e.data)
     state.preGame.init(e.data)
+    ctx.LPTE.emit({
+      meta: {
+        type: 'create',
+        namespace: 'valorant-state-pregame',
+        version: 1
+      },
+      state: state.getState()
+    })
   });
   ctx.LPTE.on('valo', 'valo-pregame-update', e => {
     state.preGame.update(e.data)
+    ctx.LPTE.emit({
+      meta: {
+        type: 'update',
+        namespace: 'valorant-state-pregame',
+        version: 1
+      },
+      state: state.getState()
+    })
   });
   ctx.LPTE.on('valo', 'valo-pregame-delete', e => {
     state.preGame.delete()
@@ -58,4 +76,12 @@ module.exports = async (ctx: PluginContext) => {
     },
     status: 'RUNNING'
   });
+
+  /* state.matchInfo.init(preGameData[0] as any)
+  state.preGame.init(preGameData[0] as any)
+  for (let i = 1; i < preGameData.length; i++) {
+    setTimeout(() => {
+      state.preGame.update(preGameData[i] as any)
+    }, i * 1000)
+  } */
 };

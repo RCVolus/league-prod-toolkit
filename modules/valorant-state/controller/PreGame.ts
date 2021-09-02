@@ -1,6 +1,6 @@
 import { PluginContext } from 'league-prod-toolkit/core/modules/Module'
 import { PregameState } from '../types/Enums'
-import { PreGame as PreGameType, PreGameInit } from '../types/PreGame'
+import { PreGame as PreGameType, PreGameInit, Team } from '../types/PreGame'
 
 export class PreGame {
 
@@ -11,6 +11,7 @@ export class PreGame {
 
   private phase ? : PregameState
   private timeLeftUntil = 0
+  private teams ? : Team[]
 
   constructor (private ctx: PluginContext) {}
 
@@ -21,13 +22,13 @@ export class PreGame {
 
     this.timeLeftUntil = data.timer.timeLeftUntil
     this.phase = data.timer.phase
+    this.teams = data.teams
   }
 
   public update (data : PreGameType) {
     this._updated = new Date().getTime()
     this.phase = data.PregameState
-
-    // TODO
+    this.teams = data.Teams
   }
 
   public delete () {
@@ -41,6 +42,7 @@ export class PreGame {
       _created: this._created,
       _updated: this._updated,
       _deleted: this._deleted,
+      teams: this.teams,
       timer: {
         phase: this.phase,
         timeLeftUntil: this.timeLeftUntil

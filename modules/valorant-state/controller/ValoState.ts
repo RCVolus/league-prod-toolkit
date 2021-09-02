@@ -18,7 +18,7 @@ export class ValoState {
     return {
       loopState: this.sessionLoopState,
       matchInfo: this.matchInfo.getState(),
-      preGaem: this.preGame.getState()
+      preGame: this.preGame.getState()
     }
   }
 }
