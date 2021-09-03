@@ -64,7 +64,16 @@ module.exports = async (ctx: PluginContext) => {
     })
   });
   ctx.LPTE.on('valo', 'valo-pregame-delete', e => {
-    state.preGame.delete()
+    state.preGame.delete(e.data)
+    state.matchInfo.updateTeam(e.data.Teams)
+    ctx.LPTE.emit({
+      meta: {
+        type: 'delete',
+        namespace: 'valorant-state-pregame',
+        version: 1
+      },
+      state: state.getState()
+    })
   });
 
   // Emit event that we're ready to operate

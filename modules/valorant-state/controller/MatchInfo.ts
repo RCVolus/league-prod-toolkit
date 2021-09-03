@@ -30,6 +30,11 @@ export class MatchInfo {
     this.gameMode = data.gameMode
     this.gameType = data.gameType
   }
+
+  public updateTeam (teams : Team[]) {
+    this._updated = new Date().getTime()
+    this.teams = teams
+  }
   
   public getState () {
     return {

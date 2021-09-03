@@ -31,9 +31,12 @@ export class PreGame {
     this.teams = data.Teams
   }
 
-  public delete () {
+  public delete (data : PreGameType) {
     this._available = false
     this._deleted = new Date().getTime()
+    this._updated = new Date().getTime()
+    this.phase = data.PregameState
+    this.teams = data.Teams
   }
   
   public getState () {
