@@ -1,0 +1,1314 @@
+[
+  {
+    "ID": "15d7ef8a-7ec8-46bc-af66-353336adff08",
+    "timer": {
+      "phase": "character_select_active",
+      "timeLeftUntil": 1718637209234
+    },
+    "participants": [
+      {
+        "DisplayName": "",
+        "Subject": "39e8cf98-7ffa-5641-a234-ef51693b888e",
+        "GameName": "Himyu",
+        "TagLine": "EUW"
+      }
+    ],
+    "teams": [
+      {
+        "TeamID": "Red",
+        "Players": [
+          {
+            "Subject": "39e8cf98-7ffa-5641-a234-ef51693b888e",
+            "CharacterID": "",
+            "CharacterSelectionState": "",
+            "PregamePlayerState": "joined",
+            "CompetitiveTier": 0,
+            "PlayerIdentity": {
+              "Subject": "39e8cf98-7ffa-5641-a234-ef51693b888e",
+              "PlayerCardID": "82b5cd0d-4b81-c336-2332-61a753849355",
+              "PlayerTitleID": "d13e579c-435e-44d4-cec2-6eae5a3c5ed4",
+              "AccountLevel": 1,
+              "PreferredLevelBorderID": "00000000-0000-0000-0000-000000000000",
+              "Incognito": false,
+              "HideAccountLevel": false
+            },
+            "SeasonalBadgeInfo": {
+              "SeasonID": "",
+              "NumberOfWins": 0,
+              "WinsByTier": null,
+              "Rank": 0,
+              "LeaderboardRank": 0
+            }
+          }
+        ]
+      }
+    ],
+    "map": "/Game/Maps/Duality/Duality",
+    "gameMode": "/Game/GameModes/Bomb/BombGameMode.BombGameMode_C",
+    "gameType": "CustomGame"
+  },
+  {
+    "ID": "15d7ef8a-7ec8-46bc-af66-353336adff08",
+    "Version": 1630591564740,
+    "Teams": [
+      {
+        "TeamID": "Red",
+        "Players": [
+          {
+            "Subject": "39e8cf98-7ffa-5641-a234-ef51693b888e",
+            "CharacterID": "",
+            "CharacterSelectionState": "",
+            "PregamePlayerState": "joined",
+            "CompetitiveTier": 0,
+            "PlayerIdentity": {
+              "Subject": "39e8cf98-7ffa-5641-a234-ef51693b888e",
+              "PlayerCardID": "82b5cd0d-4b81-c336-2332-61a753849355",
+              "PlayerTitleID": "d13e579c-435e-44d4-cec2-6eae5a3c5ed4",
+              "AccountLevel": 1,
+              "PreferredLevelBorderID": "00000000-0000-0000-0000-000000000000",
+              "Incognito": false,
+              "HideAccountLevel": false
+            },
+            "SeasonalBadgeInfo": {
+              "SeasonID": "",
+              "NumberOfWins": 0,
+              "WinsByTier": null,
+              "Rank": 0,
+              "LeaderboardRank": 0
+            }
+          }
+        ]
+      }
+    ],
+    "AllyTeam": {
+      "TeamID": "Red",
+      "Players": [
+        {
+          "Subject": "39e8cf98-7ffa-5641-a234-ef51693b888e",
+          "CharacterID": "",
+          "CharacterSelectionState": "",
+          "PregamePlayerState": "joined",
+          "CompetitiveTier": 0,
+          "PlayerIdentity": {
+            "Subject": "39e8cf98-7ffa-5641-a234-ef51693b888e",
+            "PlayerCardID": "82b5cd0d-4b81-c336-2332-61a753849355",
+            "PlayerTitleID": "d13e579c-435e-44d4-cec2-6eae5a3c5ed4",
+            "AccountLevel": 1,
+            "PreferredLevelBorderID": "00000000-0000-0000-0000-000000000000",
+            "Incognito": false,
+            "HideAccountLevel": false
+          },
+          "SeasonalBadgeInfo": {
+            "SeasonID": "",
+            "NumberOfWins": 0,
+            "WinsByTier": null,
+            "Rank": 0,
+            "LeaderboardRank": 0
+          }
+        }
+      ]
+    },
+    "EnemyTeam": null,
+    "ObserverSubjects": [],
+    "MatchCoaches": [],
+    "EnemyTeamSize": 0,
+    "EnemyTeamLockCount": 0,
+    "PregameState": "character_select_active",
+    "LastUpdated": "0001-01-01T00:00:00Z",
+    "MapID": "/Game/Maps/Duality/Duality",
+    "GamePodID": "aresriot.aws-rclusterprod-euc1-1.eu-gp-frankfurt-1",
+    "Mode": "/Game/GameModes/Bomb/BombGameMode.BombGameMode_C",
+    "VoiceSessionID": "15d7ef8a-7ec8-46bc-af66-353336adff08-tm2",
+    "MUCName": "15d7ef8a-7ec8-46bc-af66-353336adff08-2@ares-pregame.eu2.pvp.net",
+    "QueueID": "",
+    "ProvisioningFlowID": "CustomGame",
+    "IsRanked": false,
+    "PhaseTimeRemainingNS": 87040626687,
+    "altModesFlagADA": false
+  },
+  {
+    "ID": "15d7ef8a-7ec8-46bc-af66-353336adff08",
+    "Version": 1630591564740,
+    "Teams": [
+      {
+        "TeamID": "Red",
+        "Players": [
+          {
+            "Subject": "39e8cf98-7ffa-5641-a234-ef51693b888e",
+            "CharacterID": "",
+            "CharacterSelectionState": "",
+            "PregamePlayerState": "joined",
+            "CompetitiveTier": 0,
+            "PlayerIdentity": {
+              "Subject": "39e8cf98-7ffa-5641-a234-ef51693b888e",
+              "PlayerCardID": "82b5cd0d-4b81-c336-2332-61a753849355",
+              "PlayerTitleID": "d13e579c-435e-44d4-cec2-6eae5a3c5ed4",
+              "AccountLevel": 1,
+              "PreferredLevelBorderID": "00000000-0000-0000-0000-000000000000",
+              "Incognito": false,
+              "HideAccountLevel": false
+            },
+            "SeasonalBadgeInfo": {
+              "SeasonID": "",
+              "NumberOfWins": 0,
+              "WinsByTier": null,
+              "Rank": 0,
+              "LeaderboardRank": 0
+            }
+          }
+        ]
+      }
+    ],
+    "AllyTeam": {
+      "TeamID": "Red",
+      "Players": [
+        {
+          "Subject": "39e8cf98-7ffa-5641-a234-ef51693b888e",
+          "CharacterID": "",
+          "CharacterSelectionState": "",
+          "PregamePlayerState": "joined",
+          "CompetitiveTier": 0,
+          "PlayerIdentity": {
+            "Subject": "39e8cf98-7ffa-5641-a234-ef51693b888e",
+            "PlayerCardID": "82b5cd0d-4b81-c336-2332-61a753849355",
+            "PlayerTitleID": "d13e579c-435e-44d4-cec2-6eae5a3c5ed4",
+            "AccountLevel": 1,
+            "PreferredLevelBorderID": "00000000-0000-0000-0000-000000000000",
+            "Incognito": false,
+            "HideAccountLevel": false
+          },
+          "SeasonalBadgeInfo": {
+            "SeasonID": "",
+            "NumberOfWins": 0,
+            "WinsByTier": null,
+            "Rank": 0,
+            "LeaderboardRank": 0
+          }
+        }
+      ]
+    },
+    "EnemyTeam": null,
+    "ObserverSubjects": [],
+    "MatchCoaches": [],
+    "EnemyTeamSize": 0,
+    "EnemyTeamLockCount": 0,
+    "PregameState": "character_select_active",
+    "LastUpdated": "0001-01-01T00:00:00Z",
+    "MapID": "/Game/Maps/Duality/Duality",
+    "GamePodID": "aresriot.aws-rclusterprod-euc1-1.eu-gp-frankfurt-1",
+    "Mode": "/Game/GameModes/Bomb/BombGameMode.BombGameMode_C",
+    "VoiceSessionID": "15d7ef8a-7ec8-46bc-af66-353336adff08-tm2",
+    "MUCName": "15d7ef8a-7ec8-46bc-af66-353336adff08-2@ares-pregame.eu2.pvp.net",
+    "QueueID": "",
+    "ProvisioningFlowID": "CustomGame",
+    "IsRanked": false,
+    "PhaseTimeRemainingNS": 86035360099,
+    "altModesFlagADA": false
+  },
+  {
+    "ID": "15d7ef8a-7ec8-46bc-af66-353336adff08",
+    "Version": 1630591564740,
+    "Teams": [
+      {
+        "TeamID": "Red",
+        "Players": [
+          {
+            "Subject": "39e8cf98-7ffa-5641-a234-ef51693b888e",
+            "CharacterID": "",
+            "CharacterSelectionState": "",
+            "PregamePlayerState": "joined",
+            "CompetitiveTier": 0,
+            "PlayerIdentity": {
+              "Subject": "39e8cf98-7ffa-5641-a234-ef51693b888e",
+              "PlayerCardID": "82b5cd0d-4b81-c336-2332-61a753849355",
+              "PlayerTitleID": "d13e579c-435e-44d4-cec2-6eae5a3c5ed4",
+              "AccountLevel": 1,
+              "PreferredLevelBorderID": "00000000-0000-0000-0000-000000000000",
+              "Incognito": false,
+              "HideAccountLevel": false
+            },
+            "SeasonalBadgeInfo": {
+              "SeasonID": "",
+              "NumberOfWins": 0,
+              "WinsByTier": null,
+              "Rank": 0,
+              "LeaderboardRank": 0
+            }
+          }
+        ]
+      }
+    ],
+    "AllyTeam": {
+      "TeamID": "Red",
+      "Players": [
+        {
+          "Subject": "39e8cf98-7ffa-5641-a234-ef51693b888e",
+          "CharacterID": "",
+          "CharacterSelectionState": "",
+          "PregamePlayerState": "joined",
+          "CompetitiveTier": 0,
+          "PlayerIdentity": {
+            "Subject": "39e8cf98-7ffa-5641-a234-ef51693b888e",
+            "PlayerCardID": "82b5cd0d-4b81-c336-2332-61a753849355",
+            "PlayerTitleID": "d13e579c-435e-44d4-cec2-6eae5a3c5ed4",
+            "AccountLevel": 1,
+            "PreferredLevelBorderID": "00000000-0000-0000-0000-000000000000",
+            "Incognito": false,
+            "HideAccountLevel": false
+          },
+          "SeasonalBadgeInfo": {
+            "SeasonID": "",
+            "NumberOfWins": 0,
+            "WinsByTier": null,
+            "Rank": 0,
+            "LeaderboardRank": 0
+          }
+        }
+      ]
+    },
+    "EnemyTeam": null,
+    "ObserverSubjects": [],
+    "MatchCoaches": [],
+    "EnemyTeamSize": 0,
+    "EnemyTeamLockCount": 0,
+    "PregameState": "character_select_active",
+    "LastUpdated": "0001-01-01T00:00:00Z",
+    "MapID": "/Game/Maps/Duality/Duality",
+    "GamePodID": "aresriot.aws-rclusterprod-euc1-1.eu-gp-frankfurt-1",
+    "Mode": "/Game/GameModes/Bomb/BombGameMode.BombGameMode_C",
+    "VoiceSessionID": "15d7ef8a-7ec8-46bc-af66-353336adff08-tm2",
+    "MUCName": "15d7ef8a-7ec8-46bc-af66-353336adff08-2@ares-pregame.eu2.pvp.net",
+    "QueueID": "",
+    "ProvisioningFlowID": "CustomGame",
+    "IsRanked": false,
+    "PhaseTimeRemainingNS": 85027421705,
+    "altModesFlagADA": false
+  },
+  {
+    "ID": "15d7ef8a-7ec8-46bc-af66-353336adff08",
+    "Version": 1630591564740,
+    "Teams": [
+      {
+        "TeamID": "Red",
+        "Players": [
+          {
+            "Subject": "39e8cf98-7ffa-5641-a234-ef51693b888e",
+            "CharacterID": "",
+            "CharacterSelectionState": "",
+            "PregamePlayerState": "joined",
+            "CompetitiveTier": 0,
+            "PlayerIdentity": {
+              "Subject": "39e8cf98-7ffa-5641-a234-ef51693b888e",
+              "PlayerCardID": "82b5cd0d-4b81-c336-2332-61a753849355",
+              "PlayerTitleID": "d13e579c-435e-44d4-cec2-6eae5a3c5ed4",
+              "AccountLevel": 1,
+              "PreferredLevelBorderID": "00000000-0000-0000-0000-000000000000",
+              "Incognito": false,
+              "HideAccountLevel": false
+            },
+            "SeasonalBadgeInfo": {
+              "SeasonID": "",
+              "NumberOfWins": 0,
+              "WinsByTier": null,
+              "Rank": 0,
+              "LeaderboardRank": 0
+            }
+          }
+        ]
+      }
+    ],
+    "AllyTeam": {
+      "TeamID": "Red",
+      "Players": [
+        {
+          "Subject": "39e8cf98-7ffa-5641-a234-ef51693b888e",
+          "CharacterID": "",
+          "CharacterSelectionState": "",
+          "PregamePlayerState": "joined",
+          "CompetitiveTier": 0,
+          "PlayerIdentity": {
+            "Subject": "39e8cf98-7ffa-5641-a234-ef51693b888e",
+            "PlayerCardID": "82b5cd0d-4b81-c336-2332-61a753849355",
+            "PlayerTitleID": "d13e579c-435e-44d4-cec2-6eae5a3c5ed4",
+            "AccountLevel": 1,
+            "PreferredLevelBorderID": "00000000-0000-0000-0000-000000000000",
+            "Incognito": false,
+            "HideAccountLevel": false
+          },
+          "SeasonalBadgeInfo": {
+            "SeasonID": "",
+            "NumberOfWins": 0,
+            "WinsByTier": null,
+            "Rank": 0,
+            "LeaderboardRank": 0
+          }
+        }
+      ]
+    },
+    "EnemyTeam": null,
+    "ObserverSubjects": [],
+    "MatchCoaches": [],
+    "EnemyTeamSize": 0,
+    "EnemyTeamLockCount": 0,
+    "PregameState": "character_select_active",
+    "LastUpdated": "0001-01-01T00:00:00Z",
+    "MapID": "/Game/Maps/Duality/Duality",
+    "GamePodID": "aresriot.aws-rclusterprod-euc1-1.eu-gp-frankfurt-1",
+    "Mode": "/Game/GameModes/Bomb/BombGameMode.BombGameMode_C",
+    "VoiceSessionID": "15d7ef8a-7ec8-46bc-af66-353336adff08-tm2",
+    "MUCName": "15d7ef8a-7ec8-46bc-af66-353336adff08-2@ares-pregame.eu2.pvp.net",
+    "QueueID": "",
+    "ProvisioningFlowID": "CustomGame",
+    "IsRanked": false,
+    "PhaseTimeRemainingNS": 84026994009,
+    "altModesFlagADA": false
+  },
+  {
+    "ID": "15d7ef8a-7ec8-46bc-af66-353336adff08",
+    "Version": 1630591564740,
+    "Teams": [
+      {
+        "TeamID": "Red",
+        "Players": [
+          {
+            "Subject": "39e8cf98-7ffa-5641-a234-ef51693b888e",
+            "CharacterID": "",
+            "CharacterSelectionState": "",
+            "PregamePlayerState": "joined",
+            "CompetitiveTier": 0,
+            "PlayerIdentity": {
+              "Subject": "39e8cf98-7ffa-5641-a234-ef51693b888e",
+              "PlayerCardID": "82b5cd0d-4b81-c336-2332-61a753849355",
+              "PlayerTitleID": "d13e579c-435e-44d4-cec2-6eae5a3c5ed4",
+              "AccountLevel": 1,
+              "PreferredLevelBorderID": "00000000-0000-0000-0000-000000000000",
+              "Incognito": false,
+              "HideAccountLevel": false
+            },
+            "SeasonalBadgeInfo": {
+              "SeasonID": "",
+              "NumberOfWins": 0,
+              "WinsByTier": null,
+              "Rank": 0,
+              "LeaderboardRank": 0
+            }
+          }
+        ]
+      }
+    ],
+    "AllyTeam": {
+      "TeamID": "Red",
+      "Players": [
+        {
+          "Subject": "39e8cf98-7ffa-5641-a234-ef51693b888e",
+          "CharacterID": "",
+          "CharacterSelectionState": "",
+          "PregamePlayerState": "joined",
+          "CompetitiveTier": 0,
+          "PlayerIdentity": {
+            "Subject": "39e8cf98-7ffa-5641-a234-ef51693b888e",
+            "PlayerCardID": "82b5cd0d-4b81-c336-2332-61a753849355",
+            "PlayerTitleID": "d13e579c-435e-44d4-cec2-6eae5a3c5ed4",
+            "AccountLevel": 1,
+            "PreferredLevelBorderID": "00000000-0000-0000-0000-000000000000",
+            "Incognito": false,
+            "HideAccountLevel": false
+          },
+          "SeasonalBadgeInfo": {
+            "SeasonID": "",
+            "NumberOfWins": 0,
+            "WinsByTier": null,
+            "Rank": 0,
+            "LeaderboardRank": 0
+          }
+        }
+      ]
+    },
+    "EnemyTeam": null,
+    "ObserverSubjects": [],
+    "MatchCoaches": [],
+    "EnemyTeamSize": 0,
+    "EnemyTeamLockCount": 0,
+    "PregameState": "character_select_active",
+    "LastUpdated": "0001-01-01T00:00:00Z",
+    "MapID": "/Game/Maps/Duality/Duality",
+    "GamePodID": "aresriot.aws-rclusterprod-euc1-1.eu-gp-frankfurt-1",
+    "Mode": "/Game/GameModes/Bomb/BombGameMode.BombGameMode_C",
+    "VoiceSessionID": "15d7ef8a-7ec8-46bc-af66-353336adff08-tm2",
+    "MUCName": "15d7ef8a-7ec8-46bc-af66-353336adff08-2@ares-pregame.eu2.pvp.net",
+    "QueueID": "",
+    "ProvisioningFlowID": "CustomGame",
+    "IsRanked": false,
+    "PhaseTimeRemainingNS": 83016653604,
+    "altModesFlagADA": false
+  },
+  {
+    "ID": "15d7ef8a-7ec8-46bc-af66-353336adff08",
+    "Version": 1630591564740,
+    "Teams": [
+      {
+        "TeamID": "Red",
+        "Players": [
+          {
+            "Subject": "39e8cf98-7ffa-5641-a234-ef51693b888e",
+            "CharacterID": "",
+            "CharacterSelectionState": "",
+            "PregamePlayerState": "joined",
+            "CompetitiveTier": 0,
+            "PlayerIdentity": {
+              "Subject": "39e8cf98-7ffa-5641-a234-ef51693b888e",
+              "PlayerCardID": "82b5cd0d-4b81-c336-2332-61a753849355",
+              "PlayerTitleID": "d13e579c-435e-44d4-cec2-6eae5a3c5ed4",
+              "AccountLevel": 1,
+              "PreferredLevelBorderID": "00000000-0000-0000-0000-000000000000",
+              "Incognito": false,
+              "HideAccountLevel": false
+            },
+            "SeasonalBadgeInfo": {
+              "SeasonID": "",
+              "NumberOfWins": 0,
+              "WinsByTier": null,
+              "Rank": 0,
+              "LeaderboardRank": 0
+            }
+          }
+        ]
+      }
+    ],
+    "AllyTeam": {
+      "TeamID": "Red",
+      "Players": [
+        {
+          "Subject": "39e8cf98-7ffa-5641-a234-ef51693b888e",
+          "CharacterID": "",
+          "CharacterSelectionState": "",
+          "PregamePlayerState": "joined",
+          "CompetitiveTier": 0,
+          "PlayerIdentity": {
+            "Subject": "39e8cf98-7ffa-5641-a234-ef51693b888e",
+            "PlayerCardID": "82b5cd0d-4b81-c336-2332-61a753849355",
+            "PlayerTitleID": "d13e579c-435e-44d4-cec2-6eae5a3c5ed4",
+            "AccountLevel": 1,
+            "PreferredLevelBorderID": "00000000-0000-0000-0000-000000000000",
+            "Incognito": false,
+            "HideAccountLevel": false
+          },
+          "SeasonalBadgeInfo": {
+            "SeasonID": "",
+            "NumberOfWins": 0,
+            "WinsByTier": null,
+            "Rank": 0,
+            "LeaderboardRank": 0
+          }
+        }
+      ]
+    },
+    "EnemyTeam": null,
+    "ObserverSubjects": [],
+    "MatchCoaches": [],
+    "EnemyTeamSize": 0,
+    "EnemyTeamLockCount": 0,
+    "PregameState": "character_select_active",
+    "LastUpdated": "0001-01-01T00:00:00Z",
+    "MapID": "/Game/Maps/Duality/Duality",
+    "GamePodID": "aresriot.aws-rclusterprod-euc1-1.eu-gp-frankfurt-1",
+    "Mode": "/Game/GameModes/Bomb/BombGameMode.BombGameMode_C",
+    "VoiceSessionID": "15d7ef8a-7ec8-46bc-af66-353336adff08-tm2",
+    "MUCName": "15d7ef8a-7ec8-46bc-af66-353336adff08-2@ares-pregame.eu2.pvp.net",
+    "QueueID": "",
+    "ProvisioningFlowID": "CustomGame",
+    "IsRanked": false,
+    "PhaseTimeRemainingNS": 82015043441,
+    "altModesFlagADA": false
+  },
+  {
+    "ID": "15d7ef8a-7ec8-46bc-af66-353336adff08",
+    "Version": 1630591564740,
+    "Teams": [
+      {
+        "TeamID": "Red",
+        "Players": [
+          {
+            "Subject": "39e8cf98-7ffa-5641-a234-ef51693b888e",
+            "CharacterID": "",
+            "CharacterSelectionState": "",
+            "PregamePlayerState": "joined",
+            "CompetitiveTier": 0,
+            "PlayerIdentity": {
+              "Subject": "39e8cf98-7ffa-5641-a234-ef51693b888e",
+              "PlayerCardID": "82b5cd0d-4b81-c336-2332-61a753849355",
+              "PlayerTitleID": "d13e579c-435e-44d4-cec2-6eae5a3c5ed4",
+              "AccountLevel": 1,
+              "PreferredLevelBorderID": "00000000-0000-0000-0000-000000000000",
+              "Incognito": false,
+              "HideAccountLevel": false
+            },
+            "SeasonalBadgeInfo": {
+              "SeasonID": "",
+              "NumberOfWins": 0,
+              "WinsByTier": null,
+              "Rank": 0,
+              "LeaderboardRank": 0
+            }
+          }
+        ]
+      }
+    ],
+    "AllyTeam": {
+      "TeamID": "Red",
+      "Players": [
+        {
+          "Subject": "39e8cf98-7ffa-5641-a234-ef51693b888e",
+          "CharacterID": "",
+          "CharacterSelectionState": "",
+          "PregamePlayerState": "joined",
+          "CompetitiveTier": 0,
+          "PlayerIdentity": {
+            "Subject": "39e8cf98-7ffa-5641-a234-ef51693b888e",
+            "PlayerCardID": "82b5cd0d-4b81-c336-2332-61a753849355",
+            "PlayerTitleID": "d13e579c-435e-44d4-cec2-6eae5a3c5ed4",
+            "AccountLevel": 1,
+            "PreferredLevelBorderID": "00000000-0000-0000-0000-000000000000",
+            "Incognito": false,
+            "HideAccountLevel": false
+          },
+          "SeasonalBadgeInfo": {
+            "SeasonID": "",
+            "NumberOfWins": 0,
+            "WinsByTier": null,
+            "Rank": 0,
+            "LeaderboardRank": 0
+          }
+        }
+      ]
+    },
+    "EnemyTeam": null,
+    "ObserverSubjects": [],
+    "MatchCoaches": [],
+    "EnemyTeamSize": 0,
+    "EnemyTeamLockCount": 0,
+    "PregameState": "character_select_active",
+    "LastUpdated": "0001-01-01T00:00:00Z",
+    "MapID": "/Game/Maps/Duality/Duality",
+    "GamePodID": "aresriot.aws-rclusterprod-euc1-1.eu-gp-frankfurt-1",
+    "Mode": "/Game/GameModes/Bomb/BombGameMode.BombGameMode_C",
+    "VoiceSessionID": "15d7ef8a-7ec8-46bc-af66-353336adff08-tm2",
+    "MUCName": "15d7ef8a-7ec8-46bc-af66-353336adff08-2@ares-pregame.eu2.pvp.net",
+    "QueueID": "",
+    "ProvisioningFlowID": "CustomGame",
+    "IsRanked": false,
+    "PhaseTimeRemainingNS": 81014235320,
+    "altModesFlagADA": false
+  },
+  {
+    "ID": "15d7ef8a-7ec8-46bc-af66-353336adff08",
+    "Version": 1630591564740,
+    "Teams": [
+      {
+        "TeamID": "Red",
+        "Players": [
+          {
+            "Subject": "39e8cf98-7ffa-5641-a234-ef51693b888e",
+            "CharacterID": "",
+            "CharacterSelectionState": "",
+            "PregamePlayerState": "joined",
+            "CompetitiveTier": 0,
+            "PlayerIdentity": {
+              "Subject": "39e8cf98-7ffa-5641-a234-ef51693b888e",
+              "PlayerCardID": "82b5cd0d-4b81-c336-2332-61a753849355",
+              "PlayerTitleID": "d13e579c-435e-44d4-cec2-6eae5a3c5ed4",
+              "AccountLevel": 1,
+              "PreferredLevelBorderID": "00000000-0000-0000-0000-000000000000",
+              "Incognito": false,
+              "HideAccountLevel": false
+            },
+            "SeasonalBadgeInfo": {
+              "SeasonID": "",
+              "NumberOfWins": 0,
+              "WinsByTier": null,
+              "Rank": 0,
+              "LeaderboardRank": 0
+            }
+          }
+        ]
+      }
+    ],
+    "AllyTeam": {
+      "TeamID": "Red",
+      "Players": [
+        {
+          "Subject": "39e8cf98-7ffa-5641-a234-ef51693b888e",
+          "CharacterID": "",
+          "CharacterSelectionState": "",
+          "PregamePlayerState": "joined",
+          "CompetitiveTier": 0,
+          "PlayerIdentity": {
+            "Subject": "39e8cf98-7ffa-5641-a234-ef51693b888e",
+            "PlayerCardID": "82b5cd0d-4b81-c336-2332-61a753849355",
+            "PlayerTitleID": "d13e579c-435e-44d4-cec2-6eae5a3c5ed4",
+            "AccountLevel": 1,
+            "PreferredLevelBorderID": "00000000-0000-0000-0000-000000000000",
+            "Incognito": false,
+            "HideAccountLevel": false
+          },
+          "SeasonalBadgeInfo": {
+            "SeasonID": "",
+            "NumberOfWins": 0,
+            "WinsByTier": null,
+            "Rank": 0,
+            "LeaderboardRank": 0
+          }
+        }
+      ]
+    },
+    "EnemyTeam": null,
+    "ObserverSubjects": [],
+    "MatchCoaches": [],
+    "EnemyTeamSize": 0,
+    "EnemyTeamLockCount": 0,
+    "PregameState": "character_select_active",
+    "LastUpdated": "0001-01-01T00:00:00Z",
+    "MapID": "/Game/Maps/Duality/Duality",
+    "GamePodID": "aresriot.aws-rclusterprod-euc1-1.eu-gp-frankfurt-1",
+    "Mode": "/Game/GameModes/Bomb/BombGameMode.BombGameMode_C",
+    "VoiceSessionID": "15d7ef8a-7ec8-46bc-af66-353336adff08-tm2",
+    "MUCName": "15d7ef8a-7ec8-46bc-af66-353336adff08-2@ares-pregame.eu2.pvp.net",
+    "QueueID": "",
+    "ProvisioningFlowID": "CustomGame",
+    "IsRanked": false,
+    "PhaseTimeRemainingNS": 80009436518,
+    "altModesFlagADA": false
+  },
+  {
+    "ID": "15d7ef8a-7ec8-46bc-af66-353336adff08",
+    "Version": 1630591575222,
+    "Teams": [
+      {
+        "TeamID": "Red",
+        "Players": [
+          {
+            "Subject": "39e8cf98-7ffa-5641-a234-ef51693b888e",
+            "CharacterID": "add6443a-41bd-e414-f6ad-e58d267f4e95",
+            "CharacterSelectionState": "selected",
+            "PregamePlayerState": "joined",
+            "CompetitiveTier": 0,
+            "PlayerIdentity": {
+              "Subject": "39e8cf98-7ffa-5641-a234-ef51693b888e",
+              "PlayerCardID": "82b5cd0d-4b81-c336-2332-61a753849355",
+              "PlayerTitleID": "d13e579c-435e-44d4-cec2-6eae5a3c5ed4",
+              "AccountLevel": 1,
+              "PreferredLevelBorderID": "00000000-0000-0000-0000-000000000000",
+              "Incognito": false,
+              "HideAccountLevel": false
+            },
+            "SeasonalBadgeInfo": {
+              "SeasonID": "",
+              "NumberOfWins": 0,
+              "WinsByTier": null,
+              "Rank": 0,
+              "LeaderboardRank": 0
+            }
+          }
+        ]
+      }
+    ],
+    "AllyTeam": {
+      "TeamID": "Red",
+      "Players": [
+        {
+          "Subject": "39e8cf98-7ffa-5641-a234-ef51693b888e",
+          "CharacterID": "add6443a-41bd-e414-f6ad-e58d267f4e95",
+          "CharacterSelectionState": "selected",
+          "PregamePlayerState": "joined",
+          "CompetitiveTier": 0,
+          "PlayerIdentity": {
+            "Subject": "39e8cf98-7ffa-5641-a234-ef51693b888e",
+            "PlayerCardID": "82b5cd0d-4b81-c336-2332-61a753849355",
+            "PlayerTitleID": "d13e579c-435e-44d4-cec2-6eae5a3c5ed4",
+            "AccountLevel": 1,
+            "PreferredLevelBorderID": "00000000-0000-0000-0000-000000000000",
+            "Incognito": false,
+            "HideAccountLevel": false
+          },
+          "SeasonalBadgeInfo": {
+            "SeasonID": "",
+            "NumberOfWins": 0,
+            "WinsByTier": null,
+            "Rank": 0,
+            "LeaderboardRank": 0
+          }
+        }
+      ]
+    },
+    "EnemyTeam": null,
+    "ObserverSubjects": [],
+    "MatchCoaches": [],
+    "EnemyTeamSize": 0,
+    "EnemyTeamLockCount": 0,
+    "PregameState": "character_select_active",
+    "LastUpdated": "0001-01-01T00:00:00Z",
+    "MapID": "/Game/Maps/Duality/Duality",
+    "GamePodID": "aresriot.aws-rclusterprod-euc1-1.eu-gp-frankfurt-1",
+    "Mode": "/Game/GameModes/Bomb/BombGameMode.BombGameMode_C",
+    "VoiceSessionID": "15d7ef8a-7ec8-46bc-af66-353336adff08-tm2",
+    "MUCName": "15d7ef8a-7ec8-46bc-af66-353336adff08-2@ares-pregame.eu2.pvp.net",
+    "QueueID": "",
+    "ProvisioningFlowID": "CustomGame",
+    "IsRanked": false,
+    "PhaseTimeRemainingNS": 79008001074,
+    "altModesFlagADA": false
+  },
+  {
+    "ID": "15d7ef8a-7ec8-46bc-af66-353336adff08",
+    "Version": 1630591575222,
+    "Teams": [
+      {
+        "TeamID": "Red",
+        "Players": [
+          {
+            "Subject": "39e8cf98-7ffa-5641-a234-ef51693b888e",
+            "CharacterID": "add6443a-41bd-e414-f6ad-e58d267f4e95",
+            "CharacterSelectionState": "selected",
+            "PregamePlayerState": "joined",
+            "CompetitiveTier": 0,
+            "PlayerIdentity": {
+              "Subject": "39e8cf98-7ffa-5641-a234-ef51693b888e",
+              "PlayerCardID": "82b5cd0d-4b81-c336-2332-61a753849355",
+              "PlayerTitleID": "d13e579c-435e-44d4-cec2-6eae5a3c5ed4",
+              "AccountLevel": 1,
+              "PreferredLevelBorderID": "00000000-0000-0000-0000-000000000000",
+              "Incognito": false,
+              "HideAccountLevel": false
+            },
+            "SeasonalBadgeInfo": {
+              "SeasonID": "",
+              "NumberOfWins": 0,
+              "WinsByTier": null,
+              "Rank": 0,
+              "LeaderboardRank": 0
+            }
+          }
+        ]
+      }
+    ],
+    "AllyTeam": {
+      "TeamID": "Red",
+      "Players": [
+        {
+          "Subject": "39e8cf98-7ffa-5641-a234-ef51693b888e",
+          "CharacterID": "add6443a-41bd-e414-f6ad-e58d267f4e95",
+          "CharacterSelectionState": "selected",
+          "PregamePlayerState": "joined",
+          "CompetitiveTier": 0,
+          "PlayerIdentity": {
+            "Subject": "39e8cf98-7ffa-5641-a234-ef51693b888e",
+            "PlayerCardID": "82b5cd0d-4b81-c336-2332-61a753849355",
+            "PlayerTitleID": "d13e579c-435e-44d4-cec2-6eae5a3c5ed4",
+            "AccountLevel": 1,
+            "PreferredLevelBorderID": "00000000-0000-0000-0000-000000000000",
+            "Incognito": false,
+            "HideAccountLevel": false
+          },
+          "SeasonalBadgeInfo": {
+            "SeasonID": "",
+            "NumberOfWins": 0,
+            "WinsByTier": null,
+            "Rank": 0,
+            "LeaderboardRank": 0
+          }
+        }
+      ]
+    },
+    "EnemyTeam": null,
+    "ObserverSubjects": [],
+    "MatchCoaches": [],
+    "EnemyTeamSize": 0,
+    "EnemyTeamLockCount": 0,
+    "PregameState": "character_select_active",
+    "LastUpdated": "0001-01-01T00:00:00Z",
+    "MapID": "/Game/Maps/Duality/Duality",
+    "GamePodID": "aresriot.aws-rclusterprod-euc1-1.eu-gp-frankfurt-1",
+    "Mode": "/Game/GameModes/Bomb/BombGameMode.BombGameMode_C",
+    "VoiceSessionID": "15d7ef8a-7ec8-46bc-af66-353336adff08-tm2",
+    "MUCName": "15d7ef8a-7ec8-46bc-af66-353336adff08-2@ares-pregame.eu2.pvp.net",
+    "QueueID": "",
+    "ProvisioningFlowID": "CustomGame",
+    "IsRanked": false,
+    "PhaseTimeRemainingNS": 77968207353,
+    "altModesFlagADA": false
+  },
+  {
+    "ID": "15d7ef8a-7ec8-46bc-af66-353336adff08",
+    "Version": 1630591576950,
+    "Teams": [
+      {
+        "TeamID": "Red",
+        "Players": [
+          {
+            "Subject": "39e8cf98-7ffa-5641-a234-ef51693b888e",
+            "CharacterID": "add6443a-41bd-e414-f6ad-e58d267f4e95",
+            "CharacterSelectionState": "locked",
+            "PregamePlayerState": "joined",
+            "CompetitiveTier": 0,
+            "PlayerIdentity": {
+              "Subject": "39e8cf98-7ffa-5641-a234-ef51693b888e",
+              "PlayerCardID": "82b5cd0d-4b81-c336-2332-61a753849355",
+              "PlayerTitleID": "d13e579c-435e-44d4-cec2-6eae5a3c5ed4",
+              "AccountLevel": 1,
+              "PreferredLevelBorderID": "00000000-0000-0000-0000-000000000000",
+              "Incognito": false,
+              "HideAccountLevel": false
+            },
+            "SeasonalBadgeInfo": {
+              "SeasonID": "",
+              "NumberOfWins": 0,
+              "WinsByTier": null,
+              "Rank": 0,
+              "LeaderboardRank": 0
+            }
+          }
+        ]
+      }
+    ],
+    "AllyTeam": {
+      "TeamID": "Red",
+      "Players": [
+        {
+          "Subject": "39e8cf98-7ffa-5641-a234-ef51693b888e",
+          "CharacterID": "add6443a-41bd-e414-f6ad-e58d267f4e95",
+          "CharacterSelectionState": "locked",
+          "PregamePlayerState": "joined",
+          "CompetitiveTier": 0,
+          "PlayerIdentity": {
+            "Subject": "39e8cf98-7ffa-5641-a234-ef51693b888e",
+            "PlayerCardID": "82b5cd0d-4b81-c336-2332-61a753849355",
+            "PlayerTitleID": "d13e579c-435e-44d4-cec2-6eae5a3c5ed4",
+            "AccountLevel": 1,
+            "PreferredLevelBorderID": "00000000-0000-0000-0000-000000000000",
+            "Incognito": false,
+            "HideAccountLevel": false
+          },
+          "SeasonalBadgeInfo": {
+            "SeasonID": "",
+            "NumberOfWins": 0,
+            "WinsByTier": null,
+            "Rank": 0,
+            "LeaderboardRank": 0
+          }
+        }
+      ]
+    },
+    "EnemyTeam": null,
+    "ObserverSubjects": [],
+    "MatchCoaches": [],
+    "EnemyTeamSize": 0,
+    "EnemyTeamLockCount": 0,
+    "PregameState": "character_select_finished",
+    "LastUpdated": "0001-01-01T00:00:00Z",
+    "MapID": "/Game/Maps/Duality/Duality",
+    "GamePodID": "aresriot.aws-rclusterprod-euc1-1.eu-gp-frankfurt-1",
+    "Mode": "/Game/GameModes/Bomb/BombGameMode.BombGameMode_C",
+    "VoiceSessionID": "15d7ef8a-7ec8-46bc-af66-353336adff08-tm2",
+    "MUCName": "15d7ef8a-7ec8-46bc-af66-353336adff08-2@ares-pregame.eu2.pvp.net",
+    "QueueID": "",
+    "ProvisioningFlowID": "CustomGame",
+    "IsRanked": false,
+    "PhaseTimeRemainingNS": 0,
+    "altModesFlagADA": false
+  },
+  {
+    "ID": "15d7ef8a-7ec8-46bc-af66-353336adff08",
+    "Version": 1630591576950,
+    "Teams": [
+      {
+        "TeamID": "Red",
+        "Players": [
+          {
+            "Subject": "39e8cf98-7ffa-5641-a234-ef51693b888e",
+            "CharacterID": "add6443a-41bd-e414-f6ad-e58d267f4e95",
+            "CharacterSelectionState": "locked",
+            "PregamePlayerState": "joined",
+            "CompetitiveTier": 0,
+            "PlayerIdentity": {
+              "Subject": "39e8cf98-7ffa-5641-a234-ef51693b888e",
+              "PlayerCardID": "82b5cd0d-4b81-c336-2332-61a753849355",
+              "PlayerTitleID": "d13e579c-435e-44d4-cec2-6eae5a3c5ed4",
+              "AccountLevel": 1,
+              "PreferredLevelBorderID": "00000000-0000-0000-0000-000000000000",
+              "Incognito": false,
+              "HideAccountLevel": false
+            },
+            "SeasonalBadgeInfo": {
+              "SeasonID": "",
+              "NumberOfWins": 0,
+              "WinsByTier": null,
+              "Rank": 0,
+              "LeaderboardRank": 0
+            }
+          }
+        ]
+      }
+    ],
+    "AllyTeam": {
+      "TeamID": "Red",
+      "Players": [
+        {
+          "Subject": "39e8cf98-7ffa-5641-a234-ef51693b888e",
+          "CharacterID": "add6443a-41bd-e414-f6ad-e58d267f4e95",
+          "CharacterSelectionState": "locked",
+          "PregamePlayerState": "joined",
+          "CompetitiveTier": 0,
+          "PlayerIdentity": {
+            "Subject": "39e8cf98-7ffa-5641-a234-ef51693b888e",
+            "PlayerCardID": "82b5cd0d-4b81-c336-2332-61a753849355",
+            "PlayerTitleID": "d13e579c-435e-44d4-cec2-6eae5a3c5ed4",
+            "AccountLevel": 1,
+            "PreferredLevelBorderID": "00000000-0000-0000-0000-000000000000",
+            "Incognito": false,
+            "HideAccountLevel": false
+          },
+          "SeasonalBadgeInfo": {
+            "SeasonID": "",
+            "NumberOfWins": 0,
+            "WinsByTier": null,
+            "Rank": 0,
+            "LeaderboardRank": 0
+          }
+        }
+      ]
+    },
+    "EnemyTeam": null,
+    "ObserverSubjects": [],
+    "MatchCoaches": [],
+    "EnemyTeamSize": 0,
+    "EnemyTeamLockCount": 0,
+    "PregameState": "character_select_finished",
+    "LastUpdated": "0001-01-01T00:00:00Z",
+    "MapID": "/Game/Maps/Duality/Duality",
+    "GamePodID": "aresriot.aws-rclusterprod-euc1-1.eu-gp-frankfurt-1",
+    "Mode": "/Game/GameModes/Bomb/BombGameMode.BombGameMode_C",
+    "VoiceSessionID": "15d7ef8a-7ec8-46bc-af66-353336adff08-tm2",
+    "MUCName": "15d7ef8a-7ec8-46bc-af66-353336adff08-2@ares-pregame.eu2.pvp.net",
+    "QueueID": "",
+    "ProvisioningFlowID": "CustomGame",
+    "IsRanked": false,
+    "PhaseTimeRemainingNS": 0,
+    "altModesFlagADA": false
+  },
+  {
+    "ID": "15d7ef8a-7ec8-46bc-af66-353336adff08",
+    "Version": 1630591576950,
+    "Teams": [
+      {
+        "TeamID": "Red",
+        "Players": [
+          {
+            "Subject": "39e8cf98-7ffa-5641-a234-ef51693b888e",
+            "CharacterID": "add6443a-41bd-e414-f6ad-e58d267f4e95",
+            "CharacterSelectionState": "locked",
+            "PregamePlayerState": "joined",
+            "CompetitiveTier": 0,
+            "PlayerIdentity": {
+              "Subject": "39e8cf98-7ffa-5641-a234-ef51693b888e",
+              "PlayerCardID": "82b5cd0d-4b81-c336-2332-61a753849355",
+              "PlayerTitleID": "d13e579c-435e-44d4-cec2-6eae5a3c5ed4",
+              "AccountLevel": 1,
+              "PreferredLevelBorderID": "00000000-0000-0000-0000-000000000000",
+              "Incognito": false,
+              "HideAccountLevel": false
+            },
+            "SeasonalBadgeInfo": {
+              "SeasonID": "",
+              "NumberOfWins": 0,
+              "WinsByTier": null,
+              "Rank": 0,
+              "LeaderboardRank": 0
+            }
+          }
+        ]
+      }
+    ],
+    "AllyTeam": {
+      "TeamID": "Red",
+      "Players": [
+        {
+          "Subject": "39e8cf98-7ffa-5641-a234-ef51693b888e",
+          "CharacterID": "add6443a-41bd-e414-f6ad-e58d267f4e95",
+          "CharacterSelectionState": "locked",
+          "PregamePlayerState": "joined",
+          "CompetitiveTier": 0,
+          "PlayerIdentity": {
+            "Subject": "39e8cf98-7ffa-5641-a234-ef51693b888e",
+            "PlayerCardID": "82b5cd0d-4b81-c336-2332-61a753849355",
+            "PlayerTitleID": "d13e579c-435e-44d4-cec2-6eae5a3c5ed4",
+            "AccountLevel": 1,
+            "PreferredLevelBorderID": "00000000-0000-0000-0000-000000000000",
+            "Incognito": false,
+            "HideAccountLevel": false
+          },
+          "SeasonalBadgeInfo": {
+            "SeasonID": "",
+            "NumberOfWins": 0,
+            "WinsByTier": null,
+            "Rank": 0,
+            "LeaderboardRank": 0
+          }
+        }
+      ]
+    },
+    "EnemyTeam": null,
+    "ObserverSubjects": [],
+    "MatchCoaches": [],
+    "EnemyTeamSize": 0,
+    "EnemyTeamLockCount": 0,
+    "PregameState": "character_select_finished",
+    "LastUpdated": "0001-01-01T00:00:00Z",
+    "MapID": "/Game/Maps/Duality/Duality",
+    "GamePodID": "aresriot.aws-rclusterprod-euc1-1.eu-gp-frankfurt-1",
+    "Mode": "/Game/GameModes/Bomb/BombGameMode.BombGameMode_C",
+    "VoiceSessionID": "15d7ef8a-7ec8-46bc-af66-353336adff08-tm2",
+    "MUCName": "15d7ef8a-7ec8-46bc-af66-353336adff08-2@ares-pregame.eu2.pvp.net",
+    "QueueID": "",
+    "ProvisioningFlowID": "CustomGame",
+    "IsRanked": false,
+    "PhaseTimeRemainingNS": 0,
+    "altModesFlagADA": false
+  },
+  {
+    "ID": "15d7ef8a-7ec8-46bc-af66-353336adff08",
+    "Version": 1630591576950,
+    "Teams": [
+      {
+        "TeamID": "Red",
+        "Players": [
+          {
+            "Subject": "39e8cf98-7ffa-5641-a234-ef51693b888e",
+            "CharacterID": "add6443a-41bd-e414-f6ad-e58d267f4e95",
+            "CharacterSelectionState": "locked",
+            "PregamePlayerState": "joined",
+            "CompetitiveTier": 0,
+            "PlayerIdentity": {
+              "Subject": "39e8cf98-7ffa-5641-a234-ef51693b888e",
+              "PlayerCardID": "82b5cd0d-4b81-c336-2332-61a753849355",
+              "PlayerTitleID": "d13e579c-435e-44d4-cec2-6eae5a3c5ed4",
+              "AccountLevel": 1,
+              "PreferredLevelBorderID": "00000000-0000-0000-0000-000000000000",
+              "Incognito": false,
+              "HideAccountLevel": false
+            },
+            "SeasonalBadgeInfo": {
+              "SeasonID": "",
+              "NumberOfWins": 0,
+              "WinsByTier": null,
+              "Rank": 0,
+              "LeaderboardRank": 0
+            }
+          }
+        ]
+      }
+    ],
+    "AllyTeam": {
+      "TeamID": "Red",
+      "Players": [
+        {
+          "Subject": "39e8cf98-7ffa-5641-a234-ef51693b888e",
+          "CharacterID": "add6443a-41bd-e414-f6ad-e58d267f4e95",
+          "CharacterSelectionState": "locked",
+          "PregamePlayerState": "joined",
+          "CompetitiveTier": 0,
+          "PlayerIdentity": {
+            "Subject": "39e8cf98-7ffa-5641-a234-ef51693b888e",
+            "PlayerCardID": "82b5cd0d-4b81-c336-2332-61a753849355",
+            "PlayerTitleID": "d13e579c-435e-44d4-cec2-6eae5a3c5ed4",
+            "AccountLevel": 1,
+            "PreferredLevelBorderID": "00000000-0000-0000-0000-000000000000",
+            "Incognito": false,
+            "HideAccountLevel": false
+          },
+          "SeasonalBadgeInfo": {
+            "SeasonID": "",
+            "NumberOfWins": 0,
+            "WinsByTier": null,
+            "Rank": 0,
+            "LeaderboardRank": 0
+          }
+        }
+      ]
+    },
+    "EnemyTeam": null,
+    "ObserverSubjects": [],
+    "MatchCoaches": [],
+    "EnemyTeamSize": 0,
+    "EnemyTeamLockCount": 0,
+    "PregameState": "character_select_finished",
+    "LastUpdated": "0001-01-01T00:00:00Z",
+    "MapID": "/Game/Maps/Duality/Duality",
+    "GamePodID": "aresriot.aws-rclusterprod-euc1-1.eu-gp-frankfurt-1",
+    "Mode": "/Game/GameModes/Bomb/BombGameMode.BombGameMode_C",
+    "VoiceSessionID": "15d7ef8a-7ec8-46bc-af66-353336adff08-tm2",
+    "MUCName": "15d7ef8a-7ec8-46bc-af66-353336adff08-2@ares-pregame.eu2.pvp.net",
+    "QueueID": "",
+    "ProvisioningFlowID": "CustomGame",
+    "IsRanked": false,
+    "PhaseTimeRemainingNS": 0,
+    "altModesFlagADA": false
+  },
+  {
+    "ID": "15d7ef8a-7ec8-46bc-af66-353336adff08",
+    "Version": 1630591576950,
+    "Teams": [
+      {
+        "TeamID": "Red",
+        "Players": [
+          {
+            "Subject": "39e8cf98-7ffa-5641-a234-ef51693b888e",
+            "CharacterID": "add6443a-41bd-e414-f6ad-e58d267f4e95",
+            "CharacterSelectionState": "locked",
+            "PregamePlayerState": "joined",
+            "CompetitiveTier": 0,
+            "PlayerIdentity": {
+              "Subject": "39e8cf98-7ffa-5641-a234-ef51693b888e",
+              "PlayerCardID": "82b5cd0d-4b81-c336-2332-61a753849355",
+              "PlayerTitleID": "d13e579c-435e-44d4-cec2-6eae5a3c5ed4",
+              "AccountLevel": 1,
+              "PreferredLevelBorderID": "00000000-0000-0000-0000-000000000000",
+              "Incognito": false,
+              "HideAccountLevel": false
+            },
+            "SeasonalBadgeInfo": {
+              "SeasonID": "",
+              "NumberOfWins": 0,
+              "WinsByTier": null,
+              "Rank": 0,
+              "LeaderboardRank": 0
+            }
+          }
+        ]
+      }
+    ],
+    "AllyTeam": {
+      "TeamID": "Red",
+      "Players": [
+        {
+          "Subject": "39e8cf98-7ffa-5641-a234-ef51693b888e",
+          "CharacterID": "add6443a-41bd-e414-f6ad-e58d267f4e95",
+          "CharacterSelectionState": "locked",
+          "PregamePlayerState": "joined",
+          "CompetitiveTier": 0,
+          "PlayerIdentity": {
+            "Subject": "39e8cf98-7ffa-5641-a234-ef51693b888e",
+            "PlayerCardID": "82b5cd0d-4b81-c336-2332-61a753849355",
+            "PlayerTitleID": "d13e579c-435e-44d4-cec2-6eae5a3c5ed4",
+            "AccountLevel": 1,
+            "PreferredLevelBorderID": "00000000-0000-0000-0000-000000000000",
+            "Incognito": false,
+            "HideAccountLevel": false
+          },
+          "SeasonalBadgeInfo": {
+            "SeasonID": "",
+            "NumberOfWins": 0,
+            "WinsByTier": null,
+            "Rank": 0,
+            "LeaderboardRank": 0
+          }
+        }
+      ]
+    },
+    "EnemyTeam": null,
+    "ObserverSubjects": [],
+    "MatchCoaches": [],
+    "EnemyTeamSize": 0,
+    "EnemyTeamLockCount": 0,
+    "PregameState": "character_select_finished",
+    "LastUpdated": "0001-01-01T00:00:00Z",
+    "MapID": "/Game/Maps/Duality/Duality",
+    "GamePodID": "aresriot.aws-rclusterprod-euc1-1.eu-gp-frankfurt-1",
+    "Mode": "/Game/GameModes/Bomb/BombGameMode.BombGameMode_C",
+    "VoiceSessionID": "15d7ef8a-7ec8-46bc-af66-353336adff08-tm2",
+    "MUCName": "15d7ef8a-7ec8-46bc-af66-353336adff08-2@ares-pregame.eu2.pvp.net",
+    "QueueID": "",
+    "ProvisioningFlowID": "CustomGame",
+    "IsRanked": false,
+    "PhaseTimeRemainingNS": 0,
+    "altModesFlagADA": false
+  },
+  {
+    "ID": "15d7ef8a-7ec8-46bc-af66-353336adff08",
+    "Version": 1630591582320,
+    "Teams": [
+      {
+        "TeamID": "Red",
+        "Players": [
+          {
+            "Subject": "39e8cf98-7ffa-5641-a234-ef51693b888e",
+            "CharacterID": "add6443a-41bd-e414-f6ad-e58d267f4e95",
+            "CharacterSelectionState": "locked",
+            "PregamePlayerState": "joined",
+            "CompetitiveTier": 0,
+            "PlayerIdentity": {
+              "Subject": "39e8cf98-7ffa-5641-a234-ef51693b888e",
+              "PlayerCardID": "82b5cd0d-4b81-c336-2332-61a753849355",
+              "PlayerTitleID": "d13e579c-435e-44d4-cec2-6eae5a3c5ed4",
+              "AccountLevel": 1,
+              "PreferredLevelBorderID": "00000000-0000-0000-0000-000000000000",
+              "Incognito": false,
+              "HideAccountLevel": false
+            },
+            "SeasonalBadgeInfo": {
+              "SeasonID": "",
+              "NumberOfWins": 0,
+              "WinsByTier": null,
+              "Rank": 0,
+              "LeaderboardRank": 0
+            }
+          }
+        ]
+      }
+    ],
+    "AllyTeam": {
+      "TeamID": "Red",
+      "Players": [
+        {
+          "Subject": "39e8cf98-7ffa-5641-a234-ef51693b888e",
+          "CharacterID": "add6443a-41bd-e414-f6ad-e58d267f4e95",
+          "CharacterSelectionState": "locked",
+          "PregamePlayerState": "joined",
+          "CompetitiveTier": 0,
+          "PlayerIdentity": {
+            "Subject": "39e8cf98-7ffa-5641-a234-ef51693b888e",
+            "PlayerCardID": "82b5cd0d-4b81-c336-2332-61a753849355",
+            "PlayerTitleID": "d13e579c-435e-44d4-cec2-6eae5a3c5ed4",
+            "AccountLevel": 1,
+            "PreferredLevelBorderID": "00000000-0000-0000-0000-000000000000",
+            "Incognito": false,
+            "HideAccountLevel": false
+          },
+          "SeasonalBadgeInfo": {
+            "SeasonID": "",
+            "NumberOfWins": 0,
+            "WinsByTier": null,
+            "Rank": 0,
+            "LeaderboardRank": 0
+          }
+        }
+      ]
+    },
+    "EnemyTeam": null,
+    "ObserverSubjects": [],
+    "MatchCoaches": [],
+    "EnemyTeamSize": 0,
+    "EnemyTeamLockCount": 0,
+    "PregameState": "provisioned",
+    "LastUpdated": "0001-01-01T00:00:00Z",
+    "MapID": "/Game/Maps/Duality/Duality",
+    "GamePodID": "aresriot.aws-rclusterprod-euc1-1.eu-gp-frankfurt-1",
+    "Mode": "/Game/GameModes/Bomb/BombGameMode.BombGameMode_C",
+    "VoiceSessionID": "15d7ef8a-7ec8-46bc-af66-353336adff08-tm2",
+    "MUCName": "15d7ef8a-7ec8-46bc-af66-353336adff08-2@ares-pregame.eu2.pvp.net",
+    "QueueID": "",
+    "ProvisioningFlowID": "CustomGame",
+    "IsRanked": false,
+    "PhaseTimeRemainingNS": 0,
+    "altModesFlagADA": false
+  }
+]
