@@ -1,7 +1,7 @@
 import { PluginContext } from 'league-prod-toolkit/core/modules/Module'
 import { ValoState } from './controller/ValoState';
 
-//import preGameData from './data/Valo-Champselect-data.json'
+// import preGameData from './data/Valo-Champselect-data.json'
 
 const namespace = 'valorant-state';
 

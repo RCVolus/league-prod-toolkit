@@ -76,7 +76,7 @@ function renderItems (participants, teams) {
     // first row
     const name = document.createElement('h3')
     name.classList.add('name')
-    name.innerHTML = participant.summonerName
+    name.innerHTML = participant.name
 
     const kills = participant.stats.kills
     const deaths = participant.stats.deaths

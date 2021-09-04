@@ -3,3 +3,4 @@ frontend/data/*
 frontend/img/*
 !frontend/img/summoner-spell
 !frontend/img/drakes
+frontend/agent-bust/*.png

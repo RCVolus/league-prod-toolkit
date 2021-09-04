@@ -98,7 +98,7 @@ export class SetGameController extends Controller {
       state.web.timeline._updated = new Date();
 
       // Overwrite participants from names (this is because of a custom game limitation)
-      if (state.web.live.participants !== undefined) {
+      /* if (state.web.live.participants !== undefined) {
         state.web.live.participants.forEach((participant: any, index: number) => {
           state.web.match.participants[index].summonerName = participant.summonerName;
         });
@@ -106,7 +106,7 @@ export class SetGameController extends Controller {
         state.web.match.participantIdentities.forEach((participant: any, index: number) => {
           state.web.match.participants[index].summonerName = participant.player.summonerName;
         });
-      }
+      } */
 
       this.pluginContext.LPTE.emit({
         meta: {

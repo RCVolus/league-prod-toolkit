@@ -15,6 +15,10 @@ export default (globalContext: GlobalContext): Router => {
     const anyParams = req.params as any
     const page = globalContext.module_pages.filter(p => p.id === anyParams.page)[0]
 
+    if (page === undefined) {
+      return res.status(404).send(`No page found with name ${anyParams.page as string}`)
+    }
+
     const relativePath = anyParams[0] !== '' ? anyParams[0] : '/'
     const absolutePath = path.join(page.sender.path, page.frontend, relativePath)
 

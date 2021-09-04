@@ -1,6 +1,29 @@
 const LeagueJS = require('leaguejs');
+const axios = require('axios');
 
 const sleep = async (ms) => new Promise((resolve) => setTimeout(resolve, ms))
+
+let apiKey = '';
+
+const getMatchV5ById = async matchId => {
+  const response = await axios.get(`https://europe.api.riotgames.com/lol/match/v5/matches/EUW1_${matchId}`, {
+    headers: {
+      'X-Riot-Token': apiKey
+    }
+  })
+
+  return response.data;
+}
+
+const getMatchV5TimelineById = async matchId => {
+  const response = await axios.get(`https://europe.api.riotgames.com/lol/match/v5/matches/EUW1_${matchId}/timeline`, {
+    headers: {
+      'X-Riot-Token': apiKey
+    }
+  })
+
+  return response.data;
+}
 
 module.exports = async (ctx) => {
   let config = {};
@@ -82,7 +105,8 @@ module.exports = async (ctx) => {
 
     let gameData;
     try {
-      gameData = await riotApi.Match.gettingById(e.matchId);
+      // gameData = await riotApi.Match.gettingById(e.matchId);
+      gameData = await getMatchV5ById(e.matchId)
     } catch (error) {
       ctx.log.error(`Failed to get match information for matchId=${e.matchId}. Maybe the match is not over yet? error=${error}`);
       ctx.LPTE.emit({
@@ -94,13 +118,14 @@ module.exports = async (ctx) => {
 
     let timelineData;
     try {
-      timelineData = await riotApi.Match.gettingTimelineById(e.matchId);
+      // timelineData = await riotApi.Match.gettingTimelineById(e.matchId);
+      timelineData = await getMatchV5TimelineById(e.matchId)
     } catch (error) {
       ctx.log.warn(`Failed to get match timeline for matchId=${e.matchId}. Maybe the match is not over yet? Since this is optional, it will be skipped. error=${error}`);
       return;
     }
 
-    ctx.log.info(`Fetched match for matchId=${e.matchId}, gameId=${gameData.gameId}`);
+    ctx.log.info(`Fetched match for matchId=${e.matchId}, gameId=${gameData.info.gameId}`);
     ctx.LPTE.emit({
       meta: replyMeta,
       match: gameData,
@@ -134,4 +159,6 @@ module.exports = async (ctx) => {
   riotApi = new LeagueJS(config.apiKey, {
     PLATFORM_ID: 'euw1'
   });
+
+  apiKey = config.apiKey;
 };
