@@ -36,7 +36,7 @@ export class InGameState {
     })
   }
 
-  private checkItemUpdate (currentPlayerState: Player, previousPlayerState: Player, id: number) {
+  private checkLevelUpdate (currentPlayerState: Player, previousPlayerState: Player, id: number) {
     if (previousPlayerState === undefined) return
     if (currentPlayerState.level === previousPlayerState.level) return
     if (!this.config.level.includes(currentPlayerState.level.toString())) return
@@ -53,7 +53,7 @@ export class InGameState {
     })
   }
 
-  private checkLevelUpdate (currentPlayerState: Player, previousPlayerState: Player, id: number) {
+  private checkItemUpdate (currentPlayerState: Player, previousPlayerState: Player, id: number) {
     if (previousPlayerState === undefined) return
 
     const previousItems = previousPlayerState.items
