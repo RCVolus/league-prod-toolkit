@@ -1,5 +1,3 @@
-// TODO Implement Real static data
-
 function initGfx (data, static) {
   console.log(data)
   if (!data.matchInfo._available || !data.preGame._available) return
@@ -7,7 +5,7 @@ function initGfx (data, static) {
   document.querySelector('#Blue').innerHTML = ''
   document.querySelector('#Red').innerHTML = ''
 
-  initMap(data.matchInfo.map)
+  initMap(data.matchInfo.map, static)
 
   for (const team of data.preGame.teams) {
     for (const player of team.Players) {
@@ -21,7 +19,6 @@ function initGfx (data, static) {
 
 const agentImgUrl = (CharacterID) => {
   return `/serve/valorant-static/agent-bust/${CharacterID}.png`
-  // return `https://media.valorant-api.com/agents/${CharacterID}/bustportrait.png`
 }
 
 const template = document.querySelector('#agent-template')
@@ -41,19 +38,21 @@ function addPlayer (participant, player, team) {
 
 const mapDiv = document.querySelector('#map')
 const mapName = document.querySelector('#map-name')
-function initMap (map) {
-  // TODO Add real map data
+function initMap (map, static) {
+  const currentMap = static.mapData.find(m => {
+    return m.mapUrl === map
+  })
 
   const mapData = {
-    displayName: 'Bind',
-    splash: "https://media.valorant-api.com/maps/2c9d57ec-4431-9c5e-2939-8f9ef6dd5cba/splash.png"
+    displayName: currentMap.displayName,
+    uuid: currentMap.uuid
   }
 
-  mapDiv.style.backgroundImage = `url(${mapData.splash})`
+  mapDiv.style.backgroundImage = `url(/serve/valorant-static/map-splash/${mapData.uuid}.png)`
   mapName.innerHTML = mapData.displayName
 }
 
-function displayData (state, static) {
+function displayData (state) {
   if (!state.preGame._available) return
 
   for (const team of state.preGame.teams) {
@@ -95,6 +94,6 @@ LPTE.onready(async () => {
   });
 
   LPTE.on('valorant-state-pregame', 'update', (e) => {
-    displayData(e.state, static)
+    displayData(e.state)
   });
 })

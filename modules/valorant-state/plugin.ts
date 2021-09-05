@@ -1,7 +1,7 @@
 import { PluginContext } from 'league-prod-toolkit/core/modules/Module'
 import { ValoState } from './controller/ValoState';
 
-import preGameData from './data/Valo-Champselect-data.json'
+//import preGameData from './data/Valo-Champselect-data.json'
 
 const namespace = 'valorant-state';
 
@@ -86,11 +86,11 @@ module.exports = async (ctx: PluginContext) => {
     status: 'RUNNING'
   });
 
-  state.matchInfo.init(preGameData[0] as any)
+  /* state.matchInfo.init(preGameData[0] as any)
   state.preGame.init(preGameData[0] as any)
   for (let i = 1; i < preGameData.length; i++) {
     setTimeout(() => {
       state.preGame.update(preGameData[i] as any)
     }, i * 1000)
-  }
+  } */
 };
