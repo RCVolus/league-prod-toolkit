@@ -49,17 +49,15 @@ module.exports = async (ctx: PluginContext) => {
   staticData.agentData = agentData.data.data;
 
   const mapDisplayIconFolder = path.join(__dirname, '../frontend/map-displayicon');
+  const mapSplashFolder = path.join(__dirname, '../frontend/map-splash');
   staticData.mapData.forEach(async map => {
-    if (!map.displayIcon) return;
-
-    axios.get(map.displayIcon, { responseType: 'stream' }).then(response => response.data.pipe(fs.createWriteStream(path.join(mapDisplayIconFolder, `${map.uuid}.png`))))
+    if (map.displayIcon) axios.get(map.displayIcon, { responseType: 'stream' }).then(response => response.data.pipe(fs.createWriteStream(path.join(mapDisplayIconFolder, `${map.uuid}.png`))))
+    if (map.splash) axios.get(map.splash, { responseType: 'stream' }).then(response => response.data.pipe(fs.createWriteStream(path.join(mapSplashFolder, `${map.uuid}.png`))))
   });
 
   const agentBustFolder = path.join(__dirname, '../frontend/agent-bust');
   staticData.agentData.forEach(async agent => {
-    if (!agent.bustPortrait) return;
-    
-    axios.get(agent.bustPortrait, { responseType: 'stream' }).then(response => response.data.pipe(fs.createWriteStream(path.join(agentBustFolder, `${agent.uuid}.png`))))
+    if (agent.bustPortrait) axios.get(agent.bustPortrait, { responseType: 'stream' }).then(response => response.data.pipe(fs.createWriteStream(path.join(agentBustFolder, `${agent.uuid}.png`))))
   });
 
   ctx.LPTE.on(namespace, 'request-constants', (e: any) => {
