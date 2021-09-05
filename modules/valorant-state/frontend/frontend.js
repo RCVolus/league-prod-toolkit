@@ -21,7 +21,7 @@ const updateUi = (state) => {
 
   // Flow
   setStatus('valo-match-info', state.matchInfo)
-  setStatus('valo-pregame', state.preGaem)
+  setStatus('valo-pregame', state.preGame)
   /* setStatus('valo-end-of-game', state.endGame)
   setStatus('valo-in-game', state.inGame) */
 }

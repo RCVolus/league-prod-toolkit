@@ -5,10 +5,10 @@ body {
 
 .teamname {
     position: absolute;
-    left: 100px;
-    top: 837px;
+    left: 70px;
+    top: 835px;
 
-    font-size: 35px;
+    font-size: 45px;
     text-transform: uppercase;
 }
 
