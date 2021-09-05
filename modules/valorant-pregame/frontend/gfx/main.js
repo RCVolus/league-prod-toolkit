@@ -20,7 +20,8 @@ function initGfx (data, static) {
 }
 
 const agentImgUrl = (CharacterID) => {
-  return `https://media.valorant-api.com/agents/${CharacterID}/bustportrait.png`
+  return `/serve/valorant-static/agent-bust/${CharacterID}.png`
+  // return `https://media.valorant-api.com/agents/${CharacterID}/bustportrait.png`
 }
 
 const template = document.querySelector('#agent-template')

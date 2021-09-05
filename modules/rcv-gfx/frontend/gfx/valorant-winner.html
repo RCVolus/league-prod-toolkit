@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Valorant Winner.gfx</title>
+  <script src="/static/main-bundle.js"></script>
+  <link rel="stylesheet" href="/pages/rcv-gfx/gfx/valorant-winner.css">
+  <link rel="stylesheet" href="https://use.typekit.net/anc5qxp.css">
+  <link rel="stylesheet" href="/pages/op-themeing/active/index.css">
+</head>
+<body class="rcv-gfx-valorant-winner">
+    <img src="/pages/rcv-gfx/gfx/valorant-winner.png" class="background">
+
+    <div class="box">
+        <div class="agent-box">
+            <img id="agent-1" class="agent-bust" src="">
+            <div class="text-background"></div>
+            <div id="name-1" class="name"></div>
+        </div>
+        <div class="agent-box">
+            <img id="agent-2" class="agent-bust" src="">
+            <div class="text-background"></div>
+            <div id="name-2" class="name"></div>
+        </div>
+        <div class="agent-box">
+            <img id="agent-3" class="agent-bust" src="">
+            <div class="text-background"></div>
+            <div id="name-3" class="name"></div>
+        </div>
+        <div class="agent-box">
+            <img id="agent-4" class="agent-bust" src="">
+            <div class="text-background"></div>
+            <div id="name-4" class="name"></div>
+        </div>
+        <div class="agent-box">
+            <img id="agent-5" class="agent-bust" src="">
+            <div class="text-background"></div>
+            <div id="name-5" class="name"></div>
+        </div>
+    </div>
+
+    <div class="teamname"><span id="teamname"></span> wins!</div>
+  <script>
+      window.LPTE.onready(async () => {
+          const valorantStatic = await LPTE.request({
+              meta: {
+                  namespace: 'valorant-static',
+                  type: 'request-constants',
+                  version: 1
+              }
+          });
+
+          const activeTeamData = await LPTE.request({
+              meta: {
+                  namespace: 'rcv-teams',
+                  type: 'request-current',
+                  version: 1
+              }
+          });
+
+          const updateTeams = async data => {
+              const blueTeam = data.teams.blueTeam;
+              const redTeam = data.teams.redTeam;
+
+              if (blueTeam.score === redTeam.score) {
+                  return;
+              }
+
+              const valorantPregameData = await LPTE.request({
+                  meta: {
+                      namespace: 'valorant-state',
+                      type: 'request',
+                      version: 1
+                  }
+              });
+
+              let teamPlayers = []
+
+              if (blueTeam.score > redTeam.score) {
+                  document.getElementById('teamname').innerText = blueTeam.name;
+                  teamPlayers = (valorantPregameData.state.preGame.teams.filter(team => team.TeamID === 'Blue')[0] || { Players: [] }).Players
+              } else {
+                  document.getElementById('teamname').innerText = redTeam.name;
+                  teamPlayers = (valorantPregameData.state.preGame.teams.filter(team => team.TeamID === 'Red')[0] || { Players: [] }).Players
+              }
+
+              teamPlayers = teamPlayers.map(player => ({
+                  ...player,
+                  participant: valorantPregameData.state.matchInfo.participants.find(p => player.Subject === p.Subject)
+              }))
+
+              teamPlayers.forEach((player, index) => {
+                  const number = index + 1;
+                  document.getElementById(`agent-${number}`).src = `/serve/valorant-static/agent-bust/${player.CharacterID}.png`
+                  document.getElementById(`name-${number}`).innerText = player.participant.GameName;
+              })
+
+              console.log(data, teamPlayers)
+          }
+
+          await updateTeams(activeTeamData);
+
+          window.LPTE.on('rcv-teams', 'update', teamData => updateTeams(teamData));
+      })
+  </script>
+</body>
+</html>

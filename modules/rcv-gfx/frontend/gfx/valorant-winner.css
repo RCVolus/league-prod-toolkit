@@ -1,0 +1,64 @@
+body {
+    margin: 0;
+    overflow: hidden;
+}
+
+.teamname {
+    position: absolute;
+    left: 100px;
+    top: 837px;
+
+    font-size: 35px;
+    text-transform: uppercase;
+}
+
+.box {
+    position: absolute;
+    left: 20px;
+    right: 20px;
+    top: 150px;
+    height: 600px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.agent-box {
+    background: linear-gradient(rgb(0, 0, 0, 0) 20%, rgb(0, 0, 0, 1));
+    width: 17%;
+    height: 100%;
+    position: relative;
+
+    overflow: hidden;
+}
+
+.agent-bust {
+    width: 170%;
+    margin-left: -35%;
+    height: auto;
+
+    position: absolute;
+    bottom: 0px;
+}
+
+.text-background {
+    background: green;
+    height: 300px;
+    width: 100%;
+
+    position: absolute;
+    bottom: 0px;
+
+    background: linear-gradient(rgb(0, 0, 0, 0), rgb(0, 0, 0, 1));
+}
+
+.name {
+    color: white;
+    font-size: 35px;
+
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+
+    letter-spacing: 1px;
+}

@@ -3,13 +3,14 @@ import type { PluginContext } from 'league-prod-toolkit/core/modules/Module'
 module.exports = async (ctx: PluginContext) => {
   ctx.LPTE.emit({
     meta: {
-      type: 'add-serves',
+      type: 'add-pages',
       namespace: 'ui',
       version: 1
     },
-    serves: [{
+    pages: [{
       frontend: 'frontend',
-      id: 'rcv-gfx'
+      id: 'rcv-gfx',
+      name: 'rcv-gfx'
     }]
   });
 
