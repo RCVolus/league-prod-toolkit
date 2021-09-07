@@ -1,8 +1,4 @@
-frontend/data/*
-!frontend/data/constants
 frontend/img/*
-!frontend/img/summoner-spell
-!frontend/img/drakes
 frontend/agent-bust/*.png
 frontend/map-displayicon/*.png
 frontend/map-splash/*.png
