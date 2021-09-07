@@ -1,5 +1,15 @@
 const namespace = 'valorant-state';
 
+function runTest () {
+  LPTE.emit({
+    meta: {
+      namespace,
+      type: 'run-test',
+      version: 1
+    }
+  });
+}
+
 const setStatus = (componentName, component) => {
   // Status
   if (component._available) {
