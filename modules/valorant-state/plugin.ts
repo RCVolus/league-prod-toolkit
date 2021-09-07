@@ -99,7 +99,7 @@ module.exports = async (ctx: PluginContext) => {
           },
           data: preGameTestData[i]
         })
-      }, i * 2000)
+      }, i * 1000)
     }
   });
 };
