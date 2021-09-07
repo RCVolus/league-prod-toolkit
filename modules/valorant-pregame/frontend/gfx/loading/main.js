@@ -7,11 +7,12 @@ function initGfx (data, static) {
   initMap(data.matchInfo.map, static)
 
   for (const team of data.preGame.teams) {
-    for (const player of team.Players) {
+    for (let i = 0; i < team.Players.length; i++) {
+      const player = team.Players[i]
       const participant = data.matchInfo.participants.find(p => {
         return player.Subject === p.Subject
       })
-      addPlayer(participant, player, team.TeamID)
+      addPlayer(i, participant, player, team.TeamID)
     }
   }
 }
@@ -21,9 +22,10 @@ const agentImgUrl = (CharacterID) => {
 }
 
 const template = document.querySelector('#agent-template')
-function addPlayer (participant, player, team) {
+function addPlayer (index, participant, player, team) {
   const playerDiv = template.content.cloneNode(true)
   playerDiv.querySelector('.agent').dataset.subject = player.Subject
+  playerDiv.querySelector('.agent').style.backgroundImage = `url(/pages/op-valorant-pregame/gfx/img/agent-tiles/${team}-${index+1}.png)`
 
   playerDiv.querySelector('.agent-name').innerHTML = participant.GameName
 
