@@ -27,33 +27,23 @@ function addPlayer (participant, player, team) {
 
   playerDiv.querySelector('.agent-name').innerHTML = participant.GameName
 
-  if (player.CharacterID) {
-    playerDiv.querySelector('.agent-img').src = agentImgUrl(player.CharacterID)
-  }
-
-  if (player.CharacterSelectionState === "locked") {
-    playerDiv.querySelector('.agent').classList.remove('hover')
-  } else {
-    playerDiv.querySelector('.agent').classList.add('hover')
-  }
+  playerDiv.querySelector('.agent-img').src = player.CharacterID == "" ? "" : agentImgUrl(player.CharacterID)
 
   document.querySelector(`#${team}`).appendChild(playerDiv);
 }
 
-const mapDiv = document.querySelector('#map')
+const mapDiv = document.body
+const mapIcon = document.querySelector('#map-icon')
 const mapName = document.querySelector('#map-name')
 function initMap (map, static) {
   const currentMap = static.mapData.find(m => {
     return m.mapUrl === map
   })
 
-  const mapData = {
-    displayName: currentMap.displayName,
-    uuid: currentMap.uuid
-  }
+  mapDiv.style.backgroundImage = `url(/serve/valorant-static/map-splash/${currentMap.uuid}.png)`
+  mapName.innerHTML = currentMap.displayName
 
-  mapDiv.style.backgroundImage = `url(/serve/valorant-static/map-splash/${mapData.uuid}.png)`
-  mapName.innerHTML = mapData.displayName
+  mapIcon.src = `/serve/valorant-static/map-rcv/${currentMap.uuid}.png`
 }
 
 function displayData (state) {
@@ -63,11 +53,6 @@ function displayData (state) {
     for (const player of team.Players) {
       const playerDiv = document.querySelector(`[data-subject='${player.Subject}']`)
       playerDiv.querySelector('.agent-img').src = player.CharacterID == "" ? "" : agentImgUrl(player.CharacterID)
-      if (player.CharacterSelectionState === "locked") {
-        playerDiv.classList.remove('hover')
-      } else {
-        playerDiv.classList.add('hover')
-      }
     }
   }
 }
