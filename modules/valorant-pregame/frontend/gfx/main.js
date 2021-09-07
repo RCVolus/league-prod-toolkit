@@ -1,5 +1,4 @@
 function initGfx (data, static) {
-  console.log(data)
   if (!data.matchInfo._available || !data.preGame._available) return
 
   document.querySelector('#Blue').innerHTML = ''
@@ -18,7 +17,7 @@ function initGfx (data, static) {
 }
 
 const agentImgUrl = (CharacterID) => {
-  return `/serve/valorant-static/agent-bust/${CharacterID}.png`
+  return `/serve/valorant-static/agent-drawing/${CharacterID}.png`
 }
 
 const template = document.querySelector('#agent-template')
@@ -27,10 +26,15 @@ function addPlayer (participant, player, team) {
   playerDiv.querySelector('.agent').dataset.subject = player.Subject
 
   playerDiv.querySelector('.agent-name').innerHTML = participant.GameName
-  playerDiv.querySelector('.agent-img').src = player.CharacterID == "" ? "" : agentImgUrl(player.CharacterID)
+
+  if (player.CharacterID) {
+    playerDiv.querySelector('.agent-img').src = agentImgUrl(player.CharacterID)
+  }
 
   if (player.CharacterSelectionState === "locked") {
     playerDiv.querySelector('.agent').classList.remove('hover')
+  } else {
+    playerDiv.querySelector('.agent').classList.add('hover')
   }
 
   document.querySelector(`#${team}`).appendChild(playerDiv);
@@ -61,6 +65,8 @@ function displayData (state) {
       playerDiv.querySelector('.agent-img').src = player.CharacterID == "" ? "" : agentImgUrl(player.CharacterID)
       if (player.CharacterSelectionState === "locked") {
         playerDiv.classList.remove('hover')
+      } else {
+        playerDiv.classList.add('hover')
       }
     }
   }

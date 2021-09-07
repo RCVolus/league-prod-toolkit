@@ -9,6 +9,7 @@
   height: 1080px;
   padding-top: 225px;
   overflow: hidden;
+  background-image: url(/pages/op-valorant-pregame/gfx/img/pick_background.jpg);
   background-size: cover;
   background-position: center center;
   color: white;
@@ -68,11 +69,11 @@
 .agent {
   width: 428px;
   height: 135px;
-  background: rgba(15, 25, 33, 0.75);
+  background: rgba(15, 25, 33, 0.725);
   margin: 9px 22px;
   position: relative;
   overflow: hidden;
-  padding: 12px;
+  padding: 10px 20px;
   display: flex;
   transform-origin: right;
   animation: scale 0.3s linear;
@@ -94,8 +95,8 @@
   left: 0;
   top: 0;
   background: #000;
-  -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.35));
-  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.35));
+  -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.5));
+  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.5));
   z-index: 5;
   transition: background 1.2s linear;
 }
@@ -106,20 +107,21 @@
   flex-direction: row-reverse;
   transform-origin: left;
 }
-#Red .agent .agent-img {
-  transform: scaleX(-1);
-  left: unset;
-  right: -37.5%;
-}
 .agent .agent-img {
   z-index: 0;
-  left: -37.5%;
-  top: -25px;
+  left: 0;
+  transform: translateX(-32%);
+  top: -125%;
   position: absolute;
-  width: 175%;
+  width: 200%;
   object-fit: cover;
   opacity: 0;
   animation: fadeIn 0.3s 0.2s linear forwards;
+}
+#Red .agent .agent-img {
+  left: unset;
+  right: 0;
+  transform: translateX(25%);
 }
 .agent .agent-name {
   font-family: "D-DIN";
