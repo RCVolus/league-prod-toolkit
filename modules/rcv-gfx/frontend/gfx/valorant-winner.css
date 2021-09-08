@@ -55,6 +55,8 @@ body {
 .name {
     color: white;
     font-size: 35px;
+    font-family: D-DIN;
+    font-weight: bold;
 
     position: absolute;
     bottom: 20px;
