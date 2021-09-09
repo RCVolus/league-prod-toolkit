@@ -1,0 +1,63 @@
+.rcv-teams-pause-gfx {
+
+  .match {
+    width: auto;
+    background: #0f1921;
+    margin-bottom: 30px;
+
+    .blue, .red {
+      color: #fff !important;
+    }
+  
+    .vs {
+      color: #fbfb42;
+      font-family: Tungsten;
+      font-weight: bold;
+      line-height: 0.8;
+      font-size: 115pt;
+      margin-top: -22px;
+      overflow: hidden;
+    }
+
+    .tag {
+      font-family: D-DIN;
+      font-weight: bold;
+      letter-spacing: 7.5px;
+      font-size: 37.5pt;
+      margin: 20px 0;
+    }
+
+    .outline {
+      -webkit-text-fill-color: inherit;
+      opacity: 0.4;
+    }
+
+    .team {
+      position: relative;
+
+      .shards {
+        position: absolute;
+        bottom: -25%;
+        width: 100%;
+
+        &.red {
+          flex-direction: row;
+        }
+
+        .shard {
+          width: 40px;
+          height: 4px;
+          border-color: #fff !important;
+          background: #fff !important;
+          opacity: 0.4;
+
+          &.full {
+            background: #fff !important;
+            border-color: #fff !important;
+            opacity: 1;
+          }
+        }
+      }
+    }
+  }
+}
