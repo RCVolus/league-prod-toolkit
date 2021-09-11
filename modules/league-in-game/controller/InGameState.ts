@@ -1,5 +1,5 @@
 import type { PluginContext } from 'league-prod-toolkit/core/modules/Module'
-import { AllGameData, Player } from '../types/AllGameData'
+import { AllGameData, Player, Event } from '../types/AllGameData'
 import { Config } from '../types/Config'
 import { ItemEpicness } from '../types/Items'
 
@@ -7,6 +7,8 @@ export class InGameState {
 
   public gameData : any[] = []
   public itemEpicness : number[]
+
+  public actions : Array<(allGameData : AllGameData, i: number) => void> = []
 
   constructor (
     private namespace: string,
@@ -21,6 +23,11 @@ export class InGameState {
     if (this.gameData.length > 0) {
       const previousGameData = this.gameData[this.gameData.length -1]
       this.checkPlayerUpdate(allGameData, previousGameData)
+      this.checkEventUpdate(allGameData, previousGameData)
+
+      this.actions.forEach((func, i) => {
+        func(allGameData, i)
+      })
     }
 
     this.gameData.push(allGameData)
@@ -79,5 +86,47 @@ export class InGameState {
         item: itemID
       })
     }
+  }
+
+  // ---
+
+  private checkEventUpdate (allGameData: AllGameData, previousGameData: AllGameData) {
+    if (allGameData.events.Events.length === 0 || previousGameData.events.Events.length === 0) return
+
+    const newEvents = allGameData.events.Events.slice(previousGameData.events.Events.length)
+
+    newEvents.forEach(event => {
+      if (event.EventName === "InhibKilled") {
+        this.handleBaronEvent(event)
+      }
+    })
+  }
+
+  private handleBaronEvent (event: Event) {
+    const split = event.InhibKilled.split('_') as string[]
+    const team = split[1] === 'T1' ? 100 : 200
+    const lane = split[2]
+    const respawnAt = Math.round(event.EventTime) + (60 * 5)
+
+    this.actions.push((allGameData, i) => {
+      const gameState = allGameData.gameData
+      const diff = respawnAt - Math.round(gameState.gameTime)
+      const percent = Math.round((diff * 100) / (60 * 5))
+
+      this.ctx.LPTE.emit({
+        meta: {
+          namespace: this.namespace,
+          type: 'inhibUpdate',
+          version: 1
+        },
+        team,
+        lane,
+        percent
+      })
+
+      if (diff <= 0) {
+        this.actions.splice(i, 1)
+      }
+    })
   }
 }

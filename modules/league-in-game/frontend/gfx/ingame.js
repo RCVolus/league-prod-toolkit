@@ -8,7 +8,6 @@ function getPlayerId(id) {
 }
 
 function levelUpdate (e) {
-  console.log(e)
   const playerId = getPlayerId(e.player)
 
   const team = e.team === "ORDER" ? blueTeam : redTeam
@@ -50,7 +49,36 @@ function itemUpdate (e) {
   }, 6000)
 }
 
+const inhibDiv = document.querySelector('#inhibDiv')
+const blueSide = inhibDiv.querySelector('#blueSide')
+const redSide = inhibDiv.querySelector('#redSide')
+
+function inhibUpdate (e) {
+  const team = e.team === 100 ? blueSide : redSide
+  const inhib = team.querySelector(`.${e.lane}`)
+  inhib.style.setProperty('--percent', e.percent + "%")
+}
+
 LPTE.onready(async () => {
-  LPTE.on(namespace, 'levelUpdate', levelUpdate);
-  LPTE.on(namespace, 'itemUpdate', itemUpdate);
+  LPTE.on(namespace, 'level-update', levelUpdate);
+  LPTE.on(namespace, 'item-update', itemUpdate);
+  LPTE.on(namespace, 'inhib-update', inhibUpdate);
+
+  LPTE.on(namespace, 'show-inhibs', (e) => {
+    inhibDiv.classList.remove('hide')
+
+    if (e.side == 100) {
+      blueSide.classList.remove('hide')
+      redSide.classList.add('hide')
+    } else {
+      blueSide.classList.add('hide')
+      redSide.classList.remove('hide')
+    }
+  });
+
+  LPTE.on(namespace, 'hide-inhibs', (e) => {
+    inhibDiv.classList.add('hide')
+    blueSide.classList.add('hide')
+    redSide.classList.add('hide')
+  });
 })

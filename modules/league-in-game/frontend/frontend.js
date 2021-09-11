@@ -16,6 +16,27 @@ $('#settings').on('submit', (e) => {
   })
 })
 
+function showInhibs (side) {
+  LPTE.emit({
+    meta: {
+      namespace,
+      type: 'show-inhibs',
+      version: 1
+    },
+    side
+  })
+}
+
+function hideInhibs () {
+  LPTE.emit({
+    meta: {
+      namespace,
+      type: 'hide-inhibs',
+      version: 1
+    }
+  })
+}
+
 function initSettings (settings) {
   $('#items').val(settings.items)
   $('#level').val(settings.level)

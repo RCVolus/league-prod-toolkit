@@ -1,6 +1,8 @@
 :root {
   --blue: #00b7e0;
+  --dark-blue: #0088a7;
   --red: #ff5233;
+  --dark-red: #bd3d26;
   --white: #fafafa;
   --dark: #051c2c;
 }
@@ -21,6 +23,7 @@ body {
   margin-top: 154px;
   font-family: poppins, sans-serif;
   font-weight: 700;
+  position: relative;
 }
 
 .player {
@@ -82,7 +85,7 @@ body {
 
 #blue .player {
   background: var(--blue);
-  background: linear-gradient(180deg, var(--blue) 0%, var(--dark) 250%);
+  background: linear-gradient(180deg, var(--blue) 0%, var(--dark-blue) 250%);
   -webkit-mask-image: radial-gradient(circle 18px at 70px 9px, transparent 0, transparent 12px, black 13px);
 }
 
@@ -97,7 +100,7 @@ body {
 
 #red .player {
   background: var(--red);
-  background: linear-gradient(180deg, var(--red) 0%, var(--dark) 250%);
+  background: linear-gradient(180deg, var(--red) 0%, var(--dark-red) 250%);
   -webkit-mask-image: radial-gradient(circle 18px at 4px 9px, transparent 0, transparent 12px, black 13px);
 }
 
@@ -139,4 +142,83 @@ body {
   to {
     transform: translateY(-100%);
   }
+}
+
+#inhibDiv {
+  opacity: 1;
+  background-image: url(./img/inhibbadge.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 310px;
+  height: 135px;
+  position: absolute;
+  left: 0;
+  bottom: 135px;
+  transform: translateY(-100%);
+  transition: opacity 0.3s ease;
+}
+
+.inhibitors {
+  transform: scale(1);
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  opacity: 1;
+  transition: opacity 0.5s ease;
+  padding: 15px 30px 10px 22px;
+  position: absolute;
+}
+
+.inhibitors h3 {
+  text-align: center;
+  width: 100%;
+  margin-bottom: 10px;
+  font-family: bebas-neue, sans-serif;
+  font-size: 35px;
+  position: relative;
+  letter-spacing: 7.5px;
+}
+
+.inhibitor,
+.inhibitor svg {
+  width: 50px;
+  height: 50px;
+}
+
+.inhibitor {
+  --percent: 0%;
+  position: relative;
+}
+
+.inhibitor.L1::before {
+  content: url(./img/top.svg);
+}
+.inhibitor.C1::before {
+  content: url(./img/mid.svg);
+}
+.inhibitor.R1::before {
+  content: url(./img/bottom.svg);
+}
+
+.inhibitor::before {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 10;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, transparent var(--percent), black calc(var(--percent) - 1px));
+}
+
+#blueSide {
+  color: var(--blue);
+}
+
+#redSide {
+  color: var(--red);
+}
+
+.hide {
+  opacity: 0 !important;
 }

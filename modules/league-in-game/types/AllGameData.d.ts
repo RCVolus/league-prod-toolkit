@@ -1,7 +1,9 @@
 export interface AllGameData {
   activePlayer: ActivePlayer
   allPlayers: Player[]
-  events: Event[]
+  events: {
+    Events: Event[]
+  }
   gameData: GameData
 }
 
