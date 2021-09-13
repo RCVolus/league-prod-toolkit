@@ -42,9 +42,43 @@ function displayTeams(teams, bestOf) {
   pointContainer.style.display = 'flex'
 
   if (bestOf > 1) {
+    document.body.classList.add('has-scores')
     pointContainer.style.display = 'flex'
   } else {
+    document.body.classList.remove('has-scores')
     pointContainer.style.display = 'none'
+  }
+
+  // Set point visibility if required
+  const pointsToWin = Math.ceil(bestOf / 2)
+  for (let i = 0; i < 5; i++) {
+    const point = i + 1
+
+    const setTeamPoints = (teamName, teamData) => {
+      const selector = document.getElementById(`point-${teamName}-${point}`)
+      if (teamData.score >= point) {
+        // Point scored, make visible
+        selector.style.display = 'block'
+        // selector.style.visibility = 'unset'
+        selector.classList.remove('empty')
+      } else {
+        // is this point possible to make?
+        if (point > pointsToWin) {
+          // no, completely not display
+          selector.style.display = 'none'
+          // selector.style.visibility = 'unset'
+          selector.classList.remove('empty')
+        } else {
+          // yes, only soft hide
+          // selector.style.visibility = 'hidden'
+          selector.style.display = 'block'
+          selector.classList.add('empty')
+        }
+      }
+    }
+
+    setTeamPoints('blue', teams.blueTeam)
+    setTeamPoints('red', teams.redTeam)
   }
 
   blueTag.innerHTML = teams.blueTeam.tag

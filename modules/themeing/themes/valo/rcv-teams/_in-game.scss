@@ -9,9 +9,10 @@
     display: block;
     width: 200px;
     text-align: center;
-    font-size: 20px;
+    font-size: 40px;
 
-    margin-top: 2.45rem;
+    margin-top: 2rem;
+    letter-spacing: 3px;
   }
 
   #blue-tag {
@@ -22,5 +23,47 @@
   #red-tag {
     left: 83%;
     color: white !important;
+  }
+
+  &.has-scores {
+    #tag-container {
+      background-image: url(/pages/op-themeing/active/images/rcv-teams-ingame-score.png);
+    }
+
+    .point {
+      background-image: url(/pages/op-themeing/active/images/rcv-teams-point.png);
+      height: 20px;
+      width: 20px;
+      display: block;
+  
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+
+      &.empty {
+        background-image: url(/pages/op-themeing/active/images/rcv-teams-point-empty.png);
+      }
+    }
+
+    .points-team {
+      display: flex;
+      flex-direction: row-reverse;
+      position: absolute;
+
+      width: 50px;
+      justify-content: space-between;
+
+      z-index: 10;
+      top: 2.5rem;
+    }
+
+    .points-blue {
+      right: 85.5%;
+    }
+
+    .points-red {
+      left: 85.5%;
+      flex-direction: row;
+    }
   }
 }

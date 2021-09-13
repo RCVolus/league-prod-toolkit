@@ -55,7 +55,7 @@
 }
 
 
-#point-container {
+#score-container {
   position: absolute;
   background-image: url(../img/scores.png);
   background-position: center top;
@@ -80,4 +80,8 @@
 
 #red-score {
   transform: translateX(530px);
+}
+
+.point {
+  display: none;
 }
