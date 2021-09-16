@@ -57,6 +57,13 @@ function inhibUpdate (e) {
   const team = e.team === 100 ? blueSide : redSide
   const inhib = team.querySelector(`.${e.lane}`)
   inhib.style.setProperty('--percent', e.percent + "%")
+  inhib.querySelector('p').innerText = convertSecsToTime(e.timeLeft)
+}
+
+function convertSecsToTime (secs) {
+  const minutes = Math.floor(secs / 60);
+  const seconds = secs - minutes * 60;
+  return `${('0' + minutes).slice(-2)}:${('0' + seconds).slice(-2)}`
 }
 
 LPTE.onready(async () => {

@@ -50,7 +50,7 @@ export class InGameState {
 
     this.ctx.LPTE.emit({
       meta: {
-        type: 'levelUpdate',
+        type: 'level-update',
         namespace: this.namespace,
         version: 1
       },
@@ -77,7 +77,7 @@ export class InGameState {
 
       this.ctx.LPTE.emit({
         meta: {
-          type: 'itemUpdate',
+          type: 'item-update',
           namespace: this.namespace,
           version: 1
         },
@@ -97,12 +97,12 @@ export class InGameState {
 
     newEvents.forEach(event => {
       if (event.EventName === "InhibKilled") {
-        this.handleBaronEvent(event)
+        this.handleInhibEvent(event)
       }
     })
   }
 
-  private handleBaronEvent (event: Event) {
+  private handleInhibEvent (event: Event) {
     const split = event.InhibKilled.split('_') as string[]
     const team = split[1] === 'T1' ? 100 : 200
     const lane = split[2]
@@ -116,12 +116,13 @@ export class InGameState {
       this.ctx.LPTE.emit({
         meta: {
           namespace: this.namespace,
-          type: 'inhibUpdate',
+          type: 'inhib-update',
           version: 1
         },
         team,
         lane,
-        percent
+        percent,
+        timeLeft: diff
       })
 
       if (diff <= 0) {
