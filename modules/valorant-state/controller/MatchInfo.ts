@@ -1,5 +1,6 @@
 import { PluginContext } from 'league-prod-toolkit/core/modules/Module'
 import { GameMode, GameType, Map } from '../types/Enums'
+import { MatchInfoState } from '../types/GameSets'
 import { PlayerName } from '../types/Player'
 import { PreGameInit, Team } from '../types/PreGame'
 
@@ -35,8 +36,20 @@ export class MatchInfo {
     this._updated = new Date().getTime()
     this.teams = teams
   }
+
+  public delete () {
+    this.id = undefined
+    this.participants = undefined
+    this.teams = undefined
+    this.map = undefined
+    this.gameMode = undefined
+    this.gameType = undefined
+
+    this._available = false
+    this._deleted = new Date().getTime()
+  }
   
-  public getState () {
+  public getState () : MatchInfoState {
     return {
       _available: this._available,
       _created: this._created,

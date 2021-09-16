@@ -10,6 +10,27 @@ function runTest () {
   });
 }
 
+function setRound (round) {
+  LPTE.emit({
+    meta: {
+      namespace,
+      type: 'set-round',
+      version: 1
+    },
+    round
+  });
+}
+
+function clearGames () {
+  LPTE.emit({
+    meta: {
+      namespace,
+      type: 'clear-round',
+      version: 1
+    }
+  });
+}
+
 const setStatus = (componentName, component) => {
   // Status
   if (component._available) {
@@ -31,11 +52,32 @@ const updateUi = (state) => {
 
   // Flow
   setStatus('valo-match-info', state.matchInfo)
-  setStatus('valo-pregame', state.preGame)
-  /* setStatus('valo-end-of-game', state.endGame)
-  setStatus('valo-in-game', state.inGame) */
+  setStatus('valo-pre-game', state.preGame)
+  /* setStatus('valo-in-game', state.inGame) */
+  setStatus('valo-post-game', state.postGame)
 }
 
+const updateRounds = (rounds) => {
+  console.log(rounds)
+
+  for (i = 0; i < 5; i++) {
+    const currentBtn = $(`#r${i+1}`)
+    const roundsLength = Object.keys(rounds).length
+
+    if (i+1 <= roundsLength) {
+      currentBtn.addClass('btn-primary')
+      currentBtn.removeClass('btn-secondary')
+    } else if (i+1 === roundsLength+1) {
+      currentBtn.prop('disabled', false);
+      currentBtn.removeClass('btn-primary')
+      currentBtn.addClass('btn-secondary')
+    } else {
+      currentBtn.prop('disabled', true);
+      currentBtn.removeClass('btn-primary')
+      currentBtn.addClass('btn-secondary')
+    }
+  }
+}
 
 LPTE.onready(async () => {
   const response = await LPTE.request({
@@ -47,4 +89,33 @@ LPTE.onready(async () => {
   });
 
   updateUi(response.state);
+
+  const roundsResponse = await LPTE.request({
+    meta: {
+      namespace,
+      type: 'get-rounds',
+      version: 1
+    }
+  });
+  updateRounds(roundsResponse.rounds)
+
+  LPTE.on('valorant-state-pre-game', 'create', (e) => {
+    updateUi(e.state)
+  });
+
+  LPTE.on('valorant-state-pre-game', 'update', (e) => {
+    updateUi(e.state)
+  });
+
+  LPTE.on('valorant-state-game', 'create', (e) => {
+    updateUi(e.state)
+  });
+
+  LPTE.on('valorant-state-post-game', 'create', (e) => {
+    updateUi(e.state)
+  });
+
+  LPTE.on('valorant-state-rounds', 'update', (e) => {
+    updateRounds(e.rounds)
+  });
 })

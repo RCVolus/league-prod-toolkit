@@ -1,5 +1,6 @@
 import { PluginContext } from 'league-prod-toolkit/core/modules/Module'
 import { PregameState } from '../types/Enums'
+import { PreGameState } from '../types/GameSets'
 import { PreGame as PreGameType, PreGameInit, Team } from '../types/PreGame'
 
 export class PreGame {
@@ -39,7 +40,7 @@ export class PreGame {
     this.teams = data.Teams
   }
   
-  public getState () {
+  public getState () : PreGameState {
     return {
       _available: this._available,
       _created: this._created,

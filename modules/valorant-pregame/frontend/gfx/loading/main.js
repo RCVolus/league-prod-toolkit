@@ -82,11 +82,11 @@ LPTE.onready(async () => {
 
   initGfx(data, static)
 
-  LPTE.on('valorant-state-pregame', 'create', (e) => {
+  LPTE.on('valorant-state-pre-game', 'create', (e) => {
     initGfx(e.state, static)
   });
 
-  LPTE.on('valorant-state-pregame', 'update', (e) => {
+  LPTE.on('valorant-state-pre-game', 'update', (e) => {
     displayData(e.state)
   });
 })
