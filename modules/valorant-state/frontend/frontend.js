@@ -64,6 +64,8 @@ const updateUi = (state) => {
   setStatus('valo-pre-game', state.preGame)
   /* setStatus('valo-in-game', state.inGame) */
   setStatus('valo-post-game', state.postGame)
+
+  $('#mvp').val(state.mvp?.subject)
 }
 
 const updateMvpList = (state) => {
