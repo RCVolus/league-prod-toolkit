@@ -34,6 +34,24 @@ module.exports = async (ctx: PluginContext) => {
     })
   });
 
+  ctx.LPTE.on(namespace, 'set-mvp', e => {
+    const currentState = state.getState()
+
+    if (!currentState.postGame._available) return
+
+    const player = currentState.postGame.players?.find(p => p.subject === e.subject)
+    state.mvp = player
+
+    ctx.LPTE.emit({
+      meta: {
+        type: 'update',
+        namespace: 'valorant-state-mvp',
+        version: 1
+      },
+      mvp: player
+    })
+  });
+
   ctx.LPTE.on(namespace, 'set-round', e => {
     state.gameSets[e.round] = state.getState()
 
@@ -76,6 +94,7 @@ module.exports = async (ctx: PluginContext) => {
     state.matchInfo.init(e.data)
     state.preGame.init(e.data)
     state.postGame.delete()
+    state.mvp = undefined
 
     ctx.LPTE.emit({
       meta: {

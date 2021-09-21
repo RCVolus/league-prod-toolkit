@@ -57,6 +57,16 @@ This page contains configuration and operation elements for the <code>Valorant-s
 </div>
 
 <div class="mb-3">
+  <H2>MVP</H2>
+  <div class="form-group">
+    <select class="form-control" id="mvp" required aria-describedby="Caster 1">
+      <option selected disabled value="">Select a Player</option>
+    </select>
+  </div>
+  <button class="btn btn-success btn-block" onclick="setMvp()">Save</button>
+</div>
+
+<div class="mb-3">
   <H2>Rounds</H2>
   <div class="d-flex">
     <button class="btn btn-secondary mr-3" id="r1" onclick="setRound(1)">Set Game 1</button>

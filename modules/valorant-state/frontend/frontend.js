@@ -31,6 +31,17 @@ function clearGames () {
   });
 }
 
+function setMvp () {
+  LPTE.emit({
+    meta: {
+      namespace,
+      type: 'set-mvp',
+      version: 1
+    },
+    subject: $('#mvp').val()
+  })
+}
+
 const setStatus = (componentName, component) => {
   // Status
   if (component._available) {
@@ -46,8 +57,6 @@ const setStatus = (componentName, component) => {
 }
 
 const updateUi = (state) => {
-  console.log(state)
-
   $('#loopState').html(state.loopState)
 
   // Flow
@@ -55,6 +64,21 @@ const updateUi = (state) => {
   setStatus('valo-pre-game', state.preGame)
   /* setStatus('valo-in-game', state.inGame) */
   setStatus('valo-post-game', state.postGame)
+}
+
+const updateMvpList = (state) => {
+  if (state.postGame._available) {
+    var save = $('#mvp option:selected').detach();
+    $('#mvp').empty()
+    $('#mvp').append(save)
+    for (const player of state.postGame.players) {
+      if (player.teamId !== "Neutral") {
+        $('#mvp').append(new Option(player.gameName, player.subject))
+      }
+    }
+  }
+
+  $('#mvp').val(state.mvp?.subject)
 }
 
 const updateRounds = (rounds) => {
@@ -89,6 +113,7 @@ LPTE.onready(async () => {
   });
 
   updateUi(response.state);
+  updateMvpList(response.state);
 
   const roundsResponse = await LPTE.request({
     meta: {
@@ -113,9 +138,14 @@ LPTE.onready(async () => {
 
   LPTE.on('valorant-state-post-game', 'create', (e) => {
     updateUi(e.state)
+    updateMvpList(e.state)
   });
 
   LPTE.on('valorant-state-rounds', 'update', (e) => {
     updateRounds(e.rounds)
+  });
+
+  LPTE.on('valorant-state-mvp', 'update', (e) => {
+    $('#mvp').val(e.mvp?.subject)
   });
 })

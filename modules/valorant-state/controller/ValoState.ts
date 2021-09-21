@@ -3,6 +3,7 @@ import { MatchInfo } from "./MatchInfo";
 import { PreGame } from "./PreGame";
 import { PostGame } from "./PostGame";
 import { GameSets } from '../types/GameSets';
+import { Player } from '../types/Match'
 
 export class ValoState {
 
@@ -11,6 +12,7 @@ export class ValoState {
   preGame : PreGame 
   matchInfo : MatchInfo
   postGame : PostGame
+  mvp ? : Player
 
   gameSets : GameSets = {}
 
@@ -25,7 +27,8 @@ export class ValoState {
       loopState: this.sessionLoopState,
       matchInfo: this.matchInfo.getState(),
       preGame: this.preGame.getState(),
-      postGame: this.postGame.getState()
+      postGame: this.postGame.getState(),
+      mvp: this.mvp
     }
   }
 }
