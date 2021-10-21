@@ -2,6 +2,9 @@ import React, {useEffect, useState} from 'react';
 import Overlay from "./europe/Overlay";
 import convertState from './convertState';
 
+const blue = getComputedStyle(document.body).getPropertyValue('--blue-team')
+const red = getComputedStyle(document.body).getPropertyValue('--red-team')
+
 function App() {
     const [globalState, setGlobalState] = useState({});
     const [config, setConfig] = useState({
@@ -13,13 +16,13 @@ function App() {
                 name: "Team Blue",
                 score: 0,
                 coach: "",
-                color: "rgb(0,151,196)"
+                color: blue
             },
             redTeam: {
                 name: "Team Red",
                 score: 0,
                 coach: "",
-                color: "rgb(222,40,70)"
+                color: red
             },
             patch: ""
         }

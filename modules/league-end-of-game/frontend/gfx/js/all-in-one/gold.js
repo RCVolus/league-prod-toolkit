@@ -1,6 +1,6 @@
 const goldGraphCTX = document.getElementById('goldGraphCTX').getContext('2d');
-const red = getComputedStyle(document.body).getPropertyValue('--blue-team')
-const blue = getComputedStyle(document.body).getPropertyValue('--red-team')
+const blue = getComputedStyle(document.body).getPropertyValue('--blue-team')
+const red = getComputedStyle(document.body).getPropertyValue('--red-team')
 const white = 'rgba(250,250,250,1)'
 const whiteTransparent = 'rgba(242,234,213,0.1)'
 
