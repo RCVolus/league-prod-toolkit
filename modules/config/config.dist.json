@@ -10,7 +10,7 @@
     },
     "database": {
         "user": "root",
-        "password": "rootpassword",
+        "password": "",
         "clusterUrl": "localhost",
         "port": 27017
     },
