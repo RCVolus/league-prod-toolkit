@@ -1,22 +1,31 @@
 # league-prod-toolkit
 
 ## What's the state of this?
-This is currently under heavy development and **cannot be used right now**.
+**While we are still working on this, most features are functional.**
 
-## What is this?
-This is a modular software, that aims to assist in professional league of legends productions. It is built with modularity in mind,
-so it should allow to be adapted to your individual needs.
+## Features
+- Custom champion select overlay (implementation of our stand-alone tool [here](https://github.com/RCVolus/lol-pick-ban-ui))
+- Ingame overlay with animations for item purchases and level ups
+- Track matchups and automatically update ingame overlays and pause screens
+- Postgame stats (pick order, item builds, damage graphs, gold graph, and more)
 
-## Architecture
-Please note that this composition of modules is only an example of how it could be used. Every module can be disabled / turned off. There may also be more modules available than shown here.
+## Requirements
+- Champion Select / ingame overlays require our [Observer Tool](https://github.com/RCVolus/league-observer-tool) to send game data
+- Some features require a Riot API Key
 
-![Architecture](Architecture.png)
+## Installation & Docs
+**[Head over to the Wiki](https://github.com/RCVolus/league-prod-toolkit/wiki)**
+
+## Architecture/Sample setup
+This shows the prod toolkit running on a dedicated server, with observer PCs sending data and overlays integrated into OBS/vMix with a browser source.
+
+![Example Setup](sample-setup.png)
 
 Legend:
-- Magenta - this application runs externally and connects to the server via websocket
-- Blue - this application runs within the server process
-- Green - this is an external API that is being connected to
-- Grey - this is something that is visible or where user interaction happens
+- Magenta - Clients running the observer tool
+- Blue - The prod-toolkit
+- Green - An external API that is being connected to
+- Grey - Prod-toolkit interfaces
 
 ## Developing
 This section contains information about how to locally run and extend the toolkit.
