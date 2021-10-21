@@ -1,0 +1,176 @@
+body {
+  display: grid;
+  grid-template-columns: repeat(2, 864px);
+  grid-template-rows: repeat(2, 1fr);
+  grid-gap: 50px;
+  padding: 190px 100px 125px 100px;
+  transform: scale(0.975);
+}
+
+#teamStats {
+  width: 100%;
+  height: 100%;
+  grid-column: 1 / 1;
+  grid-row: 1 / 3;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.statsContainer {
+  display: flex;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin-bottom: 45px;
+}
+
+.statsContainer:last-child {
+  margin-bottom: 0px;
+}
+
+.label {
+  font-family: var(--secondary-font-family);
+  text-transform: uppercase;
+  font-size: 30px;
+  color: var(--accent-color);
+  margin: 0 35px;
+  width: 200px;
+}
+
+.stat {
+  font-size: 60px;
+  display: flex;
+}
+
+.stat.blue {
+  color: var(--blue-team);
+  text-align: right;
+}
+
+.stat.red {
+  color: var(--red-team);
+  text-align: left;
+}
+
+.dragon {
+  width: 43px;
+}
+
+.stat.blue .dragon:not(:last-child) {
+  margin-left: 30px;
+}
+
+#drakes .stat.blue {
+  flex-direction: row-reverse;
+}
+
+.stat.red .dragon:not(:last-child) {
+  margin-right: 30px;
+}
+
+.ban {
+  width: 43px;
+}
+
+.stat.blue .ban:not(:first-child) {
+  margin-left: 25px;
+}
+
+.stat.red .ban:not(:last-child) {
+  margin-right: 25px;
+}
+
+#goldGraph {
+  width: 100%;
+  height: 100%;
+  grid-column: 2 / 3;
+  grid-row: 0 / 2;
+}
+
+#damageGraph {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  grid-column: 2 / 3;
+  grid-row: 2 / 3;
+}
+
+#damageGraph .team {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+#damageGraph .container {
+  display: flex;
+  width: 100%;
+  align-items: center;
+}
+
+#damageGraph .red {
+  margin-left: auto;
+}
+
+#damageGraph .red .container,
+#damageGraph .red .container .dmgContainer {
+  flex-direction: row-reverse;
+}
+
+.champImg {
+  width: 45px;
+  height: 45px;
+}
+
+.blue .champImg {
+  margin-right: 20px;
+}
+
+.red .champImg {
+  margin-left: 20px;
+}
+
+.dmgContainer {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.dmgContainer h3 {
+  color: var(--accent-color);
+  animation: fade-in 0.25s;
+}
+
+#redTeam .dmgContainer {
+  justify-content: flex-end;
+}
+
+.dmgContainer .dmgBar {
+  height: 35px;
+  width: var(--bar-width);
+  animation: scale 0.5s ease;
+}
+
+.blue .dmgBar {
+  background-color: var(--blue-team);
+  transform-origin: left;
+  margin-right: 1rem;
+}
+
+.red .dmgBar {
+  background-color: var(--red-team);
+  transform-origin: right;
+  margin-left: 1rem;
+}
+
+@keyframes scale {
+  0% {
+    width: 0;
+  }
+  100% {
+    width: var(--bar-width);
+  }
+}

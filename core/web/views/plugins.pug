@@ -1,0 +1,28 @@
+extends layout
+
+block layout-content
+  h1 Plugins
+  p Plugins are executed server-side. Currently, there are <strong>#{plugins.length | 0}</strong> plugin(s) registered.
+  table.table
+    thead
+      tr
+        th Name
+        th Loaded
+        th Status
+    tbody
+      each plugin in plugins
+        tr
+          td= plugin.getModule().getName()
+          - pluginStatus = plugin.isLoaded === true ? 'YES' : 'NO'
+          if pluginStatus === 'YES'
+            td.table-success= pluginStatus
+          if pluginStatus === 'NO'
+            td.table-danger= pluginStatus
+          - pluginStatus = plugin.status
+          if pluginStatus === 'RUNNING'
+            td.table-success= pluginStatus
+          if pluginStatus === 'UNAVAILABLE'
+            td.table-danger= pluginStatus
+          if pluginStatus === 'DEGRADED'
+            td.table-danger= pluginStatus
+      

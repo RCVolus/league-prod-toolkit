@@ -1,0 +1,65 @@
+.box.hidden {
+  width: 0 !important;
+}
+
+.box {
+  position: absolute;
+  width: 800px;
+  height: 260px;
+
+  bottom: 109px;
+
+  transition: width 1s ease-in-out;
+
+  background-size: cover;
+  background-position: top center;
+}
+.blue-box {
+  right: calc(50% + 80px);
+}
+.red-box {
+  left: calc(50% + 80px);
+}
+
+.box-content {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.runes {
+  position: absolute;
+  bottom: 0;
+
+  width: 100%;
+  height: 60px;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.runes-content {
+  width: 500px;
+  height: 100%;
+  margin: 0 auto;
+ 
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.rune {
+  margin: 0 20px;
+}
+
+.rune.small {
+  height: 60%;
+}
+
+.rune.primary {
+  height: 90%;
+}
+
+.rune.spacing {
+  width: 20px;
+}

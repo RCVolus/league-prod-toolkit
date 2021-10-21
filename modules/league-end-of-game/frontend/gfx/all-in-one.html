@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All in One | League</title>
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/all-in-one.css">
+  <link rel="stylesheet" href="/pages/op-themeing/active/index.css">
+
+  <script src="/static/main-bundle.js"></script>
+  <script src="js/Chart.bundle.min.js"></script>
+</head>
+<body>
+
+  <div id="teamStats">
+    <div id="kda" class="statsContainer">
+      <p class="stat blue"></p>
+      <p class="label">KDA</p>
+      <p class="stat red"></p>
+    </div>
+    <div id="gold" class="statsContainer">
+      <p class="stat blue"></p>
+      <p class="label">Gold</p>
+      <p class="stat red"></p>
+    </div>
+    <div id="tower" class="statsContainer">
+      <p class="stat blue"></p>
+      <p class="label">Tower</p>
+      <p class="stat red"></p>
+    </div>
+    <div id="inhibitors" class="statsContainer">
+      <p class="stat blue"></p>
+      <p class="label">Inhibitors</p>
+      <p class="stat red"></p>
+    </div>
+    <div id="drakes" class="statsContainer">
+      <div class="stat blue">
+        <img src="" class="dragon">
+        <img src="" class="dragon">
+        <img src="" class="dragon">
+        <img src="" class="dragon">
+      </div>
+      <p class="label">Drakes</p>
+      <div class="stat red">
+        <img src="" class="dragon">
+        <img src="" class="dragon">
+        <img src="" class="dragon">
+        <img src="" class="dragon">
+      </div>
+    </div>
+    <div id="elders" class="statsContainer">
+      <p class="stat blue"></p>
+      <p class="label">Elders</p>
+      <p class="stat red"></p>
+    </div>
+    <div id="barons" class="statsContainer">
+      <p class="stat blue"></p>
+      <p class="label">Barons</p>
+      <p class="stat red"></p>
+    </div>
+    <div id="bans" class="statsContainer">
+      <div class="stat blue">
+        <img src="" class="ban">
+        <img src="" class="ban">
+        <img src="" class="ban">
+        <img src="" class="ban">
+        <img src="" class="ban">
+      </div>
+      <p class="label">Bans</p>
+      <div class="stat red">
+        <img src="" class="ban">
+        <img src="" class="ban">
+        <img src="" class="ban">
+        <img src="" class="ban">
+        <img src="" class="ban">
+      </div>
+    </div>
+  </div>
+
+  <div id="goldGraph">
+    <canvas id="goldGraphCTX"></canvas>
+  </div>
+
+  <div id="damageGraph">
+    <div class="team blue"></div>
+    <div class="team red"></div>
+  </div>
+
+  <script src="js/all-in-one/main.js" defer></script>
+  <script src="js/all-in-one/gold.js" defer></script>
+  <script src="js/all-in-one/teamStats.js" defer></script>
+  <script src="js/all-in-one/damage.js" defer></script>
+</body>
+</html>

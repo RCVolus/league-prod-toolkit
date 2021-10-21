@@ -1,0 +1,15 @@
+{
+  "name": "rcv-rune-gfx",
+  "version": "1.0.0",
+  "description": "Module that provides GFX elements for runes (reforged) League of Legends games",
+  "author": "Larce",
+  "license": "MIT",
+  "toolkit": {
+    "modes": [
+      "PLUGIN"
+    ],
+    "plugin": {
+      "main": "plugin.js"
+    }
+  }
+}

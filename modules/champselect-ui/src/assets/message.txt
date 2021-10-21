@@ -1,0 +1,150 @@
+{
+	"Events": [
+		{
+			"EventID": 0,
+			"EventName": "GameStart",
+			"EventTime": 0.03565869852900505
+		},
+		{
+			"EventID": 1,
+			"EventName": "MinionsSpawning",
+			"EventTime": 65.03414154052735
+		},
+		{
+			"Assisters": [
+				"Larce"
+			],
+			"EventID": 2,
+			"EventName": "ChampionKill",
+			"EventTime": 135.12705993652345,
+			"KillerName": "Elilift",
+			"VictimName": "Nimbus Cloak Zoe"
+		},
+		{
+			"EventID": 3,
+			"EventName": "FirstBlood",
+			"EventTime": 135.12705993652345,
+			"Recipient": "Elilift"
+		},
+		{
+			"Assisters": [
+				"7brot7"
+			],
+			"EventID": 4,
+			"EventName": "ChampionKill",
+			"EventTime": 166.7054901123047,
+			"KillerName": "yvo2",
+			"VictimName": "inspratoo"
+		},
+		{
+			"Assisters": [
+				"7brot7"
+			],
+			"EventID": 5,
+			"EventName": "ChampionKill",
+			"EventTime": 170.14576721191407,
+			"KillerName": "yvo2",
+			"VictimName": "Arvitsi"
+		},
+		{
+			"EventID": 6,
+			"EventName": "Multikill",
+			"EventTime": 170.14576721191407,
+			"KillStreak": 2,
+			"KillerName": "yvo2"
+		},
+		{
+			"Assisters": [],
+			"EventID": 7,
+			"EventName": "ChampionKill",
+			"EventTime": 190.1298065185547,
+			"KillerName": "Móbý",
+			"VictimName": "Larce"
+		},
+		{
+			"Assisters": [],
+			"EventID": 8,
+			"EventName": "ChampionKill",
+			"EventTime": 195.740478515625,
+			"KillerName": "Arvitsi",
+			"VictimName": "AlienBrain"
+		},
+		{
+			"Assisters": [
+				"Nimbus Cloak Zoe"
+			],
+			"EventID": 9,
+			"EventName": "ChampionKill",
+			"EventTime": 196.60516357421876,
+			"KillerName": "Móbý",
+			"VictimName": "Elilift"
+		},
+		{
+			"EventID": 10,
+			"EventName": "Multikill",
+			"EventTime": 196.60516357421876,
+			"KillStreak": 2,
+			"KillerName": "Móbý"
+		},
+		{
+			"Assisters": [],
+			"EventID": 11,
+			"EventName": "ChampionKill",
+			"EventTime": 198.75453186035157,
+			"KillerName": "Elilift",
+			"VictimName": "Móbý"
+		},
+		{
+			"Assisters": [],
+			"EventID": 12,
+			"EventName": "ChampionKill",
+			"EventTime": 202.3837432861328,
+			"KillerName": "inspratoo",
+			"VictimName": "7brot7"
+		},
+		{
+			"Assisters": [],
+			"EventID": 13,
+			"EventName": "ChampionKill",
+			"EventTime": 226.51304626464845,
+			"KillerName": "AlienBrain",
+			"VictimName": "Arvitsi"
+		},
+		{
+			"Assisters": [
+				"Larce"
+			],
+			"EventID": 14,
+			"EventName": "ChampionKill",
+			"EventTime": 233.69235229492188,
+			"KillerName": "Elilift",
+			"VictimName": "Nimbus Cloak Zoe"
+		},
+		{
+			"Assisters": [],
+			"EventID": 15,
+			"EventName": "ChampionKill",
+			"EventTime": 241.8317108154297,
+			"KillerName": "Móbý",
+			"VictimName": "Larce"
+		},
+		{
+			"Assisters": [
+				"Móbý"
+			],
+			"EventID": 16,
+			"EventName": "ChampionKill",
+			"EventTime": 254.77723693847657,
+			"KillerName": "Nimbus Cloak Zoe",
+			"VictimName": "Elilift"
+		},
+		{
+			"Assisters": [],
+			"EventID": 17,
+			"EventName": "ChampionKill",
+			"EventTime": 259.4906005859375,
+			"KillerName": "AlienBrain",
+			"VictimName": "Arvitsi"
+		}
+	]
+}

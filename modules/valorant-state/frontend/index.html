@@ -1,0 +1,84 @@
+<link rel="stylesheet" href="/pages/op-valorant-game/style.css">
+<script src="/pages/op-valorant-game/frontend.js"></script>
+
+<h1>Valorant Game State</h1>
+This page contains configuration and operation elements for the <code>Valorant-state</code> module.
+
+<h2>Flow - <span id="loopState">N.A.</span></h2>
+<table class="table">
+  <thead>
+    <tr>
+      <th>Component</th>
+      <th>Status</th>
+      <th>Available since</th>
+      <th>Last update</th>
+      <th>Unavailable since</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>valo-match-info</td>
+      <td id="valo-match-info-status">Unknown</td>
+      <td id="valo-match-info-available">Unknown</td>
+      <td id="valo-match-info-update">Unknown</td>
+      <td id="valo-match-info-unavailable">Unknown</td>
+    </tr>
+    <tr>
+      <td>valo-pre-game</td>
+      <td id="valo-pre-game-status">Unknown</td>
+      <td id="valo-pre-game-available">Unknown</td>
+      <td id="valo-pre-game-update">Unknown</td>
+      <td id="valo-pre-game-unavailable">Unknown</td>
+    </tr>
+    <tr>
+      <td>valo-in-game</td>
+      <td id="valo-in-game-status">Unknown</td>
+      <td id="valo-in-game-available">Unknown</td>
+      <td id="valo-in-game-update">Unknown</td>
+      <td id="valo-in-game-unavailable">Unknown</td>
+    </tr>
+    <tr>
+      <td>valo-post-game</td>
+      <td id="valo-post-game-status">Unknown</td>
+      <td id="valo-post-game-available">Unknown</td>
+      <td id="valo-post-game-update">Unknown</td>
+      <td id="valo-post-game-unavailable">Unknown</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="gameinfo" id="gameinfo-container">  
+  <ul>
+    <li>Game mode: <span data-jspath=".gameMode"></span></li>
+    <li>Game map: <span data-jspath=".mapConstants.mapName"></span> (<span data-jspath=".mapId"></span>)</li>
+    <li>Game queue: <span data-jspath=".gameQueueConstants.map"></span> - <span data-jspath=".gameQueueConstants.description"></span> (<span data-jspath=".gameQueueConfigId"></span>)</li>
+    <li>Game start: <span data-jspath=".gameStartTime" data-isdate></span></li>
+  </ul>
+</div>
+
+<div class="mb-3">
+  <H2>MVP</H2>
+  <div class="form-group">
+    <select class="form-control" id="mvp" required aria-describedby="Caster 1">
+      <option selected disabled value="">Select a Player</option>
+    </select>
+  </div>
+  <button class="btn btn-success btn-block" onclick="setMvp()">Save</button>
+</div>
+
+<div class="mb-3">
+  <H2>Rounds</H2>
+  <div class="d-flex">
+    <button class="btn btn-secondary mr-3" id="r1" onclick="setRound(1)">Set Game 1</button>
+    <button class="btn btn-secondary mr-3" disabled id="r2" onclick="setRound(2)">Set Game 2</button>
+    <button class="btn btn-secondary mr-3" disabled id="r3" onclick="setRound(3)">Set Game 3</button>
+    <button class="btn btn-secondary mr-3" disabled id="r4" onclick="setRound(4)">Set Game 4</button>
+    <button class="btn btn-secondary mr-3" disabled id="r5" onclick="setRound(5)">Set Game 5</button>
+    <button class="btn btn-danger" onclick="clearGames()">Clear Games</button>
+  </div>
+</div>
+
+<div>
+  <h2>Test</h2>
+  <button class="btn btn-secondary" onclick="runTest()">Run Test</button>
+</div>

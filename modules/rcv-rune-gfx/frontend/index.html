@@ -1,0 +1,18 @@
+<script src="/pages/op-rcv-rune-gfx/frontend.js"></script>
+
+<h1>RCVolus Runes: Operator Cockpit</h1>
+<h2>Preview</h2>
+<div style="width: 480px; height: 270px; overflow: hidden;">
+  <iframe src="/pages/op-rcv-rune-gfx/gfx.html" width="1920" height="1080" style="transform: scale(0.25); transform-origin: 0 0;"></iframe>
+</div>
+
+<h2>State</h2>
+<p>State: <span id="text-state">LOADING</span></p>
+<p>Data state: <span id="data-state">LOADING</span></p>
+<button class="btn btn-secondary" onclick="nextStep()">Next step</button>
+<button class="btn btn-secondary" onclick="prevStep()">Previous step</button>
+<button class="btn btn-secondary" onclick="$('#state').toggle()">Toggle show/hide</button>
+<div id="state" style="width: 100%; height: auto; white-space: pre-wrap; display: none"></div>
+
+<h3>Embed</h3>
+<input style="width: 100%;" readonly id="embed-copy" />

@@ -1,0 +1,27 @@
+{
+  "name": "database",
+  "version": "1.0.0",
+  "description": "Module that provides Database connection",
+  "author": "Himyu",
+  "license": "MIT",
+  "toolkit": {
+    "modes": [
+      "PLUGIN"
+    ],
+    "plugin": {
+      "main": "dist/plugin.js"
+    },
+    "needsBuild": true
+  },
+  "dependencies": {
+    "mongodb": "^3.6.9",
+    "league-prod-toolkit": "file:../.."
+  },
+  "devDependencies": {
+    "@types/mongodb": "^3.6.17",
+    "typescript": "^4.3.2"
+  },
+  "scripts": {
+    "build": "tsc"
+  }
+}

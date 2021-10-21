@@ -1,0 +1,26 @@
+{
+  "name": "valorant-pregame",
+  "version": "1.0.0",
+  "description": "Module that provides a gfx for the Valorant PreGame",
+  "author": "Himyu",
+  "license": "MIT",
+  "toolkit": {
+    "modes": [
+      "PLUGIN"
+    ],
+    "plugin": {
+      "main": "dist/plugin.js"
+    },
+    "needsBuild": true
+  },
+  "dependencies": {
+    "typescript": "^4.3.2",
+    "league-prod-toolkit": "file:../..",
+    "sass": "^1.34.1"
+  },
+  "scripts": {
+    "compile-sass": "sass frontend/gfx/:frontend/gfx/",
+    "watch-sass": "sass --watch frontend/gfx/:frontend/gfx/",
+    "build": "npm run compile-sass && tsc"
+  }
+}

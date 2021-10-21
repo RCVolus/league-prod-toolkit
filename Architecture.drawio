@@ -1,0 +1,123 @@
+<mxfile host="app.diagrams.net" modified="2020-06-20T17:37:02.805Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.106 Safari/537.36" etag="VeKOmrO8xcGeEz_bALH5" version="13.0.1" type="github">
+  <diagram id="cQiaPVA6_7n2lRbbFgf3" name="Page-1">
+    <mxGraphModel dx="1422" dy="766" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="Faiy6mNt1-_q737ygW8u-1" value="league-prod-toolkit&lt;br&gt;Server" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
+          <mxGeometry x="360" y="360" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="Faiy6mNt1-_q737ygW8u-2" value="HTTP Administration&lt;br&gt;Interface" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;" parent="1" vertex="1">
+          <mxGeometry x="360" y="460" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="Faiy6mNt1-_q737ygW8u-3" value="HTTP" style="endArrow=classic;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" parent="1" source="Faiy6mNt1-_q737ygW8u-2" edge="1">
+          <mxGeometry x="-0.1995" y="1" width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="419" y="460" as="sourcePoint" />
+            <mxPoint x="419" y="420" as="targetPoint" />
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Faiy6mNt1-_q737ygW8u-4" value="league-prod-toolkit&lt;br&gt;provider-lcuapi" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#aa00ff;strokeColor=#7700CC;fontColor=#ffffff;" parent="1" vertex="1">
+          <mxGeometry x="100" y="360" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="Faiy6mNt1-_q737ygW8u-5" value="League Client LCU&lt;br&gt;API (Observer PC)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" vertex="1">
+          <mxGeometry x="100" y="460" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="Faiy6mNt1-_q737ygW8u-6" value="HTTP" style="endArrow=classic;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" parent="1" source="Faiy6mNt1-_q737ygW8u-4" target="Faiy6mNt1-_q737ygW8u-5" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="400" y="520" as="sourcePoint" />
+            <mxPoint x="450" y="470" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Faiy6mNt1-_q737ygW8u-7" value="" style="endArrow=classic;startArrow=classic;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="Faiy6mNt1-_q737ygW8u-4" target="Faiy6mNt1-_q737ygW8u-1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="400" y="520" as="sourcePoint" />
+            <mxPoint x="450" y="470" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Faiy6mNt1-_q737ygW8u-8" value="LPTE (via WS)" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="Faiy6mNt1-_q737ygW8u-7" vertex="1" connectable="0">
+          <mxGeometry x="0.2667" relative="1" as="geometry">
+            <mxPoint x="-19" y="-10" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Faiy6mNt1-_q737ygW8u-9" value="League Web API&#39;s" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" vertex="1">
+          <mxGeometry x="100" y="160" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="Faiy6mNt1-_q737ygW8u-10" value="league-prod-toolkit&lt;br&gt;provider-webapi&lt;br&gt;(running inside the Server application)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#6a00ff;strokeColor=#3700CC;fontColor=#ffffff;" parent="1" vertex="1">
+          <mxGeometry x="100" y="260" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="Faiy6mNt1-_q737ygW8u-11" value="LPTE (via native)" style="endArrow=classic;startArrow=classic;html=1;entryX=0;entryY=0;entryDx=0;entryDy=0;" parent="1" source="Faiy6mNt1-_q737ygW8u-10" target="Faiy6mNt1-_q737ygW8u-1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="323.33333333333326" y="340" as="sourcePoint" />
+            <mxPoint x="450" y="470" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Faiy6mNt1-_q737ygW8u-14" value="HTTPS (needs API Key)" style="endArrow=classic;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" parent="1" source="Faiy6mNt1-_q737ygW8u-10" target="Faiy6mNt1-_q737ygW8u-9" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="400" y="520" as="sourcePoint" />
+            <mxPoint x="450" y="470" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Faiy6mNt1-_q737ygW8u-15" value="league-prod-toolkit&lt;br&gt;provider-ingameapi&lt;br&gt;(must be running on all player PC&#39;s (10))" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#aa00ff;strokeColor=#7700CC;fontColor=#ffffff;" parent="1" vertex="1">
+          <mxGeometry x="360" y="260" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="Faiy6mNt1-_q737ygW8u-16" value="LPTE (via WS)" style="endArrow=classic;startArrow=classic;html=1;" parent="1" source="Faiy6mNt1-_q737ygW8u-1" target="Faiy6mNt1-_q737ygW8u-15" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="400" y="420" as="sourcePoint" />
+            <mxPoint x="450" y="370" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Faiy6mNt1-_q737ygW8u-17" value="League Ingame API" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" vertex="1">
+          <mxGeometry x="360" y="160" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="Faiy6mNt1-_q737ygW8u-18" value="HTTP" style="endArrow=classic;html=1;" parent="1" source="Faiy6mNt1-_q737ygW8u-15" target="Faiy6mNt1-_q737ygW8u-17" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="400" y="420" as="sourcePoint" />
+            <mxPoint x="450" y="370" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Faiy6mNt1-_q737ygW8u-19" value="league-prod-toolkit&lt;br&gt;output-webgfx" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#aa00ff;strokeColor=#7700CC;fontColor=#ffffff;" parent="1" vertex="1">
+          <mxGeometry x="620" y="360" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="Faiy6mNt1-_q737ygW8u-20" value="LPTE (via WS)" style="endArrow=classic;startArrow=classic;html=1;" parent="1" source="Faiy6mNt1-_q737ygW8u-1" target="Faiy6mNt1-_q737ygW8u-19" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="400" y="420" as="sourcePoint" />
+            <mxPoint x="450" y="370" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Faiy6mNt1-_q737ygW8u-21" value="Browser Source&lt;br&gt;On Stream&lt;br&gt;(OBS, vMix, etc.)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;" parent="1" vertex="1">
+          <mxGeometry x="620" y="460" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="Faiy6mNt1-_q737ygW8u-22" value="Render" style="endArrow=classic;html=1;" parent="1" source="Faiy6mNt1-_q737ygW8u-21" target="Faiy6mNt1-_q737ygW8u-19" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="400" y="420" as="sourcePoint" />
+            <mxPoint x="450" y="370" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Faiy6mNt1-_q737ygW8u-23" value="league-prod-toolkit&lt;br&gt;output-webapi" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#aa00ff;strokeColor=#7700CC;fontColor=#ffffff;" parent="1" vertex="1">
+          <mxGeometry x="620" y="260" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="Faiy6mNt1-_q737ygW8u-24" value="" style="endArrow=classic;startArrow=classic;html=1;" parent="1" source="Faiy6mNt1-_q737ygW8u-1" target="Faiy6mNt1-_q737ygW8u-23" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="400" y="420" as="sourcePoint" />
+            <mxPoint x="450" y="370" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Faiy6mNt1-_q737ygW8u-25" value="LPTE (via WS)" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="Faiy6mNt1-_q737ygW8u-24" vertex="1" connectable="0">
+          <mxGeometry x="-0.1733" relative="1" as="geometry">
+            <mxPoint x="12.13" y="-4.67" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Faiy6mNt1-_q737ygW8u-26" value="Your Custom Live Stats Frontend&lt;br&gt;(like LoLEsports.com)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;" parent="1" vertex="1">
+          <mxGeometry x="620" y="160" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="Faiy6mNt1-_q737ygW8u-27" value="HTTP (maybe +WS)" style="endArrow=classic;html=1;" parent="1" source="Faiy6mNt1-_q737ygW8u-26" target="Faiy6mNt1-_q737ygW8u-23" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="400" y="420" as="sourcePoint" />
+            <mxPoint x="450" y="370" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

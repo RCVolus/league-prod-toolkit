@@ -1,0 +1,21 @@
+{
+    "provider-webapi": {
+        "apiKey": "RGAPI-SECRETKEY"
+    },
+    "rcv-pickban": {
+        "backend": "ws://localhost:8999"
+    },
+    "static-league": {
+        "last-downloaded-version": ""
+    },
+    "database": {
+        "user": "root",
+        "password": "",
+        "clusterUrl": "localhost",
+        "port": 27017
+    },
+    "league-in-game": {
+        "items": [],
+        "level": []
+    }
+}

@@ -1,0 +1,19 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  line-height: 1;
+}
+
+body {
+  width: 1920px;
+  height: 1080px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: none;
+  padding: 3rem;
+  font-family: var(--primary-font-family);
+  color: var(--text-color);
+}

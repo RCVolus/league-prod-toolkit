@@ -1,0 +1,28 @@
+{
+  "name": "rcv-tournament-tree",
+  "version": "1.0.0",
+  "description": "Module that provides GFX elements for a tournament tree",
+  "author": "Himyu",
+  "license": "MIT",
+  "toolkit": {
+    "modes": [
+      "PLUGIN"
+    ],
+    "plugin": {
+      "main": "dist/plugin.js"
+    },
+    "needsBuild": true
+  },
+  "dependencies": {
+    "league-prod-toolkit": "file:../.."
+  },
+  "devDependencies": {
+    "typescript": "^4.3.2",
+    "sass": "^1.34.1"
+  },
+  "scripts": {
+    "compile-sass": "sass frontend/style/tournament_tree.scss frontend/style/tournament_tree.css",
+    "watch-sass": "sass --watch frontend/style/:frontend/style/",
+    "build": "npm run compile-sass && tsc"
+  }
+}

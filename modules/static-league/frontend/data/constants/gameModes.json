@@ -1,0 +1,78 @@
+[
+    {
+        "gameMode": "CLASSIC",
+        "description": "Classic Summoner's Rift and Twisted Treeline games"
+    },
+    {
+        "gameMode": "ODIN",
+        "description": "Dominion/Crystal Scar games"
+    },
+    {
+        "gameMode": "ARAM",
+        "description": "ARAM games"
+    },
+    {
+        "gameMode": "TUTORIAL",
+        "description": "Tutorial games"
+    },
+    {
+        "gameMode": "URF",
+        "description": "URF games"
+    },
+    {
+        "gameMode": "DOOMBOTSTEEMO",
+        "description": "Doom Bot games"
+    },
+    {
+        "gameMode": "ONEFORALL",
+        "description": "One for All games"
+    },
+    {
+        "gameMode": "ASCENSION",
+        "description": "Ascension games"
+    },
+    {
+        "gameMode": "FIRSTBLOOD",
+        "description": "Snowdown Showdown games"
+    },
+    {
+        "gameMode": "KINGPORO",
+        "description": "Legend of the Poro King games"
+    },
+    {
+        "gameMode": "SIEGE",
+        "description": "Nexus Siege games"
+    },
+    {
+        "gameMode": "ASSASSINATE",
+        "description": "Blood Hunt Assassin games"
+    },
+    {
+        "gameMode": "ARSR",
+        "description": "All Random Summoner's Rift games"
+    },
+    {
+        "gameMode": "DARKSTAR",
+        "description": "Dark Star: Singularity games"
+    },
+    {
+        "gameMode": "STARGUARDIAN",
+        "description": "Star Guardian Invasion games"
+    },
+    {
+        "gameMode": "PROJECT",
+        "description": "PROJECT: Hunters games"
+    },
+    {
+        "gameMode": "GAMEMODEX",
+        "description": "Nexus Blitz games"
+    },
+    {
+        "gameMode": "ODYSSEY",
+        "description": "Odyssey: Extraction games"
+    },
+    {
+        "gameMode": "NEXUSBLITZ",
+        "description": "Nexus Blitz games"
+    }
+]

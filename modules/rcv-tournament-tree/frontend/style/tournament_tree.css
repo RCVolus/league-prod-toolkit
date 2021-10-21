@@ -1,0 +1,174 @@
+*, *::before, *::after {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.rcv-tournament-tree-gfx {
+  width: 1920px;
+  height: 1080px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.tournament_tree {
+  display: flex;
+  width: 85%;
+  color: var(---text-color);
+  font-family: var(--primary-font-family);
+}
+
+.tt_colum {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 100%;
+  margin-right: 200px;
+  position: relative;
+}
+.tt_colum:last-child {
+  margin-right: 0px;
+}
+.tt_colum.tt_first .tt_team::before {
+  display: none;
+}
+.tt_colum.tt_last .tt_match {
+  margin-bottom: 0px !important;
+}
+.tt_colum.tt_last ::after {
+  display: none;
+}
+.tt_colum.tt_size_2 .tt_team::before {
+  height: 63px;
+}
+.tt_colum.tt_size_1 .tt_team::before {
+  height: 165px;
+}
+
+.tt_match {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-bottom: 75px;
+  position: relative;
+}
+.tt_match:last-child {
+  margin-bottom: 0px;
+}
+.tt_match::after {
+  content: "";
+  width: 85px;
+  height: 2px;
+  position: absolute;
+  right: -142px;
+  background-color: rgba(250, 250, 250, 0.5);
+  top: 50%;
+  transform: translateY(-50%);
+}
+.tt_match.tt_third_place {
+  position: absolute;
+  bottom: 0;
+}
+.tt_match.tt_third_place::after {
+  display: none;
+}
+.tt_match.tt_third_place .tt_team::before {
+  display: none;
+}
+
+.tt_team {
+  width: 409px;
+  background: var(--background-color);
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 55px;
+  padding: 0 15px;
+}
+.tt_team::before {
+  content: "";
+  width: 35px;
+  height: 62px;
+  position: absolute;
+  left: -60px;
+}
+.tt_team:first-child::before {
+  border-bottom: 2px solid rgba(250, 250, 250, 0.5);
+  border-left: 2px solid rgba(250, 250, 250, 0.5);
+  bottom: 50%;
+}
+.tt_team:last-child::before {
+  border-top: 2px solid rgba(250, 250, 250, 0.5);
+  border-left: 2px solid rgba(250, 250, 250, 0.5);
+  top: 50%;
+}
+.tt_team::after {
+  content: "";
+  width: 35px;
+  height: 36px;
+  position: absolute;
+  right: -60px;
+}
+.tt_team:first-child::after {
+  border-top: 2px solid rgba(250, 250, 250, 0.5);
+  border-right: 2px solid rgba(250, 250, 250, 0.5);
+  top: 50%;
+}
+.tt_team:last-child::after {
+  border-bottom: 2px solid rgba(250, 250, 250, 0.5);
+  border-right: 2px solid rgba(250, 250, 250, 0.5);
+  bottom: 50%;
+}
+.tt_team:first-child {
+  margin-bottom: 20px;
+}
+.tt_team .tt_name, .tt_team .tt_score {
+  line-height: 1;
+  font-size: 50px;
+  text-transform: capitalize;
+  position: relative;
+  z-index: 5;
+}
+.tt_team .tt_name {
+  white-space: nowrap;
+  overflow: hidden;
+}
+.tt_team .tt_score {
+  width: 35px;
+  text-align: center;
+  margin-right: 15px;
+  position: relative;
+}
+.tt_team .tt_score::after {
+  content: "";
+  width: 2px;
+  height: 75%;
+  background: rgba(250, 250, 250, 0.5);
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: -7.5px;
+  opacity: 0.7;
+}
+.tt_team .tt_tag {
+  opacity: 0.5;
+  font-size: 78px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  line-height: 0.7;
+  z-index: 0;
+  font-family: var(--secondary-font-family);
+  font-weight: 700;
+  font-style: normal;
+}
+.tt_team.blue .tt_tag {
+  color: var(--blue-team);
+}
+.tt_team.red .tt_tag {
+  color: var(--red-team);
+}
+
+/*# sourceMappingURL=tournament_tree.css.map */

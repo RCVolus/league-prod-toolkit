@@ -1,0 +1,25 @@
+.op-valorant-game .status {
+  font-weight: bold;
+}
+
+.op-valorant-game tr.collapse td {
+  padding-bottom: 20px;
+}
+
+.op-valorant-game .collapse {
+  border: none;
+}
+
+/* disable animation because we're not fancy */
+.op-valorant-game .collapsing {
+  -webkit-transition: none;
+  transition: none;
+  display: none;
+}
+
+.op-valorant-game .green {
+  color: green;
+}
+.op-valorant-game .orange {
+  color: orange;
+}

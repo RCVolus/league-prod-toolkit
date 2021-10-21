@@ -1,0 +1,57 @@
+<h1>In-Game Information</h1>
+
+<h2>Preview</h2>
+<div style="width: 738px; height: 416px; overflow: hidden;" class="mb-5">
+  <iframe src="/pages/op-league-in-game/gfx/ingmae.html" width="1920" height="1080" style="transform: scale(0.4); transform-origin: 0 0;"></iframe>
+</div>
+
+<h2>Embed</h2>
+<input style="width: 100%;" readonly id="ingame-embed" class="mb-5" />
+
+<div class="d-flex mb-5">
+  <button class="btn btn-primary btn-lg mr-3" onclick="showInhibs(100)">Show Blue Inhibitors</button>
+  <button class="btn btn-secondary btn-lg mr-3" onclick="hideInhibs()">Hide Inhibitors</button>
+  <button class="btn btn-danger btn-lg" onclick="showInhibs(200)">Show Red Inhibitors</button>
+</div>
+
+<h2>Settings</h2>
+<form id="settings">
+  <div class="form-group mb-3">
+    <label for="items">Item Display</label>
+    <select multiple class="form-control" id="items">
+      <option>Starter</option>
+      <option>Consumable</option>
+      <option>Epic</option>
+      <option>Legendary</option>
+      <option>Mythic</option>
+    </select>
+  </div>
+  <div class="form-group mb-3">
+    <label for="level">Level Display</label>
+    <select multiple class="form-control" id="level">
+      <option>1</option>
+      <option>2</option>
+      <option>3</option>
+      <option>4</option>
+      <option>5</option>
+      <option>6</option>
+      <option>7</option>
+      <option>8</option>
+      <option>9</option>
+      <option>10</option>
+      <option>11</option>
+      <option>12</option>
+      <option>13</option>
+      <option>14</option>
+      <option>15</option>
+      <option>16</option>
+      <option>17</option>
+      <option>18</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <button type="submit" class="btn btn-primary">Save Settings</button>
+  </div>
+</form>
+
+<script src="/pages/op-league-in-game/frontend.js" defer></script>

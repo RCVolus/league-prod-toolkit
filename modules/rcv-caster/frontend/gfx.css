@@ -1,0 +1,88 @@
+body {
+  height: 1080px;
+  width: 1920px;
+  overflow: hidden;
+  position: relative;
+  background-repeat: no-repeat;
+  background-size: cover;
+  font-family: var(--primary-font-family);
+  font-weight: bold;
+  font-size: 35px;
+  color: var(--text-color);
+}
+
+.container {
+  position: absolute;
+  top: 686px;
+  left: 128px;
+  width: 1667px;
+  height: 71px;
+  display: flex;
+}
+
+.caster-box {
+  width: 400px;
+  height: 70px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  background: var(--background-color);
+  display: flex;
+  align-items: center;
+  position: relative;
+  box-shadow: 3px 3px 6px 0px rgba(0,0,0,0.25);
+}
+
+.caster-box::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 30px;
+  left: 0;
+  bottom: 0;
+  background: rgba(0,0,0,.1);
+  z-index: 0;
+}
+
+.caster-box .logo {
+  position: relative;
+  z-index: 5;
+  transform: translateX(-25%);
+}
+
+.caster-box .text {
+  position: relative;
+  z-index: 5;
+  margin-left: -25px;
+}
+
+#caster-two {
+  text-align: right;
+  margin-left: 867px;
+  padding-left: 0px;
+  flex-direction: row-reverse;
+}
+
+#caster-two .logo {
+  transform: translateX(25%);
+}
+
+#caster-two .text {
+  margin-right: -25px;
+}
+
+.name {
+  text-transform: uppercase;
+}
+
+.social {
+  color: var(--accent-color);
+  font-size: 16px;
+  font-family: var(--secondary-font-family);
+  font-weight: 400;
+  font-style: normal;
+  margin-top: 10px;
+}
+
+.social span i {
+  margin-right: 10px;
+}

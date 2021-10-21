@@ -1,0 +1,7 @@
+extends layout
+
+block layout-content
+  h1 Events
+  .eventList
+    each event in events
+      div= JSON.stringify(event, null, 2)

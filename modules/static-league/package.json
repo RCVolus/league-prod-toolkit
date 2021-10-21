@@ -1,0 +1,31 @@
+{
+  "name": "static-league",
+  "version": "3.0.0",
+  "description": "Module that provides static data for League of Legends games",
+  "author": "Himyu",
+  "license": "MIT",
+  "toolkit": {
+    "modes": [
+      "PLUGIN"
+    ],
+    "plugin": {
+      "main": "dist/plugin.js"
+    },
+    "needsBuild": true
+  },
+  "dependencies": {
+    "fs-extra": "^10.0.0",
+    "league-prod-toolkit": "file:../..",
+    "node-fetch": "^2.6.1",
+    "tar": "^6.1.0"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "^9.0.12",
+    "@types/node-fetch": "^2.5.12",
+    "@types/tar": "^4.0.4",
+    "typescript": "^4.3.2"
+  },
+  "scripts": {
+    "build": "tsc"
+  }
+}

@@ -1,0 +1,106 @@
+<link rel="stylesheet" href="/pages/op-lol-game/style.css">
+<script src="/pages/op-lol-game/frontend.js"></script>
+
+<h1>League Game State</h1>
+This page contains configuration and operation elements for the <code>state-league</code> module.
+
+<h2>Flow</h2>
+<table class="table">
+  <thead>
+    <tr>
+      <th>Component</th>
+      <th>Status</th>
+      <th>Available since</th>
+      <th>Last update</th>
+      <th>Unavailable since</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>lcu-lobby</td>
+      <td id="lcu-lobby-status">Unknown</td>
+      <td id="lcu-lobby-available">Unknown</td>
+      <td id="lcu-lobby-update">Unknown</td>
+      <td id="lcu-lobby-unavailable">Unknown</td>
+    </tr>
+    <tr>
+      <td>lcu-champ-select</td>
+      <td id="lcu-champ-select-status">Unknown</td>
+      <td id="lcu-champ-select-available">Unknown</td>
+      <td id="lcu-champ-select-update">Unknown</td>
+      <td id="lcu-champ-select-unavailable">Unknown</td>
+    </tr>
+    <tr>
+      <td>lcu-end-of-game</td>
+      <td id="lcu-end-of-game-status">Unknown</td>
+      <td id="lcu-end-of-game-available">Unknown</td>
+      <td id="lcu-end-of-game-update">Unknown</td>
+      <td id="lcu-end-of-game-unavailable">Unknown</td>
+    </tr>
+    <tr>
+      <td>web-live</td>
+      <td id="web-live-status">Unknown</td>
+      <td id="web-live-available">Unknown</td>
+      <td id="web-live-update">Unknown</td>
+      <td id="web-live-unavailable">Unknown</td>
+    </tr>
+    <tr>
+      <td>web-match</td>
+      <td id="web-match-status">Unknown</td>
+      <td id="web-match-available">Unknown</td>
+      <td id="web-match-update">Unknown</td>
+      <td id="web-match-unavailable">Unknown</td>
+    </tr>
+    <tr>
+      <td>web-timeline</td>
+      <td id="web-timeline-status">Unknown</td>
+      <td id="web-timeline-available">Unknown</td>
+      <td id="web-timeline-update">Unknown</td>
+      <td id="web-timeline-unavailable">Unknown</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="setgame" id="setgame-container">
+  <hr />
+  <h2>You have not yet set up a game. </h2>
+  <h3>Set game by player name</h3>
+  <p>Only works if the game is currently running. Enter a summoner name, and load the live game.</p>
+  <form onsubmit="event.preventDefault(); formLoadByName();">
+    <input type="text" id="name" />
+    <input type="submit" value="Load game" />
+  </form>
+  <h3>Set game by game id</h3>
+  <p>Only works if the game is already finished.</p>
+  <form onsubmit="event.preventDefault(); formLoadByGameId();">
+    <input type="text" id="gameid" />
+    <input type="submit" value="Load game" />
+  </form>
+</div>
+
+<div class="gameinfo" id="gameinfo-container">
+  <hr />
+  <h2>Game is loaded: #<span data-jspath=".gameId"></span> (<span data-jspath=".platformId">PLATFORM</span>) via provider-webapi live</h2>
+  <ul>
+    <li>Game mode: <span data-jspath=".gameMode"></span></li>
+    <li>Game map: <span data-jspath=".mapConstants.mapName"></span> (<span data-jspath=".mapId"></span>)</li>
+    <li>Game queue: <span data-jspath=".gameQueueConstants.map"></span> - <span data-jspath=".gameQueueConstants.description"></span> (<span data-jspath=".gameQueueConfigId"></span>)</li>
+    <li>Game start: <span data-jspath=".gameStartTime" data-isdate></span></li>
+  </ul>
+
+  <h3>Bans</h3>
+  <div id="ban-table"></div>
+
+  <h3>Participants</h3>
+  <div id="participant-table"></div>
+
+  <hr />
+  <div style="display: flex">
+    <form onsubmit="event.preventDefault(); formUnsetGame();">
+      <input type="submit" value="Unset game" />
+    </form>
+    <form style="margin-left: 10px;" onsubmit="event.preventDefault(); formLoadMatchByLive();">
+      <input type="submit" value="Load match (postgame)" />
+    </form>
+  </div>
+</div>

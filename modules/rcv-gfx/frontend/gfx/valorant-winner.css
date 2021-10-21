@@ -1,0 +1,142 @@
+body {
+    margin: 0;
+    overflow: hidden;
+    font-family: D-DIN;
+    font-weight: bold;
+}
+
+.teamname {
+    position: absolute;
+    left: 70px;
+    top: 827px;
+
+    font-size: 60px;
+    text-transform: uppercase;
+}
+
+.box {
+    position: absolute;
+    left: 20px;
+    right: 20px;
+    top: 150px;
+    height: 600px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.agent-box {
+    background: linear-gradient(rgb(0, 0, 0, 0) 20%, rgb(0, 0, 0, 1));
+    width: 17%;
+    height: 100%;
+    position: relative;
+
+    overflow: hidden;
+    padding: 20px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+}
+
+.agent-bust {
+    width: 180%;
+    margin-left: -50%;
+    height: auto;
+
+    position: absolute;
+    top: -50px;
+}
+
+.text-background {
+    background: green;
+    height: 300px;
+    width: 100%;
+
+    position: absolute;
+    bottom: 0px;
+
+    background: linear-gradient(rgb(0, 0, 0, 0), rgb(0, 0, 0, 1));
+}
+
+.name {
+    margin-top: auto;
+    color: white;
+    font-size: 50px;
+    letter-spacing: 1px;
+    z-index: 5;
+    margin-bottom: 20px;
+}
+
+.stats {
+    z-index: 5;
+    display: flex;
+    justify-content: space-between;
+}
+
+.stat p {
+    font-size: 20pt;
+}
+
+.stat h3 {
+    font-size: 50pt;
+}
+
+h3, h4 {
+    font-family: Tungsten;
+    font-weight: bold;
+    color: #fff;
+    line-height: 1;
+    margin: 0;
+}
+
+p {
+    text-transform: uppercase;
+    color: #fbfb42;
+    letter-spacing: 2px;
+    margin: 0;
+}
+
+.map {
+    box-sizing: border-box;
+    position: absolute;
+    right: 68px;
+    bottom: 141px;
+    width: 320px;
+    height: 150px;
+    mask: url(./maske.png);
+    -webkit-mask: url("./maske.png");
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 15px;
+}
+
+.map::before {
+    content: '';
+    height: 300px;
+    width: 100%;
+
+    position: absolute;
+    bottom: 0px;
+
+    background: linear-gradient(rgb(0, 0, 0, 0), rgb(0, 0, 0, 0.25));
+}
+
+.map p {
+    position: relative;
+    z-index: 5;
+    font-size: 20px;
+}
+
+.map h4 {
+    position: relative;
+    z-index: 5;
+    font-size: 40px;
+}
+
+#map {
+    position: absolute;
+    top: 0;
+    z-index: -1;
+}

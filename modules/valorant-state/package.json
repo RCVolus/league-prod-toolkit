@@ -1,0 +1,23 @@
+{
+  "name": "valorant-state",
+  "version": "1.5.0",
+  "description": "Module that provides state integration for Valorant games",
+  "author": "Himyu",
+  "license": "MIT",
+  "toolkit": {
+    "modes": [
+      "PLUGIN"
+    ],
+    "plugin": {
+      "main": "dist/plugin.js"
+    },
+    "needsBuild": true
+  },
+  "dependencies": {
+    "typescript": "^4.3.2",
+    "league-prod-toolkit": "file:../.."
+  },
+  "scripts": {
+    "build": "tsc"
+  }
+}

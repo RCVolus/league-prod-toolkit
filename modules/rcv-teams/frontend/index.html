@@ -1,0 +1,82 @@
+<h1>RCVolus Teams: Operator Cockpit</h1>
+<div style="display: flex; margin-bottom: 2rem;">
+  <div>
+    <h2>Preview for talk</h2>
+    <div style="width: 369px; height: 208px; overflow: hidden; margin-bottom: 1rem;">
+      <iframe src="/pages/op-rcv-teams/talk-gfx.html" width="1920" height="1080" style="transform: scale(0.2); transform-origin: 0 0;"></iframe>
+    </div>
+    <h3>Embed</h3>
+    <input style="width: 100%;" readonly id="embed-copy-talk" />
+  </div>
+  <div style="margin-left: 3rem;">
+    <h2>Preview for in-game</h2>
+    <div style="width: 369px; height: 208px; overflow: hidden; margin-bottom: 1rem;">
+      <iframe src="/pages/op-rcv-teams/in-game-gfx.html" width="1920" height="1080" style="transform: scale(0.2); transform-origin: 0 0;"></iframe>
+    </div>
+    <h3>Embed</h3>
+    <input style="width: 100%;" readonly id="embed-copy-in-game" />
+  </div>
+  <div style="margin-left: 3rem;">
+    <h2>Preview for pause</h2>
+    <div style="width: 369px; height: 208px; overflow: hidden; margin-bottom: 1rem;">
+      <iframe src="/pages/op-rcv-teams/pause-gfx.html" width="1920" height="1080" style="transform: scale(0.2); transform-origin: 0 0;"></iframe>
+    </div>
+    <h3>Embed</h3>
+    <input style="width: 100%;" readonly id="embed-copy-pause" />
+  </div>
+</div>
+
+<form id="team-form">
+  <h2 style="text-align: center;">Teams</h2>
+
+  <div style="display: flex; width: 100%;">
+    <div id="blue-team" style="display: flex; flex-grow: 1;">
+      <input style="flex-grow: 1;" type="text" placeholder="Name" id="blue-team-name" required />
+      <input style="width: 5rem; margin-left: 1rem;" placeholder="Tag" type="text" id="blue-team-tag" required />
+      <input style="width: 3rem; margin-left: 1rem; text-align: center;" value="0" type="number" id="blue-team-score" min="0" max="3" required />
+    </div>
+
+    <div style="margin: 0 2rem;">
+      <select id="best-of" style="width: 6rem; height: 100%;" required>
+        <option value="1">Best of 1</option>
+        <option value="3">Best of 3</option>
+        <option value="5">Best of 5</option>
+      </select>
+    </div>
+
+    <div style="margin: 0 2rem;">
+      <select id="round-of" style="width: 6rem; height: 100%;" required>
+        <option value="2">FINALS</option>
+        <option value="4">SEMI FINALS</option>
+        <option value="8">QUARTER FINALS</option>
+        <option value="16">ROUND OF 16</option>
+        <option value="32">ROUND OF 32</option>
+        <option value="64">ROUND OF 64</option>
+        <option value="128">ROUND OF 128</option>
+        <option value="256">ROUND OF 256</option>
+        <option value="512">ROUND OF 512</option>
+        <option value="1024">ROUND OF 1024</option>
+        <option value="2048">ROUND OF 2048</option>
+      </select>
+    </div>
+
+    <div id="red-team" style="display: flex; flex-grow: 1;">
+      <input style="width: 3rem; margin-right: 1rem; text-align: center;" value="0" type="number" id="red-team-score" min="0" max="3" required />
+      <input style="width: 5rem; margin-right: 1rem; text-align: right;" type="text" placeholder="Tag" id="red-team-tag" required />
+      <input style="flex-grow: 1; text-align: right;" type="text" placeholder="Name" id="red-team-name" required />
+    </div>
+  </div>
+
+  <div style="display: flex; width: 100%; justify-content: center; margin-top: 1rem;">
+    <button class="btn btn-secondary" style="width: 100px; margin-right: 1rem;">Save</button>
+    <button type="button" class="btn btn-secondary" style="width: 100px; margin-right: 1rem;" onclick="swop()">Swop</button>
+    <button type="button" class="btn btn-secondary" style="width: 100px; margin-right: 1rem;" onclick="unset()">Unset</button>
+
+    <button type="button" class="btn btn-danger" onclick="clearMatches()">Clear Matches</button>
+  </div>
+</form>
+
+<script src="/pages/op-rcv-teams/frontend.js" defer></script>
+
+
+
