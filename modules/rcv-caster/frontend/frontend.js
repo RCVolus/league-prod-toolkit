@@ -65,7 +65,7 @@ function deleteCaster (_id) {
   })
 }
 
-function swop (set = 1) {
+function swap (set = 1) {
   window.LPTE.emit({
     meta: {
       namespace: 'rcv-caster',
