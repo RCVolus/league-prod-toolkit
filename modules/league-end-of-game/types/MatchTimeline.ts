@@ -1,4 +1,4 @@
-import { Metadata } from "./Metadata";
+import Metadata from "./Metadata";
 import { Position } from './Position'
 import { DragonSoul, MonsterSubType, MonsterType } from './Monster';
 import { LaneType } from './Lanes';

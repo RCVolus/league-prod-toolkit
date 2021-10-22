@@ -174,16 +174,16 @@ export class EndOfGameData {
     for (const event of events) {
       if (event.type !== "ELITE_MONSTER_KILL") continue
 
-      const newEvent = event as MatchTimelineEvents.ELITE_MONSTER_KILL
+      const typedEvent = event as MatchTimelineEvents.ELITE_MONSTER_KILL
 
-      if (newEvent.monsterType !== MonsterType.DRAGON) continue
+      if (typedEvent.monsterType !== MonsterType.DRAGON) continue
 
-      if (!newEvent.monsterSubType) continue
+      if (!typedEvent.monsterSubType) continue
 
-      if (newEvent.monsterSubType === MonsterSubType.ELDER_DRAGON) {
-        this.teams[newEvent.killerTeamId].stats.elders++ 
+      if (typedEvent.monsterSubType === MonsterSubType.ELDER_DRAGON) {
+        this.teams[typedEvent.killerTeamId].stats.elders++ 
       } else {
-        this.teams[newEvent.killerTeamId].dragons.push(newEvent.monsterSubType)
+        this.teams[typedEvent.killerTeamId].dragons.push(typedEvent.monsterSubType)
       }
     }
   }
