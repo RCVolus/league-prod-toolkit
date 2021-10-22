@@ -19,7 +19,7 @@
 ## Architecture/Sample setup
 This shows the prod toolkit running on a dedicated server, with observer PCs sending data and overlays integrated into OBS/vMix with a browser source.
 
-![Example Setup](sample-setup.png)
+![Example Setup](Architecture.png)
 
 Legend:
 - Magenta - Clients running the observer tool
