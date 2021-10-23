@@ -49,3 +49,6 @@ In order to set up a git pre-commit hook, that will make sure that the code styl
 ```
 npm run setuphooks
 ```
+
+### Legal Disclaimer
+league-prod-toolkit was created under Riot Games' "Legal Jibber Jabber" policy using assets owned by Riot Games.  Riot Games does not endorse or sponsor this project.
