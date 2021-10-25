@@ -2,7 +2,7 @@ export default interface Metadata {
   /**
    * Match data version.
   */
-  dataVersion: string | number
+  dataVersion: string
   /**
    * Match id.
   */
