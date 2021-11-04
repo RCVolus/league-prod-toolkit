@@ -2,6 +2,8 @@
 
 ## What's the state of this?
 **While we are still working on this, most features are functional.**
+- Some features do not work on Tournament Realm, the prod-toolkit has only been tested on live
+- The tools API-related functions currently only work on EUW
 
 ## Features
 - Custom champion select overlay (implementation of our stand-alone tool [here](https://github.com/RCVolus/lol-pick-ban-ui))
