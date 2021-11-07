@@ -38,7 +38,7 @@ const main = async () => {
 
       if (pkgJson.dependencies || pkgJson.devDependencies) {
         // run install
-        await execPromise('npm install', {
+        await execPromise('npm ci', {
           cwd: currentModulePath
         })
 
