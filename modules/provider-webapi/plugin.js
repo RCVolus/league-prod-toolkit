@@ -3,31 +3,33 @@ const axios = require('axios');
 
 const sleep = async (ms) => new Promise((resolve) => setTimeout(resolve, ms))
 
-let apiKey = '';
+let apiKey = ''
+let region = ''
+let server = ''
 
 const getMatchV5ById = async matchId => {
-  const response = await axios.get(`https://europe.api.riotgames.com/lol/match/v5/matches/EUW1_${matchId}`, {
+  const response = await axios.get(`https://${region}.api.riotgames.com/lol/match/v5/matches/${server.toUpperCase()}_${matchId}`, {
     headers: {
       'X-Riot-Token': apiKey
     }
   })
 
-  return response.data;
+  return response.data
 }
 
 const getMatchV5TimelineById = async matchId => {
-  const response = await axios.get(`https://europe.api.riotgames.com/lol/match/v5/matches/EUW1_${matchId}/timeline`, {
+  const response = await axios.get(`https://${region}.api.riotgames.com/lol/match/v5/matches/${server.toUpperCase()}_${matchId}/timeline`, {
     headers: {
       'X-Riot-Token': apiKey
     }
   })
 
-  return response.data;
+  return response.data
 }
 
 module.exports = async (ctx) => {
   let config = {};
-  let riotApi;
+  let riotApi
 
   /* const lolRequest = async (realm, api, path) => {
     return new Promise((resolve, reject) => {
@@ -157,8 +159,10 @@ module.exports = async (ctx) => {
   config = response.config;
 
   riotApi = new LeagueJS(config.apiKey, {
-    PLATFORM_ID: 'euw1'
+    PLATFORM_ID: config.server | 'euw1'
   });
 
   apiKey = config.apiKey;
+  region = config.region || 'europe';
+  server = config.server || 'euw1';
 };
