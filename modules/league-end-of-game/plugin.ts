@@ -70,8 +70,8 @@ module.exports = async (ctx: PluginContext) => {
   await ctx.LPTE.await('lpt', 'ready', 150000);
 
   ctx.LPTE.on('state-league', 'match-game-loaded', e => {
-    const matchData = e.web.match
-    const timelineData = e.web.timeline
+    const matchData = e.state.web.match
+    const timelineData = e.state.web.timeline
 
     const emdOfGameData = new EndOfGameData(matchData, timelineData)
 
