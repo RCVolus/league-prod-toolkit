@@ -3,6 +3,4 @@ dist/
 .idea/
 core-build/
 cache/
-modules/config/config.json
 .DS_Store
-modules/themeing/frontend/active
