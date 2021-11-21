@@ -3,6 +3,7 @@ const blueTag = document.querySelector('#blue-tag')
 const redTag = document.querySelector('#red-tag')
 
 const pointContainer = document.querySelector('#point-container')
+const scoreContainer = document.querySelector('#score-container')
 const blueScore = document.querySelector('#blue-score')
 const redScore = document.querySelector('#red-score')
 
@@ -44,9 +45,11 @@ function displayTeams(teams, bestOf) {
   if (bestOf > 1) {
     document.body.classList.add('has-scores')
     pointContainer.style.display = 'flex'
+    scoreContainer.style.display = 'flex'
   } else {
     document.body.classList.remove('has-scores')
     pointContainer.style.display = 'none'
+    scoreContainer.style.display = 'none'
   }
 
   // Set point visibility if required

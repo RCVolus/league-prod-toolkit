@@ -1,6 +1,8 @@
 {
     "provider-webapi": {
-        "apiKey": "RGAPI-SECRETKEY"
+        "apiKey": "RGAPI-SECRETKEY",
+        "region": "europe",
+        "server" : "euw1"
     },
     "rcv-pickban": {
         "backend": "ws://localhost:8999"
@@ -10,7 +12,7 @@
     },
     "database": {
         "user": "root",
-        "password": "",
+        "password": "12345",
         "clusterUrl": "localhost",
         "port": 27017
     },
