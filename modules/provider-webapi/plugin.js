@@ -159,7 +159,7 @@ module.exports = async (ctx) => {
   config = response.config;
 
   riotApi = new LeagueJS(config.apiKey, {
-    PLATFORM_ID: config.server | 'euw1'
+    PLATFORM_ID: config.server || 'euw1'
   });
 
   apiKey = config.apiKey;
