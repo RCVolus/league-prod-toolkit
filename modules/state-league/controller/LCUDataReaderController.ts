@@ -80,7 +80,7 @@ export class LCUDataReaderController extends Controller {
       }
 
       // Only trigger if event changes, to only load game once
-      if (state.lcu.champselect.timer.phase !== PickBanPhase.GAME_STARTING && event.data.timer.phase === PickBanPhase.GAME_STARTING) {
+      if (state.lcu.champselect && state.lcu.champselect.timer && state.lcu.champselect.timer.phase !== PickBanPhase.GAME_STARTING && event.data.timer.phase === PickBanPhase.GAME_STARTING) {
         this.pluginContext.log.info('Flow: champselect - game started (spectator delay)')
         state.lcu.champselect.showSummoners = true;
 
@@ -100,7 +100,7 @@ export class LCUDataReaderController extends Controller {
       }
 
       // Only trigger if we're now in finalization, save order
-      if (state.lcu.champselect.timer.phase !== PickBanPhase.FINALIZATION && event.data.timer.phase === PickBanPhase.FINALIZATION) {
+      if (state.lcu.champselect && state.lcu.champselect.timer && state.lcu.champselect.timer.phase !== PickBanPhase.FINALIZATION && event.data.timer.phase === PickBanPhase.FINALIZATION) {
         state.lcu.champselect.order = event.data;
       }
 
