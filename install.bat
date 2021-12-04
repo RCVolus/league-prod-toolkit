@@ -21,4 +21,6 @@ set /P "server=Enter your server (%server%): "
 powershell -Command "& {node ./scripts/install.js -- %apikey% %region% %server%}"
 
 powershell -Command "& {npm ci; npm run build:modules}"
+
+echo Installation complete! You can now start the Tool by just executing the 'start.bat'
 pause
