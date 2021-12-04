@@ -20,5 +20,5 @@ set /P "server=Enter your server (%server%): "
 
 powershell -Command "& {node ./scripts/install.js -- %apikey% %region% %server%}"
 
-powershell -Command "& {npm install; npm run build:modules}"
+powershell -Command "& {npm ci; npm run build:modules}"
 pause
