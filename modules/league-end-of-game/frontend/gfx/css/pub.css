@@ -1,7 +1,7 @@
 .pub {
   width: fit-content;
   height: 150px;
-  background-color: var(--dark);
+  background-color: var(--background-color);
   display: flex;
   box-shadow: 3px 2px 9px 0px rgba(0, 0, 0, 0.25);
   transform-origin: center bottom;
@@ -38,11 +38,11 @@
 }
 
 #blueTeam {
-  background-color: var(--blue);
+  background-color: var(--blue-team);
 }
 
 #redTeam {
-  background-color: var(--red);
+  background-color: var(--red-team);
 }
 
 img {
