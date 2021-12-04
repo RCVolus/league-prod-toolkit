@@ -69,7 +69,7 @@ function swap (set = 1) {
   window.LPTE.emit({
     meta: {
       namespace: 'rcv-caster',
-      type: `swop`,
+      type: 'swop',
       version: 1
     },
     set

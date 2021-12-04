@@ -94,7 +94,8 @@ module.exports = async (ctx: PluginContext) => {
         namespace: 'database',
         version: 1
       },
-      collection: 'caster'
+      collection: 'caster',
+      limit: 30
     })
 
     if (res === undefined) {
@@ -132,7 +133,8 @@ module.exports = async (ctx: PluginContext) => {
         namespace: 'database',
         version: 1
       },
-      collection: 'caster'
+      collection: 'caster',
+      limit: 30
     })
 
     if (res === undefined) {
@@ -156,7 +158,8 @@ module.exports = async (ctx: PluginContext) => {
         namespace: 'database',
         version: 1
       },
-      collection: 'caster'
+      collection: 'caster',
+      limit: 30
     })
 
     if (res === undefined) {
