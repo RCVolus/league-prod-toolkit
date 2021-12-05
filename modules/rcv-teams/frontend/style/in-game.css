@@ -75,11 +75,13 @@
 
 #blue-score {
   transform: translateX(-520px);
+  margin-top: -3px;
 }
 
 #red-score {
   transform: translateX(530px);
-  margin-top: -33px;
+  /* margin-top: -33px; */
+  margin-top: -3px;
 }
 
 .point {

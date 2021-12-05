@@ -16,7 +16,7 @@
 .tournament_tree {
   display: flex;
   width: 85%;
-  color: var(---text-color);
+  color: var(--text-color);
   font-family: var(--primary-font-family);
 }
 
