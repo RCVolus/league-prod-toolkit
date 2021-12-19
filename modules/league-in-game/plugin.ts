@@ -84,10 +84,45 @@ module.exports = async (ctx: PluginContext) => {
   }
   const statics = staticsRes.constants;
 
-  const inGameState = new InGameState(namespace, ctx, config, statics)
+  let inGameState : InGameState
+
+  ctx.LPTE.on('state-league', 'live-game-loaded', () => {
+    inGameState = new InGameState(namespace, ctx, config, statics)
+  })
 
   ctx.LPTE.on(namespace, 'allgamedata', (e) => {
+    if (inGameState === undefined) {
+      inGameState = new InGameState(namespace, ctx, config, statics)
+    }
+
     const data = e.data as AllGameData
     inGameState.handelData(data)
   });
+
+  ctx.LPTE.on(namespace, 'request', (e) => {
+    if (inGameState === undefined) {
+      inGameState = new InGameState(namespace, ctx, config, statics)
+    }
+
+    ctx.LPTE.emit({
+      meta: {
+        type: e.meta.reply as string,
+        namespace: 'reply',
+        version: 1
+      },
+      state: inGameState.gameState
+    });
+  });
+
+  ctx.LPTE.on(namespace, 'show-inhibs', (e) => {
+    if (inGameState === undefined) return
+
+    inGameState.gameState.showInhibitors = e.side
+  })
+
+  ctx.LPTE.on(namespace, 'hide-inhibs', (e) => {
+    if (inGameState === undefined) return
+
+    inGameState.gameState.showInhibitors = null
+  })
 };

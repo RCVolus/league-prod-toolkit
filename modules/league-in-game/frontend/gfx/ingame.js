@@ -10,7 +10,7 @@ function getPlayerId(id) {
 function levelUpdate (e) {
   const playerId = getPlayerId(e.player)
 
-  const team = e.team === "ORDER" ? blueTeam : redTeam
+  const team = e.team === 100 ? blueTeam : redTeam
   const playerDiv = team.children[playerId]
 
   const levelContainer = playerDiv.querySelector('.level')
@@ -31,7 +31,7 @@ function levelUpdate (e) {
 function itemUpdate (e) {
   const playerId = getPlayerId(e.player)
 
-  const team = e.team === "ORDER" ? blueTeam : redTeam
+  const team = e.team === 100 ? blueTeam : redTeam
   const playerDiv = team.children[playerId]
 
   const levelContainer = playerDiv.querySelector('.item')
@@ -56,8 +56,73 @@ const redSide = inhibDiv.querySelector('#redSide')
 function inhibUpdate (e) {
   const team = e.team === 100 ? blueSide : redSide
   const inhib = team.querySelector(`.${e.lane}`)
-  inhib.style.setProperty('--percent', e.percent + "%")
-  inhib.querySelector('p').innerText = convertSecsToTime(e.timeLeft)
+  inhib.style.setProperty('--percent', e.percent)
+  inhib.querySelector('p').innerText = convertSecsToTime(e.respawnIn)
+}
+
+const turretDiv = document.querySelector('#turrets')
+const blueTurrets = turretDiv.querySelector('#blueTurrets')
+const redTurrets = turretDiv.querySelector('#redTurrets')
+
+function towerUpdate (e) {
+  const team = e.team === 100 ? redTurrets : blueTurrets
+  const value = team.querySelector('.value')
+  const newValue = (Number(value.innerText) || 0) + 1
+  value.innerText = newValue
+}
+
+function setGameState (e) {
+  const state = e.state
+
+  for (const [teamId, team] of Object.entries(state.towers)) {
+    for (const lane of Object.values(team)) {
+      const teamDiv = teamId === 100 ? blueTurrets : redTurrets
+      const value = teamDiv.querySelector('.value')
+
+      if (!lane['01']) {
+        const newValue = (Number(value.innerText) || 0) + 1
+        value.innerText = newValue
+      }
+      if (!lane['02']) {
+        const newValue = (Number(value.innerText) || 0) + 1
+        value.innerText = newValue
+      }
+      if (!lane['03']) {
+        const newValue = (Number(value.innerText) || 0) + 1
+        value.innerText = newValue
+      }
+    }
+  }
+
+  for (const [teamId, team] of Object.entries(state.inhibitors)) {
+    for (const [lane, data] of Object.entries(team)) {
+      const teamDiv = teamId === 100 ? blueSide : redSide
+      const div = teamDiv.querySelector(`.${lane}`)
+
+      if (data.alive) {
+        div.style.setProperty('--percent', '0')
+        div.querySelector('p').innerText = convertSecsToTime(0)
+      } else {
+        div.style.setProperty('--percent', data.percent)
+        div.querySelector('p').innerText = convertSecsToTime(data.respawnIn)
+      }
+    }
+  }
+
+  if (state.showInhibitors !== null) {
+    inhibDiv.classList.remove('hide')
+    if (state.showInhibitors === 100) {
+      blueSide.classList.remove('hide')
+      redSide.classList.add('hide')
+    } else {
+      blueSide.classList.add('hide')
+      redSide.classList.remove('hide')
+    }
+  } else {
+    inhibDiv.classList.add('hide')
+    blueSide.classList.add('hide')
+    redSide.classList.add('hide')
+  }
 }
 
 function convertSecsToTime (secs) {
@@ -67,14 +132,16 @@ function convertSecsToTime (secs) {
 }
 
 LPTE.onready(async () => {
-  LPTE.on(namespace, 'level-update', levelUpdate);
-  LPTE.on(namespace, 'item-update', itemUpdate);
-  LPTE.on(namespace, 'inhib-update', inhibUpdate);
+  LPTE.on(namespace, 'level-update', levelUpdate)
+  LPTE.on(namespace, 'item-update', itemUpdate)
+  LPTE.on(namespace, 'inhib-update', inhibUpdate)
+  LPTE.on(namespace, 'tower-update', towerUpdate)
+  LPTE.on(namespace, 'update', setGameState)
 
   LPTE.on(namespace, 'show-inhibs', (e) => {
     inhibDiv.classList.remove('hide')
 
-    if (e.side == 100) {
+    if (e.side === 100) {
       blueSide.classList.remove('hide')
       redSide.classList.add('hide')
     } else {
@@ -83,9 +150,19 @@ LPTE.onready(async () => {
     }
   });
 
-  LPTE.on(namespace, 'hide-inhibs', (e) => {
+  LPTE.on(namespace, 'hide-inhibs', () => {
     inhibDiv.classList.add('hide')
     blueSide.classList.add('hide')
     redSide.classList.add('hide')
   });
+
+  const res = await LPTE.request({
+    meta: {
+      namespace,
+      type: 'request',
+      version: 1
+    }
+  });
+
+  setGameState(res)
 })

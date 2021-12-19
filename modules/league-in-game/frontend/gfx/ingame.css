@@ -201,7 +201,7 @@ body {
   top: 0;
   bottom: 0;
   z-index: 10;
-  -webkit-mask-image: linear-gradient(to bottom, transparent 0, transparent var(--percent), black calc(var(--percent) - 1px));
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, transparent calc(var(--percent) * 1%), black calc(calc(var(--percent) * 1%) - 1px));
 }
 
 #blueSide h3 {
@@ -214,4 +214,33 @@ body {
 
 .hide {
   opacity: 0 !important;
+}
+
+#turrets {
+  position: absolute;
+  top: -140px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 610px;
+  font-size: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.turrets {
+  display: flex;
+}
+
+.turret {
+  margin-right: 5px;
+  object-fit: contain;
+  width: 18px;
+}
+
+#blueTurrets {
+  color: #0099e0;
+}
+
+#redTurrets {
+  color: #e83d3d;
 }
