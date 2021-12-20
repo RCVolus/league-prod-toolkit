@@ -65,7 +65,7 @@ const blueTurrets = turretDiv.querySelector('#blueTurrets')
 const redTurrets = turretDiv.querySelector('#redTurrets')
 
 function towerUpdate (e) {
-  const team = e.team === 100 ? redTurrets : blueTurrets
+  const team = e.team === '100' ? redTurrets : blueTurrets
   const value = team.querySelector('.value')
   const newValue = (Number(value.innerText) || 0) + 1
   value.innerText = newValue
@@ -76,21 +76,18 @@ function setGameState (e) {
 
   for (const [teamId, team] of Object.entries(state.towers)) {
     for (const lane of Object.values(team)) {
-      const teamDiv = teamId === 100 ? blueTurrets : redTurrets
+      const teamDiv = teamId === '100' ? redTurrets : blueTurrets
       const value = teamDiv.querySelector('.value')
+      let newValue = 0
 
-      if (!lane['01']) {
-        const newValue = (Number(value.innerText) || 0) + 1
-        value.innerText = newValue
+      for (const alive of Object.values(lane)) {
+        if (alive) continue
+
+        newValue += 1
+        value.textContent = newValue + 1
       }
-      if (!lane['02']) {
-        const newValue = (Number(value.innerText) || 0) + 1
-        value.innerText = newValue
-      }
-      if (!lane['03']) {
-        const newValue = (Number(value.innerText) || 0) + 1
-        value.innerText = newValue
-      }
+
+      value.textContent = (Number(value.innerText) || 0)
     }
   }
 

@@ -23,38 +23,14 @@ export class InGameState {
     this.gameState = {
       towers : {
         100 : {
-          L : {
-            '01' : true,
-            '02' : true,
-            '03' : true
-          },
-          C : {
-            '01' : true,
-            '02' : true,
-            '03' : true
-          },
-          R : {
-            '01' : true,
-            '02' : true,
-            '03' : true
-          }
+          L : {},
+          C : {},
+          R : {}
         },
         200 : {
-          L : {
-            '01' : true,
-            '02' : true,
-            '03' : true
-          },
-          C : {
-            '01' : true,
-            '02' : true,
-            '03' : true
-          },
-          R : {
-            '01' : true,
-            '02' : true,
-            '03' : true
-          }
+          L : {},
+          C : {},
+          R : {}
         },
       },
       showInhibitors : null,
@@ -299,12 +275,12 @@ export class InGameState {
     const split = event.TurretKilled.split('_') as string[]
     const team = split[1] === 'T1' ? 100 : 200
     const lane = split[2] as 'L' | 'C' | 'R'
-    const number = split[3] as '01' | '02' | '03'
+    const turret = split[3]
 
-    console.log(this.gameState.towers[team][lane][number])
-    if (!this.gameState.towers[team][lane][number]) return
+    console.log(this.gameState.towers[team][lane][turret])
+    if (this.gameState.towers[team][lane][turret] === false) return
 
-    this.gameState.towers[team][lane][number] = false
+    this.gameState.towers[team][lane][turret] = false
 
     this.ctx.LPTE.emit({
       meta: {
@@ -314,7 +290,7 @@ export class InGameState {
       },
       team,
       lane,
-      number
+      turret
     })
   }
 }

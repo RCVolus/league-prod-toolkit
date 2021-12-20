@@ -18,19 +18,13 @@ export interface InGameState {
 
 export interface TowerState {
   L : {
-    '01' : boolean
-    '02' : boolean
-    '03' : boolean
+    [turret : string] : boolean
   }
   C : {
-    '01' : boolean
-    '02' : boolean
-    '03' : boolean
+    [turret : string] : boolean
   }
   R : {
-    '01' : boolean
-    '02' : boolean
-    '03' : boolean
+    [turret : string] : boolean
   }
 }
 
