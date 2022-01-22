@@ -2,12 +2,11 @@
 
 ## What's the state of this?
 **While we are still working on this, most features are functional.**
-- Some features do not work on Tournament Realm, the prod-toolkit has only been tested on live
-- The tools API-related functions currently only work on EUW
+- Some features do not work on Tournament Realm, the prod-toolkit has only been tested on live (EUW)
 
 ## Features
 - Custom champion select overlay (implementation of our stand-alone tool [here](https://github.com/RCVolus/lol-pick-ban-ui))
-- Ingame overlay with animations for item purchases and level ups
+- Ingame overlay with animations for item purchases and level ups, and replacement for missing towers
 - Track matchups and automatically update ingame overlays and pause screens
 - Postgame stats (pick order, item builds, damage graphs, gold graph, and more)
 
