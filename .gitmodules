@@ -6,3 +6,7 @@
 	path = modules/plugin-database
 	url = https://github.com/rcv-prod-toolkit/plugin-database.git
 	branch = main
+[submodule "modules/plugin-prod-clock"]
+	path = modules/plugin-prod-clock
+	url = https://github.com/rcv-prod-toolkit/plugin-prod-clock.git
+	branch = main
