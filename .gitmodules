@@ -1,0 +1,4 @@
+[submodule "modules/plugin-config"]
+	path = modules/plugin-config
+	url = https://github.com/rcv-prod-toolkit/plugin-config.git
+	branch = main
