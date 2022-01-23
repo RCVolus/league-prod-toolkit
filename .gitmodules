@@ -2,3 +2,7 @@
 	path = modules/plugin-config
 	url = https://github.com/rcv-prod-toolkit/plugin-config.git
 	branch = main
+[submodule "modules/plugin-database"]
+	path = modules/plugin-database
+	url = https://github.com/rcv-prod-toolkit/plugin-database.git
+	branch = main
