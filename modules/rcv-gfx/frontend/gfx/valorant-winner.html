@@ -163,6 +163,7 @@
               } else {
                   document.getElementById('teamname').innerText = redTeam.name;
               }
+              resizeText(document.getElementById('teamname'))
 
               teamPlayers.forEach((player, index) => {
                   const number = index + 1;
@@ -173,7 +174,7 @@
                   const stats = player.stats
                   const kd = stats.deaths > 0 ? stats.kills / stats.deaths : stats.kills
                   document.getElementById(`kd-${number}`).innerText = (kd).toFixed(1)
-                  document.getElementById(`score-${number}`).innerText = stats.score
+                  document.getElementById(`score-${number}`).innerText = Math.round(stats.score / 10)
                   document.getElementById(`kills-${number}`).innerText = stats.kills
               })
           }
@@ -182,6 +183,23 @@
 
           LPTE.on('rcv-teams', 'update', teamData => updateTeams(teamData));
       })
-  </script>
+
+      const isOverflown = ({ clientWidth, scrollWidth }) => scrollWidth > clientWidth
+
+      const resizeText = ( parent ) => {
+        let i = 25 // let's start with 12px
+        let overflow = false
+        const maxSize = 60 // very huge text size
+
+        while (!overflow && i < maxSize) {
+            parent.style.fontSize = `${i}px`
+            overflow = isOverflown(parent)
+            if (!overflow) i++
+        }
+
+        // revert to last state where no overflow happened:
+        parent.style.fontSize = `${i - 1}px`
+      }
+    </script>
 </body>
 </html>
