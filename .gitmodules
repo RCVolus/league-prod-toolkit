@@ -42,3 +42,7 @@
 	path = modules/module-valorant-static
 	url = https://github.com/rcv-prod-toolkit/module-valorant-static.git
 	branch = main
+[submodule "modules/module-valorant-state"]
+	path = modules/module-valorant-state
+	url = https://github.com/rcv-prod-toolkit/module-valorant-state.git
+	branch = main
