@@ -22,3 +22,7 @@
 	path = modules/module-teams
 	url = https://github.com/rcv-prod-toolkit/module-teams.git
 	branch = main
+[submodule "modules/module-caster"]
+	path = modules/module-caster
+	url = https://github.com/rcv-prod-toolkit/module-caster.git
+	branch = main
