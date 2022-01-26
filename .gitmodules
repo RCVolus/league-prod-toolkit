@@ -30,3 +30,7 @@
 	path = modules/module-tournament-tree
 	url = https://github.com/rcv-prod-toolkit/module-tournament-tree.git
 	branch = main
+[submodule "modules/module-league-state"]
+	path = modules/module-league-state
+	url = https://github.com/rcv-prod-toolkit/module-league-state.git
+	branch = main
