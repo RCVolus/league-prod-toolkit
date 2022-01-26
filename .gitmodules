@@ -46,3 +46,7 @@
 	path = modules/module-valorant-state
 	url = https://github.com/rcv-prod-toolkit/module-valorant-state.git
 	branch = main
+[submodule "modules/module-valorant-pregame"]
+	path = modules/module-valorant-pregame
+	url = https://github.com/rcv-prod-toolkit/module-valorant-pregame.git
+	branch = main
