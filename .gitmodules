@@ -14,3 +14,7 @@
 	path = modules/plugin-themeing
 	url = https://github.com/rcv-prod-toolkit/plugin-themeing.git
 	branch = main
+[submodule "modules/plugin-webapi"]
+	path = modules/plugin-webapi
+	url = https://github.com/rcv-prod-toolkit/plugin-webapi.git
+	branch = main
