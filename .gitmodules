@@ -34,3 +34,7 @@
 	path = modules/module-league-state
 	url = https://github.com/rcv-prod-toolkit/module-league-state.git
 	branch = main
+[submodule "modules/module-league-static"]
+	path = modules/module-league-static
+	url = https://github.com/rcv-prod-toolkit/module-league-static.git
+	branch = main

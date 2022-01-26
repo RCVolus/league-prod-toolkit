@@ -1,6 +1,0 @@
-frontend/data/*
-!frontend/data/constants
-frontend/img/*
-!frontend/img/summoner-spell
-!frontend/img/drakes
-frontend/*.tgz
