@@ -18,3 +18,7 @@
 	path = modules/plugin-webapi
 	url = https://github.com/rcv-prod-toolkit/plugin-webapi.git
 	branch = main
+[submodule "modules/module-teams"]
+	path = modules/module-teams
+	url = https://github.com/rcv-prod-toolkit/module-teams.git
+	branch = main
