@@ -26,3 +26,7 @@
 	path = modules/module-caster
 	url = https://github.com/rcv-prod-toolkit/module-caster.git
 	branch = main
+[submodule "modules/module-tournament-tree"]
+	path = modules/module-tournament-tree
+	url = https://github.com/rcv-prod-toolkit/module-tournament-tree.git
+	branch = main
