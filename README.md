@@ -28,8 +28,15 @@ Legend:
 - Green - An external API that is being connected to
 - Grey - Prod-toolkit interfaces
 
-## Developing
+## Developing
 This section contains information about how to locally run and extend the toolkit.
+
+### Fetch submodules
+To fetch all submodules (to fetch the modules), execute the following:
+
+```
+git submodule update --init --recursive
+```
 
 ### Building modules
 To make sure all the modules are correctly built and installed, use the following command:

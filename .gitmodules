@@ -10,3 +10,7 @@
 	path = modules/plugin-prod-clock
 	url = https://github.com/rcv-prod-toolkit/plugin-prod-clock.git
 	branch = main
+[submodule "modules/plugin-themeing"]
+	path = modules/plugin-themeing
+	url = https://github.com/rcv-prod-toolkit/plugin-themeing.git
+	branch = main
