@@ -38,3 +38,7 @@
 	path = modules/module-league-static
 	url = https://github.com/rcv-prod-toolkit/module-league-static.git
 	branch = main
+[submodule "modules/module-valorant-static"]
+	path = modules/module-valorant-static
+	url = https://github.com/rcv-prod-toolkit/module-valorant-static.git
+	branch = main
