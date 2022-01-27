@@ -5,8 +5,8 @@ const apiKey = process.argv[3]
 const region = process.argv[4]
 const server = process.argv[5]
 
-const filePath = path.join(__dirname, '..', 'modules', 'config', 'config.dist.json')
-const newFilePath = path.join(__dirname, '..', 'modules', 'config', 'config.json')
+const filePath = path.join(__dirname, '..', 'modules', 'plugin-config', 'config.dist.json')
+const newFilePath = path.join(__dirname, '..', 'modules', 'plugin-config', 'config.json')
 const file = require(filePath)
 
 file['provider-webapi'].apiKey = apiKey
