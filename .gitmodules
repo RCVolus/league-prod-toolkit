@@ -54,3 +54,7 @@
 	path = modules/module-league-champselect-ui
 	url = https://github.com/rcv-prod-toolkit/module-league-champselect-ui.git
 	branch = main
+[submodule "modules/module-league-end-of-game"]
+	path = modules/module-league-end-of-game
+	url = https://github.com/rcv-prod-toolkit/module-league-end-of-game.git
+	branch = main
