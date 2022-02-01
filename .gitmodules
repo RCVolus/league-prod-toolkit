@@ -58,3 +58,7 @@
 	path = modules/module-league-end-of-game
 	url = https://github.com/rcv-prod-toolkit/module-league-end-of-game.git
 	branch = main
+[submodule "modules/module-league-in-game"]
+	path = modules/module-league-in-game
+	url = https://github.com/rcv-prod-toolkit/module-league-in-game.git
+	branch = main
