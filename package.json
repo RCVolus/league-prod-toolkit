@@ -3,11 +3,10 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc && webpack",
     "build:modules": "node build/build-modules.js",
     "postbuild": "copyfiles core/web/views/**.* core/web/public/**.* dist",
-    "start": "npm run build && node --trace-warnings dist/core/app.js",
+    "start": "node --trace-warnings dist/core/app.js",
     "start:watch": "nodemon",
     "ui": "browser-sync start --proxy=localhost:3003 --files='dist/core/**/*.css, dist/core/**/*.pug, dist/core/**/*.js' --ignore=node_modules --reload-delay 10 --no-ui --no-notify --no-open",
     "dev": "concurrently \"docker-compose up\" \"npm:start:watch\" \"npm:ui\"",
