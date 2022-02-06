@@ -6,6 +6,8 @@ import { ModuleService } from './ModuleService'
 import lpteService from '../eventbus/LPTEService'
 import logger from '../logging'
 import { LPTE } from '../eventbus/LPTE'
+import { MultiBar } from 'cli-progress'
+import progress from '../logging/progress'
 
 export interface PackageJson {
   name: string
@@ -88,12 +90,14 @@ export class PluginContext {
   require: (file: string) => any
   LPTE: LPTE
   plugin: Plugin
+  progress: MultiBar
 
   constructor (plugin: Plugin) {
     this.log = logger('plugin-' + plugin.getModule().getName())
     this.require = (file: string) => require(path.join(plugin.getModule().getFolder(), file))
     this.LPTE = lpteService.forPlugin(plugin)
     this.plugin = plugin
+    this.progress = progress(plugin.module.getName())
   }
 }
 
