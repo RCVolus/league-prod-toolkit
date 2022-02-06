@@ -29,23 +29,27 @@ jobs:
           npm ci
           npm run build
           npm run build:modules
-      
+
+      - name: Create Zip
+        run: zip -r prod-toolkit.zip \
+          LICENSE \
+          README.md \
+          package.json \
+          package-lock.json \
+          install.bat \
+          start.bat \
+          scripts/ \
+          dist/ \
+          modules/plugin-config/ \
+          modules/plugin-database/ \
+          modules/plugin-prod-clock/ \
+          modules/plugin-themeing/ \
+          modules/plugin-webapi/
+
       - uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           automatic_release_tag: "latest"
           prerelease: false
           files: |
-            LICENSE
-            README.md
-            package.json
-            package-lock.json
-            install.bat.
-            start.bat
-            scripts/
-            dist/
-            modules/plugin-config/
-            modules/plugin-database/
-            modules/plugin-prod-clock/
-            modules/plugin-themeing/
-            modules/plugin-webapi/
+            prod-toolkit.zip
