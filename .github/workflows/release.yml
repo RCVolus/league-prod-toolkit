@@ -1,0 +1,51 @@
+name: Release
+
+# Run on every commit tag which begins with "v" (e.g., "v0.1.4")
+on:
+  push:
+    tags:
+      - "v*"
+
+# Automatically create a GitHub Release, with release details specified (the relevant commits)
+jobs:
+  release:
+    name: "Release"
+    runs-on: "ubuntu-latest"
+    steps:
+
+      - uses: actions/checkout@v2
+        with:
+          submodules: 'true'
+
+      # Setup npm
+      - name: Setup NodeJS
+        uses: actions/setup-node@v1
+        with:
+          node-version: '16'
+
+      # Build Release version
+      - name: Build
+        run: |
+          npm ci
+          npm run build
+          npm run build:modules
+      
+      - uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          automatic_release_tag: "latest"
+          prerelease: false
+          files: |
+            LICENSE
+            README.md
+            package.json
+            package-lock.json
+            install.bat.
+            start.bat
+            scripts/
+            dist/
+            modules/plugin-config/
+            modules/plugin-database/
+            modules/plugin-prod-clock/
+            modules/plugin-themeing/
+            modules/plugin-webapi/
