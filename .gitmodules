@@ -62,3 +62,6 @@
 	path = modules/module-league-in-game
 	url = https://github.com/rcv-prod-toolkit/module-league-in-game.git
 	branch = main
+[submodule "modules/module-league-runes"]
+	path = modules/module-league-runes
+	url = https://github.com/rcv-prod-toolkit/module-league-runes.git
