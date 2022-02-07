@@ -6,32 +6,225 @@ on:
     tags:
       - "v*"
 
-# Automatically create a GitHub Release, with release details specified (the relevant commits)
 jobs:
-  release:
-    name: "Release"
+  build:
+    name: "Build Toolkit"
     runs-on: "ubuntu-latest"
     steps:
 
       - uses: actions/checkout@v2
-        with:
-          submodules: 'true'
 
-      # Setup npm
       - name: Setup NodeJS
         uses: actions/setup-node@v1
         with:
           node-version: '16'
 
-      # Build Release version
       - name: Build
         run: |
           npm ci
           npm run build
-          npm run build:modules
+
+      - name: Archive production artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: build
+          path: |
+            LICENSE
+            README.md
+            package.json
+            package-lock.json
+            install.bat
+            start.bat
+            scripts
+            dist
+
+  get-config-plugin:
+    name: "Get Config Plugin"
+    runs-on: "ubuntu-latest"
+
+    steps:
+      - name: "Get Config Plugins"
+        uses: dsaltares/fetch-gh-release-asset@master
+        with:
+          repo: "rcv-prod-toolkit/plugin-config"
+          file: "plugin-config.zip"
+          target: "plugin-config.zip"
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - run: mkdir plugin-config
+
+      - name: Unzip
+        run: |
+          unzip plugin-config.zip -d plugin-config/
+
+      - name: Upload Module
+        uses: actions/upload-artifact@v2
+        with:
+          name: plugin-config
+          path: plugin-config
+
+  get-database-plugin:
+    name: "Get Database Plugin"
+    runs-on: "ubuntu-latest"
+
+    steps:
+      - name: "Get Database Plugins"
+        uses: dsaltares/fetch-gh-release-asset@master
+        with:
+          repo: "rcv-prod-toolkit/plugin-database"
+          file: "plugin-database.zip"
+          target: "plugin-database.zip"
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - run: mkdir plugin-database
+
+      - name: Unzip
+        run: |
+          unzip plugin-database.zip -d plugin-database/
+
+      - name: Upload Module
+        uses: actions/upload-artifact@v2
+        with:
+          name: plugin-database
+          path: plugin-database
+
+  get-prod-clock-plugin:
+    name: "Get Prod-Clock Plugin"
+    runs-on: "ubuntu-latest"
+
+    steps:
+      - name: "Get Prod-Clock Plugins"
+        uses: dsaltares/fetch-gh-release-asset@master
+        with:
+          repo: "rcv-prod-toolkit/plugin-prod-clock"
+          file: "plugin-prod-clock.zip"
+          target: "plugin-prod-clock.zip"
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - run: mkdir plugin-prod-clock
+
+      - name: Unzip
+        run: |
+          unzip plugin-prod-clock.zip -d plugin-prod-clock/
+
+      - name: Upload Module
+        uses: actions/upload-artifact@v2
+        with:
+          name: plugin-prod-clock
+          path: plugin-prod-clock
+
+  get-themeing-plugin:
+    name: "Get Themeing Plugin"
+    runs-on: "ubuntu-latest"
+
+    steps:
+      - name: "Get Themeing Plugins"
+        uses: dsaltares/fetch-gh-release-asset@master
+        with:
+          repo: "rcv-prod-toolkit/plugin-themeing"
+          file: "plugin-themeing.zip"
+          target: "plugin-themeing.zip"
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - run: mkdir plugin-themeing
+
+      - name: Unzip
+        run: |
+          unzip plugin-themeing.zip -d plugin-themeing/
+
+      - name: Upload Module
+        uses: actions/upload-artifact@v2
+        with:
+          name: plugin-themeing
+          path: plugin-themeing
+
+  get-webapi-plugin:
+    name: "Get Webapi Plugin"
+    runs-on: "ubuntu-latest"
+
+    steps:
+      - name: "Get Webapi Plugins"
+        uses: dsaltares/fetch-gh-release-asset@master
+        with:
+          repo: "rcv-prod-toolkit/plugin-webapi"
+          file: "plugin-webapi.zip"
+          target: "plugin-webapi.zip"
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - run: mkdir plugin-webapi
+
+      - name: Unzip
+        run: |
+          unzip plugin-webapi.zip -d plugin-webapi/
+
+      - name: Upload Module
+        uses: actions/upload-artifact@v2
+        with:
+          name: plugin-webapi
+          path: plugin-webapi
+
+  create-zip:
+    name: "Create Zip File"
+    needs: [build, get-config-plugin, get-database-plugin, get-prod-clock-plugin, get-themeing-plugin, get-webapi-plugin]
+    runs-on: "ubuntu-latest"
+
+    steps:
+      - name: Download build
+        uses: actions/download-artifact@v2
+        with:
+          name: build
+
+      - run: mkdir modules
+
+      - name: Download plugin-config
+        uses: actions/download-artifact@v2
+        with:
+          name: plugin-config
+          path: modules/plugin-config/
+
+      - name: Download plugin-database
+        uses: actions/download-artifact@v2
+        with:
+          name: plugin-database
+          path: modules/plugin-database/
+
+      - name: Download plugin-prod-clock
+        uses: actions/download-artifact@v2
+        with:
+          name: plugin-prod-clock
+          path: modules/plugin-prod-clock/
+
+      - name: Download plugin-themeing
+        uses: actions/download-artifact@v2
+        with:
+          name: plugin-themeing
+          path: modules/plugin-themeing/
+
+      - name: Download plugin-webapi
+        uses: actions/download-artifact@v2
+        with:
+          name: plugin-webapi
+          path: modules/plugin-webapi/
 
       - name: Create Zip
-        run: zip -r prod-toolkit.zip LICENSE README.md package.json package-lock.json install.bat start.bat scripts/* dist/*
+        run: zip -r prod-toolkit.zip LICENSE README.md package.json package-lock.json install.bat start.bat scripts/* dist/* modules/*
+
+      - name: Upload Zip
+        uses: actions/upload-artifact@v2
+        with:
+          name: prod-toolkit
+          path: prod-toolkit.zip
+
+  release:
+    name: "Release"
+    needs: create-zip
+    runs-on: "ubuntu-latest"
+
+    steps:
+      - name: Download zip
+        uses: actions/download-artifact@v2
+        with:
+          name: prod-toolkit
 
       - uses: "marvinpinto/action-automatic-releases@latest"
         with:
