@@ -37,7 +37,6 @@ jobs:
             start.bat
             scripts
             dist
-            modules
 
   get-config-plugin:
     name: "Get Config Plugin"
@@ -75,6 +74,8 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: build
+
+      - run: mkdir modules
 
       - name: Download plugin-config
         uses: actions/download-artifact@v2
