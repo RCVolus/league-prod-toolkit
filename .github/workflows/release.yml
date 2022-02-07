@@ -13,8 +13,6 @@ jobs:
     steps:
 
       - uses: actions/checkout@v2
-        with:
-          submodules: 'true'
 
       - name: Setup NodeJS
         uses: actions/setup-node@v1
@@ -25,7 +23,6 @@ jobs:
         run: |
           npm ci
           npm run build
-          npm run build:modules
 
       - name: Archive production artifacts
         uses: actions/upload-artifact@v2
@@ -49,7 +46,7 @@ jobs:
       - name: "Get Config Plugins"
         uses: dsaltares/fetch-gh-release-asset@master
         with:
-          repo: "dsaltares/godot-wild-jam-18"
+          repo: "rcv-prod-toolkit/plugin-config"
           file: "plugin-config.zip"
           target: "plugin-config.zip"
           token: ${{ secrets.GITHUB_TOKEN }}
