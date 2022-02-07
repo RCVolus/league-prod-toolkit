@@ -18,7 +18,7 @@ const getServer = async () => {
   const server = await inquirer.prompt({
     type: 'list',
     name: 'server',
-    message: 'Enter your server (EUW1)',
+    message: 'Enter your server',
     default: 'EUW1',
     choices: [
       'BR1',
@@ -31,11 +31,48 @@ const getServer = async () => {
       'NA1',
       'OC1',
       'TR1',
-      'RU',
+      'RU'
     ]
   })
 
   return server.server
+}
+
+const getDatabaseInfo = async () => {
+  const clusterUrl = await inquirer.prompt({
+    type: 'input',
+    name: 'clusterUrl',
+    message: 'Enter your Database cluster-url',
+    default: 'localhost'
+  })
+
+  const port = await inquirer.prompt({
+    type: 'number',
+    name: 'port',
+    message: 'Enter your Database port',
+    default: 27017
+  })
+
+  const user = await inquirer.prompt({
+    type: 'input',
+    name: 'user',
+    message: 'Enter your Database user',
+    default: 'root'
+  })
+
+  const password = await inquirer.prompt({
+    type: 'input',
+    name: 'password',
+    message: 'Enter your Database password',
+    default: '12345'
+  })
+
+  return {
+    clusterUrl: clusterUrl.clusterUrl,
+    port: port.port,
+    user: user.user,
+    password: password.password
+  }
 }
 
 const filePath = path.join(__dirname, '..', 'modules', 'plugin-config', 'config.dist.json')
@@ -45,9 +82,11 @@ const file = require(filePath)
 const askQuestions = async () => {
   const apiKey = await getApiKey()
   const server = await getServer()
+  const database = await getDatabaseInfo()
 
   file['provider-webapi'].apiKey = apiKey
   file['provider-webapi'].server = server
+  file.database = database
 
   const spinner = createSpinner('Saving config')
 
