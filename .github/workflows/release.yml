@@ -56,7 +56,8 @@ jobs:
       - name: Unzip and remove zip
         run: |
           unzip plugin-config.zip -d plugin-config/
-          rm plugin-config.zip
+
+      - run: ls
 
       - name: Upload Module
         uses: actions/upload-artifact@v2
@@ -80,6 +81,8 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: plugin-config
+
+      - run: ls
         
       - run: mv plugin-config/ modules/
 
