@@ -37,6 +37,7 @@ jobs:
             start.bat
             scripts
             dist
+            modules
 
   get-config-plugin:
     name: "Get Config Plugin"
@@ -81,10 +82,9 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: plugin-config
+          path: modules/plugin-config/
 
       - run: ls
-        
-      - run: mv plugin-config/ modules/
 
       - name: Create Zip
         run: zip -r prod-toolkit.zip LICENSE README.md package.json package-lock.json install.bat start.bat scripts/* dist/* modules/*
