@@ -41,8 +41,8 @@ jobs:
             scripts
             dist
 
-  get-config-plugins:
-    name: "Get Config Plugins"
+  get-config-plugin:
+    name: "Get Config Plugin"
     runs-on: "ubuntu-latest"
 
     steps:
@@ -68,7 +68,7 @@ jobs:
 
   create-zip:
     name: "Create Zip File"
-    needs: [build, get-plugins]
+    needs: [build, get-config-plugin]
     runs-on: "ubuntu-latest"
 
     steps:
