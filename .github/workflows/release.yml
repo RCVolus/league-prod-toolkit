@@ -58,8 +58,6 @@ jobs:
         run: |
           unzip plugin-config.zip -d plugin-config/
 
-      - run: ls
-
       - name: Upload Module
         uses: actions/upload-artifact@v2
         with:
@@ -84,8 +82,6 @@ jobs:
           name: plugin-config
           path: modules/plugin-config/
 
-      - run: ls
-
       - name: Create Zip
         run: zip -r prod-toolkit.zip LICENSE README.md package.json package-lock.json install.bat start.bat scripts/* dist/* modules/*
 
@@ -100,12 +96,12 @@ jobs:
     needs: create-zip
     runs-on: "ubuntu-latest"
 
-    - name: Download zip
+    steps:
+      - name: Download zip
         uses: actions/download-artifact@v2
         with:
           name: prod-toolkit
 
-    steps:
       - uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
