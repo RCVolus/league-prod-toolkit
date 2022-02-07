@@ -87,7 +87,7 @@ jobs:
       - run: mv plugin-config modules
 
       - name: Create Zip
-        run: zip -r prod-toolkit.zip LICENSE README.md package.json package-lock.json install.bat start.bat scripts/* dist/*
+        run: zip -r prod-toolkit.zip LICENSE README.md package.json package-lock.json install.bat start.bat scripts/* dist/* modules/*
 
   release:
     name: "Release"
