@@ -51,9 +51,11 @@ jobs:
           target: "plugin-config.zip"
           token: ${{ secrets.GITHUB_TOKEN }}
 
+      - run: mkdir plugin-config
+
       - name: Unzip and remove zip
         run: |
-          unzip plugin-config.zip
+          unzip plugin-config.zip -d plugin-config/
           rm plugin-config.zip
 
       - name: Upload Module
@@ -73,8 +75,6 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: build
-
-      - run: mkdir -p modules
 
       - name: Download modules
         uses: actions/download-artifact@v2
