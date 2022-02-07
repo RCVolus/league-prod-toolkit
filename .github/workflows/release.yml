@@ -89,10 +89,21 @@ jobs:
       - name: Create Zip
         run: zip -r prod-toolkit.zip LICENSE README.md package.json package-lock.json install.bat start.bat scripts/* dist/* modules/*
 
+      - name: Upload Zip
+        uses: actions/upload-artifact@v2
+        with:
+          name: prod-toolkit
+          path: prod-toolkit.zip
+
   release:
     name: "Release"
     needs: create-zip
     runs-on: "ubuntu-latest"
+
+    - name: Download zip
+        uses: actions/download-artifact@v2
+        with:
+          name: prod-toolkit
 
     steps:
       - uses: "marvinpinto/action-automatic-releases@latest"
