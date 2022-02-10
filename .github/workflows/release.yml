@@ -163,9 +163,34 @@ jobs:
           name: plugin-webapi
           path: plugin-webapi
 
+  get-default-theme:
+    name: "Get Themeing Plugin"
+    runs-on: "ubuntu-latest"
+
+    steps:
+      - name: "Get Themeing Plugin"
+        uses: dsaltares/fetch-gh-release-asset@master
+        with:
+          repo: "rcv-prod-toolkit/theme-default"
+          file: "theme-default.zip"
+          target: "theme-default.zip"
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - run: mkdir plugin-themeing
+
+      - name: Unzip
+        run: |
+          unzip theme-default.zip -d theme-default/
+
+      - name: Upload Module
+        uses: actions/upload-artifact@v2
+        with:
+          name: theme-default
+          path: theme-default
+
   create-zip:
     name: "Create Zip File"
-    needs: [build, get-config-plugin, get-database-plugin, get-prod-clock-plugin, get-themeing-plugin, get-webapi-plugin]
+    needs: [build, get-config-plugin, get-database-plugin, get-prod-clock-plugin, get-themeing-plugin, get-webapi-plugin, get-default-theme]
     runs-on: "ubuntu-latest"
 
     steps:
@@ -205,6 +230,12 @@ jobs:
         with:
           name: plugin-webapi
           path: modules/plugin-webapi/
+
+      - name: Download theme-default
+        uses: actions/download-artifact@v2
+        with:
+          name: theme-default
+          path: modules/plugin-themeing/themes/theme-default
 
       - name: Create Zip
         run: zip -r prod-toolkit.zip LICENSE README.md package.json package-lock.json install.bat start.bat scripts/* dist/* modules/*
