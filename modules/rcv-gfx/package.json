@@ -13,10 +13,8 @@
     },
     "needsBuild": true
   },
-  "dependencies": {
-    "league-prod-toolkit": "file:../.."
-  },
   "devDependencies": {
+    "rcv-prod-toolkit-types": "^1.0.1",
     "typescript": "^4.3.2"
   },
   "scripts": {
