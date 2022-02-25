@@ -14,7 +14,7 @@
     "needsBuild": true
   },
   "devDependencies": {
-    "rcv-prod-toolkit-types": "^1.0.1",
+    "@rcv-prod-toolkit/types": "github:rcv-prod-toolkit/types",
     "typescript": "^4.3.2"
   },
   "scripts": {

@@ -1,4 +1,4 @@
-import type { PluginContext } from 'rcv-prod-toolkit-types'
+import type { PluginContext } from '@rcv-prod-toolkit/types'
 
 module.exports = async (ctx: PluginContext) => {
   ctx.LPTE.emit({
