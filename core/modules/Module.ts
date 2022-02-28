@@ -13,8 +13,8 @@ export interface PackageJson {
   name: string
   version: string
   author: string
-  dependencies?: Array<{[n: string]: string}>
-  devDependencies?: Array<{[n: string]: string}>
+  dependencies?: {[n: string]: string}
+  devDependencies?: {[n: string]: string}
   toolkit: ToolkitConfig
 }
 
