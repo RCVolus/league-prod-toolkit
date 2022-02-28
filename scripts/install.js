@@ -84,9 +84,9 @@ const askQuestions = async () => {
   const server = await getServer()
   const database = await getDatabaseInfo()
 
-  file['provider-webapi'].apiKey = apiKey
-  file['provider-webapi'].server = server
-  file.database = database
+  file['plugin-webapi'].apiKey = apiKey
+  file['plugin-webapi'].server = server
+  file['plugin-database'] = database
 
   const spinner = createSpinner('Saving config')
 
