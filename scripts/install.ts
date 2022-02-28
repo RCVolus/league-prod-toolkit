@@ -1,9 +1,9 @@
-const fs = require('fs')
-const path = require('path')
-const inquirer = require('inquirer')
-const { createSpinner } = require('nanospinner')
+import fs from 'fs'
+import path from 'path'
+import inquirer from 'inquirer'
+import { createSpinner } from 'nanospinner'
 
-const getApiKey = async () => {
+const getApiKey = async (): Promise<string> => {
   const apiKey = await inquirer.prompt({
     type: 'input',
     name: 'apiKey',
@@ -14,7 +14,7 @@ const getApiKey = async () => {
   return apiKey.apiKey
 }
 
-const getServer = async () => {
+const getServer = async (): Promise<string> => {
   const server = await inquirer.prompt({
     type: 'list',
     name: 'server',
@@ -38,7 +38,7 @@ const getServer = async () => {
   return server.server
 }
 
-const getDatabaseInfo = async () => {
+const getDatabaseInfo = async (): Promise<any> => {
   const clusterUrl = await inquirer.prompt({
     type: 'input',
     name: 'clusterUrl',
@@ -77,9 +77,10 @@ const getDatabaseInfo = async () => {
 
 const filePath = path.join(__dirname, '..', 'modules', 'plugin-config', 'config.dist.json')
 const newFilePath = path.join(__dirname, '..', 'modules', 'plugin-config', 'config.json')
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const file = require(filePath)
 
-const askQuestions = async () => {
+const askQuestions = async (): Promise<void> => {
   const apiKey = await getApiKey()
   const server = await getServer()
   const database = await getDatabaseInfo()
@@ -102,4 +103,5 @@ const askQuestions = async () => {
   }
 }
 
+// eslint-disable-next-line @typescript-eslint/no-floating-promises
 askQuestions()

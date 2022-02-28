@@ -1,8 +1,9 @@
-const fs = require('fs')
-const { promisify } = require('util')
-const path = require('path')
-const { exec } = require('child_process')
-const console = require('console')
+import fs from 'fs'
+import { promisify } from 'util'
+import path from 'path'
+import { exec } from 'child_process'
+import console from 'console'
+import { PackageJson } from '../core/modules/Module'
 
 const readdirPromise = promisify(fs.readdir)
 const readFilePromise = promisify(fs.readFile)
@@ -16,7 +17,7 @@ if (process.argv.length === 3) {
   filter = process.argv[2]
 }
 
-const main = async () => {
+const main = async (): Promise<void> => {
   const data = await readdirPromise(modulePath)
   await Promise.all(
     data.map(async (folderName) => {
@@ -34,9 +35,9 @@ const main = async () => {
         return
       }
 
-      const pkgJson = JSON.parse((await readFilePromise(packageJsonPath)).toString())
+      const pkgJson = JSON.parse((await readFilePromise(packageJsonPath)).toString()) as PackageJson
 
-      if (pkgJson.dependencies || pkgJson.devDependencies) {
+      if (pkgJson.dependencies !== undefined || pkgJson.devDependencies !== undefined) {
         // run install
         await execPromise('npm ci', {
           cwd: currentModulePath
@@ -45,17 +46,17 @@ const main = async () => {
         console.log('installed ' + folderName)
       }
 
-      if (pkgJson.toolkit.needsBuild) {
+      if (pkgJson.toolkit.needsBuild !== undefined && pkgJson.toolkit.needsBuild) {
         // run build
-        await new Promise((resolve, reject) => {
+        await new Promise<void>((resolve, reject) => {
           exec('npm run build', {
             cwd: currentModulePath
           }, (error, stdout, stderr) => {
             console.log('='.repeat(20))
             console.log('start building ' + folderName)
             console.log(stdout)
-            if (error || stderr) {
-              return console.log(error || stderr)
+            if (error !== null || stderr !== '') {
+              return console.log(error ?? stderr)
             }
             console.log('finished building ' + folderName)
             resolve()
@@ -66,4 +67,5 @@ const main = async () => {
   )
 }
 
+// eslint-disable-next-line @typescript-eslint/no-floating-promises
 main()

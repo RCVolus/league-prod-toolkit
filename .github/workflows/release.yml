@@ -35,8 +35,10 @@ jobs:
             package-lock.json
             install.bat
             start.bat
-            scripts
             dist
+            !dist/*.ts
+            !dist/build/update.js
+            !dist/build/update.js.map
 
   get-config-plugin:
     name: "Get Config Plugin"

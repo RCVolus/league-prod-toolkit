@@ -13,6 +13,8 @@ export interface PackageJson {
   name: string
   version: string
   author: string
+  dependencies?: Array<{[n: string]: string}>
+  devDependencies?: Array<{[n: string]: string}>
   toolkit: ToolkitConfig
 }
 
@@ -23,6 +25,7 @@ export interface PluginConfig {
 export interface ToolkitConfig {
   modes: ModuleType[]
   plugin: undefined | PluginConfig
+  needsBuild?: boolean
 }
 
 export default class Module {
