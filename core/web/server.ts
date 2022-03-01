@@ -7,6 +7,8 @@ import logging from '../logging'
 import globalContext from './globalContext'
 import getController from './controller'
 import { handleClient } from './ws'
+import { LPTEService } from '../eventbus/LPTEService'
+import { runAuth } from './auth'
 
 /**
  * App Variables
@@ -43,11 +45,15 @@ app.use(express.json())
 
 /**
  * Websocket Server
- */
-export const wss = new WebSocket.Server({ server, path: '/eventbus' })
+*/
+export const wss = new WebSocket.Server({
+  server,
+  path: '/eventbus'
+})
 
 export let wsClients: WebSocket[] = []
-wss.on('connection', (socket: WebSocket) => {
+
+wss.on('connection', (socket: WebSocket, requests) => {
   wsClients.push(socket)
   log.debug('Websocket client connected')
 
@@ -70,7 +76,9 @@ for (const [key, value] of Object.entries(getController(globalContext))) {
 /**
  * Run server
  */
-export const runServer = (): void => {
+export const runServer = (lpteService: LPTEService): void => {
+  runAuth(lpteService, server, wss)
+
   server.listen(port, () => {
     log.info(`Listening for requests on http://localhost:${port}`)
   })
