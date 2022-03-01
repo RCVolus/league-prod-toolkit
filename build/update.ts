@@ -101,13 +101,18 @@ async function start (): Promise<void> {
 
 async function getNewVersion (): Promise<string> {
   const version = await inquirer.prompt({
-    type: 'input',
-    name: 'newVersion',
-    message: 'Enter a new version',
-    default: '1.0.0'
+    type: 'list',
+    name: 'versionType',
+    message: 'select a version type',
+    choices: [
+      'patch',
+      'minor',
+      'major'
+    ],
+    default: 'patch'
   })
 
-  return version.newVersion
+  return version.versionType
 }
 
 async function updateVersion (modules: Module[]): Promise<void> {
@@ -116,22 +121,13 @@ async function updateVersion (modules: Module[]): Promise<void> {
   for await (const module of modules) {
     const modulePath = module[0]
 
-    const packagePath = path.join(modulePath, 'package.json')
-
-    const moduleConfig = await fs.promises.readFile(packagePath)
-
-    const data = JSON.parse(moduleConfig.toString())
-    data.version = version
-
-    await fs.promises.writeFile(packagePath, JSON.stringify(data, null, 4))
-
     try {
-      const tag = await execPromise(`git tag v${version}`, {
+      const tag = await execPromise(`npm version ${version}`, {
         cwd: modulePath
       })
       console.log(tag.stdout)
 
-      const push = await execPromise(`git push origin v${version}`, {
+      const push = await execPromise('git push origin main --follow-tags', {
         cwd: modulePath
       })
       console.log(push.stdout)
