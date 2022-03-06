@@ -46,11 +46,14 @@ export class ModuleService {
 
     const modulePath = this.getModulePath()
     log.debug(`Modules path: ${modulePath}`)
+
+    // load dri and make sure plugins start loading first
     const data = (await readdirPromise(modulePath)).sort((a, b) => {
       if (a < b) return 1
       else if (a > b) return -1
       return 0
     })
+
     const allModules = await Promise.all(
       data.map(async (folderName) =>
         await this.handleFolder(path.join(modulePath, folderName))

@@ -66,18 +66,18 @@ wss.on('connection', (socket: WebSocket, requests) => {
 })
 
 /**
- * Routes
- */
-for (const [key, value] of Object.entries(getController(globalContext))) {
-  app.use(key, value)
-  log.debug(`Registered route: ${key}`)
-}
-
-/**
  * Run server
  */
 export const runServer = (lpteService: LPTEService): void => {
-  runAuth(lpteService, server, wss)
+  runAuth(lpteService, app, wss)
+
+  /**
+   * Routes
+   */
+  for (const [key, value] of Object.entries(getController(globalContext))) {
+    app.use(key, value)
+    log.debug(`Registered route: ${key}`)
+  }
 
   server.listen(port, () => {
     log.info(`Listening for requests on http://localhost:${port}`)
