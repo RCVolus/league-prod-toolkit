@@ -29,7 +29,9 @@ const main = async (): Promise<void> => {
 
   await moduleService.initialize()
 
-  runServer(lpteService)
+  lpteService.on('lpt', 'ready', () => {
+    runServer(lpteService)
+  })
 }
 
 main()
