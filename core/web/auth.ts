@@ -40,11 +40,9 @@ function verifyWSClient (
 }
 
 function verifyEPClient (req: Request, res: Response, next: NextFunction) {
-  console.log('request')
   if (req.path.startsWith('/auth')) return next()
 
   if (!verify(req.headers, req.url)) {
-    console.log('not verified request')
     return res
       .send({ success: false, message: 'authentication failed' })
       .status(403)
