@@ -177,7 +177,10 @@ class LPTEService implements LPTE {
   }
 }
 
-(window as any).LPTE = new LPTEService(`ws${location.origin.startsWith('https://') ? 's' : ''}://${location.host}/eventbus`)
+const apiKey = new URLSearchParams(window.location.search).get('apikey')
+const wsUrl = `ws${location.origin.startsWith('https://') ? 's' : ''}://${location.host}/eventbus`
+const backend = apiKey !== null ? `${wsUrl}?apikey=${apiKey}` : wsUrl;
+(window as any).LPTE = new LPTEService(backend)
 
 /* const postJson = (url, request) => {
   var headers = new Headers()
