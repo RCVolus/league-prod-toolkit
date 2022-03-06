@@ -1,5 +1,4 @@
-import { promisify } from 'util'
-import { readdir, stat, Stats } from 'fs'
+import fs, { Stats } from 'fs'
 import path from 'path'
 
 import LPTEService from '../eventbus/LPTEService'
@@ -8,8 +7,8 @@ import Module, { Plugin, PluginStatus } from './Module'
 import ModuleType from './ModuleType'
 import { EventType } from '../eventbus/LPTE'
 
-const readdirPromise = promisify(readdir)
-const statPromise = promisify(stat)
+const readdirPromise = fs.promises.readdir
+const statPromise = fs.promises.stat
 const log = logging('module-svc')
 
 export class ModuleService {
