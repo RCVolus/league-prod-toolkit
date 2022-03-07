@@ -1,10 +1,12 @@
 import { LPTEService } from '../eventbus/LPTEService'
-import { IncomingHttpHeaders, IncomingMessage } from 'http'
+import { IncomingMessage } from 'http'
 import WebSocket from 'ws'
 import uuidAPIKey from 'uuid-apikey'
 import logging from '../logging'
 import { OutgoingHttpHeaders } from 'http2'
 import { Express, NextFunction, Request, Response } from 'express'
+import jwt from 'jsonwebtoken'
+import config from '../../modules/plugin-config/config.json'
 
 const log = logging('auth')
 
@@ -26,13 +28,22 @@ export function runAuth (lpte: LPTEService, server: Express, wss: WebSocket.Serv
 
   wss.options.verifyClient = verifyWSClient
   server.all('*', verifyEPClient)
+
+  server.get('/login', (req, res) => {
+    res.render('login', {
+      title: 'Login',
+      version: '0.0.1'
+    })
+  })
+  server.post('/login', login)
+  server.get('/logout', logout)
 }
 
 function verifyWSClient (
   info: { origin: string, secure: boolean, req: IncomingMessage },
   done: (res: boolean, code?: number, message?: string, headers?: OutgoingHttpHeaders) => void
 ): void {
-  if (!verify(info.req.headers, info.req.url)) {
+  if (!verify(info.req.url)) {
     return done(false, 403, 'authentication failed')
   }
 
@@ -40,18 +51,18 @@ function verifyWSClient (
 }
 
 function verifyEPClient (req: Request, res: Response, next: NextFunction) {
-  if (req.path.startsWith('/auth')) return next()
+  if (req.path.startsWith('/login')) return next()
 
-  if (!verify(req.headers, req.url)) {
+  if (!verify(req.url, req.cookies)) {
     return res
-      .send({ success: false, message: 'authentication failed' })
       .status(403)
+      .redirect('/login')
   }
 
   return next()
 }
 
-function verify (headers: IncomingHttpHeaders, url?: string): boolean {
+function verify (url?: string, cookies?: any): boolean {
   const queryString = url?.split('?')[1]
 
   if (queryString !== undefined) {
@@ -62,9 +73,43 @@ function verify (headers: IncomingHttpHeaders, url?: string): boolean {
     }
   }
 
-  if (headers['x-rcv-prod-tool-token'] !== undefined) {
-    // TODO auth with header
+  if (cookies?.access_token !== undefined) {
+    try {
+      jwt.verify(cookies.access_token, config.auth.secreteKey)
+      return true
+    } catch (e) {
+      log.warn(e)
+      return false
+    }
   }
 
   return false
+}
+
+function login (req: Request, res: Response): void {
+  const { apiKey } = uuidAPIKey.create()
+  allowedKeys.push(apiKey)
+  const user = {
+    username: 'rcv',
+    apiKey
+  }
+
+  const token = jwt.sign(user, config.auth.secreteKey)
+  res
+    .cookie('access_token', token)
+    .status(200)
+    .redirect('/')
+}
+
+function logout (req: Request, res: Response): void {
+  const decoded = jwt.decode(req.cookies.access_token)
+
+  if (decoded !== null && typeof decoded !== 'string') {
+    allowedKeys.filter(k => k !== decoded.apiKey)
+  }
+
+  res
+    .clearCookie('access_token')
+    .status(200)
+    .redirect('/login')
 }

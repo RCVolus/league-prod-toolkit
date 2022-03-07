@@ -1,4 +1,5 @@
 import { EventType, LPTE, LPTEvent, Registration } from '../core/eventbus/LPTE'
+import decode from 'jwt-decode'
 
 // Setup toasts
 if ((window as any).toastr !== undefined) {
@@ -177,10 +178,44 @@ class LPTEService implements LPTE {
   }
 }
 
-const apiKey = new URLSearchParams(window.location.search).get('apikey')
+const apiKey = getApiKey()
 const wsUrl = `ws${location.origin.startsWith('https://') ? 's' : ''}://${location.host}/eventbus`
 const backend = apiKey !== null ? `${wsUrl}?apikey=${apiKey}` : wsUrl;
 (window as any).LPTE = new LPTEService(backend)
+
+function getApiKey (): string | null {
+  const queryKey = new URLSearchParams(window.location.search).get('apikey')
+
+  if (queryKey !== null) return queryKey
+
+  const cookieKey = getCookie('access_token')
+
+  if (cookieKey !== '') {
+    const decoded = decode<any>(cookieKey)
+    return decoded.apiKey
+  }
+
+  alert('there is no api key set')
+  return null
+}
+
+function getCookie (cname: string): string {
+  const name = `${cname}=`
+  const decodedCookie = decodeURIComponent(document.cookie)
+  const ca = decodedCookie.split(';')
+
+  for (let i = 0; i < ca.length; i++) {
+    let c = ca[i]
+    while (c.charAt(0) === ' ') {
+      c = c.substring(1)
+    }
+    if (c.indexOf(name) === 0) {
+      return c.substring(name.length, c.length)
+    }
+  }
+
+  return ''
+}
 
 /* const postJson = (url, request) => {
   var headers = new Headers()

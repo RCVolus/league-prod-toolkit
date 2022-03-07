@@ -2,6 +2,7 @@ import express from 'express'
 import path from 'path'
 import http from 'http'
 import * as WebSocket from 'ws'
+import cookieParser from 'cookie-parser'
 
 import logging from '../logging'
 import globalContext from './globalContext'
@@ -41,7 +42,12 @@ app.use(
   '/vendor/toastr',
   express.static(path.join(__dirname, '../../../node_modules/toastr/build'))
 )
+app.use(
+  '/vendor/jwt-decode',
+  express.static(path.join(__dirname, '../../../node_modules/jwt-decode/build'))
+)
 app.use(express.json())
+app.use(cookieParser())
 
 /**
  * Websocket Server
