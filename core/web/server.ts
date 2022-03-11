@@ -10,6 +10,8 @@ import getController from './controller'
 import { handleClient } from './ws'
 import { LPTEService } from '../eventbus/LPTEService'
 import { runAuth } from './auth'
+import fileUpload, { UploadedFile } from 'express-fileupload'
+import bodyParser from 'body-parser'
 
 /**
  * App Variables
@@ -46,7 +48,9 @@ app.use(
   '/vendor/jwt-decode',
   express.static(path.join(__dirname, '../../../node_modules/jwt-decode/build'))
 )
+
 app.use(express.json())
+app.use(bodyParser.urlencoded({ extended: true }))
 app.use(cookieParser())
 
 /**
@@ -72,9 +76,40 @@ wss.on('connection', (socket: WebSocket, requests) => {
 })
 
 /**
+ * Uploads
+*/
+
+app.use(fileUpload({
+  createParentPath: true
+}))
+
+app.post('/upload', (req, res) => {
+  if (req.files === undefined) {
+    return res
+      .status(401)
+      .send('no file found')
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
+  const file = req.files.file as UploadedFile
+  file.mv(path.join(__dirname, '..', '..', '..', 'modules', req.body.path, file.name))
+
+  res.send({
+    status: true,
+    message: 'File is uploaded',
+    data: {
+      name: file.name,
+      mimetype: file.mimetype,
+      size: file.size
+    }
+  });
+})
+
+/**
  * Run server
  */
 export const runServer = (lpteService: LPTEService): void => {
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   runAuth(lpteService, app, wss)
 
   /**
