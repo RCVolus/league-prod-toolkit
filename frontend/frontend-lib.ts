@@ -184,6 +184,10 @@ const backend = apiKey !== null ? `${wsUrl}?apikey=${apiKey}` : wsUrl;
 (window as any).LPTE = new LPTEService(backend)
 
 function getApiKey (): string | null {
+  if (getCookie('auth_disabled') === 'true') {
+    return null
+  }
+
   const queryKey = new URLSearchParams(window.location.search).get('apikey')
 
   if (queryKey !== null) return queryKey
