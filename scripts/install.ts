@@ -2,6 +2,7 @@ import fs from 'fs'
 import path from 'path'
 import inquirer from 'inquirer'
 import { createSpinner } from 'nanospinner'
+import { randomBytes } from 'crypto'
 
 const getApiKey = async (): Promise<string> => {
   const apiKey = await inquirer.prompt({
@@ -36,6 +37,17 @@ const getServer = async (): Promise<string> => {
   })
 
   return server.server
+}
+
+const getAuth = async (): Promise<boolean> => {
+  const auth = await inquirer.prompt({
+    type: 'confirm',
+    name: 'enabled',
+    message: 'Do you want to enabled the authentication?',
+    default: false
+  })
+
+  return auth.enabled
 }
 
 const getDatabaseInfo = async (): Promise<any> => {
@@ -84,10 +96,15 @@ const askQuestions = async (): Promise<void> => {
   const apiKey = await getApiKey()
   const server = await getServer()
   const database = await getDatabaseInfo()
+  const auth = await getAuth()
 
   file['plugin-webapi'].apiKey = apiKey
   file['plugin-webapi'].server = server
   file['plugin-database'] = database
+  file.auth = {
+    enabled: auth,
+    secreteKey: auth ? randomBytes(48).toString('hex') : ''
+  }
 
   const spinner = createSpinner('Saving config')
 

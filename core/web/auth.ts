@@ -6,16 +6,38 @@ import logging from '../logging'
 import { OutgoingHttpHeaders } from 'http2'
 import { Express, NextFunction, Request, Response } from 'express'
 import jwt from 'jsonwebtoken'
-import config from '../../modules/plugin-config/config.json'
+import ModuleType from '../modules/ModuleType'
 
 const log = logging('auth')
 
 const allowedKeys: string[] = []
 
-export function runAuth (lpte: LPTEService, server: Express, wss: WebSocket.Server): void {
-  const authActive = true
+let config: any
 
-  if (!authActive) return
+export async function runAuth (lpte: LPTEService, server: Express, wss: WebSocket.Server): Promise<void> {
+  const configReq = await lpte.request({
+    meta: {
+      type: 'request',
+      namespace: 'config',
+      version: 1,
+      sender: {
+        name: 'auth',
+        version: '1.0.0',
+        mode: ModuleType.STANDALONE
+      }
+    }
+  })
+
+  config = configReq?.config
+  const authActive = config.enabled as boolean
+
+  if (!authActive) {
+    server.all('*', (req, res, next) => {
+      res.cookie('auth_disabled', true)
+      next()
+    })
+    return
+  }
 
   log.info('=========================')
   log.info('Authentication is enabled')
@@ -75,7 +97,7 @@ function verify (url?: string, cookies?: any): boolean {
 
   if (cookies?.access_token !== undefined) {
     try {
-      jwt.verify(cookies.access_token, config.auth.secreteKey)
+      jwt.verify(cookies.access_token, config.secreteKey)
       return true
     } catch (e) {
       log.warn(e)
@@ -94,8 +116,9 @@ function login (req: Request, res: Response): void {
     apiKey
   }
 
-  const token = jwt.sign(user, config.auth.secreteKey)
+  const token = jwt.sign(user, config.secreteKey)
   res
+    .clearCookie('auth_disabled')
     .cookie('access_token', token)
     .status(200)
     .redirect('/')
