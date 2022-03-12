@@ -48,7 +48,7 @@ npm run build:modules
 This will make sure that all modules are installed and built correctly. If you want to only run for a single module, have a look at the folder name of the module, and then run:
 
 ```
-npm run build:modules static-league
+npm run build:modules module-league-static
 ```
 
 ### Setting up git hooks

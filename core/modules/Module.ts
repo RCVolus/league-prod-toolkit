@@ -96,7 +96,7 @@ export class PluginContext {
   progress: MultiBar
 
   constructor (plugin: Plugin) {
-    this.log = logger('plugin-' + plugin.getModule().getName())
+    this.log = logger(plugin.getModule().getName())
     this.require = (file: string) => require(path.join(plugin.getModule().getFolder(), file))
     this.LPTE = lpteService.forPlugin(plugin)
     this.plugin = plugin
