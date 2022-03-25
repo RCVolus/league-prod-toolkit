@@ -50,7 +50,7 @@
     "browser-sync": "^2.26.7",
     "concurrently": "^5.2.0",
     "copyfiles": "^2.2.0",
-    "electron": "^7.0.0",
+    "electron": "^13.6.6",
     "eslint": "7",
     "eslint-config-standard-with-typescript": "^19.0.1",
     "eslint-plugin-import": "2",
