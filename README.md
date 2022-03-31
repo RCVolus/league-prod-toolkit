@@ -6,7 +6,7 @@
 
 ## Features
 - Custom champion select overlay (implementation of our stand-alone tool [here](https://github.com/RCVolus/lol-pick-ban-ui))
-- Ingame overlay with animations for item purchases and level ups, and replacement for missing towers
+- Ingame overlay with animations for item purchases and level ups
 - Track matchups and automatically update ingame overlays and pause screens
 - Postgame stats (pick order, item builds, damage graphs, gold graph, and more)
 
