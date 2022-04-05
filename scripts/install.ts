@@ -13,6 +13,8 @@ const orga = 'rcv-prod-toolkit'
 
 if (process.argv.includes('-plugins')) {
   installPlugins()
+} else if (process.argv.includes('-install')) {
+  run()
 }
 
 /**
@@ -22,12 +24,7 @@ export async function getAll (): Promise<Asset[]> {
   let repos = []
   try {
     const url = `https://api.github.com/orgs/${orga}/repos`
-    const req = await axios.get(url, {
-      auth: {
-        username: 'himyu',
-        password: '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'
-      }
-    })
+    const req = await axios.get(url)
 
     if (req.status !== 200) return []
 
@@ -58,12 +55,7 @@ export async function getAll (): Promise<Asset[]> {
 async function getLatest (name: string): Promise<any> {
   try {
     const url = `https://api.github.com/repos/${orga}/${name}/releases/latest`
-    const req = await axios.get(url, {
-      auth: {
-        username: 'himyu',
-        password: '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'
-      }
-    })
+    const req = await axios.get(url)
 
     if (req.status !== 200) return undefined
     return req.data
@@ -86,7 +78,7 @@ export async function download (asset: Asset): Promise<void> {
   spinner.start()
 
   if (dl.status !== 200) return
-  let cwd = path.join(__dirname, '..', 'modules', 'test')
+  let cwd = path.join(__dirname, '..', 'modules')
 
   if (asset.name.startsWith('theme')) {
     cwd = path.join(cwd, 'plugin-themeing', 'themes')
