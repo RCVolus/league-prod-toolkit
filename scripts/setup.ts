@@ -87,8 +87,8 @@ const getDatabaseInfo = async (): Promise<any> => {
   }
 }
 
-const filePath = path.join(__dirname, '..', 'modules', 'plugin-config', 'config.dist.json')
-const newFilePath = path.join(__dirname, '..', 'modules', 'plugin-config', 'config.json')
+const filePath = path.join(__dirname, '..', '..', 'modules', 'plugin-config', 'config.dist.json')
+const newFilePath = path.join(__dirname, '..', '..', 'modules', 'plugin-config', 'config.json')
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const file = require(filePath)
 

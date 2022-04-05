@@ -7,6 +7,8 @@ import unzipper from 'unzipper'
 import { createSpinner } from 'nanospinner'
 import { Asset } from '../core/modules/Module'
 
+console.log(__dirname)
+
 const execPromise = promisify(exec)
 
 const orga = 'rcv-prod-toolkit'
@@ -78,7 +80,7 @@ export async function download (asset: Asset): Promise<void> {
   spinner.start()
 
   if (dl.status !== 200) return
-  let cwd = path.join(__dirname, '..', 'modules')
+  let cwd = path.join(__dirname, '..', '..', 'modules')
 
   if (asset.name.startsWith('theme')) {
     cwd = path.join(cwd, 'plugin-themeing', 'themes')
