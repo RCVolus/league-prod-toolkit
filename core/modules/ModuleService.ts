@@ -3,9 +3,10 @@ import path from 'path'
 
 import LPTEService from '../eventbus/LPTEService'
 import logging from '../logging'
-import Module, { Plugin, PluginStatus } from './Module'
+import Module, { Plugin, PluginStatus, Asset, PackageJson } from './Module'
 import ModuleType from './ModuleType'
 import { EventType } from '../eventbus/LPTE'
+import { getAll } from '../../scripts/install'
 
 const readdirPromise = fs.promises.readdir
 const statPromise = fs.promises.stat
@@ -13,6 +14,7 @@ const log = logging('module-svc')
 
 export class ModuleService {
   modules: Module[] = []
+  assets: Asset[] = []
   activePlugins: Plugin[] = []
 
   public async initialize (): Promise<void> {
@@ -46,6 +48,8 @@ export class ModuleService {
 
     const modulePath = this.getModulePath()
     log.debug(`Modules path: ${modulePath}`)
+
+    this.assets = await this.getAssets()
 
     // load dri and make sure plugins start loading first
     const data = (await readdirPromise(modulePath)).sort((a, b) => {
@@ -87,6 +91,10 @@ export class ModuleService {
     this.activePlugins.forEach((plugin) => {
       plugin.initialize(this)
     })
+  }
+
+  public async getAssets (): Promise<Asset[]> {
+    return await getAll()
   }
 
   public getModulePath (): string {
@@ -145,9 +153,13 @@ export class ModuleService {
     }
 
     // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const packageJson = require(packageJsonPath)
+    const packageJson = require(packageJsonPath) as PackageJson
 
-    return new Module(packageJson, folder)
+    const index = this.assets.findIndex(a => a.name === packageJson.name)
+    const asset = this.assets[index]
+    this.assets.splice(index, 1)
+
+    return new Module(packageJson, folder, asset)
   }
 }
 
