@@ -83,7 +83,7 @@ app.use(fileUpload({
   createParentPath: true
 }))
 
-app.post('/upload', (req, res) => {
+app.post('/upload', async (req, res) => {
   if (req.files === undefined) {
     return res
       .status(401)
@@ -92,7 +92,7 @@ app.post('/upload', (req, res) => {
 
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
   const file = req.files.file as UploadedFile
-  file.mv(path.join(__dirname, '..', '..', '..', 'modules', req.body.path, file.name))
+  await file.mv(path.join(__dirname, '..', '..', '..', 'modules', req.body.path, file.name))
 
   res.send({
     status: true,
