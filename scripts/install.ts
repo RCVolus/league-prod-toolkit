@@ -1,124 +1,140 @@
+import axios from 'axios'
 import fs from 'fs'
+import { promisify } from 'util'
 import path from 'path'
-import inquirer from 'inquirer'
+import { exec } from 'child_process'
+import unzipper from 'unzipper'
 import { createSpinner } from 'nanospinner'
-import { randomBytes } from 'crypto'
+import { Asset } from '../core/modules/Module'
 
-const getApiKey = async (): Promise<string> => {
-  const apiKey = await inquirer.prompt({
-    type: 'input',
-    name: 'apiKey',
-    message: 'Enter your Riot-API-Key (RGAPI-SECRETKEY)',
-    default: 'RGAPI-SECRETKEY'
-  })
+const execPromise = promisify(exec)
 
-  return apiKey.apiKey
+const orga = 'rcv-prod-toolkit'
+
+if (process.argv.includes('-plugins')) {
+  installPlugins()
 }
 
-const getServer = async (): Promise<string> => {
-  const server = await inquirer.prompt({
-    type: 'list',
-    name: 'server',
-    message: 'Enter your server',
-    default: 'EUW1',
-    choices: [
-      'BR1',
-      'EUN1',
-      'EUW1',
-      'JP1',
-      'KR',
-      'LA1',
-      'LA2',
-      'NA1',
-      'OC1',
-      'TR1',
-      'RU'
-    ]
-  })
-
-  return server.server
-}
-
-const getAuth = async (): Promise<boolean> => {
-  const auth = await inquirer.prompt({
-    type: 'confirm',
-    name: 'enabled',
-    message: 'Do you want to enabled the authentication?',
-    default: false
-  })
-
-  return auth.enabled
-}
-
-const getDatabaseInfo = async (): Promise<any> => {
-  const clusterUrl = await inquirer.prompt({
-    type: 'input',
-    name: 'clusterUrl',
-    message: 'Enter your Database cluster-url',
-    default: 'localhost'
-  })
-
-  const port = await inquirer.prompt({
-    type: 'number',
-    name: 'port',
-    message: 'Enter your Database port',
-    default: 27017
-  })
-
-  const user = await inquirer.prompt({
-    type: 'input',
-    name: 'user',
-    message: 'Enter your Database user',
-    default: 'root'
-  })
-
-  const password = await inquirer.prompt({
-    type: 'input',
-    name: 'password',
-    message: 'Enter your Database password',
-    default: '12345'
-  })
-
-  return {
-    clusterUrl: clusterUrl.clusterUrl,
-    port: port.port,
-    user: user.user,
-    password: password.password
-  }
-}
-
-const filePath = path.join(__dirname, '..', 'modules', 'plugin-config', 'config.dist.json')
-const newFilePath = path.join(__dirname, '..', 'modules', 'plugin-config', 'config.json')
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const file = require(filePath)
-
-const askQuestions = async (): Promise<void> => {
-  const apiKey = await getApiKey()
-  const server = await getServer()
-  const database = await getDatabaseInfo()
-  const auth = await getAuth()
-
-  file['plugin-webapi'].apiKey = apiKey
-  file['plugin-webapi'].server = server
-  file['plugin-database'] = database
-  file.auth = {
-    enabled: auth,
-    secreteKey: auth ? randomBytes(48).toString('hex') : ''
-  }
-
-  const spinner = createSpinner('Saving config')
-
+/**
+ * get all available plugins modules and themes for the prod tool
+ */
+export async function getAll (): Promise<Asset[]> {
+  let repos = []
   try {
-    await fs.promises.writeFile(newFilePath, JSON.stringify(file, null, 2))
-    spinner.success({
-      text: 'config saved'
+    const url = `https://api.github.com/orgs/${orga}/repos`
+    const req = await axios.get(url, {
+      auth: {
+        username: 'himyu',
+        password: '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'
+      }
     })
-  } catch (err) {
-    spinner.error({
-      text: err.message
+
+    if (req.status !== 200) return []
+
+    repos = req.data.filter((r: any) => r.name.startsWith('plugin') as boolean || r.name.startsWith('module') || r.name.startsWith('theme')) as any[]
+  } catch (e) {
+    console.log(e.data?.message)
+  }
+
+  const assets: Asset[] = []
+
+  for await (const repo of repos) {
+    const latest = await getLatest(repo.name)
+
+    if (latest === undefined || latest.assets === undefined) continue
+
+    const asset: Asset = {
+      name: repo.name,
+      version: latest.tag_name,
+      type: repo.name.split('-')[0],
+      download_url: latest.assets[0].browser_download_url
+    }
+    assets.push(asset)
+  }
+
+  return assets
+}
+
+async function getLatest (name: string): Promise<any> {
+  try {
+    const url = `https://api.github.com/repos/${orga}/${name}/releases/latest`
+    const req = await axios.get(url, {
+      auth: {
+        username: 'himyu',
+        password: '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'
+      }
+    })
+
+    if (req.status !== 200) return undefined
+    return req.data
+  } catch (e) {
+    console.log(e.data?.message, name)
+  }
+}
+
+/**
+ * downloads a single module plugin or theme
+ * @param asset to download
+ */
+export async function download (asset: Asset): Promise<void> {
+  const url = asset.download_url
+  const dl = await axios.get(url, {
+    responseType: 'stream'
+  })
+
+  const spinner = createSpinner(`downloading ${asset.name}`)
+  spinner.start()
+
+  if (dl.status !== 200) return
+  let cwd = path.join(__dirname, '..', 'modules', 'test')
+
+  if (asset.name.startsWith('theme')) {
+    cwd = path.join(cwd, 'plugin-themeing', 'themes')
+  }
+
+  const savePath = path.join(cwd, `${asset.name}.zip`)
+  const folderPath = path.join(cwd, asset.name)
+  dl.data.pipe(fs.createWriteStream(savePath))
+  dl.data.on('end', async () => {
+    spinner.update({
+      text: `unpacking ${asset.name}`
+    })
+    await unpack(savePath, folderPath)
+    spinner.update({ text: `installing dependency for ${asset.name}` })
+    await execPromise('npm i --production', { cwd: folderPath })
+    spinner.success()
+  })
+
+  async function unpack (filepath: string, path: string): Promise<void> {
+    return await new Promise((resolve) => {
+      fs.createReadStream(filepath)
+        .pipe(unzipper.Extract({ path, forceStream: true }))
+        .on('finish', async () => {
+          await execPromise(`rm ${filepath}`)
+          resolve()
+        })
     })
   }
 }
 
-// eslint-disable-next-line @typescript-eslint/no-floating-promises
-askQuestions()
+async function run (): Promise<void> {
+  const available = await getAll()
+
+  const install = available.filter(a => {
+    return process.argv.includes(a.name)
+  })
+
+  for (const asset of install) {
+    await download(asset)
+  }
+}
+
+async function installPlugins(): Promise<void> {
+  const available = (await getAll())
+
+  for (const asset of available) {
+    if (!asset.name.startsWith('plugin')) continue
+
+    await download(asset)
+  }
+}
