@@ -37,8 +37,7 @@ jobs:
             start.bat
             dist
             !dist/*.ts
-            !dist/build/update.js
-            !dist/build/update.js.map
+            !dist/build/*
 
   create-zip:
     name: "Create Zip File"
