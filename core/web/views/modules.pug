@@ -2,25 +2,58 @@ extends layout
 
 block layout-content
   h1 Modules
-  p Modules provide you the actual functionality. Currently, there are <strong>#{modules.length | 0}</strong> module(s) registered.
-  table.table
-    thead
-      tr
-        th Name
-        th Version
-        th Author
-        th Modes
-        th Plugin
-    tbody
-      each mod in modules
+  p Modules provide you the actual functionality.
+
+  h2 Installed Modules
+  p Currently, there are <strong>#{moduleCount}</strong> module(s) registered.
+
+  each key in Object.keys(installedModules)
+    h3= key
+    table.table
+      thead
         tr
-          td= mod.getName()
-          td= mod.getVersion()
-          td= mod.getAuthor()
-          td= mod.getConfig().modes.join(', ')
-          - pluginStatus = mod.hasPlugin() ? mod.getPlugin().status : 'UNAVAILABLE'
-          if pluginStatus === 'RUNNING'
-            td.table-success= pluginStatus
-          if pluginStatus === 'UNAVAILABLE'
-            td.table-danger= pluginStatus
-      
+          th Name
+          th Author
+          th Plugin
+          th Version
+          th Newest Version
+          th
+      tbody
+        each mod in installedModules[key]
+          tr
+            td.align-middle= mod.getName()
+            td.align-middle= mod.getAuthor()
+            - pluginStatus = mod.hasPlugin() ? mod.getPlugin().status : 'UNAVAILABLE'
+            if pluginStatus === 'RUNNING'
+              td.align-middle.table-success= pluginStatus
+            if pluginStatus === 'UNAVAILABLE'
+              td.align-middle.table-danger= pluginStatus
+            td.align-middle= "v" + mod.getVersion()
+            td.align-middle= mod.getNewestVersion()
+            if "v" + mod.getVersion() > mod.getNewestVersion() && mod.getNewestVersion() !== ''
+              td.align-middle
+                button.btn.btn-success(onclick="")= Update
+                  i.fa.fa-download
+            else
+              td.align-middle
+
+  h2.mt-5 Available Modules
+  p There are also <strong>#{availableModuleCount}</strong> module(s) available for installation.
+
+  each key in Object.keys(availableModules)
+    if availableModules[key].length > 0
+      h3= key
+      table.table
+        thead
+          tr
+            th Name
+            th Version
+            th
+        tbody
+          each mod in availableModules[key]
+            tr
+              td.align-middle= mod.name
+              td.align-middle= mod.version
+              td.align-middle
+                button.btn.btn-success(onclick="")= Install
+                  i.fa.fa-download
