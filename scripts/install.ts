@@ -7,11 +7,7 @@ import unzipper from 'unzipper'
 import { createSpinner } from 'nanospinner'
 import { Asset } from '../core/modules/Module'
 
-console.log(__dirname)
-
 const execPromise = promisify(exec)
-
-const orga = 'rcv-prod-toolkit'
 
 if (process.argv.includes('-plugins')) {
   installPlugins()
@@ -23,47 +19,19 @@ if (process.argv.includes('-plugins')) {
  * get all available plugins modules and themes for the prod tool
  */
 export async function getAll (): Promise<Asset[]> {
-  let repos = []
+  let assets: Asset[] = []
   try {
-    const url = `https://api.github.com/orgs/${orga}/repos`
+    const url = `https://sweet-pond-bc97.tatrix42.workers.dev/`
     const req = await axios.get(url)
 
     if (req.status !== 200) return []
 
-    repos = req.data.filter((r: any) => r.name.startsWith('plugin') as boolean || r.name.startsWith('module') || r.name.startsWith('theme')) as any[]
+    assets = req.data
   } catch (e) {
     console.log(e.data?.message)
   }
 
-  const assets: Asset[] = []
-
-  for await (const repo of repos) {
-    const latest = await getLatest(repo.name)
-
-    if (latest === undefined || latest.assets === undefined) continue
-
-    const asset: Asset = {
-      name: repo.name,
-      version: latest.tag_name,
-      type: repo.name.split('-')[0],
-      download_url: latest.assets[0].browser_download_url
-    }
-    assets.push(asset)
-  }
-
   return assets
-}
-
-async function getLatest (name: string): Promise<any> {
-  try {
-    const url = `https://api.github.com/repos/${orga}/${name}/releases/latest`
-    const req = await axios.get(url)
-
-    if (req.status !== 200) return undefined
-    return req.data
-  } catch (e) {
-    console.log(e.data?.message, name)
-  }
 }
 
 /**
