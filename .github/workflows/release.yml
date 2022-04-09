@@ -37,6 +37,7 @@ jobs:
             start.bat
             dist
             !dist/*.ts
+            !dist/build
             !dist/build/*
 
   create-zip:
