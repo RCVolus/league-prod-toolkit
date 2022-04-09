@@ -26,7 +26,7 @@ export async function getAll (): Promise<Asset[]> {
 
     if (req.status !== 200) return []
 
-    assets = req.data
+    assets = req.data.filter((a: any []) => a !== null)
   } catch (e) {
     console.log(e.data?.message)
   }
@@ -64,7 +64,9 @@ export async function download (asset: Asset): Promise<void> {
     await unpack(savePath, folderPath)
     spinner.update({ text: `installing dependency for ${asset.name}` })
     await execPromise('npm i --production', { cwd: folderPath })
-    spinner.success()
+    spinner.success({
+      text: `${asset.name} installed`
+    })
   })
 
   async function unpack (filepath: string, path: string): Promise<void> {
