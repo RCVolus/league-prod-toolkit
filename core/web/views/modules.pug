@@ -30,9 +30,9 @@ block layout-content
               td.align-middle.table-danger= pluginStatus
             td.align-middle= "v" + mod.getVersion()
             td.align-middle= mod.getNewestVersion()
-            if "v" + mod.getVersion() > mod.getNewestVersion() && mod.getNewestVersion() !== ''
+            if "v" + mod.getVersion() < mod.getNewestVersion() && mod.getNewestVersion() !== ''
               td.align-middle
-                button.btn.btn-success(onclick="")= Update
+                button.btn.btn-success(onclick=download(mod.asset))= Update
                   i.fa.fa-download
             else
               td.align-middle
@@ -55,5 +55,5 @@ block layout-content
               td.align-middle= mod.name
               td.align-middle= mod.version
               td.align-middle
-                button.btn.btn-success(onclick="")= Install
+                button.btn.btn-success(onclick=download(mod))= Install
                   i.fa.fa-download
