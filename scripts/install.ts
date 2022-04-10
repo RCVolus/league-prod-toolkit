@@ -56,16 +56,20 @@ export async function download (asset: Asset): Promise<void> {
 
   const savePath = path.join(cwd, `${asset.name}.zip`)
   const folderPath = path.join(cwd, asset.name)
-  dl.data.pipe(fs.createWriteStream(savePath))
-  dl.data.on('end', async () => {
-    spinner.update({
-      text: `unpacking ${asset.name}`
-    })
-    await unpack(savePath, folderPath)
-    spinner.update({ text: `installing dependency for ${asset.name}` })
-    await execPromise('npm i --production', { cwd: folderPath })
-    spinner.success({
-      text: `${asset.name} installed`
+
+  return await new Promise((resolve) => {
+    dl.data.pipe(fs.createWriteStream(savePath))
+    dl.data.on('end', async () => {
+      spinner.update({
+        text: `unpacking ${asset.name}`
+      })
+      await unpack(savePath, folderPath)
+      spinner.update({ text: `installing dependency for ${asset.name}` })
+      await execPromise('npm i --production', { cwd: folderPath })
+      spinner.success({
+        text: `${asset.name} installed`
+      })
+      resolve()
     })
   })
 
