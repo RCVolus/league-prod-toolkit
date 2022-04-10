@@ -28,8 +28,7 @@ export default (globalContext: any): Router => {
           Themes: moduleService.assets.filter(m => m.name.startsWith('theme')),
           Other: moduleService.assets.filter(m =>
             !m.name.startsWith('theme') && !m.name.includes('valo') && !m.name.includes('league') && !m.name.startsWith('plugin'))
-        },
-        download
+        }
       })
   })
   router.get('/api', (req, res) => {

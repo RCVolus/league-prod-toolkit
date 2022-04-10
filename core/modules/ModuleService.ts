@@ -6,7 +6,7 @@ import logging from '../logging'
 import Module, { Plugin, PluginStatus, Asset, PackageJson } from './Module'
 import ModuleType from './ModuleType'
 import { EventType } from '../eventbus/LPTE'
-import { getAll } from '../../scripts/install'
+import { download, getAll } from '../../scripts/install'
 
 const readdirPromise = fs.promises.readdir
 const statPromise = fs.promises.stat
@@ -44,6 +44,47 @@ export class ModuleService {
         })
         log.debug('All plugins ready.')
       }
+    })
+
+    LPTEService.on('lpt', 'update-plugin', async (e) => {
+      const active = this.activePlugins.find(a => a.module.getName() === e.name)
+
+      if (active?.module.asset !== undefined) {
+        await download(active.module.asset)
+        log.info(`plugin ${e.name as string} was updated`)
+        return LPTEService.emit({
+          meta: {
+            namespace: 'lpt',
+            type: 'plugin-updated',
+            version: 1
+          },
+          name: e.name
+        })
+      }
+
+      const asset = this.assets.find(a => a.name === e.name)
+
+      if (asset !== undefined) {
+        await download(asset)
+        log.info(`plugin ${e.name as string} was installed`)
+        return LPTEService.emit({
+          meta: {
+            namespace: 'lpt',
+            type: 'plugin-updated',
+            version: 1
+          },
+          name: e.name
+        })
+      }
+
+      return LPTEService.emit({
+        meta: {
+          namespace: 'lpt',
+          type: 'plugin updated failed',
+          version: 1
+        },
+        error: 'no plugin or asset could be found with that name'
+      })
     })
 
     const modulePath = this.getModulePath()
