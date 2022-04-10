@@ -199,7 +199,6 @@ function getApiKey (): string | null {
     return decoded.apiKey
   }
 
-  alert('there is no api key set')
   return null
 }
 
