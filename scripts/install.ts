@@ -78,7 +78,7 @@ export async function download (asset: Asset): Promise<void> {
       fs.createReadStream(filepath)
         .pipe(unzipper.Extract({ path, forceStream: true }))
         .on('finish', async () => {
-          await execPromise(`rm ${filepath}`)
+          await fs.promises.unlink(filepath)
           resolve()
         })
     })
