@@ -42,10 +42,9 @@ export async function runAuth (lpte: LPTEService, server: Express, wss: WebSocke
   log.info('=========================')
   log.info('Authentication is enabled')
 
-  const adminApiKey = uuidAPIKey.create()
-  allowedKeys.push(adminApiKey.apiKey)
+  allowedKeys.push(config['super-api-key'])
 
-  log.info(`Admin API key: ${adminApiKey.apiKey}`)
+  log.info(`Admin API key: ${config['super-api-key'] as string}`)
   log.info('=========================')
 
   wss.options.verifyClient = verifyWSClient
@@ -72,7 +71,7 @@ function verifyWSClient (
   return done(true)
 }
 
-function verifyEPClient (req: Request, res: Response, next: NextFunction) {
+function verifyEPClient (req: Request, res: Response, next: NextFunction): void {
   if (req.path.startsWith('/login')) return next()
 
   if (!verify(req.url, req.cookies)) {

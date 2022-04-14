@@ -5,6 +5,7 @@ import { createSpinner } from 'nanospinner'
 import { randomBytes } from 'crypto'
 import { download, getAll } from './install'
 import { Asset } from '../core/modules/Module'
+import uuidAPIKey from 'uuid-apikey'
 
 const getApiKey = async (): Promise<string> => {
   const apiKey = await inquirer.prompt({
@@ -197,7 +198,8 @@ const askQuestions = async (): Promise<void> => {
   file['plugin-database'] = database
   file.auth = {
     enabled: auth,
-    secreteKey: auth ? randomBytes(48).toString('hex') : ''
+    secreteKey: auth ? randomBytes(48).toString('hex') : '',
+    'super-api-key': auth ? uuidAPIKey.create().apiKey : ''
   }
 
   const spinner = createSpinner('Saving config')
