@@ -1,18 +1,6 @@
 extends layout
 
 block layout-content
-  script.
-    async function removeKey (_id) {
-      LPTE.emit({
-        meta: {
-          namespace: 'auth',
-          type: 'remove-key',
-          version: 1
-        },
-      })
-      _id
-    };
-
   h1 Api Keys
   p These keys are used to login into the Production Tool itself but also to connect other apps like the Observer Tools.
 
@@ -26,9 +14,52 @@ block layout-content
     tbody
       each key in keys
         tr
-          td.align-middle= key.key
+          td.align-middle= key.apiKey
           td.align-middle= key.description
-          td.align-middle= new Date(key.expiring)
+          td.align-middle= key.expiring === -1 ? 'never' : new Date(key.expiring).toDateString()
           td.align-middle
-            button.btn.btn-danger(onclick=`removeKey(${key._id})`)
-              i.fa.fa-delete
+            button.btn.btn-danger(onclick=`removeKey('${key._id}', '${key.apiKey}')`)
+              i.fa.fa-trash
+
+  form.mt-5#addKey
+    .d-flex(style='gap: 1rem; width: 100%;')
+      .form-group.flex-grow-1
+        label(for="description") Description
+        input.form-control(type="text" name="description" id="description" class="form-control" placeholder="Description" required)
+      .form-group.d-flex.flex-column
+        label(for="neverExpires") Never Expires
+        .form-check.m-auto
+          input.form-check-input.position-static(type="checkbox" id="neverExpires")
+      .form-group.flex-grow-1
+        label(for="expiring") Expiring
+        input.form-control(type="date" name="expiring" id="expiring" class="form-control")
+
+    button.btn.btn-success.btn-block(type="submit") Add key
+
+  script.
+    function removeKey (_id, apiKey) {
+      LPTE.emit({
+        meta: {
+          namespace: 'auth',
+          type: 'remove-key',
+          version: 1
+        },
+        _id,
+        apiKey
+      })
+    };
+
+    document.querySelector('#addKey').addEventListener('submit', (e) => {
+      e.preventDefault()
+      
+      LPTE.emit({
+        meta: {
+          namespace: 'auth',
+          type: 'add-key',
+          version: 1
+        },
+        description: e.target[0].value,
+        neverExpires: e.target[1].checked,
+        expiring: e.target[2].value,
+      })
+    })

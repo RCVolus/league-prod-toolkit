@@ -7,6 +7,7 @@ import events from './events'
 import api from './api'
 import pages from './pages'
 import serve from './serve'
+import keys from './keys'
 
 export default (globalContext: any): {
   [name: string]: Router
@@ -15,6 +16,7 @@ export default (globalContext: any): {
   '/modules': modules(globalContext),
   '/plugins': plugins(globalContext),
   '/events': events(globalContext),
+  '/keys': keys(globalContext),
   '/pages': pages(globalContext),
   '/api': api,
   '/serve': serve(globalContext)

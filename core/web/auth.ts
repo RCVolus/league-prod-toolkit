@@ -1,4 +1,4 @@
-import { LPTEService } from '../eventbus/LPTEService'
+import LPTEService from '../eventbus/LPTEService'
 import { IncomingMessage } from 'http'
 import WebSocket from 'ws'
 import uuidAPIKey from 'uuid-apikey'
@@ -14,8 +14,8 @@ const allowedKeys: Set<string> = new Set()
 
 let config: any
 
-export async function runAuth (lpte: LPTEService, server: Express, wss: WebSocket.Server): Promise<void> {
-  const configReq = await lpte.request({
+export async function runAuth (server: Express, wss: WebSocket.Server): Promise<void> {
+  const configReq = await LPTEService.request({
     meta: {
       type: 'request',
       namespace: 'config',
@@ -56,9 +56,65 @@ export async function runAuth (lpte: LPTEService, server: Express, wss: WebSocke
       version: '0.0.1'
     })
   })
-  server.post('/login', async (req, res) => await login(req, res, lpte))
+  server.post('/login', login)
   server.get('/logout', logout)
+
+  await getKeys()
 }
+
+async function getKeys (): Promise<void> {
+  const keys = await LPTEService.request({
+    meta: {
+      type: 'request',
+      namespace: 'database',
+      version: 1
+    },
+    collection: 'key'
+  })
+
+  if (keys === undefined || keys.data?.length <= 0) return
+  const cDate = new Date().getTime()
+
+  for (const key of keys.data) {
+    if (key.expiring !== -1 && key.expiring < cDate) continue
+
+    allowedKeys.add(key.apiKey)
+  }
+}
+
+LPTEService.on('auth', 'add-key', (e) => {
+  const { apiKey } = uuidAPIKey.create()
+
+  LPTEService.emit({
+    meta: {
+      namespace: 'database',
+      type: 'insertOne',
+      version: 1
+    },
+    collection: 'key',
+    data: {
+      apiKey: 'RCVPT-' + apiKey,
+      description: e.description,
+      expiring: e.neverExpires as boolean ? -1 : new Date(e.expiring).getTime()
+    }
+  })
+
+  allowedKeys.add('RCVPT-' + apiKey)
+})
+
+LPTEService.on('auth', 'remove-key', (e) => {
+  LPTEService.emit({
+    meta: {
+      namespace: 'database',
+      type: 'deleteOne',
+      version: 1
+    },
+    collection: 'key',
+    id: e._id
+  })
+
+  allowedKeys.delete(e.apiKey)
+})
 
 function verifyWSClient (
   info: { origin: string, secure: boolean, req: IncomingMessage },
@@ -89,7 +145,7 @@ function verify (url?: string, cookies?: any): boolean {
   if (queryString !== undefined) {
     const query = new URLSearchParams(queryString)
 
-    if (query.has('apikey') && uuidAPIKey.isAPIKey(query.get('apikey') as string) && allowedKeys.has(query.get('apikey') as string)) {
+    if (query.has('apikey') && allowedKeys.has(query.get('apikey') as string)) {
       return true
     }
   }
@@ -98,7 +154,7 @@ function verify (url?: string, cookies?: any): boolean {
     try {
       const key = jwt.verify(cookies.access_token, config.secreteKey) as jwt.JwtPayload
 
-      if (key.apiKey !== undefined && uuidAPIKey.isAPIKey(key.apiKey as string) && allowedKeys.has(key.apiKey as string)) {
+      if (key.apiKey !== undefined && allowedKeys.has(key.apiKey as string)) {
         return true
       }
 
@@ -112,7 +168,7 @@ function verify (url?: string, cookies?: any): boolean {
   return false
 }
 
-async function login (req: Request, res: Response, lpte: LPTEService): Promise<void> {
+async function login (req: Request, res: Response): Promise<void> {
   const { apiKey } = req.body
 
   if (apiKey === undefined) {
@@ -120,13 +176,13 @@ async function login (req: Request, res: Response, lpte: LPTEService): Promise<v
     return
   }
 
-  const key = await lpte.request({
+  const key = await LPTEService.request({
     meta: {
       type: 'request',
       namespace: 'database',
       version: 1
     },
-    collection: 'keys',
+    collection: 'key',
     filter: { apiKey }
   })
 
@@ -155,6 +211,7 @@ async function login (req: Request, res: Response, lpte: LPTEService): Promise<v
   const token = jwt.sign(cKey, config.secreteKey, {
     expiresIn: cKey.expiring !== -1 ? cKey.expiring - cTime : '1d'
   })
+  
   return res
     .clearCookie('auth_disabled')
     .cookie('access_token', token)
