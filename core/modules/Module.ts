@@ -28,14 +28,23 @@ export interface ToolkitConfig {
   needsBuild?: boolean
 }
 
+export interface Asset {
+  name: string
+  type: 'plugin' | 'module' | 'theme'
+  version: string
+  download_url: string
+}
+
 export default class Module {
   packageJson: PackageJson
   plugin: undefined | Plugin
   folder: string
+  asset?: Asset
 
-  constructor (packageJson: any, folder: string) {
+  constructor (packageJson: any, folder: string, asset?: Asset) {
     this.packageJson = packageJson
     this.folder = folder
+    this.asset = asset
   }
 
   public getName (): string {
@@ -44,6 +53,10 @@ export default class Module {
 
   public getVersion (): string {
     return this.packageJson.version
+  }
+
+  public getNewestVersion (): string {
+    return this.asset?.version ?? ''
   }
 
   public getAuthor (): string {
@@ -74,6 +87,7 @@ export default class Module {
     return {
       name: this.getName(),
       version: this.getVersion(),
+      newestVersion: this.getNewestVersion(),
       author: this.getAuthor(),
       folder: this.getFolder(),
       config: this.getConfig(),
@@ -96,7 +110,7 @@ export class PluginContext {
   progress: MultiBar
 
   constructor (plugin: Plugin) {
-    this.log = logger('plugin-' + plugin.getModule().getName())
+    this.log = logger(plugin.getModule().getName())
     this.require = (file: string) => require(path.join(plugin.getModule().getFolder(), file))
     this.LPTE = lpteService.forPlugin(plugin)
     this.plugin = plugin

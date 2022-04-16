@@ -24,15 +24,15 @@ Content-Type: application/json
 Sometimes a simple fire-and-forget event is not enough. In that case, a request may be submitted. The request will wait for an answer, and return that if found.
 If an event of the specified namespace and type is not catched in the timeout (ms), it will return 404 with an empty body instead.
 
-Example request that would fetch the game state from the state-league module:
+Example request that would fetch the game state from the module-league-state module:
 ```
-POST /api/events/request?namespace=state-league&type=state&timeout=1000
+POST /api/events/request?namespace=module-league-state&type=state&timeout=1000
 Content-Type: application/json
 
 
 {
     "meta": {
-        "namespace": "state-league",
+        "namespace": "module-league-state",
         "type": "request",
         "version": 1
     }

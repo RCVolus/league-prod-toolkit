@@ -6,7 +6,7 @@
 
 ## Features
 - Custom champion select overlay (implementation of our stand-alone tool [here](https://github.com/RCVolus/lol-pick-ban-ui))
-- Ingame overlay with animations for item purchases and level ups, and replacement for missing towers
+- Ingame overlay with animations for item purchases and level ups
 - Track matchups and automatically update ingame overlays and pause screens
 - Postgame stats (pick order, item builds, damage graphs, gold graph, and more)
 
@@ -48,7 +48,7 @@ npm run build:modules
 This will make sure that all modules are installed and built correctly. If you want to only run for a single module, have a look at the folder name of the module, and then run:
 
 ```
-npm run build:modules static-league
+npm run build:modules module-league-static
 ```
 
 ### Setting up git hooks
