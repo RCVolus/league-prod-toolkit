@@ -108,9 +108,9 @@ app.post('/upload', async (req, res) => {
 /**
  * Run server
  */
-export const runServer = (lpteService: LPTEService): void => {
+export const runServer = async (lpteService: LPTEService): Promise<void> => {
   // eslint-disable-next-line @typescript-eslint/no-floating-promises
-  runAuth(lpteService, app, wss)
+  await runAuth(lpteService, app, wss)
 
   /**
    * Routes
