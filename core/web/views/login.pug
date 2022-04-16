@@ -24,11 +24,8 @@ html
         
         img(src="/static/rcv.png" width="25%" class="mx-auto mb-5")
 
-        label( for="inputName" class="sr-only") Username
-        input(type="text" name="username" id="inputName" class="form-control mb-3" placeholder="Username" required autofocus)
-
-        label(for="inputPassword" class="sr-only") Password
-        input(type="password" name="password" id="inputPassword" class="form-control mb-5" placeholder="Password" required)
+        label(for="inputApiKey" class="sr-only") Api Key
+        input(type="password" name="apiKey" id="inputApiKey" class="form-control mb-5" placeholder="Api-Key" required)
 
         - var buttonClass=['btn', 'btn-lg', 'btn-primary', 'btn-block'];
         button(class=buttonClass type="submit") Sign in
