@@ -129,7 +129,7 @@ function verifyWSClient (
 
 function verifyEPClient (req: Request, res: Response, next: NextFunction): void {
   if (req.path.startsWith('/login')) return next()
-
+  if (req.path.endsWith('.js') || req.path.endsWith('.css') || req.path.endsWith('.png') || req.path.endsWith('.jpg') || req.path.endsWith('.svg')) return next()
   if (!verify(req.url, req.cookies)) {
     return res
       .status(403)
