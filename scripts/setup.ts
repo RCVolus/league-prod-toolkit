@@ -46,7 +46,7 @@ const getAuth = async (): Promise<boolean> => {
   const auth = await inquirer.prompt({
     type: 'confirm',
     name: 'enabled',
-    message: 'Do you want to enabled the authentication?',
+    message: 'Do you want to enable the authentication?',
     default: false
   })
 
@@ -91,7 +91,7 @@ const getModuleSelection = async (): Promise<Asset[]> => {
   })
 
   if (choices.assets.length <= 0) {
-    console.warn('! Please select at least on Asset')
+    console.warn('! Please select at least one Asset')
     return await getModuleSelection()
   }
 
@@ -113,7 +113,7 @@ const getGameSelection = async (): Promise<Asset[]> => {
   })
 
   if (choices.games.length <= 0) {
-    console.warn('! Please select at least on game')
+    console.warn('! Please select at least one game')
     return await getGameSelection()
   }
 

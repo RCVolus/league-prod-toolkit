@@ -92,7 +92,7 @@ export class ModuleService {
 
     this.assets = await this.getAssets()
 
-    // load dri and make sure plugins start loading first
+    // load dir and make sure plugins start loading first
     const data = (await readdirPromise(modulePath)).sort((a, b) => {
       if (a < b) return 1
       else if (a > b) return -1

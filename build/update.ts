@@ -55,7 +55,7 @@ async function choseModules (modules: Module[]): Promise<Module[]> {
   })
 
   if (choices.modules.length <= 0) {
-    console.warn('! Please select at least on module')
+    console.warn('! Please select at least one module')
     return await choseModules(modules)
   } else {
     return choices.modules
