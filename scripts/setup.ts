@@ -171,7 +171,7 @@ const getDatabaseInfo = async (): Promise<any> => {
     type: 'input',
     name: 'password',
     message: 'Enter your Database password',
-    default: '12345'
+    default: ''
   })
 
   return {
@@ -199,7 +199,7 @@ const askQuestions = async (): Promise<void> => {
   file.auth = {
     enabled: auth,
     secreteKey: auth ? randomBytes(48).toString('hex') : '',
-    'super-api-key': auth ? uuidAPIKey.create().apiKey : ''
+    'super-api-key': auth ? 'RCVPT-' + uuidAPIKey.create().apiKey : ''
   }
 
   const spinner = createSpinner('Saving config')
