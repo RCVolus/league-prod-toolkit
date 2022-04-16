@@ -10,7 +10,7 @@ import ModuleType from '../modules/ModuleType'
 
 const log = logging('auth')
 
-const allowedKeys: string[] = []
+const allowedKeys: Set<string> = new Set()
 
 let config: any
 
@@ -42,7 +42,7 @@ export async function runAuth (lpte: LPTEService, server: Express, wss: WebSocke
   log.info('=========================')
   log.info('Authentication is enabled')
 
-  allowedKeys.push(config['super-api-key'])
+  allowedKeys.add(config['super-api-key'])
 
   log.info(`Admin API key: ${config['super-api-key'] as string}`)
   log.info('=========================')
@@ -56,7 +56,7 @@ export async function runAuth (lpte: LPTEService, server: Express, wss: WebSocke
       version: '0.0.1'
     })
   })
-  server.post('/login', login)
+  server.post('/login', async (req, res) => await login(req, res, lpte))
   server.get('/logout', logout)
 }
 
@@ -89,15 +89,20 @@ function verify (url?: string, cookies?: any): boolean {
   if (queryString !== undefined) {
     const query = new URLSearchParams(queryString)
 
-    if (query.has('apikey') && allowedKeys.includes(query.get('apikey') as string)) {
+    if (query.has('apikey') && uuidAPIKey.isAPIKey(query.get('apikey') as string) && allowedKeys.has(query.get('apikey') as string)) {
       return true
     }
   }
 
   if (cookies?.access_token !== undefined) {
     try {
-      jwt.verify(cookies.access_token, config.secreteKey)
-      return true
+      const key = jwt.verify(cookies.access_token, config.secreteKey) as jwt.JwtPayload
+
+      if (key.apiKey !== undefined && uuidAPIKey.isAPIKey(key.apiKey as string) && allowedKeys.has(key.apiKey as string)) {
+        return true
+      }
+
+      return false
     } catch (e) {
       log.warn(e)
       return false
@@ -107,16 +112,50 @@ function verify (url?: string, cookies?: any): boolean {
   return false
 }
 
-function login (req: Request, res: Response): void {
-  const { apiKey } = uuidAPIKey.create()
-  allowedKeys.push(apiKey)
-  const user = {
-    username: 'rcv',
-    apiKey
+async function login (req: Request, res: Response, lpte: LPTEService): Promise<void> {
+  const { apiKey } = req.body
+
+  if (apiKey === undefined) {
+    res.send('key is missing in request').status(400)
+    return
   }
 
-  const token = jwt.sign(user, config.secreteKey)
-  res
+  const key = await lpte.request({
+    meta: {
+      type: 'request',
+      namespace: 'database',
+      version: 1
+    },
+    collection: 'keys',
+    filter: { apiKey }
+  })
+
+  if ((key?.data === undefined || key.data.length <= 0) && config['super-api-key'] !== apiKey) {
+    res.send('key does not exists').status(403)
+    return
+  }
+
+  const cKey = key?.data[0] ?? {
+    apiKey,
+    description: 'Super-Key',
+    expiring: -1
+  }
+  const cTime = new Date().getTime()
+
+  if (cKey.expiring < cTime && cKey.expiring !== -1) {
+    res.send('key is expired').status(403)
+    return
+  }
+
+  if (!allowedKeys.has(cKey.apiKey)) {
+    res.send('key is not allowed').status(403)
+    return
+  }
+
+  const token = jwt.sign(cKey, config.secreteKey, {
+    expiresIn: cKey.expiring !== -1 ? cKey.expiring - cTime : '1d'
+  })
+  return res
     .clearCookie('auth_disabled')
     .cookie('access_token', token)
     .status(200)
@@ -127,7 +166,7 @@ function logout (req: Request, res: Response): void {
   const decoded = jwt.decode(req.cookies.access_token)
 
   if (decoded !== null && typeof decoded !== 'string') {
-    allowedKeys.filter(k => k !== decoded.apiKey)
+    allowedKeys.delete(decoded.apiKey)
   }
 
   res
