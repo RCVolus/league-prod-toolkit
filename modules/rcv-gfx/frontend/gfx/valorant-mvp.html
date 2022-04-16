@@ -45,7 +45,7 @@
         LPTE.onready(async () => {
             const valorantStatic = await LPTE.request({
                 meta: {
-                    namespace: 'valorant-static',
+                    namespace: 'module-valorant-static',
                     type: 'request-constants',
                     version: 1
                 }
@@ -53,7 +53,7 @@
 
             const valorantPregameData = await LPTE.request({
                 meta: {
-                    namespace: 'valorant-state',
+                    namespace: 'module-valorant-state',
                     type: 'request',
                     version: 1
                 }

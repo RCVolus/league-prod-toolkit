@@ -181,7 +181,8 @@ class LPTEService implements LPTE {
 const apiKey = getApiKey()
 const wsUrl = `ws${location.origin.startsWith('https://') ? 's' : ''}://${location.host}/eventbus`
 const backend = apiKey !== null ? `${wsUrl}?apikey=${apiKey}` : wsUrl;
-(window as any).LPTE = new LPTEService(backend)
+(window as any).LPTE = new LPTEService(backend);
+(window as any).apiKey = apiKey
 
 function getApiKey (): string | null {
   if (getCookie('auth_disabled') === 'true') {

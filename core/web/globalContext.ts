@@ -33,6 +33,12 @@ lpte.on('ui', 'add-pages', e => {
       sender: e.meta.sender
     })
   })
+
+  context.module_pages.sort((a, b) => {
+    if (a.name > b.name) return 1
+    else if (a.name < b.name) return -1
+    return 0
+  })
 })
 
 lpte.on('ui', 'add-serves', e => {

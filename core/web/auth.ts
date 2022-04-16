@@ -18,7 +18,7 @@ export async function runAuth (server: Express, wss: WebSocket.Server): Promise<
   const configReq = await LPTEService.request({
     meta: {
       type: 'request',
-      namespace: 'config',
+      namespace: 'plugin-config',
       version: 1,
       sender: {
         name: 'auth',
@@ -66,7 +66,7 @@ async function getKeys (): Promise<void> {
   const keys = await LPTEService.request({
     meta: {
       type: 'request',
-      namespace: 'database',
+      namespace: 'plugin-database',
       version: 1
     },
     collection: 'key'
@@ -87,7 +87,7 @@ LPTEService.on('auth', 'add-key', (e) => {
 
   LPTEService.emit({
     meta: {
-      namespace: 'database',
+      namespace: 'plugin-database',
       type: 'insertOne',
       version: 1
     },
@@ -105,7 +105,7 @@ LPTEService.on('auth', 'add-key', (e) => {
 LPTEService.on('auth', 'remove-key', (e) => {
   LPTEService.emit({
     meta: {
-      namespace: 'database',
+      namespace: 'plugin-database',
       type: 'deleteOne',
       version: 1
     },
@@ -179,7 +179,7 @@ async function login (req: Request, res: Response): Promise<void> {
   const key = await LPTEService.request({
     meta: {
       type: 'request',
-      namespace: 'database',
+      namespace: 'plugin-database',
       version: 1
     },
     collection: 'key',

@@ -9,7 +9,7 @@ export default (globalContext: any): Router => {
     const res = await lpteService.request({
       meta: {
         type: 'request',
-        namespace: 'database',
+        namespace: 'plugin-database',
         version: 1
       },
       collection: 'key',

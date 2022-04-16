@@ -22,7 +22,7 @@
       window.LPTE.onready(async () => {
           const valorantStatic = await LPTE.request({
               meta: {
-                  namespace: 'valorant-static',
+                  namespace: 'module-valorant-static',
                   type: 'request-constants',
                   version: 1
               }
@@ -32,7 +32,7 @@
 
           const activeTeamData = await LPTE.request({
               meta: {
-                  namespace: 'rcv-teams',
+                  namespace: 'module-teams',
                   type: 'request-current',
                   version: 1
               }
@@ -74,7 +74,7 @@
 
           updateTeams(activeTeamData);
 
-          window.LPTE.on('rcv-teams', 'update', teamData => updateTeams(teamData));
+          window.LPTE.on('module-teams', 'update', teamData => updateTeams(teamData));
       })
   </script>
 </body>
