@@ -1,14 +1,14 @@
-# Themeing GFX
-This guide should tackle how themeing should be handled in GFX elements.
+# Theming GFX
+This guide should tackle how theming should be handled in GFX elements.
 
-It is required to allow for different themeing of graphical visualisations, in order to suit each different theme and topic of the broadcast.
+It is required to allow for different theming of graphical visualisations, in order to suit each different theme and topic of the broadcast.
 
-## Themeing of components
+## Theming of components
 Usually, all GFX elements are in the form of a web resource, that can be rendered by any web browser (especially the OBS/vMix integrated ones). Usually, they are consisting of HTML, JavaScript and CSS files.
 All of those files are provided by the GFX provider per default. They may just represent a graphical visualisation that the maintainer of the GFX provider likes and that could be more or less fitting in a lot of scenarios.
 
-## Global themeing overwrite
-Usually you would want to set up one single theme that will then be used all across various GFX elements. This is where the global themeing overwrite comes into play. It allows you to specify one single CSS file, in which you can
+## Global theming overwrite
+Usually you would want to set up one single theme that will then be used all across various GFX elements. This is where the global theming overwrite comes into play. It allows you to specify one single CSS file, in which you can
 overwrite all the styling information from the CSS file that is provided by the component, and adapt the looks to the specific needs.
 
 ## For GFX providers
