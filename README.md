@@ -29,8 +29,14 @@ Legend:
 - Grey - Prod-toolkit interfaces
 
 ## Developing
-
 This section contains information about how to locally run and extend the toolkit.
+
+### Fetch submodules
+To fetch all submodules (to fetch the modules), execute the following:
+
+```
+git submodule update --init --recursive
+```
 
 ### Building modules
 To make sure all the modules are correctly built and installed, use the following command:
@@ -42,7 +48,7 @@ npm run build:modules
 This will make sure that all modules are installed and built correctly. If you want to only run for a single module, have a look at the folder name of the module, and then run:
 
 ```
-npm run build:modules static-league
+npm run build:modules module-league-static
 ```
 
 ### Setting up git hooks

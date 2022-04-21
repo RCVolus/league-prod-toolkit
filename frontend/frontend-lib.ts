@@ -1,4 +1,5 @@
 import { EventType, LPTE, LPTEvent, Registration } from '../core/eventbus/LPTE'
+import decode from 'jwt-decode'
 
 // Setup toasts
 if ((window as any).toastr !== undefined) {
@@ -177,7 +178,48 @@ class LPTEService implements LPTE {
   }
 }
 
-(window as any).LPTE = new LPTEService(`ws${location.origin.startsWith('https://') ? 's' : ''}://${location.host}/eventbus`)
+const apiKey = getApiKey()
+const wsUrl = `ws${location.origin.startsWith('https://') ? 's' : ''}://${location.host}/eventbus`
+const backend = apiKey !== null ? `${wsUrl}?apikey=${apiKey}` : wsUrl;
+(window as any).LPTE = new LPTEService(backend);
+(window as any).apiKey = apiKey
+
+function getApiKey (): string | null {
+  if (getCookie('auth_disabled') === 'true') {
+    return null
+  }
+
+  const queryKey = new URLSearchParams(window.location.search).get('apikey')
+
+  if (queryKey !== null) return queryKey
+
+  const cookieKey = getCookie('access_token')
+
+  if (cookieKey !== '') {
+    const decoded = decode<any>(cookieKey)
+    return decoded.apiKey
+  }
+
+  return null
+}
+
+function getCookie (cname: string): string {
+  const name = `${cname}=`
+  const decodedCookie = decodeURIComponent(document.cookie)
+  const ca = decodedCookie.split(';')
+
+  for (let i = 0; i < ca.length; i++) {
+    let c = ca[i]
+    while (c.charAt(0) === ' ') {
+      c = c.substring(1)
+    }
+    if (c.indexOf(name) === 0) {
+      return c.substring(name.length, c.length)
+    }
+  }
+
+  return ''
+}
 
 /* const postJson = (url, request) => {
   var headers = new Headers()

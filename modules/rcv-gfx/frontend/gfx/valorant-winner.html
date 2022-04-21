@@ -8,7 +8,7 @@
     <script src="/static/main-bundle.js"></script>
     <link rel="stylesheet" href="/pages/rcv-gfx/gfx/valorant-winner.css">
     <link rel="stylesheet" href="https://use.typekit.net/anc5qxp.css">
-    <link rel="stylesheet" href="/pages/op-themeing/active/index.css">
+    <link rel="stylesheet" href="/pages/op-plugin-theming/active/index.css">
 </head>
 <body class="rcv-gfx-valorant-winner">
     <!-- <img src="/pages/rcv-gfx/gfx/valorant-winner.png" class="background"> -->
@@ -121,7 +121,7 @@
       LPTE.onready(async () => {
           const valorantStatic = await LPTE.request({
               meta: {
-                  namespace: 'valorant-static',
+                  namespace: 'module-valorant-static',
                   type: 'request-constants',
                   version: 1
               }
@@ -129,7 +129,7 @@
 
           const activeTeamData = await LPTE.request({
               meta: {
-                  namespace: 'rcv-teams',
+                  namespace: 'module-teams',
                   type: 'request-current',
                   version: 1
               }
@@ -141,7 +141,7 @@
 
               const valorantPregameData = await LPTE.request({
                   meta: {
-                      namespace: 'valorant-state',
+                      namespace: 'module-valorant-state',
                       type: 'request',
                       version: 1
                   }
@@ -181,7 +181,7 @@
 
           await updateTeams(activeTeamData);
 
-          LPTE.on('rcv-teams', 'update', teamData => updateTeams(teamData));
+          LPTE.on('module-teams', 'update', teamData => updateTeams(teamData));
       })
 
       const isOverflown = ({ clientWidth, scrollWidth }) => scrollWidth > clientWidth

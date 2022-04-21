@@ -8,7 +8,7 @@
   <script src="/static/main-bundle.js"></script>
   <link rel="stylesheet" href="/pages/rcv-gfx/gfx/valorant-ingame.css">
   <link rel="stylesheet" href="https://use.typekit.net/anc5qxp.css">
-  <link rel="stylesheet" href="/pages/op-themeing/active/index.css">
+  <link rel="stylesheet" href="/pages/op-plugin-theming/active/index.css">
 </head>
 <body class="rcv-gfx-valorant-ingame">
     <img src="/pages/rcv-gfx/gfx/valorant-ingame.png" class="background">
@@ -22,7 +22,7 @@
       window.LPTE.onready(async () => {
           const valorantStatic = await LPTE.request({
               meta: {
-                  namespace: 'valorant-static',
+                  namespace: 'module-valorant-static',
                   type: 'request-constants',
                   version: 1
               }
@@ -32,7 +32,7 @@
 
           const activeTeamData = await LPTE.request({
               meta: {
-                  namespace: 'rcv-teams',
+                  namespace: 'module-teams',
                   type: 'request-current',
                   version: 1
               }
@@ -74,7 +74,7 @@
 
           updateTeams(activeTeamData);
 
-          window.LPTE.on('rcv-teams', 'update', teamData => updateTeams(teamData));
+          window.LPTE.on('module-teams', 'update', teamData => updateTeams(teamData));
       })
   </script>
 </body>

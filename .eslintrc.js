@@ -5,6 +5,6 @@ module.exports = {
   },
   ignorePatterns: ['*.pug'],
   rules: {
-    "@typescript-eslint/no-misused-promises": "off"
+    '@typescript-eslint/no-misused-promises': 'off'
   }
 }

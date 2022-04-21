@@ -1,26 +1,10 @@
 @echo off
 
-rem Define a default value for apikey.
-set "apikey=RGAPI-SECRETKE"
+powershell -Command "& {npm i --production}"
 
-rem Ask user of batch file for the apikey.
-set /P "apikey=Enter your Riot-API-Key (%apikey%): "
+powershell -Command "& {node ./dist/scripts/install.js -plugins theme-default}"
 
-rem Define a default value for region.
-set "region=EUROPE"
-
-rem Ask user of batch file for the region.
-set /P "region=Enter your region (%region%): "
-
-rem Define a default value for server.
-set "server=EUW1"
-
-rem Ask user of batch file for the server.
-set /P "server=Enter your server (%server%): "
-
-powershell -Command "& {node ./scripts/install.js -- %apikey% %region% %server%}"
-
-powershell -Command "& {npm ci; npm run build:modules}"
+powershell -Command "& {node ./dist/scripts/setup.js}"
 
 echo Installation complete! You can now start the Tool by just executing the 'start.bat'
 pause

@@ -1,0 +1,67 @@
+[submodule "modules/plugin-config"]
+	path = modules/plugin-config
+	url = https://github.com/rcv-prod-toolkit/plugin-config.git
+	branch = main
+[submodule "modules/plugin-database"]
+	path = modules/plugin-database
+	url = https://github.com/rcv-prod-toolkit/plugin-database.git
+	branch = main
+[submodule "modules/plugin-prod-clock"]
+	path = modules/plugin-prod-clock
+	url = https://github.com/rcv-prod-toolkit/plugin-prod-clock.git
+	branch = main
+[submodule "modules/plugin-themeing"]
+	path = modules/plugin-themeing
+	url = https://github.com/rcv-prod-toolkit/plugin-themeing.git
+	branch = main
+[submodule "modules/plugin-webapi"]
+	path = modules/plugin-webapi
+	url = https://github.com/rcv-prod-toolkit/plugin-webapi.git
+	branch = main
+[submodule "modules/module-teams"]
+	path = modules/module-teams
+	url = https://github.com/rcv-prod-toolkit/module-teams.git
+	branch = main
+[submodule "modules/module-caster"]
+	path = modules/module-caster
+	url = https://github.com/rcv-prod-toolkit/module-caster.git
+	branch = main
+[submodule "modules/module-tournament-tree"]
+	path = modules/module-tournament-tree
+	url = https://github.com/rcv-prod-toolkit/module-tournament-tree.git
+	branch = main
+[submodule "modules/module-league-state"]
+	path = modules/module-league-state
+	url = https://github.com/rcv-prod-toolkit/module-league-state.git
+	branch = main
+[submodule "modules/module-league-static"]
+	path = modules/module-league-static
+	url = https://github.com/rcv-prod-toolkit/module-league-static.git
+	branch = main
+[submodule "modules/module-valorant-static"]
+	path = modules/module-valorant-static
+	url = https://github.com/rcv-prod-toolkit/module-valorant-static.git
+	branch = main
+[submodule "modules/module-valorant-state"]
+	path = modules/module-valorant-state
+	url = https://github.com/rcv-prod-toolkit/module-valorant-state.git
+	branch = main
+[submodule "modules/module-valorant-pregame"]
+	path = modules/module-valorant-pregame
+	url = https://github.com/rcv-prod-toolkit/module-valorant-pregame.git
+	branch = main
+[submodule "modules/module-league-champselect-ui"]
+	path = modules/module-league-champselect-ui
+	url = https://github.com/rcv-prod-toolkit/module-league-champselect-ui.git
+	branch = main
+[submodule "modules/module-league-end-of-game"]
+	path = modules/module-league-end-of-game
+	url = https://github.com/rcv-prod-toolkit/module-league-end-of-game.git
+	branch = main
+[submodule "modules/module-league-in-game"]
+	path = modules/module-league-in-game
+	url = https://github.com/rcv-prod-toolkit/module-league-in-game.git
+	branch = main
+[submodule "modules/module-league-runes"]
+	path = modules/module-league-runes
+	url = https://github.com/rcv-prod-toolkit/module-league-runes.git

@@ -33,6 +33,14 @@ lpte.on('ui', 'add-pages', e => {
       sender: e.meta.sender
     })
   })
+
+  context.module_pages.sort((a, b) => {
+    if ((!a.name.startsWith('LoL') && !a.name.startsWith('Valo')) && (b.name.startsWith('LoL') || b.name.startsWith('Valo'))) return -1
+    if ((a.name.startsWith('LoL') || a.name.startsWith('Valo')) && (!b.name.startsWith('LoL') && !b.name.startsWith('Valo'))) return 1
+    else if (a.name > b.name) return 1
+    else if (a.name < b.name) return -1
+    return 0
+  })
 })
 
 lpte.on('ui', 'add-serves', e => {

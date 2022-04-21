@@ -35,38 +35,14 @@ jobs:
             package-lock.json
             install.bat
             start.bat
-            scripts
             dist
-
-  get-config-plugin:
-    name: "Get Config Plugin"
-    runs-on: "ubuntu-latest"
-
-    steps:
-      - name: "Get Config Plugins"
-        uses: dsaltares/fetch-gh-release-asset@master
-        with:
-          repo: "rcv-prod-toolkit/plugin-config"
-          file: "plugin-config.zip"
-          target: "plugin-config.zip"
-          token: ${{ secrets.GITHUB_TOKEN }}
-
-      - run: mkdir plugin-config
-
-      - name: Unzip and remove zip
-        run: |
-          unzip plugin-config.zip -d plugin-config/
-
-      - name: Upload Module
-        uses: actions/upload-artifact@v2
-        with:
-          name: plugin-config
-          path: plugin-config
-
+            !dist/*.ts
+            !dist/build
+            !dist/build/*
 
   create-zip:
     name: "Create Zip File"
-    needs: [build, get-config-plugin]
+    needs: [build]
     runs-on: "ubuntu-latest"
 
     steps:
@@ -76,12 +52,6 @@ jobs:
           name: build
 
       - run: mkdir modules
-
-      - name: Download plugin-config
-        uses: actions/download-artifact@v2
-        with:
-          name: plugin-config
-          path: modules/plugin-config/
 
       - name: Create Zip
         run: zip -r prod-toolkit.zip LICENSE README.md package.json package-lock.json install.bat start.bat scripts/* dist/* modules/*

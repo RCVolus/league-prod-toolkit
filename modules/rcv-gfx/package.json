@@ -1,6 +1,6 @@
 {
   "name": "rcv-gfx",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Module that provides various GFX elements",
   "author": "RCVolus",
   "license": "MIT",
@@ -13,10 +13,8 @@
     },
     "needsBuild": true
   },
-  "dependencies": {
-    "league-prod-toolkit": "file:../.."
-  },
   "devDependencies": {
+    "@rcv-prod-toolkit/types": "github:rcv-prod-toolkit/types",
     "typescript": "^4.3.2"
   },
   "scripts": {
