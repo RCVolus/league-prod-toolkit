@@ -57,7 +57,7 @@ export async function download (asset: Asset): Promise<void> {
   let cwd = path.join(__dirname, '..', '..', 'modules')
 
   if (asset.name.startsWith('theme')) {
-    cwd = path.join(cwd, 'plugin-theming', 'themes')
+    cwd = path.join(cwd, 'plugin-themeing', 'themes')
   }
 
   const savePath = path.join(cwd, `${asset.name}.zip`)
