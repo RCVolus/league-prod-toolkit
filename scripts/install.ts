@@ -51,7 +51,7 @@ export async function download (asset: Asset): Promise<void> {
   })
 
   if (dl.status !== 200) {
-    spinner.error(dl.statusText)
+    spinner.error({ text: dl.statusText})
     return
   }
   let cwd = path.join(__dirname, '..', '..', 'modules')
