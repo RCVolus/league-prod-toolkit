@@ -42,15 +42,18 @@ export async function getAll (): Promise<Asset[]> {
  * @param asset to download
  */
 export async function download (asset: Asset): Promise<void> {
+  const spinner = createSpinner(`downloading ${asset.name}`)
+  spinner.start()
+
   const url = asset.download_url
   const dl = await axios.get(url, {
     responseType: 'stream'
   })
 
-  const spinner = createSpinner(`downloading ${asset.name}`)
-  spinner.start()
-
-  if (dl.status !== 200) return
+  if (dl.status !== 200) {
+    spinner.error(dl.statusText)
+    return
+  }
   let cwd = path.join(__dirname, '..', '..', 'modules')
 
   if (asset.name.startsWith('theme')) {
