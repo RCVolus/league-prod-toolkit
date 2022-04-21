@@ -67,8 +67,12 @@ export async function download (asset: Asset): Promise<void> {
         text: `unpacking ${asset.name}`
       })
       await unpack(savePath, folderPath)
-      spinner.update({ text: `installing dependency for ${asset.name}` })
-      await execPromise('npm i --production', { cwd: folderPath })
+
+      if (!asset.name.startsWith('theme')) {
+        spinner.update({ text: `installing dependency for ${asset.name}` })
+        await execPromise('npm i --production', { cwd: folderPath })
+      }
+
       spinner.success({
         text: `${asset.name} installed`
       })
