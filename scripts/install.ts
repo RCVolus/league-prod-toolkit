@@ -10,7 +10,10 @@ import { Asset } from '../core/modules/Module'
 const execPromise = promisify(exec)
 
 if (process.argv.includes('-plugins')) {
-  installPlugins()
+  (async () => {
+    await installPlugins()
+    await run()
+  })()
 } else if (process.argv.includes('-install')) {
   run()
 }
