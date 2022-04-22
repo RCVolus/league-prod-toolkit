@@ -1,21 +1,25 @@
-# league-prod-toolkit
-
-## What's the state of this?
-**While we are still working on this, most features are functional.**
-- Some features do not work on Tournament Realm, the prod-toolkit has only been tested on live (EUW)
-
-## Features
+# Features
 - Custom champion select overlay (implementation of our stand-alone tool [here](https://github.com/RCVolus/lol-pick-ban-ui))
 - Ingame overlay with animations for item purchases and level ups
 - Track matchups and automatically update ingame overlays and pause screens
 - Postgame stats (pick order, item builds, damage graphs, gold graph, and more)
 
-## Requirements
+## Requirements & Limitations
 - Champion Select / ingame overlays require our [Observer Tool](https://github.com/RCVolus/league-observer-tool) to send game data
 - Some features require a Riot API Key
+- Some features do not work on Tournament Realm
 
-## Installation & Docs
-**[Head over to the Wiki](https://github.com/RCVolus/league-prod-toolkit/wiki)**
+# Installation & Docs
+- [Installation Guide](https://github.com/RCVolus/league-prod-toolkit/wiki/1.-Installation)
+- [User Guide](https://github.com/RCVolus/league-prod-toolkit/wiki/2.-Using-Prod-Toolkit)
+- [Customisation Guide](https://github.com/RCVolus/league-prod-toolkit/wiki/3.-Customisation)
+
+# Troubleshooting & Help
+Some common issues are listed in the [Wiki](https://github.com/RCVolus/league-prod-toolkit/wiki/FAQ).
+
+If your problem is not listed in the Wiki, please check if there are any [open issues](https://github.com/RCVolus/league-prod-toolkit/issues). If not, open a [new issue](https://github.com/RCVolus/league-prod-toolkit/issues/new/choose) and include any error messages you see and steps to reproduce the problem.
+
+# About Prod Toolkit
 
 ## Architecture/Sample setup
 This shows the prod toolkit running on a dedicated server, with observer PCs sending data and overlays integrated into OBS/vMix with a browser source.
