@@ -27,6 +27,7 @@ export interface LPTEvent {
   meta: LPTEventMeta
 
   [name: string]: any
+  replay?: (data: {[name: string]: any}) => void
 }
 
 export interface LPTE {
