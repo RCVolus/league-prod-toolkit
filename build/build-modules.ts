@@ -39,7 +39,7 @@ const main = async (): Promise<void> => {
 
       if (pkgJson.dependencies !== undefined || pkgJson.devDependencies !== undefined) {
         // run install
-        await execPromise('npm i', {
+        await execPromise('npm ci', {
           cwd: currentModulePath
         })
 
