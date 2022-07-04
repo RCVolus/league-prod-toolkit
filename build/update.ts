@@ -120,6 +120,7 @@ async function updateVersion (modules: Module[]): Promise<void> {
 
   for await (const module of modules) {
     const modulePath = module[0]
+    console.log(`${module[1]}:`)
 
     try {
       const tag = await execPromise(`npm version ${version}`, {
@@ -140,6 +141,7 @@ async function updateVersion (modules: Module[]): Promise<void> {
 async function pushChanges (modules: Module[]): Promise<void> {
   for await (const module of modules) {
     const modulePath = module[0]
+    console.log(`${module[1]}:`)
 
     try {
       const push = await execPromise('git push', {
@@ -155,6 +157,7 @@ async function pushChanges (modules: Module[]): Promise<void> {
 async function pullChanges (modules: Module[]): Promise<void> {
   for await (const module of modules) {
     const modulePath = module[0]
+    console.log(`${module[1]}:`)
 
     try {
       const pull = await execPromise('git pull', {
@@ -170,6 +173,7 @@ async function pullChanges (modules: Module[]): Promise<void> {
 async function updateNpm (modules: Module[]): Promise<void> {
   for await (const module of modules) {
     const modulePath = module[0]
+    console.log(`${module[1]}:`)
 
     try {
       const pull = await execPromise('npm update', {
@@ -198,6 +202,7 @@ async function commitChanges (modules: Module[]): Promise<void> {
 
   for await (const module of modules) {
     const modulePath = module[0]
+    console.log(`${module[1]}:`)
 
     try {
       const add = await execPromise('git add .', {
@@ -230,6 +235,7 @@ async function customCommand (modules: Module[]): Promise<void> {
 
   for await (const module of modules) {
     const modulePath = module[0]
+    console.log(`${module[1]}:`)
 
     try {
       const cmd = await execPromise(commitMessage, {
