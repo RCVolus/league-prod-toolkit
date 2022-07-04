@@ -44,9 +44,20 @@ export class LPTEService implements LPTE {
   }
 
   async request (event: LPTEvent, timeout = 5000): Promise<LPTEvent | undefined> {
-    const reply = `${event.meta.type}-${uniqid()}`
+    const reply = event.meta.reply ?? `${event.meta.type}-${uniqid()}`
     event.meta.reply = reply
     event.meta.channelType = EventType.REQUEST
+
+    event.replay = (data) => {
+      this.emit({
+        meta: {
+          type: reply,
+          namespace: 'reply',
+          version: 1
+        },
+        ...data
+      })
+    }
 
     this.emit(event)
 
