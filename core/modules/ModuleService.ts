@@ -52,6 +52,8 @@ export class ModuleService {
       if (active?.module.asset !== undefined) {
         await download(active.module.asset)
         log.info(`plugin ${e.name as string} was updated`)
+
+        
         return LPTEService.emit({
           meta: {
             namespace: 'lpt',
@@ -70,7 +72,7 @@ export class ModuleService {
         return LPTEService.emit({
           meta: {
             namespace: 'lpt',
-            type: 'plugin-updated',
+            type: 'plugin-installed',
             version: 1
           },
           name: e.name
