@@ -145,7 +145,7 @@ const getGameSelection = async (): Promise<Asset[]> => {
   return selection
 }
 
-const getDatabaseInfo = async (): Promise<any> => {
+/* const getDatabaseInfo = async (): Promise<any> => {
   const clusterUrl = await inquirer.prompt({
     type: 'input',
     name: 'clusterUrl',
@@ -180,7 +180,7 @@ const getDatabaseInfo = async (): Promise<any> => {
     user: user.user,
     password: password.password
   }
-}
+} */
 
 const filePath = path.join(__dirname, '..', '..', 'modules', 'plugin-config', 'config.dist.json')
 const newFilePath = path.join(__dirname, '..', '..', 'modules', 'plugin-config', 'config.json')
@@ -190,12 +190,12 @@ const file = require(filePath)
 const askQuestions = async (): Promise<void> => {
   const apiKey = await getApiKey()
   const server = await getServer()
-  const database = await getDatabaseInfo()
+  /* const database = await getDatabaseInfo() */
   const auth = await getAuth()
 
   file['plugin-webapi'].apiKey = apiKey
   file['plugin-webapi'].server = server
-  file['plugin-database'] = database
+  /* file['plugin-database'] = database */
   file.auth = {
     enabled: auth,
     secreteKey: auth ? randomBytes(48).toString('hex') : '',
