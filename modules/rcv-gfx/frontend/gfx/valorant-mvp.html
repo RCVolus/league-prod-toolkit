@@ -61,7 +61,7 @@
 
             function updateMVP (mvp) {
                 document.querySelector('#name').innerText = mvp.gameName
-                document.querySelector('#agent').src = `/serve/valorant-static/agent-drawing/${mvp.characterId}.png`
+                document.querySelector('#agent').src = `/serve/module-valorant-static/agent-drawing/${mvp.characterId}.png`
 
                 const stats = mvp.stats
                 const kd = stats.deaths > 0 ? stats.kills / stats.deaths : stats.kills

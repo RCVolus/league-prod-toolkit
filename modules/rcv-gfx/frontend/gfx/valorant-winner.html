@@ -151,7 +151,7 @@
               if (!state._available) return
 
               const map = valorantStatic.constants.mapData.find(map => map.mapUrl === state.matchInfo.mapId)
-              document.querySelector('#map').src = `/serve/valorant-static/map-splash/${map.uuid}.png`
+              document.querySelector('#map').src = `/serve/module-valorant-static/map-splash/${map.uuid}.png`
               document.querySelector('#map-name').innerText = map.displayName
               
               const winningTeam = state.teams.find(team => team.won)
@@ -168,7 +168,7 @@
               teamPlayers.forEach((player, index) => {
                   const number = index + 1;
 
-                  document.getElementById(`agent-${number}`).src = `/serve/valorant-static/agent-drawing/${player.characterId}.png`
+                  document.getElementById(`agent-${number}`).src = `/serve/module-valorant-static/agent-drawing/${player.characterId}.png`
                   document.getElementById(`name-${number}`).innerText = player.gameName;
 
                   const stats = player.stats
