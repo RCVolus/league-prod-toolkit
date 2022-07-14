@@ -110,7 +110,7 @@ LPTEService.on('auth', 'remove-key', (e) => {
       version: 1
     },
     collection: 'key',
-    id: e._id
+    id: e.id
   })
 
   allowedKeys.delete(e.apiKey)
