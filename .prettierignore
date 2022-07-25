@@ -1,0 +1,6 @@
+*.json
+*.img
+*.png
+*.jpg
+**/build/*
+**/dist/*
