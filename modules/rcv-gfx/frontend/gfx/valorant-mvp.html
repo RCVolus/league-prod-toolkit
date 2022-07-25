@@ -1,80 +1,82 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Valorant MVP.gfx</title>
     <script src="/static/main-bundle.js"></script>
-    <link rel="stylesheet" href="/pages/rcv-gfx/gfx/valorant-mvp.css">
-    <link rel="stylesheet" href="https://use.typekit.net/anc5qxp.css">
-    <link rel="stylesheet" href="/pages/op-plugin-theming/active/index.css">
-</head>
-<body class="rcv-gfx-valorant-winner">
+    <link rel="stylesheet" href="/pages/rcv-gfx/gfx/valorant-mvp.css" />
+    <link rel="stylesheet" href="https://use.typekit.net/anc5qxp.css" />
+    <link rel="stylesheet" href="/pages/op-plugin-theming/active/index.css" />
+  </head>
+  <body class="rcv-gfx-valorant-winner">
     <!-- <img src="/pages/rcv-gfx/gfx/valorant-mvp.png" class="background"> -->
 
     <div class="agent">
-        <img id="agent" />
+      <img id="agent" />
     </div>
 
     <div class="player">
-        <h2>Match MVP</h2>
-        <h1 class="name" id="name"></h1>
+      <h2>Match MVP</h2>
+      <h1 class="name" id="name"></h1>
 
-        <div class="stats">
-            <div class="stat">
-                <h2>KD</h2>
-                <h1 id="kd"></h1>
-            </div>
-            <div class="stat">
-                <h2>Score</h2>
-                <h1 id="score"></h1>
-            </div>
-            <div class="stat">
-                <h2>Kills</h2>
-                <h1 id="kills"></h1>
-            </div>
-            <div class="stat">
-                <h2>Assists</h2>
-                <h1 id="assists"></h1>
-            </div>
+      <div class="stats">
+        <div class="stat">
+          <h2>KD</h2>
+          <h1 id="kd"></h1>
         </div>
+        <div class="stat">
+          <h2>Score</h2>
+          <h1 id="score"></h1>
+        </div>
+        <div class="stat">
+          <h2>Kills</h2>
+          <h1 id="kills"></h1>
+        </div>
+        <div class="stat">
+          <h2>Assists</h2>
+          <h1 id="assists"></h1>
+        </div>
+      </div>
     </div>
 
     <script>
-        LPTE.onready(async () => {
-            const valorantStatic = await LPTE.request({
-                meta: {
-                    namespace: 'module-valorant-static',
-                    type: 'request-constants',
-                    version: 1
-                }
-            });
-
-            const valorantPregameData = await LPTE.request({
-                meta: {
-                    namespace: 'module-valorant-state',
-                    type: 'request',
-                    version: 1
-                }
-            });
-
-            function updateMVP (mvp) {
-                document.querySelector('#name').innerText = mvp.gameName
-                document.querySelector('#agent').src = `/serve/module-valorant-static/agent-drawing/${mvp.characterId}.png`
-
-                const stats = mvp.stats
-                const kd = stats.deaths > 0 ? stats.kills / stats.deaths : stats.kills
-                document.querySelector('#kd').innerText = kd.toFixed(1)
-                document.querySelector('#score').innerText = stats.score
-                document.querySelector('#kills').innerText = stats.kills
-                document.querySelector('#assists').innerText = stats.assists
-            }
-
-            updateMVP(valorantPregameData.state.mvp)
-
-            LPTE.on('valorant-state-mvp', 'update', e => updateMVP(e.mvp));
+      LPTE.onready(async () => {
+        const valorantStatic = await LPTE.request({
+          meta: {
+            namespace: 'module-valorant-static',
+            type: 'request-constants',
+            version: 1
+          }
         })
+
+        const valorantPregameData = await LPTE.request({
+          meta: {
+            namespace: 'module-valorant-state',
+            type: 'request',
+            version: 1
+          }
+        })
+
+        function updateMVP(mvp) {
+          document.querySelector('#name').innerText = mvp.gameName
+          document.querySelector(
+            '#agent'
+          ).src = `/serve/module-valorant-static/agent-drawing/${mvp.characterId}.png`
+
+          const stats = mvp.stats
+          const kd = stats.deaths > 0 ? stats.kills / stats.deaths : stats.kills
+          document.querySelector('#kd').innerText = kd.toFixed(1)
+          document.querySelector('#score').innerText = stats.score
+          document.querySelector('#kills').innerText = stats.kills
+          document.querySelector('#assists').innerText = stats.assists
+        }
+
+        updateMVP(valorantPregameData.state.mvp)
+
+        LPTE.on('valorant-state-mvp', 'update', (e) => updateMVP(e.mvp))
+      })
     </script>
-</body>
+  </body>
 </html>

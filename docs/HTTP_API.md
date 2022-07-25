@@ -5,6 +5,7 @@ The LPT offers an HTTP API, which can be used to submit events externally. It is
 The Web API is mostly used by the frontend of the Web UI of modules.
 
 ## Submit event
+
 A new event can be submitted using the following request:
 
 ```
@@ -21,10 +22,12 @@ Content-Type: application/json
 ```
 
 ## Submit request (and get response)
+
 Sometimes a simple fire-and-forget event is not enough. In that case, a request may be submitted. The request will wait for an answer, and return that if found.
 If an event of the specified namespace and type is not catched in the timeout (ms), it will return 404 with an empty body instead.
 
 Example request that would fetch the game state from the module-league-state module:
+
 ```
 POST /api/events/request?namespace=module-league-state&type=state&timeout=1000
 Content-Type: application/json

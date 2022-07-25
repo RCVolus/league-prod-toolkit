@@ -13,8 +13,8 @@ export interface PackageJson {
   name: string
   version: string
   author: string
-  dependencies?: {[n: string]: string}
-  devDependencies?: {[n: string]: string}
+  dependencies?: { [n: string]: string }
+  devDependencies?: { [n: string]: string }
   toolkit: ToolkitConfig
 }
 
@@ -41,49 +41,49 @@ export default class Module {
   folder: string
   asset?: Asset
 
-  constructor (packageJson: any, folder: string, asset?: Asset) {
+  constructor(packageJson: any, folder: string, asset?: Asset) {
     this.packageJson = packageJson
     this.folder = folder
     this.asset = asset
   }
 
-  public getName (): string {
+  public getName(): string {
     return this.packageJson.name
   }
 
-  public getVersion (): string {
+  public getVersion(): string {
     return this.packageJson.version
   }
 
-  public getNewestVersion (): string {
+  public getNewestVersion(): string {
     return this.asset?.version ?? ''
   }
 
-  public getAuthor (): string {
+  public getAuthor(): string {
     return this.packageJson.author
   }
 
-  public getConfig (): ToolkitConfig {
+  public getConfig(): ToolkitConfig {
     return this.packageJson.toolkit
   }
 
-  public hasMode (mode: ModuleType): boolean {
+  public hasMode(mode: ModuleType): boolean {
     return this.getConfig().modes.includes(mode)
   }
 
-  public hasPlugin (): boolean {
+  public hasPlugin(): boolean {
     return this.plugin !== undefined
   }
 
-  public getPlugin (): Plugin | undefined {
+  public getPlugin(): Plugin | undefined {
     return this.plugin
   }
 
-  public getFolder (): string {
+  public getFolder(): string {
     return this.folder
   }
 
-  toJson (goDeep: boolean = true): any {
+  toJson(goDeep: boolean = true): any {
     return {
       name: this.getName(),
       version: this.getVersion(),
@@ -109,9 +109,10 @@ export class PluginContext {
   plugin: Plugin
   progress: MultiBar
 
-  constructor (plugin: Plugin) {
+  constructor(plugin: Plugin) {
     this.log = logger(plugin.getModule().getName())
-    this.require = (file: string) => require(path.join(plugin.getModule().getFolder(), file))
+    this.require = (file: string) =>
+      require(path.join(plugin.getModule().getFolder(), file))
     this.LPTE = lpteService.forPlugin(plugin)
     this.plugin = plugin
     this.progress = progress(plugin.module.getName())
@@ -124,24 +125,24 @@ export class Plugin {
   module: Module
   context: undefined | PluginContext
 
-  constructor (module: Module) {
+  constructor(module: Module) {
     this.module = module
     this.isLoaded = true
   }
 
-  getModule (): Module {
+  getModule(): Module {
     return this.module
   }
 
-  getPluginConfig (): any {
+  getPluginConfig(): any {
     return this.module.getConfig().plugin
   }
 
-  getMain (): string {
+  getMain(): string {
     return this.getPluginConfig().main
   }
 
-  toJson (goDeep: boolean = true): any {
+  toJson(goDeep: boolean = true): any {
     return {
       pluginConfig: this.getPluginConfig(),
       main: this.getMain(),
@@ -151,12 +152,15 @@ export class Plugin {
     }
   }
 
-  initialize (svc: ModuleService): void {
+  initialize(svc: ModuleService): void {
     // Craft context
     this.context = new PluginContext(this)
 
     const handleError = (e: any): void => {
-      (this.context as PluginContext).log.error(`Uncaught error in ${this.module.getName()}: `, e)
+      ;(this.context as PluginContext).log.error(
+        `Uncaught error in ${this.module.getName()}: `,
+        e
+      )
       console.error(e)
 
       // Set plugin status to degraded, maybe functionality will not work anymore

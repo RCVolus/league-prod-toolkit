@@ -16,7 +16,14 @@ const getAuth = async (): Promise<boolean> => {
   return auth.enabled
 }
 
-const newFilePath = path.join(__dirname, '..', '..', 'modules', 'plugin-config', 'config.json')
+const newFilePath = path.join(
+  __dirname,
+  '..',
+  '..',
+  'modules',
+  'plugin-config',
+  'config.json'
+)
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const file = require(newFilePath)
 

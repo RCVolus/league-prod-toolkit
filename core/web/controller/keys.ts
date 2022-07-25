@@ -22,12 +22,11 @@ export default (globalContext: any): Router => {
   }
 
   router.get('/', async (req, res) => {
-    res.render('keys',
-      {
-        ...globalContext,
-        title: 'Api Keys',
-        keys: await getKeys()
-      })
+    res.render('keys', {
+      ...globalContext,
+      title: 'Api Keys',
+      keys: await getKeys()
+    })
   })
   router.get('/api', (req, res) => {
     res.json(async () => await getKeys())

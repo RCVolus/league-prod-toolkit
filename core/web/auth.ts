@@ -14,7 +14,10 @@ const allowedKeys: Set<string> = new Set()
 
 let config: any
 
-export async function runAuth (server: Express, wss: WebSocket.Server): Promise<void> {
+export async function runAuth(
+  server: Express,
+  wss: WebSocket.Server
+): Promise<void> {
   const configReq = await LPTEService.request({
     meta: {
       type: 'request',
@@ -62,7 +65,7 @@ export async function runAuth (server: Express, wss: WebSocket.Server): Promise<
   await getKeys()
 }
 
-async function getKeys (): Promise<void> {
+async function getKeys(): Promise<void> {
   const keys = await LPTEService.request({
     meta: {
       type: 'request',
@@ -95,7 +98,9 @@ LPTEService.on('auth', 'add-key', (e) => {
     data: {
       apiKey: 'RCVPT-' + apiKey,
       description: e.description,
-      expiring: e.neverExpires as boolean ? -1 : new Date(e.expiring).getTime()
+      expiring: (e.neverExpires as boolean)
+        ? -1
+        : new Date(e.expiring).getTime()
     }
   })
 
@@ -132,9 +137,14 @@ LPTEService.on('auth', 'remove-key', (e) => {
   })
 })
 
-function verifyWSClient (
-  info: { origin: string, secure: boolean, req: IncomingMessage },
-  done: (res: boolean, code?: number, message?: string, headers?: OutgoingHttpHeaders) => void
+function verifyWSClient(
+  info: { origin: string; secure: boolean; req: IncomingMessage },
+  done: (
+    res: boolean,
+    code?: number,
+    message?: string,
+    headers?: OutgoingHttpHeaders
+  ) => void
 ): void {
   if (!verify(info.req.url)) {
     return done(false, 403, 'authentication failed')
@@ -143,19 +153,24 @@ function verifyWSClient (
   return done(true)
 }
 
-function verifyEPClient (req: Request, res: Response, next: NextFunction): void {
+function verifyEPClient(req: Request, res: Response, next: NextFunction): void {
   if (req.path.startsWith('/login')) return next()
-  if (req.path.endsWith('.js') || req.path.endsWith('.css') || req.path.endsWith('.png') || req.path.endsWith('.jpg') || req.path.endsWith('.svg')) return next()
+  if (
+    req.path.endsWith('.js') ||
+    req.path.endsWith('.css') ||
+    req.path.endsWith('.png') ||
+    req.path.endsWith('.jpg') ||
+    req.path.endsWith('.svg')
+  )
+    return next()
   if (!verify(req.url, req.cookies)) {
-    return res
-      .status(403)
-      .redirect('/login')
+    return res.status(403).redirect('/login')
   }
 
   return next()
 }
 
-function verify (url?: string, cookies?: any): boolean {
+function verify(url?: string, cookies?: any): boolean {
   const queryString = url?.split('?')[1]
 
   if (queryString !== undefined) {
@@ -168,7 +183,10 @@ function verify (url?: string, cookies?: any): boolean {
 
   if (cookies?.access_token !== undefined) {
     try {
-      const key = jwt.verify(cookies.access_token, config.secreteKey) as jwt.JwtPayload
+      const key = jwt.verify(
+        cookies.access_token,
+        config.secreteKey
+      ) as jwt.JwtPayload
 
       if (key.apiKey !== undefined && allowedKeys.has(key.apiKey as string)) {
         return true
@@ -184,7 +202,7 @@ function verify (url?: string, cookies?: any): boolean {
   return false
 }
 
-async function login (req: Request, res: Response): Promise<void> {
+async function login(req: Request, res: Response): Promise<void> {
   const { apiKey } = req.body
 
   if (apiKey === undefined) {
@@ -202,7 +220,10 @@ async function login (req: Request, res: Response): Promise<void> {
     filter: { apiKey }
   })
 
-  if ((key?.data === undefined || key.data.length <= 0) && config['super-api-key'] !== apiKey) {
+  if (
+    (key?.data === undefined || key.data.length <= 0) &&
+    config['super-api-key'] !== apiKey
+  ) {
     res.send('key does not exists').status(403)
     return
   }
@@ -235,15 +256,12 @@ async function login (req: Request, res: Response): Promise<void> {
     .redirect('/')
 }
 
-function logout (req: Request, res: Response): void {
+function logout(req: Request, res: Response): void {
   const decoded = jwt.decode(req.cookies.access_token)
 
   if (decoded !== null && typeof decoded !== 'string') {
     allowedKeys.delete(decoded.apiKey)
   }
 
-  res
-    .clearCookie('access_token')
-    .status(200)
-    .redirect('/login')
+  res.clearCookie('access_token').status(200).redirect('/login')
 }

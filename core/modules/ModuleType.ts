@@ -1,6 +1,6 @@
 export const enum ModuleType {
   STANDALONE = 'STANDALONE',
-  PLUGIN = 'PLUGIN',
+  PLUGIN = 'PLUGIN'
 }
 
 export default ModuleType

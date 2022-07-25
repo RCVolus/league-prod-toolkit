@@ -3,7 +3,14 @@ import path from 'path'
 import inquirer from 'inquirer'
 import { createSpinner } from 'nanospinner'
 
-const newFilePath = path.join(__dirname, '..', '..', 'modules', 'plugin-config', 'config.json')
+const newFilePath = path.join(
+  __dirname,
+  '..',
+  '..',
+  'modules',
+  'plugin-config',
+  'config.json'
+)
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const file = require(newFilePath)
 
@@ -12,7 +19,7 @@ const getApiKey = async (): Promise<string> => {
     type: 'input',
     name: 'apiKey',
     message: 'Enter your Riot-API-Key (RGAPI-SECRETKEY)',
-    default: file['plugin-webapi'].apiKey as string ?? 'RGAPI-SECRETKEY'
+    default: (file['plugin-webapi'].apiKey as string) ?? 'RGAPI-SECRETKEY'
   })
 
   return apiKey.apiKey

@@ -17,22 +17,32 @@ export class ModuleService {
   assets: Asset[] = []
   activePlugins: Plugin[] = []
 
-  public async initialize (): Promise<void> {
+  public async initialize(): Promise<void> {
     log.info('Initializing module service.')
 
     // Register event handlers
     LPTEService.on('lpt', 'plugin-status-change', (event: any) => {
       // Get the plugin
-      const plugin = this.activePlugins.filter(plugin => plugin.getModule().getName() === event.meta.sender.name)[0]
+      const plugin = this.activePlugins.filter(
+        (plugin) => plugin.getModule().getName() === event.meta.sender.name
+      )[0]
 
       // Check if we need to adapt the status here
       if (plugin.status !== event.status) {
-        log.info(`Plugin status changed: plugin=${plugin.getModule().getName()}, old=${plugin.status}, new=${event.status as string}`)
+        log.info(
+          `Plugin status changed: plugin=${plugin.getModule().getName()}, old=${
+            plugin.status
+          }, new=${event.status as string}`
+        )
         plugin.status = event.status
       }
 
       // Check if all plugins are ready now
-      if (this.activePlugins.filter(plugin => plugin.status === PluginStatus.UNAVAILABLE).length === 0) {
+      if (
+        this.activePlugins.filter(
+          (plugin) => plugin.status === PluginStatus.UNAVAILABLE
+        ).length === 0
+      ) {
         // Loading complete
         LPTEService.emit({
           meta: {
@@ -47,13 +57,14 @@ export class ModuleService {
     })
 
     LPTEService.on('lpt', 'update-plugin', async (e) => {
-      const active = this.activePlugins.find(a => a.module.getName() === e.name)
+      const active = this.activePlugins.find(
+        (a) => a.module.getName() === e.name
+      )
 
       if (active?.module.asset !== undefined) {
         await download(active.module.asset)
         log.info(`plugin ${e.name as string} was updated`)
 
-        
         return LPTEService.emit({
           meta: {
             namespace: 'lpt',
@@ -64,7 +75,7 @@ export class ModuleService {
         })
       }
 
-      const asset = this.assets.find(a => a.name === e.name)
+      const asset = this.assets.find((a) => a.name === e.name)
 
       if (asset !== undefined) {
         await download(asset)
@@ -102,8 +113,9 @@ export class ModuleService {
     })
 
     const allModules = await Promise.all(
-      data.map(async (folderName) =>
-        await this.handleFolder(path.join(modulePath, folderName))
+      data.map(
+        async (folderName) =>
+          await this.handleFolder(path.join(modulePath, folderName))
       )
     )
 
@@ -136,15 +148,15 @@ export class ModuleService {
     })
   }
 
-  public async getAssets (): Promise<Asset[]> {
+  public async getAssets(): Promise<Asset[]> {
     return await getAll()
   }
 
-  public getModulePath (): string {
+  public getModulePath(): string {
     return path.join(__dirname, '../../../modules')
   }
 
-  private async loadPlugins (): Promise<Plugin[]> {
+  private async loadPlugins(): Promise<Plugin[]> {
     const possibleModules = this.modules.filter((module) =>
       module.hasMode(ModuleType.PLUGIN)
     )
@@ -154,7 +166,7 @@ export class ModuleService {
     )
   }
 
-  private async loadPlugin (module: Module): Promise<Plugin> {
+  private async loadPlugin(module: Module): Promise<Plugin> {
     const plugin = new Plugin(module)
 
     module.plugin = plugin
@@ -162,7 +174,7 @@ export class ModuleService {
     return plugin
   }
 
-  private async handleFolder (folder: string): Promise<Module | null> {
+  private async handleFolder(folder: string): Promise<Module | null> {
     const statData = await statPromise(folder)
 
     if (!statData.isDirectory()) {
@@ -175,7 +187,7 @@ export class ModuleService {
     return await this.handleModule(folder)
   }
 
-  private async handleModule (folder: string): Promise<Module | null> {
+  private async handleModule(folder: string): Promise<Module | null> {
     const packageJsonPath = path.join(folder, 'package.json')
 
     let packageJsonStat: Stats
@@ -198,7 +210,7 @@ export class ModuleService {
     // eslint-disable-next-line @typescript-eslint/no-var-requires
     const packageJson = require(packageJsonPath) as PackageJson
 
-    const index = this.assets.findIndex(a => a.name === packageJson.name)
+    const index = this.assets.findIndex((a) => a.name === packageJson.name)
     const asset = this.assets[index]
     this.assets.splice(index, 1)
 

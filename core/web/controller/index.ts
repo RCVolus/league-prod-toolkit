@@ -9,7 +9,9 @@ import pages from './pages'
 import serve from './serve'
 import keys from './keys'
 
-export default (globalContext: any): {
+export default (
+  globalContext: any
+): {
   [name: string]: Router
 } => ({
   '/': home(globalContext),

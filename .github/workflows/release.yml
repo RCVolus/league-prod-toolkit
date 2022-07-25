@@ -4,14 +4,13 @@ name: Release
 on:
   push:
     tags:
-      - "v*"
+      - 'v*'
 
 jobs:
   build:
-    name: "Build Toolkit"
-    runs-on: "ubuntu-latest"
+    name: 'Build Toolkit'
+    runs-on: 'ubuntu-latest'
     steps:
-
       - uses: actions/checkout@v2
 
       - name: Setup NodeJS
@@ -41,9 +40,9 @@ jobs:
             !dist/utils/*
 
   create-zip:
-    name: "Create Zip File"
+    name: 'Create Zip File'
     needs: [build]
-    runs-on: "ubuntu-latest"
+    runs-on: 'ubuntu-latest'
 
     steps:
       - name: Download build
@@ -63,9 +62,9 @@ jobs:
           path: prod-toolkit.zip
 
   release:
-    name: "Release"
+    name: 'Release'
     needs: create-zip
-    runs-on: "ubuntu-latest"
+    runs-on: 'ubuntu-latest'
 
     steps:
       - name: Download zip
@@ -73,9 +72,9 @@ jobs:
         with:
           name: prod-toolkit
 
-      - uses: "marvinpinto/action-automatic-releases@latest"
+      - uses: 'marvinpinto/action-automatic-releases@latest'
         with:
-          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          repo_token: '${{ secrets.GITHUB_TOKEN }}'
           prerelease: false
           files: |
             prod-toolkit.zip

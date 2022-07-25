@@ -35,9 +35,14 @@ const main = async (): Promise<void> => {
         return
       }
 
-      const pkgJson = JSON.parse((await readFilePromise(packageJsonPath)).toString()) as PackageJson
+      const pkgJson = JSON.parse(
+        (await readFilePromise(packageJsonPath)).toString()
+      ) as PackageJson
 
-      if (pkgJson.dependencies !== undefined || pkgJson.devDependencies !== undefined) {
+      if (
+        pkgJson.dependencies !== undefined ||
+        pkgJson.devDependencies !== undefined
+      ) {
         // run install
         await execPromise('npm ci', {
           cwd: currentModulePath
@@ -46,21 +51,28 @@ const main = async (): Promise<void> => {
         console.log('installed ' + folderName)
       }
 
-      if (pkgJson.toolkit.needsBuild !== undefined && pkgJson.toolkit.needsBuild) {
+      if (
+        pkgJson.toolkit.needsBuild !== undefined &&
+        pkgJson.toolkit.needsBuild
+      ) {
         // run build
         await new Promise<void>((resolve, reject) => {
-          exec('npm run build', {
-            cwd: currentModulePath
-          }, (error, stdout, stderr) => {
-            console.log('='.repeat(20))
-            console.log('start building ' + folderName)
-            console.log(stdout)
-            if (error !== null || stderr !== '') {
-              return console.log(error ?? stderr)
+          exec(
+            'npm run build',
+            {
+              cwd: currentModulePath
+            },
+            (error, stdout, stderr) => {
+              console.log('='.repeat(20))
+              console.log('start building ' + folderName)
+              console.log(stdout)
+              if (error !== null || stderr !== '') {
+                return console.log(error ?? stderr)
+              }
+              console.log('finished building ' + folderName)
+              resolve()
             }
-            console.log('finished building ' + folderName)
-            resolve()
-          })
+          )
         })
       }
     })
