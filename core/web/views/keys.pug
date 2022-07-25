@@ -49,6 +49,10 @@ block layout-content
       })
     };
 
+    document.querySelector('#neverExpires').addEventListener('change', (e) => {
+      document.querySelector('#expiring').disabled = e.target.checked
+    })
+
     document.querySelector('#addKey').addEventListener('submit', (e) => {
       e.preventDefault()
       
@@ -61,5 +65,11 @@ block layout-content
         description: e.target[0].value,
         neverExpires: e.target[1].checked,
         expiring: e.target[2].value,
+      })
+    })
+
+    window.LPTE.onready(() => {
+      window.LPTE.on('auth', 'update', () => {
+        location.reload();
       })
     })
