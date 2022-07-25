@@ -100,6 +100,14 @@ LPTEService.on('auth', 'add-key', (e) => {
   })
 
   allowedKeys.add('RCVPT-' + apiKey)
+
+  LPTEService.emit({
+    meta: {
+      namespace: 'auth',
+      type: 'update',
+      version: 1
+    }
+  })
 })
 
 LPTEService.on('auth', 'remove-key', (e) => {
@@ -114,6 +122,14 @@ LPTEService.on('auth', 'remove-key', (e) => {
   })
 
   allowedKeys.delete(e.apiKey)
+
+  LPTEService.emit({
+    meta: {
+      namespace: 'auth',
+      type: 'update',
+      version: 1
+    }
+  })
 })
 
 function verifyWSClient (
@@ -211,7 +227,7 @@ async function login (req: Request, res: Response): Promise<void> {
   const token = jwt.sign(cKey, config.secreteKey, {
     expiresIn: cKey.expiring !== -1 ? cKey.expiring - cTime : '1d'
   })
-  
+
   return res
     .clearCookie('auth_disabled')
     .cookie('access_token', token)
