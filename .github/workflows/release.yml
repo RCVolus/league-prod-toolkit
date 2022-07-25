@@ -37,8 +37,8 @@ jobs:
             start.bat
             dist
             !dist/*.ts
-            !dist/build
-            !dist/build/*
+            !dist/utils
+            !dist/utils/*
 
   create-zip:
     name: "Create Zip File"
