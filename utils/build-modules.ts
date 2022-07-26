@@ -5,9 +5,6 @@ import { exec } from 'child_process'
 import console from 'console'
 import { PackageJson } from '../core/modules/Module'
 
-const readdirPromise = promisify(fs.readdir)
-const readFilePromise = promisify(fs.readFile)
-const statPromise = promisify(fs.stat)
 const execPromise = promisify(exec)
 
 const modulePath = './modules'
@@ -18,7 +15,7 @@ if (process.argv.length === 3) {
 }
 
 const main = async (): Promise<void> => {
-  const data = await readdirPromise(modulePath)
+  const data = await fs.promises.readdir(modulePath)
   await Promise.all(
     data.map(async (folderName) => {
       if (filter !== '' && folderName !== filter) {
@@ -30,13 +27,13 @@ const main = async (): Promise<void> => {
 
       try {
         // Check that package.json exists
-        await statPromise(packageJsonPath)
+        await fs.promises.stat(packageJsonPath)
       } catch {
         return
       }
 
       const pkgJson = JSON.parse(
-        (await readFilePromise(packageJsonPath)).toString()
+        (await fs.promises.readFile(packageJsonPath)).toString()
       ) as PackageJson
 
       if (
