@@ -23,11 +23,11 @@ const context: GlobalContext = {
   module_serves: []
 }
 
-lpte.on('ui', 'add-pages', e => {
+lpte.on('ui', 'add-pages', (e) => {
   const newPages = e.pages as PageDefintion[]
 
-  newPages.forEach(page => {
-    context.module_pages = context.module_pages.filter(p => p.id !== page.id)
+  newPages.forEach((page) => {
+    context.module_pages = context.module_pages.filter((p) => p.id !== page.id)
     context.module_pages.push({
       ...page,
       sender: e.meta.sender
@@ -35,19 +35,31 @@ lpte.on('ui', 'add-pages', e => {
   })
 
   context.module_pages.sort((a, b) => {
-    if ((!a.name.startsWith('LoL') && !a.name.startsWith('Valo')) && (b.name.startsWith('LoL') || b.name.startsWith('Valo'))) return -1
-    if ((a.name.startsWith('LoL') || a.name.startsWith('Valo')) && (!b.name.startsWith('LoL') && !b.name.startsWith('Valo'))) return 1
+    if (
+      !a.name.startsWith('LoL') &&
+      !a.name.startsWith('Valo') &&
+      (b.name.startsWith('LoL') || b.name.startsWith('Valo'))
+    )
+      return -1
+    if (
+      (a.name.startsWith('LoL') || a.name.startsWith('Valo')) &&
+      !b.name.startsWith('LoL') &&
+      !b.name.startsWith('Valo')
+    )
+      return 1
     else if (a.name > b.name) return 1
     else if (a.name < b.name) return -1
     return 0
   })
 })
 
-lpte.on('ui', 'add-serves', e => {
+lpte.on('ui', 'add-serves', (e) => {
   const newServes = e.serves as ServeDefinition[]
 
-  newServes.forEach(serve => {
-    context.module_serves = context.module_serves.filter(s => s.id !== serve.id)
+  newServes.forEach((serve) => {
+    context.module_serves = context.module_serves.filter(
+      (s) => s.id !== serve.id
+    )
     context.module_serves.push({
       ...serve,
       sender: e.meta.sender

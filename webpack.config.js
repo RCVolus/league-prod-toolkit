@@ -24,9 +24,7 @@ module.exports = {
   },
   plugins: [
     new CopyWebpackPlugin({
-      patterns: [
-        { from: 'frontend' }
-      ]
+      patterns: [{ from: 'frontend' }]
     })
   ]
 }

@@ -21,7 +21,7 @@ if (process.argv.includes('-plugins')) {
 /**
  * get all available plugins modules and themes for the prod tool
  */
-export async function getAll (): Promise<Asset[]> {
+export async function getAll(): Promise<Asset[]> {
   let assets: Asset[] = []
   try {
     const url = `https://sweet-pond-bc97.tatrix42.workers.dev/`
@@ -29,7 +29,7 @@ export async function getAll (): Promise<Asset[]> {
 
     if (req.status !== 200) return []
 
-    assets = req.data.filter((a: any []) => a !== null)
+    assets = req.data.filter((a: any[]) => a !== null)
   } catch (e) {
     console.log(e.data?.message)
   }
@@ -41,7 +41,7 @@ export async function getAll (): Promise<Asset[]> {
  * downloads a single module plugin or theme
  * @param asset to download
  */
-export async function download (asset: Asset): Promise<void> {
+export async function download(asset: Asset): Promise<void> {
   const spinner = createSpinner(`downloading ${asset.name}`)
   spinner.start()
 
@@ -51,13 +51,13 @@ export async function download (asset: Asset): Promise<void> {
   })
 
   if (dl.status !== 200) {
-    spinner.error({ text: dl.statusText})
+    spinner.error({ text: dl.statusText })
     return
   }
   let cwd = path.join(__dirname, '..', '..', 'modules')
 
   if (asset.name.startsWith('theme')) {
-    cwd = path.join(cwd, 'plugin-themeing', 'themes')
+    cwd = path.join(cwd, 'plugin-theming', 'themes')
   }
 
   const savePath = path.join(cwd, `${asset.name}.zip`)
@@ -83,7 +83,7 @@ export async function download (asset: Asset): Promise<void> {
     })
   })
 
-  async function unpack (filepath: string, path: string): Promise<void> {
+  async function unpack(filepath: string, path: string): Promise<void> {
     return await new Promise((resolve) => {
       fs.createReadStream(filepath)
         .pipe(unzipper.Extract({ path, forceStream: true }))
@@ -95,10 +95,10 @@ export async function download (asset: Asset): Promise<void> {
   }
 }
 
-async function run (): Promise<void> {
+async function run(): Promise<void> {
   const available = await getAll()
 
-  const install = available.filter(a => {
+  const install = available.filter((a) => {
     return process.argv.includes(a.name)
   })
 
@@ -108,7 +108,7 @@ async function run (): Promise<void> {
 }
 
 async function installPlugins(): Promise<void> {
-  const available = (await getAll())
+  const available = await getAll()
 
   for (const asset of available) {
     if (!asset.name.startsWith('plugin')) continue

@@ -7,12 +7,14 @@ module.exports = async (ctx: PluginContext) => {
       namespace: 'ui',
       version: 1
     },
-    pages: [{
-      frontend: 'frontend',
-      id: 'rcv-gfx',
-      name: 'rcv-gfx'
-    }]
-  });
+    pages: [
+      {
+        frontend: 'frontend',
+        id: 'rcv-gfx',
+        name: 'rcv-gfx'
+      }
+    ]
+  })
 
   ctx.LPTE.emit({
     meta: {
@@ -21,5 +23,5 @@ module.exports = async (ctx: PluginContext) => {
       version: 1
     },
     status: 'RUNNING'
-  });
-};
+  })
+}

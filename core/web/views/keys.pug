@@ -18,7 +18,7 @@ block layout-content
           td.align-middle= key.description
           td.align-middle= key.expiring === -1 ? 'never' : new Date(key.expiring).toDateString()
           td.align-middle
-            button.btn.btn-danger(onclick=`removeKey('${key._id}', '${key.apiKey}')`)
+            button.btn.btn-danger(onclick=`removeKey('${key.id}', '${key.apiKey}')`)
               i.fa.fa-trash
 
   form.mt-5#addKey
@@ -37,17 +37,21 @@ block layout-content
     button.btn.btn-success.btn-block(type="submit") Add key
 
   script.
-    function removeKey (_id, apiKey) {
+    function removeKey (id, apiKey) {
       LPTE.emit({
         meta: {
           namespace: 'auth',
           type: 'remove-key',
           version: 1
         },
-        _id,
+        id,
         apiKey
       })
     };
+
+    document.querySelector('#neverExpires').addEventListener('change', (e) => {
+      document.querySelector('#expiring').disabled = e.target.checked
+    })
 
     document.querySelector('#addKey').addEventListener('submit', (e) => {
       e.preventDefault()
@@ -61,5 +65,11 @@ block layout-content
         description: e.target[0].value,
         neverExpires: e.target[1].checked,
         expiring: e.target[2].value,
+      })
+    })
+
+    window.LPTE.onready(() => {
+      window.LPTE.on('auth', 'update', () => {
+        location.reload();
       })
     })
