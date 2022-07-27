@@ -8,7 +8,11 @@ import uniqid from 'uniqid'
 const log = logger('lpte-svc')
 
 export const isValidEvent = (event: LPTEvent): boolean => {
-  if (event.meta === undefined || event.meta.namespace === undefined || event.meta.type === undefined) {
+  if (
+    event.meta === undefined ||
+    event.meta.namespace === undefined ||
+    event.meta.type === undefined
+  ) {
     return false
   }
 
@@ -19,22 +23,24 @@ export class LPTEService implements LPTE {
   registrations: Registration[] = []
   eventHistory: LPTEvent[] = []
 
-  constructor () {
+  constructor() {
     this.await = this.await.bind(this)
   }
 
-  initialize (): void {
+  initialize(): void {
     log.info('Initialized event bus.')
   }
 
-  on (namespace: string, type: string, handler: (e: LPTEvent) => void): void {
+  on(namespace: string, type: string, handler: (e: LPTEvent) => void): void {
     const registration = new Registration(namespace, type, handler)
     this.registrations.push(registration)
 
-    log.debug(`New event handler registered: namespace=${namespace}, type=${type}`)
+    log.debug(
+      `New event handler registered: namespace=${namespace}, type=${type}`
+    )
   }
 
-  once (namespace: string, type: string, handler: (e: LPTEvent) => void): void {
+  once(namespace: string, type: string, handler: (e: LPTEvent) => void): void {
     const wrappedHandler = (e: LPTEvent): void => {
       log.debug(`Wrapped handler called for ${namespace}/${type}`)
       this.unregisterHandler(wrappedHandler)
@@ -43,7 +49,10 @@ export class LPTEService implements LPTE {
     this.on(namespace, type, wrappedHandler)
   }
 
-  async request (event: LPTEvent, timeout = 5000): Promise<LPTEvent | undefined> {
+  async request(
+    event: LPTEvent,
+    timeout = 5000
+  ): Promise<LPTEvent | undefined> {
     const reply = event.meta.reply ?? `${event.meta.type}-${uniqid()}`
     event.meta.reply = reply
     event.meta.channelType = EventType.REQUEST
@@ -64,12 +73,20 @@ export class LPTEService implements LPTE {
     try {
       return await this.await('reply', reply, timeout)
     } catch {
-      log.error(`Request timed out after ${timeout}ms. Request meta=${JSON.stringify(event.meta)}`)
+      log.error(
+        `Request timed out after ${timeout}ms. Request meta=${JSON.stringify(
+          event.meta
+        )}`
+      )
       return undefined
     }
   }
 
-  async await (namespace: string, type: string, timeout = 5000): Promise<LPTEvent> {
+  async await(
+    namespace: string,
+    type: string,
+    timeout = 5000
+  ): Promise<LPTEvent> {
     return await new Promise((resolve, reject) => {
       let wasHandled = false
 
@@ -92,32 +109,45 @@ export class LPTEService implements LPTE {
         wasHandled = true
         this.unregisterHandler(handler)
 
-        log.warn(`Awaiting event timed out. namespace=${namespace}, type=${type}, timeout=${timeout}`)
+        log.warn(
+          `Awaiting event timed out. namespace=${namespace}, type=${type}, timeout=${timeout}`
+        )
         reject(new Error('request timed out'))
       }, timeout)
     })
   }
 
-  unregister (namespace: string, type: string): void {
-    this.registrations = this.registrations.filter(registration => registration.namespace !== namespace && registration.type !== type)
+  unregister(namespace: string, type: string): void {
+    this.registrations = this.registrations.filter(
+      (registration) =>
+        registration.namespace !== namespace && registration.type !== type
+    )
   }
 
-  unregisterHandler (handler: (event: LPTEvent) => void): void {
+  unregisterHandler(handler: (event: LPTEvent) => void): void {
     setTimeout(() => {
-      this.registrations = this.registrations.filter(registration => registration.handle !== handler)
+      this.registrations = this.registrations.filter(
+        (registration) => registration.handle !== handler
+      )
     }, 1000)
   }
 
-  emit (event: LPTEvent): void {
+  emit(event: LPTEvent): void {
     if (!isValidEvent(event)) {
       return
     }
 
     setTimeout(() => {
       // Find matching handlers
-      const handlers = this.registrations.filter(registration => registration.namespace === event.meta.namespace && registration.type === event.meta.type)
-      log.debug(`Found ${handlers.length} matching handlers for ${event.meta.namespace}/${event.meta.type}`)
-      handlers.forEach(handler => {
+      const handlers = this.registrations.filter(
+        (registration) =>
+          registration.namespace === event.meta.namespace &&
+          registration.type === event.meta.type
+      )
+      log.debug(
+        `Found ${handlers.length} matching handlers for ${event.meta.namespace}/${event.meta.type}`
+      )
+      handlers.forEach((handler) => {
         try {
           handler.handle(event)
         } catch (e) {
@@ -126,13 +156,20 @@ export class LPTEService implements LPTE {
         }
       })
 
-      if (handlers.length === 0 && event.meta.channelType === EventType.REQUEST) {
-        log.warn(`Request was sent, but no handler was executed. This will result in a timeout. Meta=${JSON.stringify(event.meta)}`)
+      if (
+        handlers.length === 0 &&
+        event.meta.channelType === EventType.REQUEST
+      ) {
+        log.warn(
+          `Request was sent, but no handler was executed. This will result in a timeout. Meta=${JSON.stringify(
+            event.meta
+          )}`
+        )
       }
 
       // Push to websockets (currently only for logs)
       if (event.meta.namespace === 'log') {
-        wsClients.forEach(socket => {
+        wsClients.forEach((socket) => {
           socket.send(JSON.stringify(event))
         })
       }
@@ -142,7 +179,7 @@ export class LPTEService implements LPTE {
     }, 0)
   }
 
-  forPlugin (plugin: Plugin): LPTE {
+  forPlugin(plugin: Plugin): LPTE {
     const enrichEvent = (event: LPTEvent): LPTEvent => {
       return {
         ...event,
@@ -166,7 +203,10 @@ export class LPTEService implements LPTE {
         this.emit(enrichEvent(event))
       },
       on: this.on,
-      request: async (event: LPTEvent, timeout?: number): Promise<LPTEvent | undefined> => {
+      request: async (
+        event: LPTEvent,
+        timeout?: number
+      ): Promise<LPTEvent | undefined> => {
         // Enrich with sender information
         return await this.request(enrichEvent(event), timeout)
       },

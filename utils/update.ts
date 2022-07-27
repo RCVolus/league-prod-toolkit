@@ -19,7 +19,7 @@ const actions = {
 
 type Module = [string, string, boolean]
 
-async function getFolder (): Promise<Module[]> {
+async function getFolder(): Promise<Module[]> {
   const modules: Module[] = []
 
   const dir = await fs.promises.opendir(modulesPath)
@@ -30,7 +30,9 @@ async function getFolder (): Promise<Module[]> {
     const modulePath = path.join(modulesPath, folder.name)
 
     try {
-      const moduleConfig = await fs.promises.readFile(path.join(modulePath, 'package.json'))
+      const moduleConfig = await fs.promises.readFile(
+        path.join(modulePath, 'package.json')
+      )
       const data = JSON.parse(moduleConfig.toString())
 
       const name = data.name as string
@@ -47,24 +49,22 @@ async function getFolder (): Promise<Module[]> {
   return modules
 }
 
-async function choseModules (modules: Module[]): Promise<Module[]> {
+async function choseModules(modules: Module[]): Promise<Module[]> {
   const choices = await inquirer.prompt({
     type: 'checkbox',
     name: 'modules',
-    choices: modules.map(m => m[1])
+    choices: modules.map((m) => m[1])
   })
 
   if (choices.modules.length <= 0) {
     console.warn('! Please select at least one module')
     return await choseModules(modules)
   } else {
-    return choices.modules
-      .map((n: string) => modules
-        .find(m => m[1] === n))
+    return choices.modules.map((n: string) => modules.find((m) => m[1] === n))
   }
 }
 
-async function choseAction (): Promise<string> {
+async function choseAction(): Promise<string> {
   const choices = await inquirer.prompt({
     type: 'list',
     name: 'action',
@@ -74,7 +74,7 @@ async function choseAction (): Promise<string> {
   return choices.action
 }
 
-async function start (): Promise<void> {
+async function start(): Promise<void> {
   const modules = await getFolder()
 
   const chosenModules = await choseModules(modules)
@@ -99,23 +99,19 @@ async function start (): Promise<void> {
   }
 }
 
-async function getNewVersion (): Promise<string> {
+async function getNewVersion(): Promise<string> {
   const version = await inquirer.prompt({
     type: 'list',
     name: 'versionType',
     message: 'select a version type',
-    choices: [
-      'patch',
-      'minor',
-      'major'
-    ],
+    choices: ['patch', 'minor', 'major'],
     default: 'patch'
   })
 
   return version.versionType
 }
 
-async function updateVersion (modules: Module[]): Promise<void> {
+async function updateVersion(modules: Module[]): Promise<void> {
   const version = await getNewVersion()
 
   for await (const module of modules) {
@@ -138,7 +134,7 @@ async function updateVersion (modules: Module[]): Promise<void> {
   }
 }
 
-async function pushChanges (modules: Module[]): Promise<void> {
+async function pushChanges(modules: Module[]): Promise<void> {
   for await (const module of modules) {
     const modulePath = module[0]
     console.log(`${module[1]}:`)
@@ -154,7 +150,7 @@ async function pushChanges (modules: Module[]): Promise<void> {
   }
 }
 
-async function pullChanges (modules: Module[]): Promise<void> {
+async function pullChanges(modules: Module[]): Promise<void> {
   for await (const module of modules) {
     const modulePath = module[0]
     console.log(`${module[1]}:`)
@@ -170,7 +166,7 @@ async function pullChanges (modules: Module[]): Promise<void> {
   }
 }
 
-async function updateNpm (modules: Module[]): Promise<void> {
+async function updateNpm(modules: Module[]): Promise<void> {
   for await (const module of modules) {
     const modulePath = module[0]
     console.log(`${module[1]}:`)
@@ -186,18 +182,17 @@ async function updateNpm (modules: Module[]): Promise<void> {
   }
 }
 
-async function getCommitMessage (): Promise<string> {
+async function getCommitMessage(): Promise<string> {
   const message = await inquirer.prompt({
     type: 'input',
     name: 'message',
-    message: 'Enter a commit massage',
+    message: 'Enter a commit massage'
   })
 
   return message.message
 }
 
-
-async function commitChanges (modules: Module[]): Promise<void> {
+async function commitChanges(modules: Module[]): Promise<void> {
   const commitMessage = await getCommitMessage()
 
   for await (const module of modules) {
@@ -219,18 +214,17 @@ async function commitChanges (modules: Module[]): Promise<void> {
     }
   }
 }
-async function getCommand (): Promise<string> {
+async function getCommand(): Promise<string> {
   const command = await inquirer.prompt({
     type: 'input',
     name: 'command',
-    message: 'Enter a command',
+    message: 'Enter a command'
   })
 
   return command.command
 }
 
-
-async function customCommand (modules: Module[]): Promise<void> {
+async function customCommand(modules: Module[]): Promise<void> {
   const commitMessage = await getCommand()
 
   for await (const module of modules) {

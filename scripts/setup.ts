@@ -67,12 +67,10 @@ const getInstallAssets = async (): Promise<Asset[]> => {
   const type = await inquirer.prompt({
     type: 'list',
     name: 'type',
-    message: 'Do you want to install single modules/themes or all for a specific game',
+    message:
+      'Do you want to install single modules/themes or all for a specific game',
     default: 'Game',
-    choices: [
-      'Game',
-      'Single'
-    ]
+    choices: ['Game', 'Single']
   })
 
   if (type.type === 'Game') return await getGameSelection()
@@ -87,7 +85,7 @@ const getModuleSelection = async (): Promise<Asset[]> => {
   const choices = await inquirer.prompt({
     type: 'checkbox',
     name: 'assets',
-    choices: assets.map(a => a.name)
+    choices: assets.map((a) => a.name)
   })
 
   if (choices.assets.length <= 0) {
@@ -95,7 +93,7 @@ const getModuleSelection = async (): Promise<Asset[]> => {
     return await getModuleSelection()
   }
 
-  const selection = assets.filter(a => {
+  const selection = assets.filter((a) => {
     return (choices.assets as any[]).includes((i: any) => i.name === a.name)
   })
 
@@ -106,10 +104,7 @@ const getGameSelection = async (): Promise<Asset[]> => {
   const choices = await inquirer.prompt({
     type: 'checkbox',
     name: 'games',
-    choices: [
-      'League of Legends',
-      'Valorant'
-    ]
+    choices: ['League of Legends', 'Valorant']
   })
 
   if (choices.games.length <= 0) {
@@ -122,7 +117,7 @@ const getGameSelection = async (): Promise<Asset[]> => {
 
   // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
   if (choices.games.includes('League of Legends')) {
-    assets.forEach(a => {
+    assets.forEach((a) => {
       if (a.name.includes('league')) {
         selection.push(a)
       }
@@ -130,22 +125,22 @@ const getGameSelection = async (): Promise<Asset[]> => {
   }
   // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
   if (choices.games.includes('Valorant')) {
-    assets.forEach(a => {
+    assets.forEach((a) => {
       if (a.name.includes('valo')) {
         selection.push(a)
       }
     })
   }
 
-  const teams = assets.find(a => a.name === 'module-teams')
+  const teams = assets.find((a) => a.name === 'module-teams')
   if (teams !== undefined) selection.push(teams)
-  const caster = assets.find(a => a.name === 'module-caster')
+  const caster = assets.find((a) => a.name === 'module-caster')
   if (caster !== undefined) selection.push(caster)
 
   return selection
 }
 
-const getDatabaseInfo = async (): Promise<any> => {
+/* const getDatabaseInfo = async (): Promise<any> => {
   const clusterUrl = await inquirer.prompt({
     type: 'input',
     name: 'clusterUrl',
@@ -180,22 +175,36 @@ const getDatabaseInfo = async (): Promise<any> => {
     user: user.user,
     password: password.password
   }
-}
+} */
 
-const filePath = path.join(__dirname, '..', '..', 'modules', 'plugin-config', 'config.dist.json')
-const newFilePath = path.join(__dirname, '..', '..', 'modules', 'plugin-config', 'config.json')
+const filePath = path.join(
+  __dirname,
+  '..',
+  '..',
+  'modules',
+  'plugin-config',
+  'config.dist.json'
+)
+const newFilePath = path.join(
+  __dirname,
+  '..',
+  '..',
+  'modules',
+  'plugin-config',
+  'config.json'
+)
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const file = require(filePath)
 
 const askQuestions = async (): Promise<void> => {
   const apiKey = await getApiKey()
   const server = await getServer()
-  const database = await getDatabaseInfo()
+  /* const database = await getDatabaseInfo() */
   const auth = await getAuth()
 
   file['plugin-webapi'].apiKey = apiKey
   file['plugin-webapi'].server = server
-  file['plugin-database'] = database
+  /* file['plugin-database'] = database */
   file.auth = {
     enabled: auth,
     secreteKey: auth ? randomBytes(48).toString('hex') : '',

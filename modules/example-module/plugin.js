@@ -1,5 +1,5 @@
 module.exports = (ctx) => {
-  ctx.log.debug('Loading example module!');
+  ctx.log.debug('Loading example module!')
 
   // Emit event that we're ready to operate
   ctx.LPTE.emit({
@@ -9,5 +9,5 @@ module.exports = (ctx) => {
       version: 1
     },
     status: 'RUNNING'
-  });
-};
+  })
+}

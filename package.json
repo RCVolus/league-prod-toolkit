@@ -1,13 +1,15 @@
 {
   "name": "league-prod-toolkit-core",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "scripts": {
     "build": "tsc && webpack",
-    "build:modules": "node dist/build/build-modules.js",
+    "build:modules": "node dist/utils/build-modules.js",
+    "update": "node dist/utils/update.js",
     "postbuild": "copyfiles core/web/views/**.* core/web/public/**.* dist",
     "start": "node --trace-warnings dist/core/app.js",
     "tsc": "tsc",
-    "lint": "eslint core/**",
+    "lint": "eslint *",
+    "prettier": "prettier --write --ignore-unknown ./**",
     "setuphooks": "git config --local core.hooksPath .hooks",
     "hooks:pre-commit": "npm run lint && npm run build"
   },
@@ -37,7 +39,6 @@
     "ws": "^8.5.0"
   },
   "devDependencies": {
-    "typescript": "^3.6.3",
     "@types/cli-progress": "^3.9.2",
     "@types/cookie-parser": "^1.4.2",
     "@types/express": "^4.17.13",
@@ -61,7 +62,9 @@
     "eslint-plugin-promise": "4",
     "eslint-plugin-standard": "4",
     "nodemon": "^2.0.4",
+    "prettier": "^2.7.1",
     "ts-loader": "^9.2.2",
+    "typescript": "^3.6.3",
     "webpack": "^5.38.1",
     "webpack-cli": "^4.7.0"
   },

@@ -55,7 +55,7 @@ app.use(cookieParser())
 
 /**
  * Websocket Server
-*/
+ */
 export const wss = new WebSocket.Server({
   server,
   path: '/eventbus'
@@ -68,7 +68,7 @@ wss.on('connection', (socket: WebSocket, requests) => {
   log.debug('Websocket client connected')
 
   socket.on('close', () => {
-    wsClients = wsClients.filter(client => client !== socket)
+    wsClients = wsClients.filter((client) => client !== socket)
     log.debug('Websocket client disconnected')
   })
 
@@ -77,22 +77,24 @@ wss.on('connection', (socket: WebSocket, requests) => {
 
 /**
  * Uploads
-*/
+ */
 
-app.use(fileUpload({
-  createParentPath: true
-}))
+app.use(
+  fileUpload({
+    createParentPath: true
+  })
+)
 
 app.post('/upload', async (req, res) => {
   if (req.files === undefined) {
-    return res
-      .status(401)
-      .send('no file found')
+    return res.status(401).send('no file found')
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
   const file = req.files.file as UploadedFile
-  await file.mv(path.join(__dirname, '..', '..', '..', 'modules', req.body.path, file.name))
+  await file.mv(
+    path.join(__dirname, '..', '..', '..', 'modules', req.body.path, file.name)
+  )
 
   res.send({
     status: true,
@@ -102,7 +104,7 @@ app.post('/upload', async (req, res) => {
       mimetype: file.mimetype,
       size: file.size
     }
-  });
+  })
 })
 
 /**

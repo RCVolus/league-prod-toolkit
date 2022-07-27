@@ -27,7 +27,7 @@ export interface LPTEvent {
   meta: LPTEventMeta
 
   [name: string]: any
-  replay?: (data: {[name: string]: any}) => void
+  replay?: (data: { [name: string]: any }) => void
 }
 
 export interface LPTE {
@@ -63,7 +63,11 @@ export interface LPTE {
   /**
    * Awaits until an event is emitted to the given namespace and type, or until timeout
    */
-  await: (namespace: string, type: string, timeout?: number) => Promise<LPTEvent>
+  await: (
+    namespace: string,
+    type: string,
+    timeout?: number
+  ) => Promise<LPTEvent>
 }
 
 export class Registration {
@@ -71,7 +75,11 @@ export class Registration {
   namespace: string
   handle: (event: LPTEvent) => void
 
-  constructor (namespace: string, type: string, handler: (event: LPTEvent) => void) {
+  constructor(
+    namespace: string,
+    type: string,
+    handler: (event: LPTEvent) => void
+  ) {
     this.namespace = namespace
     this.type = type
     this.handle = handler
