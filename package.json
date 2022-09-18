@@ -32,11 +32,10 @@
     "toastr": "^2.1.4",
     "tslib": "^2.3.1",
     "uniqid": "^5.3.0",
-    "unzip": "^0.1.11",
-    "unzipper": "^0.10.11",
     "uuid-apikey": "^1.5.3",
     "winston": "^3.2.1",
-    "ws": "^8.5.0"
+    "ws": "^8.5.0",
+    "zip-lib": "^0.7.3"
   },
   "devDependencies": {
     "@types/cli-progress": "^3.9.2",
@@ -49,8 +48,6 @@
     "@types/node": "^12.7.7",
     "@types/send": "^0.14.5",
     "@types/uniqid": "^5.3.0",
-    "@types/unzip": "^0.1.1",
-    "@types/unzipper": "^0.10.5",
     "@types/ws": "^8.5.1",
     "@typescript-eslint/eslint-plugin": "4",
     "copy-webpack-plugin": "^10.0.0",
