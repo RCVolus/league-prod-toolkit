@@ -3,7 +3,7 @@ import fs from 'fs'
 import { promisify } from 'util'
 import path from 'path'
 import { exec } from 'child_process'
-import unzipper from 'unzipper'
+import { extract } from 'zip-lib'
 import { createSpinner } from 'nanospinner'
 import { Asset } from '../core/modules/Module'
 
@@ -24,7 +24,7 @@ if (process.argv.includes('-plugins')) {
 export async function getAll(): Promise<Asset[]> {
   let assets: Asset[] = []
   try {
-    const url = `https://sweet-pond-bc97.tatrix42.workers.dev/`
+    const url = 'https://sweet-pond-bc97.tatrix42.workers.dev/'
     const req = await axios.get(url)
 
     if (req.status !== 200) return []
@@ -69,7 +69,7 @@ export async function download(asset: Asset): Promise<void> {
       spinner.update({
         text: `unpacking ${asset.name}`
       })
-      await unpack(savePath, folderPath)
+      await extract(savePath, folderPath)
 
       if (!asset.name.startsWith('theme')) {
         spinner.update({ text: `installing dependency for ${asset.name}` })
@@ -82,17 +82,6 @@ export async function download(asset: Asset): Promise<void> {
       resolve()
     })
   })
-
-  async function unpack(filepath: string, path: string): Promise<void> {
-    return await new Promise((resolve) => {
-      fs.createReadStream(filepath)
-        .pipe(unzipper.Extract({ path, forceStream: true }))
-        .on('finish', async () => {
-          await fs.promises.unlink(filepath)
-          resolve()
-        })
-    })
-  }
 }
 
 async function run(): Promise<void> {
