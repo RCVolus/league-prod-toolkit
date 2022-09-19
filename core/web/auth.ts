@@ -161,8 +161,9 @@ function verifyEPClient(req: Request, res: Response, next: NextFunction): void {
     req.path.endsWith('.png') ||
     req.path.endsWith('.jpg') ||
     req.path.endsWith('.svg')
-  )
+  ) {
     return next()
+  }
   if (!verify(req.url, req.cookies)) {
     return res.status(403).redirect('/login')
   }
@@ -217,7 +218,7 @@ async function login(req: Request, res: Response): Promise<void> {
       version: 1
     },
     collection: 'key',
-    filter: { apiKey }
+    filter: (k: any) => k.apiKey === apiKey
   })
 
   if (
