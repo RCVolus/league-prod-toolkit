@@ -183,6 +183,8 @@
             const stats = player.stats
             const kd =
               stats.deaths > 0 ? stats.kills / stats.deaths : stats.kills
+
+            console.log(kd)
             document.getElementById(`kd-${number}`).innerText = kd.toFixed(1)
             document.getElementById(`score-${number}`).innerText = stats.score
             document.getElementById(`kills-${number}`).innerText = stats.kills
