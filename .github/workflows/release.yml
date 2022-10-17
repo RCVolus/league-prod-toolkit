@@ -55,7 +55,7 @@ jobs:
       - run: mkdir modules
 
       - name: Create Zip
-        run: zip -r prod-toolkit.zip LICENSE README.md package.json package-lock.json install.bat start.bat scripts/* dist/* modules
+        run: zip -r prod-toolkit.zip LICENSE README.md package.json package-lock.json install.bat start.bat riot-api-key.bat auth.bat scripts/* dist/* modules
 
       - name: Upload Zip
         uses: actions/upload-artifact@v2
