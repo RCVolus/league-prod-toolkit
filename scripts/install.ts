@@ -76,6 +76,7 @@ export async function download(asset: Asset): Promise<void> {
         await execPromise('npm i --production', { cwd: folderPath })
       }
 
+      await fs.promises.unlink(savePath)
       spinner.success({
         text: `${asset.name} installed`
       })
