@@ -34,6 +34,8 @@ jobs:
             package-lock.json
             install.bat
             start.bat
+            riot-api-key.bat
+            auth.bat
             dist
             !dist/*.ts
             !dist/utils
