@@ -71,3 +71,6 @@
 [submodule "modules/module-league-champselect-tent"]
 	path = modules/module-league-champselect-tent
 	url = https://github.com/rcv-prod-toolkit/module-league-champselect-tent.git
+[submodule "modules/module-league-champselect-ace"]
+	path = modules/module-league-champselect-ace
+	url = https://github.com/rcv-prod-toolkit/module-league-champselect-ace.git
