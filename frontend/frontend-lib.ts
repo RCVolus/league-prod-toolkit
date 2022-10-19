@@ -222,7 +222,7 @@ function getApiKey(): string | null {
 }
 
 function getWebServerPort(): string {
-  return location.port
+  return `${location.host}`
 }
 
 function getCookie(cname: string): string {
