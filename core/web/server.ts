@@ -8,7 +8,6 @@ import logging from '../logging'
 import globalContext from './globalContext'
 import getController from './controller'
 import { handleClient } from './ws'
-import { LPTEService } from '../eventbus/LPTEService'
 import { runAuth } from './auth'
 import fileUpload, { UploadedFile } from 'express-fileupload'
 import bodyParser from 'body-parser'
@@ -110,7 +109,7 @@ app.post('/upload', async (req, res) => {
 /**
  * Run server
  */
-export const runServer = async (lpteService: LPTEService): Promise<void> => {
+export const runServer = async (): Promise<void> => {
   // eslint-disable-next-line @typescript-eslint/no-floating-promises
   await runAuth(app, wss)
 
