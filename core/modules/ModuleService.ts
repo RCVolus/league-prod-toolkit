@@ -1,5 +1,6 @@
-import fs, { Stats } from 'fs'
-import path from 'path'
+import { Stats } from 'fs'
+import { readdir, stat } from 'fs/promises'
+import { join } from 'path'
 
 import LPTEService from '../eventbus/LPTEService'
 import logging from '../logging'
@@ -7,9 +8,10 @@ import Module, { Plugin, PluginStatus, Asset, PackageJson } from './Module'
 import ModuleType from './ModuleType'
 import { EventType } from '../eventbus/LPTE'
 import { download, getAll } from '../../scripts/install'
+import { version } from '../../package.json'
 
-const readdirPromise = fs.promises.readdir
-const statPromise = fs.promises.stat
+const readdirPromise = readdir
+const statPromise = stat
 const log = logging('module-svc')
 
 export class ModuleService {
@@ -75,10 +77,21 @@ export class ModuleService {
         })
       }
 
+      return LPTEService.emit({
+        meta: {
+          namespace: 'lpt',
+          type: 'plugin updated failed',
+          version: 1
+        },
+        error: 'no plugin could be found with that name'
+      })
+    })
+
+    LPTEService.on('lpt', 'install-plugin', async (e) => {
       const asset = this.assets.find((a) => a.name === e.name)
 
       if (asset !== undefined) {
-        await download(asset)
+        await this.install(asset)
         log.info(`plugin ${e.name as string} was installed`)
         return LPTEService.emit({
           meta: {
@@ -93,10 +106,10 @@ export class ModuleService {
       return LPTEService.emit({
         meta: {
           namespace: 'lpt',
-          type: 'plugin updated failed',
+          type: 'plugin install failed',
           version: 1
         },
-        error: 'no plugin or asset could be found with that name'
+        error: 'no asset could be found with that name'
       })
     })
 
@@ -115,7 +128,7 @@ export class ModuleService {
     const allModules = await Promise.all(
       data.map(
         async (folderName) =>
-          await this.handleFolder(path.join(modulePath, folderName))
+          await this.handleFolder(join(modulePath, folderName))
       )
     )
 
@@ -144,7 +157,7 @@ export class ModuleService {
 
     // Launch plugins
     this.activePlugins.forEach((plugin) => {
-      plugin.initialize(this)
+      plugin.initialize()
     })
   }
 
@@ -153,7 +166,7 @@ export class ModuleService {
   }
 
   public getModulePath(): string {
-    return path.join(__dirname, '../../../modules')
+    return join(__dirname, '../../../modules')
   }
 
   private async loadPlugins(): Promise<Plugin[]> {
@@ -177,6 +190,7 @@ export class ModuleService {
   private async handleFolder(folder: string): Promise<Module | null> {
     const statData = await statPromise(folder)
 
+    // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
     if (!statData.isDirectory()) {
       log.debug(
         `Expected ${folder} to be a directory, but it wasn't. Skipping.`
@@ -188,7 +202,7 @@ export class ModuleService {
   }
 
   private async handleModule(folder: string): Promise<Module | null> {
-    const packageJsonPath = path.join(folder, 'package.json')
+    const packageJsonPath = join(folder, 'package.json')
 
     let packageJsonStat: Stats
     try {
@@ -200,6 +214,7 @@ export class ModuleService {
       return null
     }
 
+    // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
     if (!packageJsonStat.isFile()) {
       log.debug(
         `Expected ${packageJsonPath} to be a file, but it wasn't. Skipping.`
@@ -215,6 +230,55 @@ export class ModuleService {
     this.assets.splice(index, 1)
 
     return new Module(packageJson, folder, asset)
+  }
+
+  private async install (asset: Asset): Promise<void> {
+    try {
+      await download(asset)
+      const module = await this.handleFolder(join(this.getModulePath(), asset.name))
+
+      if (module === null) throw Error('Module could not be loaded')
+
+      const requiredVersion = module.getConfig().toolkitVersion
+
+      if (requiredVersion !== undefined && requiredVersion < version) {
+        log.error(`Module ${asset.name} could not be installed, because the prod tool has not the required version`)
+        return
+      }
+
+      const dependencies = module.getConfig().dependencies
+
+      if (dependencies !== undefined && dependencies.length > 0) {
+        for await (const dependency of dependencies) {
+          const activeModule = this.modules.find(m => m.getName() === dependency)
+
+          if (activeModule === undefined) {
+            const asset = this.assets.find(a => a.name === dependency)
+            log.info(`Dependency ${dependency} is not installed, therefore will be installed now`)
+
+            if (asset === undefined) {
+              log.error(`Dependency ${dependency} could not be installed`)
+            } else {
+              await this.install(asset)
+            }
+          }
+        }
+      }
+
+      const plugin = await this.loadPlugin(module)
+      this.activePlugins.push(plugin)
+      plugin.initialize()
+
+      this.assets.slice(
+        this.assets.findIndex((a) => a.name === asset.name),
+        1
+      )
+      this.modules.push(module)
+
+      log.info(`${asset.name} was successfully installed`)
+    } catch (error) {
+      log.error(`Module ${asset.name} could not be installed: ${error.messages as string}`)
+    }
   }
 }
 

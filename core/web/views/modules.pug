@@ -12,6 +12,16 @@ block layout-content
         name: asset.name
       })
     };
+    async function install (asset) {
+      LPTE.emit({
+        meta: {
+          namespace: 'lpt',
+          type: 'install-plugin',
+          version: 1
+        },
+        name: asset.name
+      })
+    };
 
   h1 Modules
   p Modules provide you the actual functionality.
@@ -68,5 +78,5 @@ block layout-content
               td.align-middle= mod.name
               td.align-middle= mod.version
               td.align-middle
-                button.btn.btn-success(onclick=`download(${JSON.stringify(mod)})`)= Install
+                button.btn.btn-success(onclick=`install(${JSON.stringify(mod)})`)= Install
                   i.fa.fa-download

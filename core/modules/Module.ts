@@ -26,6 +26,8 @@ export interface ToolkitConfig {
   modes: ModuleType[]
   plugin: undefined | PluginConfig
   needsBuild?: boolean
+  toolkitVersion?: string
+  dependencies?: string[]
 }
 
 export interface Asset {
@@ -152,7 +154,7 @@ export class Plugin {
     }
   }
 
-  initialize(svc: ModuleService): void {
+  initialize (): void {
     // Craft context
     this.context = new PluginContext(this)
 
