@@ -1,4 +1,5 @@
 import { Router } from 'express'
+import { version } from '../../../package.json'
 
 export default (globalContext: any): Router => {
   const router = Router()
@@ -7,7 +8,7 @@ export default (globalContext: any): Router => {
     res.render('index', {
       ...globalContext,
       title: 'Home',
-      version: '0.0.1'
+      version: version
     })
   })
 
