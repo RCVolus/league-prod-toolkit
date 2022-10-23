@@ -74,3 +74,6 @@
 [submodule "modules/module-league-champselect-ace"]
 	path = modules/module-league-champselect-ace
 	url = https://github.com/rcv-prod-toolkit/module-league-champselect-ace.git
+[submodule "modules/module-twitch"]
+	path = modules/module-twitch
+	url = https://github.com/rcv-prod-toolkit/module-twitch
