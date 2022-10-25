@@ -8,7 +8,6 @@ import Module, { Plugin, PluginStatus, Asset, PackageJson } from './Module'
 import ModuleType from './ModuleType'
 import { EventType } from '../eventbus/LPTE'
 import { download, getAll } from '../../scripts/install'
-import { version } from '../../package.json'
 
 const readdirPromise = readdir
 const statPromise = stat
@@ -32,8 +31,7 @@ export class ModuleService {
       // Check if we need to adapt the status here
       if (plugin.status !== event.status) {
         log.info(
-          `Plugin status changed: plugin=${plugin.getModule().getName()}, old=${
-            plugin.status
+          `Plugin status changed: plugin=${plugin.getModule().getName()}, old=${plugin.status
           }, new=${event.status as string}`
         )
         plugin.status = event.status
@@ -91,16 +89,17 @@ export class ModuleService {
       const asset = this.assets.find((a) => a.name === e.name)
 
       if (asset !== undefined) {
-        await this.install(asset)
-        log.info(`plugin ${e.name as string} was installed`)
-        return LPTEService.emit({
-          meta: {
-            namespace: 'lpt',
-            type: 'plugin-installed',
-            version: 1
-          },
-          name: e.name
-        })
+        try {
+          await this.install(asset)
+          return LPTEService.emit({
+            meta: {
+              namespace: 'lpt',
+              type: 'plugin-installed',
+              version: 1
+            },
+            name: e.name
+          })
+        } catch (_e) {}
       }
 
       return LPTEService.emit({
@@ -232,19 +231,12 @@ export class ModuleService {
     return new Module(packageJson, folder, asset)
   }
 
-  private async install (asset: Asset): Promise<void> {
+  private async install(asset: Asset): Promise<void> {
     try {
       await download(asset)
       const module = await this.handleFolder(join(this.getModulePath(), asset.name))
 
       if (module === null) throw Error('Module could not be loaded')
-
-      const requiredVersion = module.getConfig().toolkitVersion
-
-      if (requiredVersion !== undefined && requiredVersion < version) {
-        log.error(`Module ${asset.name} could not be installed, because the prod tool has not the required version`)
-        return
-      }
 
       const dependencies = module.getConfig().dependencies
 
@@ -277,7 +269,7 @@ export class ModuleService {
 
       log.info(`${asset.name} was successfully installed`)
     } catch (error) {
-      log.error(`Module ${asset.name} could not be installed: ${error.messages as string}`)
+      log.error(`Module ${asset.name} could not be installed: ${error.message as string}`)
     }
   }
 }

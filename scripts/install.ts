@@ -1,11 +1,13 @@
 import axios from 'axios'
-import fs from 'fs'
+import { createWriteStream, existsSync } from 'fs'
 import { promisify } from 'util'
-import path from 'path'
+import { join } from 'path'
 import { exec } from 'child_process'
 import { extract } from 'zip-lib'
+import { move, readJSON, remove } from 'fs-extra'
 import { createSpinner } from 'nanospinner'
 import { Asset } from '../core/modules/Module'
+import { version } from '../package.json'
 
 const execPromise = promisify(exec)
 
@@ -54,33 +56,53 @@ export async function download(asset: Asset): Promise<void> {
     spinner.error({ text: dl.statusText })
     return
   }
-  let cwd = path.join(__dirname, '..', '..', 'modules')
+  let cwd = join(__dirname, '..', '..', 'modules')
 
   if (asset.name.startsWith('theme')) {
-    cwd = path.join(cwd, 'plugin-theming', 'themes')
+    cwd = join(cwd, 'plugin-theming', 'themes')
   }
 
-  const savePath = path.join(cwd, `${asset.name}.zip`)
-  const folderPath = path.join(cwd, asset.name)
+  const savePath = join(cwd, `${asset.name}.zip`)
+  const folderPath = join(cwd, asset.name)
+  const tmpPath = join(cwd, asset.name + '-tmp')
+  const packagePath = join(tmpPath, 'package.json')
 
-  return await new Promise((resolve) => {
-    dl.data.pipe(fs.createWriteStream(savePath))
+  return await new Promise((resolve, reject) => {
+    dl.data.pipe(createWriteStream(savePath))
     dl.data.on('end', async () => {
       spinner.update({
         text: `unpacking ${asset.name}`
       })
-      await extract(savePath, folderPath)
+      await extract(savePath, tmpPath)
 
-      if (!asset.name.startsWith('theme')) {
-        spinner.update({ text: `installing dependency for ${asset.name}` })
-        await execPromise('npm i --production', { cwd: folderPath })
+      let requiredVersion
+
+      if (existsSync(packagePath)) {
+        requiredVersion = (await readJSON(packagePath))?.toolkit?.toolkitVersion
       }
 
-      await fs.promises.unlink(savePath)
-      spinner.success({
-        text: `${asset.name} installed`
-      })
-      resolve()
+      if (requiredVersion !== undefined && requiredVersion > version) {
+        spinner.error({
+          text: `${asset.name} could not be installed`
+        })
+        await remove(savePath)
+        await remove(tmpPath)
+        return reject(new Error(`The prod-tool (v${version}) has not the required version ${requiredVersion as string}`))
+      } else {
+        await move(tmpPath, folderPath)
+
+        if (!asset.name.startsWith('theme')) {
+          spinner.update({ text: `installing dependency for ${asset.name}` })
+          await execPromise('npm i --production', { cwd: folderPath })
+        }
+
+        await remove(savePath)
+
+        spinner.success({
+          text: `${asset.name} installed`
+        })
+        resolve()
+      }
     })
   })
 }
