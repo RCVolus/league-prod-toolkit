@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import path from 'path'
+import { join } from 'path'
 import send from 'send'
 
 import { GlobalContext } from '../globalContext'
@@ -20,7 +20,7 @@ export default (globalContext: GlobalContext): Router => {
     }
 
     const relativePath = anyParams[0] !== '' ? anyParams[0] : '/'
-    const absolutePath = path.join(
+    const absolutePath = join(
       serve.sender.path,
       serve.frontend,
       relativePath

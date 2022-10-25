@@ -1,12 +1,9 @@
 import { Router } from 'express'
-import path from 'path'
+import { join } from 'path'
 import send from 'send'
-import fs from 'fs'
-import util from 'util'
+import { readFile } from 'fs/promises'
 
 import { GlobalContext } from '../globalContext'
-
-const readFile = util.promisify(fs.readFile)
 
 export default (globalContext: GlobalContext): Router => {
   const router = Router()
@@ -24,7 +21,7 @@ export default (globalContext: GlobalContext): Router => {
     }
 
     const relativePath = anyParams[0] !== '' ? anyParams[0] : '/'
-    const absolutePath = path.join(
+    const absolutePath = join(
       page.sender.path,
       page.frontend,
       relativePath
@@ -33,7 +30,7 @@ export default (globalContext: GlobalContext): Router => {
     if (relativePath === '/') {
       let fileContent
       try {
-        fileContent = await readFile(path.join(absolutePath, 'index.html'), {
+        fileContent = await readFile(join(absolutePath, 'index.html'), {
           encoding: 'utf8'
         })
       } catch (e) {

@@ -1,6 +1,6 @@
 import express from 'express'
-import path from 'path'
-import http from 'http'
+import { join } from 'path'
+import { createServer } from 'http'
 import * as WebSocket from 'ws'
 import cookieParser from 'cookie-parser'
 
@@ -19,33 +19,33 @@ const log = logging('server')
 const app = express()
 const port = process.env.PORT === undefined ? '3003' : process.env.PORT
 
-const server = http.createServer(app)
+const server = createServer(app)
 
 /**
  * App Configuration
  */
-app.set('views', path.join(__dirname, 'views'))
+app.set('views', join(__dirname, 'views'))
 app.set('view engine', 'pug')
 app.use('/static', express.static('dist/frontend'))
 app.use(
   '/vendor/bootstrap',
-  express.static(path.join(__dirname, '../../../node_modules/bootstrap/dist'))
+  express.static(join(__dirname, '../../../node_modules/bootstrap/dist'))
 )
 app.use(
   '/vendor/jquery',
-  express.static(path.join(__dirname, '../../../node_modules/jquery/dist'))
+  express.static(join(__dirname, '../../../node_modules/jquery/dist'))
 )
 app.use(
   '/vendor/jspath',
-  express.static(path.join(__dirname, '../../../node_modules/jspath'))
+  express.static(join(__dirname, '../../../node_modules/jspath'))
 )
 app.use(
   '/vendor/toastr',
-  express.static(path.join(__dirname, '../../../node_modules/toastr/build'))
+  express.static(join(__dirname, '../../../node_modules/toastr/build'))
 )
 app.use(
   '/vendor/jwt-decode',
-  express.static(path.join(__dirname, '../../../node_modules/jwt-decode/build'))
+  express.static(join(__dirname, '../../../node_modules/jwt-decode/build'))
 )
 
 app.use(express.json())
@@ -92,7 +92,7 @@ app.post('/upload', async (req, res) => {
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
   const file = req.files.file as UploadedFile
   await file.mv(
-    path.join(__dirname, '..', '..', '..', 'modules', req.body.path, file.name)
+    join(__dirname, '..', '..', '..', 'modules', req.body.path, file.name)
   )
 
   res.send({

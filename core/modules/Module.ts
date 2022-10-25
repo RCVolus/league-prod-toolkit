@@ -1,8 +1,7 @@
-import path from 'path'
+import { join } from 'path'
 import { Logger } from 'winston'
 
 import ModuleType from './ModuleType'
-import { ModuleService } from './ModuleService'
 import lpteService from '../eventbus/LPTEService'
 import logger from '../logging'
 import { LPTE } from '../eventbus/LPTE'
@@ -114,7 +113,7 @@ export class PluginContext {
   constructor(plugin: Plugin) {
     this.log = logger(plugin.getModule().getName())
     this.require = (file: string) =>
-      require(path.join(plugin.getModule().getFolder(), file))
+      require(join(plugin.getModule().getFolder(), file))
     this.LPTE = lpteService.forPlugin(plugin)
     this.plugin = plugin
     this.progress = progress(plugin.module.getName())
@@ -174,7 +173,7 @@ export class Plugin {
     let main
     try {
       // eslint-disable-next-line
-      main = require(path.join(this.getModule().getFolder(), mainFile))
+      main = require(join(this.getModule().getFolder(), mainFile))
     } catch (e) {
       handleError(e)
       return

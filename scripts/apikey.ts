@@ -1,9 +1,9 @@
-import fs from 'fs'
-import path from 'path'
+import { writeJSON } from 'fs-extra'
+import { join } from 'path'
 import inquirer from 'inquirer'
 import { createSpinner } from 'nanospinner'
 
-const newFilePath = path.join(
+const newFilePath = join(
   __dirname,
   '..',
   '..',
@@ -33,7 +33,7 @@ const askQuestions = async (): Promise<void> => {
   const spinner = createSpinner('Saving config')
 
   try {
-    await fs.promises.writeFile(newFilePath, JSON.stringify(file, null, 2))
+    await writeJSON(newFilePath, file, { spaces: 2 })
     spinner.success({
       text: 'config saved'
     })
