@@ -140,43 +140,6 @@ const getGameSelection = async (): Promise<Asset[]> => {
   return selection
 }
 
-/* const getDatabaseInfo = async (): Promise<any> => {
-  const clusterUrl = await inquirer.prompt({
-    type: 'input',
-    name: 'clusterUrl',
-    message: 'Enter your Database cluster-url',
-    default: 'localhost'
-  })
-
-  const port = await inquirer.prompt({
-    type: 'number',
-    name: 'port',
-    message: 'Enter your Database port',
-    default: 27017
-  })
-
-  const user = await inquirer.prompt({
-    type: 'input',
-    name: 'user',
-    message: 'Enter your Database user',
-    default: 'root'
-  })
-
-  const password = await inquirer.prompt({
-    type: 'input',
-    name: 'password',
-    message: 'Enter your Database password',
-    default: ''
-  })
-
-  return {
-    clusterUrl: clusterUrl.clusterUrl,
-    port: port.port,
-    user: user.user,
-    password: password.password
-  }
-} */
-
 const filePath = join(
   __dirname,
   '..',
@@ -199,12 +162,10 @@ const file = require(filePath)
 const askQuestions = async (): Promise<void> => {
   const apiKey = await getApiKey()
   const server = await getServer()
-  /* const database = await getDatabaseInfo() */
   const auth = await getAuth()
 
   file['plugin-webapi'].apiKey = apiKey
   file['plugin-webapi'].server = server
-  /* file['plugin-database'] = database */
   file.auth = {
     enabled: auth,
     secreteKey: auth ? randomBytes(48).toString('hex') : '',
