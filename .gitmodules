@@ -77,3 +77,6 @@
 [submodule "modules/module-twitch"]
 	path = modules/module-twitch
 	url = https://github.com/rcv-prod-toolkit/module-twitch
+[submodule "docs/wiki"]
+	path = docs/wiki
+	url = https://github.com/RCVolus/league-prod-toolkit.wiki.git
