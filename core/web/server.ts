@@ -17,7 +17,7 @@ import bodyParser from 'body-parser'
  */
 const log = logging('server')
 const app = express()
-const port = process.env.PORT === undefined ? '3003' : process.env.PORT
+const port = process.env.PORT ?? '3003'
 
 const server = createServer(app)
 
@@ -62,7 +62,7 @@ export const wss = new WebSocket.Server({
 
 export let wsClients: WebSocket[] = []
 
-wss.on('connection', (socket: WebSocket, requests) => {
+wss.on('connection', (socket: WebSocket, _requests) => {
   wsClients.push(socket)
   log.debug('Websocket client connected')
 
@@ -90,7 +90,11 @@ app.post('/upload', async (req, res) => {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
-  const file = req.files.file as UploadedFile
+  const file = req.files?.file as UploadedFile | undefined
+  if (file === undefined) {
+    return res.status(500).send()
+  }
+
   await file.mv(
     join(__dirname, '..', '..', '..', 'modules', req.body.path, file.name)
   )
