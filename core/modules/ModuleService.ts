@@ -268,7 +268,7 @@ export class ModuleService {
       this.modules.push(module)
 
       log.info(`${asset.name} was successfully installed`)
-    } catch (error) {
+    } catch (error: any) {
       log.error(`Module ${asset.name} could not be installed: ${error.message as string}`)
     }
   }
