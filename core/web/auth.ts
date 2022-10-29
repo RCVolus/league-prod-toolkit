@@ -53,7 +53,7 @@ export async function runAuth(
   wss.options.verifyClient = verifyWSClient
   server.all('*', verifyEPClient)
 
-  server.get('/login', (req, res) => {
+  server.get('/login', (_req, res) => {
     res.render('login', {
       title: 'Login',
       version: '0.0.1'
