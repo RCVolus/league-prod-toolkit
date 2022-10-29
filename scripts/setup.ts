@@ -179,7 +179,7 @@ const askQuestions = async (): Promise<void> => {
     spinner.success({
       text: 'config saved'
     })
-  } catch (err) {
+  } catch (err: any) {
     spinner.error({
       text: err.message
     })
@@ -195,7 +195,7 @@ const installAssets = async (): Promise<void> => {
     for (const asset of assets) {
       await download(asset)
     }
-  } catch (error) {
+  } catch (error: any) {
     console.log(error)
   }
 }

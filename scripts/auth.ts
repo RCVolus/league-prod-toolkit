@@ -44,7 +44,7 @@ const askQuestions = async (): Promise<void> => {
     spinner.success({
       text: 'config saved'
     })
-  } catch (err) {
+  } catch (err: any) {
     spinner.error({
       text: err.message
     })

@@ -32,7 +32,7 @@ export async function getAll(): Promise<Asset[]> {
     if (req.status !== 200) return []
 
     assets = req.data.filter((a: any[]) => a !== null)
-  } catch (e) {
+  } catch (e: any) {
     console.log(e.data?.message)
   }
 
