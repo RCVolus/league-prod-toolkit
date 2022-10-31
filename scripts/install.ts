@@ -7,6 +7,7 @@ import { extract } from 'zip-lib'
 import { move, readJSON, remove } from 'fs-extra'
 import { createSpinner } from 'nanospinner'
 import { Asset } from '../core/modules/Module'
+import { satisfies } from 'semver'
 import { version } from '../package.json'
 
 const execPromise = promisify(exec)
@@ -81,7 +82,7 @@ export async function download(asset: Asset): Promise<void> {
         requiredVersion = (await readJSON(packagePath))?.toolkit?.toolkitVersion
       }
 
-      if (requiredVersion !== undefined && requiredVersion > version) {
+      if (requiredVersion !== undefined && !satisfies(version, requiredVersion)) {
         spinner.error({
           text: `${asset.name} could not be installed`
         })

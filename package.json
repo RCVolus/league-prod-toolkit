@@ -30,6 +30,7 @@
     "minimist": "^1.2.6",
     "nanospinner": "^1.1.0",
     "pug": "^3.0.0",
+    "semver": "^7.3.8",
     "send": "^0.17.1",
     "toastr": "^2.1.4",
     "tslib": "^2.3.1",
@@ -40,12 +41,12 @@
     "zip-lib": "^0.7.3"
   },
   "devDependencies": {
-    "@types/inquirer": "^9.0.2",
     "@types/cli-progress": "^3.9.2",
     "@types/cookie-parser": "^1.4.2",
     "@types/express": "^4.17.13",
     "@types/express-fileupload": "^1.2.2",
     "@types/fs-extra": "^9.0.13",
+    "@types/inquirer": "^9.0.2",
     "@types/jsonwebtoken": "^8.5.8",
     "@types/minimist": "^1.2.0",
     "@types/node": "^18.11.2",
