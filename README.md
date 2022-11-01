@@ -35,7 +35,8 @@ Screens showing postgame stats
 ### Postgame
 - Stats for the winning team
 - MVP screen
-## Requirements & Limitations
+
+# Requirements & Limitations
 
 - Champion Select / ingame overlays require our [Observer Tool](https://github.com/RCVolus/league-observer-tool) to send game data
 - Some features require a Riot API Key
