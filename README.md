@@ -1,10 +1,40 @@
 # Features
+## Production Features
+- Manage and dynamically update lower thirds for casters
+- Track matchups and scores to automatically generate overlays for ingame, talks and breaks
+- Apply consistent theming across all generated overlays
+- Twitch integration to create predictions and show state in stream (requires a [Twitch-App](https://dev.twitch.tv/console/apps))
 
-- Custom champion select overlay (implementation of our stand-alone tool [here](https://github.com/RCVolus/lol-pick-ban-ui))
-- Ingame overlay with animations for item purchases and level ups
-- Track matchups and automatically update ingame overlays and pause screens
-- Postgame stats (pick order, item builds, damage graphs, gold graph, and more)
+## League Features
+### Pregame
+- Lobby information with all players and op.gg links
+- Custom Champ Select overlay (Implementation of [lol-pick-ban-ui](https://github.com/RCVolus/lol-pick-ban-ui))
+- Recording and Replay of Champselect
+- Rune overview (to kill time during spectator delay, game needs to be live)
 
+### Ingame
+- Animations for level ups and item purchases
+- Animations for events (Baron | Dragons | Herald)
+- Custom killfeed
+- Power-Play timer for Baron ann Elder Dragon
+- Inhibitor timers
+
+### Postgame
+Screens showing postgame stats
+- Overview
+- Pick order
+- Item builds
+- Damage graphs
+- Gold graph
+
+## Valorant Features
+### Pregame
+- Custom Agent select overlay
+- Loading screen overlay
+
+### Postgame
+- Stats for the winning team
+- MVP screen
 ## Requirements & Limitations
 
 - Champion Select / ingame overlays require our [Observer Tool](https://github.com/RCVolus/league-observer-tool) to send game data
