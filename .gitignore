@@ -4,3 +4,4 @@ dist/
 core-build/
 cache/
 .DS_Store
+modules/module-vmix

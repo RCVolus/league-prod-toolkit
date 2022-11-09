@@ -90,7 +90,7 @@ export async function download(asset: Asset): Promise<void> {
         await remove(tmpPath)
         return reject(new Error(`The prod-tool (v${version}) has not the required version ${requiredVersion as string}`))
       } else {
-        await move(tmpPath, folderPath)
+        await move(tmpPath, folderPath, { overwrite: true })
 
         if (!asset.name.startsWith('theme')) {
           spinner.update({ text: `installing dependency for ${asset.name}` })

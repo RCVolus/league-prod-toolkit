@@ -225,8 +225,11 @@ export class ModuleService {
     const packageJson = require(packageJsonPath) as PackageJson
 
     const index = this.assets.findIndex((a) => a.name === packageJson.name)
-    const asset = this.assets[index]
-    this.assets.splice(index, 1)
+    let asset
+    if (index !== -1) {
+      asset = this.assets[index]
+      this.assets.splice(index, 1)
+    }
 
     return new Module(packageJson, folder, asset)
   }
