@@ -65,9 +65,9 @@
 [submodule "modules/module-league-runes"]
 	path = modules/module-league-runes
 	url = https://github.com/rcv-prod-toolkit/module-league-runes.git
-[submodule "modules/module-league-lobby"]
-	path = modules/module-league-lobby
-	url = https://github.com/rcv-prod-toolkit/module-league-lobby.git
+[submodule "modules/module-league-caster-cockpit"]
+	path = modules/module-league-caster-cockpit
+	url = https://github.com/rcv-prod-toolkit/module-league-caster-cockpit.git
 [submodule "modules/module-league-champselect-tent"]
 	path = modules/module-league-champselect-tent
 	url = https://github.com/rcv-prod-toolkit/module-league-champselect-tent.git
