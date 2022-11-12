@@ -13,7 +13,7 @@ const main = async (): Promise<void> => {
   const data = await fs.promises.readdir(modulePath)
   await Promise.all(
     data.map(async (folderName) => {
-      if (!process.argv.includes(folderName)) {
+      if (!process.argv.includes(folderName) && process.argv.length > 2) {
         return
       }
 
