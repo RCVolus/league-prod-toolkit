@@ -4,7 +4,7 @@ import { promisify } from 'util'
 import { join } from 'path'
 import { exec } from 'child_process'
 import { extract } from 'zip-lib'
-import { move, readJSON, remove } from 'fs-extra'
+import { readJSON, remove } from 'fs-extra'
 import { createSpinner } from 'nanospinner'
 import { Asset } from '../core/modules/Module'
 import { satisfies } from 'semver'
@@ -90,13 +90,14 @@ export async function download(asset: Asset): Promise<void> {
         await remove(tmpPath)
         return reject(new Error(`The prod-tool (v${version}) has not the required version ${requiredVersion as string}`))
       } else {
-        await move(tmpPath, folderPath, { overwrite: true })
+        await extract(savePath, folderPath, { overwrite: true })
 
         if (!asset.name.startsWith('theme')) {
           spinner.update({ text: `installing dependency for ${asset.name}` })
           await execPromise('npm i --production', { cwd: folderPath })
         }
 
+        await remove(tmpPath)
         await remove(savePath)
 
         spinner.success({
