@@ -9,16 +9,11 @@ const execPromise = promisify(exec)
 
 const modulePath = './modules'
 
-let filter = ''
-if (process.argv.length === 3) {
-  filter = process.argv[2]
-}
-
 const main = async (): Promise<void> => {
   const data = await fs.promises.readdir(modulePath)
   await Promise.all(
     data.map(async (folderName) => {
-      if (filter !== '' && folderName !== filter) {
+      if (!process.argv.includes(folderName)) {
         return
       }
 
@@ -37,8 +32,8 @@ const main = async (): Promise<void> => {
       ) as PackageJson
 
       if (
-        pkgJson.dependencies !== undefined ||
-        pkgJson.devDependencies !== undefined
+        (pkgJson.dependencies !== undefined ||
+        pkgJson.devDependencies !== undefined) && !process.argv.includes('ni')
       ) {
         // run install
         await execPromise('npm ci', {
