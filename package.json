@@ -1,6 +1,6 @@
 {
   "name": "league-prod-toolkit-core",
-  "version": "1.2.12",
+  "version": "1.2.13",
   "scripts": {
     "build": "tsc && webpack",
     "build:modules": "node dist/utils/build-modules.js",
