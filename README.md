@@ -71,7 +71,7 @@ Legend:
 
 ## Developing
 
-The developer documentation can be found in the [Wiki](https://github.com/RCVolus/league-prod-toolkit/wiki/4.-Developer-Documentation)
+The developer documentation can be found in the [wiki](https://github.com/RCVolus/league-prod-toolkit/wiki/4.-Developer-Documentation).
 
 ### Legal Disclaimer
 
