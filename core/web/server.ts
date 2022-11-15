@@ -3,14 +3,13 @@ import { join } from 'path'
 import { createServer } from 'http'
 import * as WebSocket from 'ws'
 import cookieParser from 'cookie-parser'
-
 import logging from '../logging'
 import globalContext from './globalContext'
 import getController from './controller'
 import { handleClient } from './ws'
 import { runAuth } from './auth'
 import fileUpload, { UploadedFile } from 'express-fileupload'
-import bodyParser from 'body-parser'
+import { urlencoded } from 'body-parser'
 
 /**
  * App Variables
@@ -18,7 +17,6 @@ import bodyParser from 'body-parser'
 const log = logging('server')
 const app = express()
 const port = process.env.PORT ?? '3003'
-
 const server = createServer(app)
 
 /**
@@ -49,7 +47,7 @@ app.use(
 )
 
 app.use(express.json())
-app.use(bodyParser.urlencoded({ extended: true }))
+app.use(urlencoded({ extended: true }))
 app.use(cookieParser())
 
 /**
