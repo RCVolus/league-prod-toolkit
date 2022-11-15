@@ -13,7 +13,7 @@ import { version } from '../package.json'
 const execPromise = promisify(exec)
 
 if (process.argv.includes('-plugins')) {
-  (async () => {
+  ;(async () => {
     await installPlugins()
     await run()
   })()
@@ -82,13 +82,22 @@ export async function download(asset: Asset): Promise<void> {
         requiredVersion = (await readJSON(packagePath))?.toolkit?.toolkitVersion
       }
 
-      if (requiredVersion !== undefined && !satisfies(version, requiredVersion)) {
+      if (
+        requiredVersion !== undefined &&
+        !satisfies(version, requiredVersion)
+      ) {
         spinner.error({
           text: `${asset.name} could not be installed`
         })
         await remove(savePath)
         await remove(tmpPath)
-        return reject(new Error(`The prod-tool (v${version}) has not the required version ${requiredVersion as string}`))
+        return reject(
+          new Error(
+            `The prod-tool (v${version}) has not the required version ${
+              requiredVersion as string
+            }`
+          )
+        )
       } else {
         await extract(savePath, folderPath, { overwrite: true })
 

@@ -153,7 +153,7 @@ export class Plugin {
     }
   }
 
-  initialize (): void {
+  initialize(): void {
     // Craft context
     this.context = new PluginContext(this)
 

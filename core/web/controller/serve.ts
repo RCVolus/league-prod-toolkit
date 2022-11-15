@@ -20,11 +20,7 @@ export default (globalContext: GlobalContext): Router => {
     }
 
     const relativePath = anyParams[0] !== '' ? anyParams[0] : '/'
-    const absolutePath = join(
-      serve.sender.path,
-      serve.frontend,
-      relativePath
-    )
+    const absolutePath = join(serve.sender.path, serve.frontend, relativePath)
 
     send(req, absolutePath).pipe(res)
   })

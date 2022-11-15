@@ -21,11 +21,7 @@ export default (globalContext: GlobalContext): Router => {
     }
 
     const relativePath = anyParams[0] !== '' ? anyParams[0] : '/'
-    const absolutePath = join(
-      page.sender.path,
-      page.frontend,
-      relativePath
-    )
+    const absolutePath = join(page.sender.path, page.frontend, relativePath)
 
     if (relativePath === '/') {
       let fileContent

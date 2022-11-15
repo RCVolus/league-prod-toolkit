@@ -1,18 +1,23 @@
 # Features
+
 ## Production Features
+
 - Manage and dynamically update lower thirds for casters
 - Track matchups and scores to automatically generate overlays for ingame, talks and breaks
 - Apply consistent theming across all generated overlays
 - Twitch integration to create predictions and show state in stream (requires a [Twitch-App](https://dev.twitch.tv/console/apps))
 
 ## League Features
+
 ### Pregame
+
 - Lobby information with all players and op.gg links
 - Custom Champ Select overlay (Implementation of [lol-pick-ban-ui](https://github.com/RCVolus/lol-pick-ban-ui))
 - Recording and Replay of Champselect
 - Rune overview (to kill time during spectator delay, game needs to be live)
 
 ### Ingame
+
 - Animations for level ups and item purchases
 - Animations for events (Baron | Dragons | Herald)
 - Custom killfeed
@@ -20,7 +25,9 @@
 - Inhibitor timers
 
 ### Postgame
+
 Screens showing postgame stats
+
 - Overview
 - Pick order
 - Item builds
@@ -28,11 +35,14 @@ Screens showing postgame stats
 - Gold graph
 
 ## Valorant Features
+
 ### Pregame
+
 - Custom Agent select overlay
 - Loading screen overlay
 
 ### Postgame
+
 - Stats for the winning team
 - MVP screen
 

@@ -117,14 +117,14 @@ export class LPTEService implements LPTE {
     })
   }
 
-  unregister (namespace: string, type: string): void {
+  unregister(namespace: string, type: string): void {
     this.registrations = this.registrations.filter(
       (registration) =>
         registration.namespace !== namespace && registration.type !== type
     )
   }
 
-  unregisterHandler (handler: (event: LPTEvent) => void): void {
+  unregisterHandler(handler: (event: LPTEvent) => void): void {
     setTimeout(() => {
       this.registrations = this.registrations.filter(
         (registration) => registration.handle !== handler
