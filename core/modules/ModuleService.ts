@@ -31,7 +31,8 @@ export class ModuleService {
       // Check if we need to adapt the status here
       if (plugin.status !== event.status) {
         log.info(
-          `Plugin status changed: plugin=${plugin.getModule().getName()}, old=${plugin.status
+          `Plugin status changed: plugin=${plugin.getModule().getName()}, old=${
+            plugin.status
           }, new=${event.status as string}`
         )
         plugin.status = event.status
@@ -237,7 +238,9 @@ export class ModuleService {
   private async install(asset: Asset): Promise<void> {
     try {
       await download(asset)
-      const module = await this.handleFolder(join(this.getModulePath(), asset.name))
+      const module = await this.handleFolder(
+        join(this.getModulePath(), asset.name)
+      )
 
       if (module === null) throw Error('Module could not be loaded')
 
@@ -245,11 +248,15 @@ export class ModuleService {
 
       if (dependencies !== undefined && dependencies.length > 0) {
         for await (const dependency of dependencies) {
-          const activeModule = this.modules.find(m => m.getName() === dependency)
+          const activeModule = this.modules.find(
+            (m) => m.getName() === dependency
+          )
 
           if (activeModule === undefined) {
-            const asset = this.assets.find(a => a.name === dependency)
-            log.info(`Dependency ${dependency} is not installed, therefore will be installed now`)
+            const asset = this.assets.find((a) => a.name === dependency)
+            log.info(
+              `Dependency ${dependency} is not installed, therefore will be installed now`
+            )
 
             if (asset === undefined) {
               log.error(`Dependency ${dependency} could not be installed`)
@@ -272,7 +279,11 @@ export class ModuleService {
 
       log.info(`${asset.name} was successfully installed`)
     } catch (error: any) {
-      log.error(`Module ${asset.name} could not be installed: ${error.message as string}`)
+      log.error(
+        `Module ${asset.name} could not be installed: ${
+          error.message as string
+        }`
+      )
     }
   }
 }

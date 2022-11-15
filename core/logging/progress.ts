@@ -24,7 +24,11 @@ const progress = (plugin: string): MultiBar => {
       (options.barCompleteString ?? '\u2588').substring(0, completeSize) +
       (options.barIncompleteString ?? '\u2591').substring(0, incompleteSize)
 
-    const msg = `${currentDate()} [\u001b[32m${'Info'.padEnd(5)}\u001b[39m] ${`\u001b[95m${plugin}\u001b[39m`.padEnd(22)}: ${payload.task as string} [${bar}] ${percent}%`
+    const msg = `${currentDate()} [\u001b[32m${'Info'.padEnd(
+      5
+    )}\u001b[39m] ${`\u001b[95m${plugin}\u001b[39m`.padEnd(22)}: ${
+      payload.task as string
+    } [${bar}] ${percent}%`
 
     if (params.value >= params.total) {
       return msg + '\n'

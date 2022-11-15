@@ -33,7 +33,8 @@ const main = async (): Promise<void> => {
 
       if (
         (pkgJson.dependencies !== undefined ||
-        pkgJson.devDependencies !== undefined) && !process.argv.includes('ni')
+          pkgJson.devDependencies !== undefined) &&
+        !process.argv.includes('ni')
       ) {
         // run install
         await execPromise('npm ci', {
