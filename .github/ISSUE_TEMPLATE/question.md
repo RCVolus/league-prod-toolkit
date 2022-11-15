@@ -1,9 +1,10 @@
 ---
 name: Question
 about: Ask a Question
-title: '[ Question ]'
+title: "[ Question ]"
 labels: question
 assignees: sdomi4
+
 ---
 
 **Is your question related to a problem? Please describe.**

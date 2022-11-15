@@ -1,9 +1,10 @@
 ---
 name: Bug report
 about: Create a report to help us improve
-title: ''
+title: "[ Bug ]"
 labels: bug
 assignees: ''
+
 ---
 
 **Describe the bug**
@@ -27,8 +28,10 @@ If applicable, add screenshots to help explain your problem.
 
 - OS: [e.g. iOS]
 - Node: [e.g. 16.4]
+- Prod Tool Version: [e.g. 1.3.0]
+- Observer Tool Version: [e.g. 1.0.0]
+- Streaming Software & Version: (If it is a problem while streaming or testing)
 - Browser: [e.g. chrome, safari]
-- Version: [e.g. 22]
 
 **Additional context**
 Add any other context about the problem here.
