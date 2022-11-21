@@ -53,7 +53,7 @@ block layout-content
                 td.align-middle.table-danger= pluginStatus
               td.align-middle= "v" + mod.getVersion()
               td.align-middle= mod.getNewestVersion()
-              if "v" + mod.getVersion() < mod.getNewestVersion() && mod.getNewestVersion() !== ''
+              if mod.updateAvailable
                 td.align-middle
                   button.btn.btn-success(onclick=`download(${JSON.stringify(mod.asset)})`)= Update
                     i.fa.fa-download

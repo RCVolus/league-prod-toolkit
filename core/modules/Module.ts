@@ -7,6 +7,7 @@ import logger from '../logging'
 import { LPTE } from '../eventbus/LPTE'
 import { MultiBar } from 'cli-progress'
 import progress from '../logging/progress'
+import { gt, gtr } from 'semver'
 
 export interface PackageJson {
   name: string
@@ -41,11 +42,18 @@ export default class Module {
   plugin: undefined | Plugin
   folder: string
   asset?: Asset
+  updateAvailable: boolean
 
   constructor(packageJson: any, folder: string, asset?: Asset) {
     this.packageJson = packageJson
     this.folder = folder
     this.asset = asset
+
+    if (this.asset?.version !== undefined) {
+      this.updateAvailable = gt(this.asset?.version, this.packageJson.version)
+    } else {
+      this.updateAvailable = false
+    }
   }
 
   public getName(): string {
