@@ -83,3 +83,6 @@
 [submodule "modules/module-vmix"]
 	path = modules/module-vmix
 	url = https://github.com/rcv-prod-toolkit/module-vmix
+[submodule "types"]
+	path = types
+	url = https://github.com/rcv-prod-toolkit/types.git
