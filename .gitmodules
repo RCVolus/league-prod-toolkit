@@ -65,24 +65,32 @@
 [submodule "modules/module-league-runes"]
 	path = modules/module-league-runes
 	url = https://github.com/rcv-prod-toolkit/module-league-runes.git
+	branch = main
 [submodule "modules/module-league-caster-cockpit"]
 	path = modules/module-league-caster-cockpit
 	url = https://github.com/rcv-prod-toolkit/module-league-caster-cockpit.git
+	branch = main
 [submodule "modules/module-league-champselect-tent"]
 	path = modules/module-league-champselect-tent
 	url = https://github.com/rcv-prod-toolkit/module-league-champselect-tent.git
+	branch = main
 [submodule "modules/module-league-champselect-ace"]
 	path = modules/module-league-champselect-ace
 	url = https://github.com/rcv-prod-toolkit/module-league-champselect-ace.git
+	branch = main
 [submodule "modules/module-twitch"]
 	path = modules/module-twitch
-	url = https://github.com/rcv-prod-toolkit/module-twitch
+	url = https://github.com/rcv-prod-toolkit/module-twitch.git
+	branch = main
 [submodule "docs/wiki"]
 	path = docs/wiki
 	url = https://github.com/RCVolus/league-prod-toolkit.wiki.git
+	branch = main
 [submodule "modules/module-vmix"]
 	path = modules/module-vmix
-	url = https://github.com/rcv-prod-toolkit/module-vmix
+	url = https://github.com/rcv-prod-toolkit/module-vmix.git
+	branch = main
 [submodule "types"]
 	path = types
 	url = https://github.com/rcv-prod-toolkit/types.git
+	branch = main
