@@ -1,45 +1,16 @@
 import { join } from 'path'
 import { Logger } from 'winston'
 
-import ModuleType from './ModuleType'
 import lpteService from '../eventbus/LPTEService'
 import logger from '../logging'
-import { LPTE } from '../eventbus/LPTE'
+import { LPTE, ModuleType, PackageJson, Asset, ToolkitConfig, ModuleInterface, PluginInterface, PluginStatus, PluginContextInterface } from '../../types'
 import { MultiBar } from 'cli-progress'
 import progress from '../logging/progress'
-import { gt, gtr } from 'semver'
+import { gt } from 'semver'
 
-export interface PackageJson {
-  name: string
-  version: string
-  author: string
-  dependencies?: { [n: string]: string }
-  devDependencies?: { [n: string]: string }
-  toolkit: ToolkitConfig
-}
-
-export interface PluginConfig {
-  main: string
-}
-
-export interface ToolkitConfig {
-  modes: ModuleType[]
-  plugin: undefined | PluginConfig
-  needsBuild?: boolean
-  toolkitVersion?: string
-  dependencies?: string[]
-}
-
-export interface Asset {
-  name: string
-  type: 'plugin' | 'module' | 'theme'
-  version: string
-  download_url: string
-}
-
-export default class Module {
+export default class Module implements ModuleInterface {
   packageJson: PackageJson
-  plugin: undefined | Plugin
+  plugin: undefined | PluginInterface
   folder: string
   asset?: Asset
   updateAvailable: boolean
@@ -84,7 +55,7 @@ export default class Module {
     return this.plugin !== undefined
   }
 
-  public getPlugin(): Plugin | undefined {
+  public getPlugin(): PluginInterface | undefined {
     return this.plugin
   }
 
@@ -105,13 +76,7 @@ export default class Module {
   }
 }
 
-export enum PluginStatus {
-  RUNNING = 'RUNNING',
-  UNAVAILABLE = 'UNAVAILABLE',
-  DEGRADED = 'DEGRADED'
-}
-
-export class PluginContext {
+export class PluginContext implements PluginContextInterface {
   log: Logger
   require: (file: string) => any
   LPTE: LPTE
@@ -128,13 +93,13 @@ export class PluginContext {
   }
 }
 
-export class Plugin {
+export class Plugin implements PluginInterface {
   isLoaded = false
   status = PluginStatus.UNAVAILABLE
   module: Module
-  context: undefined | PluginContext
+  context: undefined | PluginContextInterface
 
-  constructor(module: Module) {
+  constructor(module: ModuleInterface) {
     this.module = module
     this.isLoaded = true
   }

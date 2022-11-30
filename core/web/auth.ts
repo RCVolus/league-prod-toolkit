@@ -6,7 +6,7 @@ import logging from '../logging'
 import { type OutgoingHttpHeaders } from 'http2'
 import { type Express, type NextFunction, type Request, type Response } from 'express'
 import jwt from 'jsonwebtoken'
-import ModuleType from '../modules/ModuleType'
+import { ModuleType } from '../../types'
 
 const log = logging('auth')
 

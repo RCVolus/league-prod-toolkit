@@ -50,7 +50,7 @@ export default (globalContext: any): Router => {
     })
   })
   router.get('/api', (req, res) => {
-    res.json(moduleService.modules.map((module) => module.toJson()))
+    res.json(moduleService.modules.map((module) => module.toJson(true)))
   })
 
   return router

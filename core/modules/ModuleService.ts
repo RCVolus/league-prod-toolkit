@@ -4,9 +4,8 @@ import { join } from 'path'
 
 import LPTEService from '../eventbus/LPTEService'
 import logging from '../logging'
-import Module, { Plugin, PluginStatus, Asset, PackageJson } from './Module'
-import ModuleType from './ModuleType'
-import { EventType } from '../eventbus/LPTE'
+import Module, { Plugin } from './Module'
+import { PluginInterface, PluginStatus, Asset, PackageJson, EventType, ModuleType, ModuleInterface } from '../../types'
 import { download, getAll } from '../../scripts/install'
 
 const readdirPromise = readdir
@@ -14,9 +13,9 @@ const statPromise = stat
 const log = logging('module-svc')
 
 export class ModuleService {
-  modules: Module[] = []
+  modules: ModuleInterface[] = []
   assets: Asset[] = []
-  activePlugins: Plugin[] = []
+  activePlugins: PluginInterface[] = []
 
   public async initialize(): Promise<void> {
     log.info('Initializing module service.')
@@ -169,7 +168,7 @@ export class ModuleService {
     return join(__dirname, '../../../modules')
   }
 
-  private async loadPlugins(): Promise<Plugin[]> {
+  private async loadPlugins(): Promise<PluginInterface[]> {
     const possibleModules = this.modules.filter((module) =>
       module.hasMode(ModuleType.PLUGIN)
     )
@@ -179,7 +178,7 @@ export class ModuleService {
     )
   }
 
-  private async loadPlugin(module: Module): Promise<Plugin> {
+  private async loadPlugin(module: ModuleInterface): Promise<PluginInterface> {
     const plugin = new Plugin(module)
 
     module.plugin = plugin
@@ -187,7 +186,7 @@ export class ModuleService {
     return plugin
   }
 
-  private async handleFolder(folder: string): Promise<Module | null> {
+  private async handleFolder(folder: string): Promise<ModuleInterface | null> {
     const statData = await statPromise(folder)
 
     // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
@@ -201,7 +200,7 @@ export class ModuleService {
     return await this.handleModule(folder)
   }
 
-  private async handleModule(folder: string): Promise<Module | null> {
+  private async handleModule(folder: string): Promise<ModuleInterface | null> {
     const packageJsonPath = join(folder, 'package.json')
 
     let packageJsonStat: Stats

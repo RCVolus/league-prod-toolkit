@@ -1,7 +1,7 @@
-import { type LPTE, type LPTEvent, EventType, Registration } from './LPTE'
+import { Registration } from './Registration'
 import logger from '../logging'
 import { type Plugin } from '../modules/Module'
-import ModuleType from '../modules/ModuleType'
+import { EventType, type LPTE, type LPTEvent, ModuleType } from '../../types'
 import { wsClients } from '../web/server'
 import uniqid from 'uniqid'
 

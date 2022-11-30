@@ -12,13 +12,18 @@ module.exports = {
     filename: '[name]-bundle.js'
   },
   resolve: {
-    extensions: ['.ts', '.tsx', '.js']
+    extensions: ['.ts', '.tsx', '.js', '.d.ts']
   },
   module: {
     rules: [
       {
         test: /\.tsx?$/,
-        loader: 'ts-loader'
+        loader: 'ts-loader',
+        exclude: /node_modules|\.d\.ts$/
+      },
+      {
+        test: /\.d\.ts$/,
+        loader: 'ignore-loader'
       }
     ]
   },

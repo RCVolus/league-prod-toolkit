@@ -1,8 +1,8 @@
 import type * as WebSocket from 'ws'
-import { EventType, type LPTEvent } from '../eventbus/LPTE'
-
+import { EventType, type LPTEvent } from '../../types'
 import LPTEService, { isValidEvent } from '../eventbus/LPTEService'
 import log from '../logging'
+
 const logger = log('ws')
 
 export const handleClient = (socket: WebSocket): void => {

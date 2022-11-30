@@ -13,7 +13,7 @@ export default (globalContext: any): Router => {
     })
   })
   router.get('/api', (req, res) => {
-    res.json(moduleService.activePlugins.map((plugin) => plugin.toJson()))
+    res.json(moduleService.activePlugins.map((plugin) => plugin.toJson(true)))
   })
 
   return router

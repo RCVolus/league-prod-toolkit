@@ -2,7 +2,8 @@ import fs from 'fs'
 import { promisify } from 'util'
 import path from 'path'
 import { exec } from 'child_process'
-import type { PackageJson } from '../core/modules/Module'
+import console from 'console'
+import type { PackageJson } from '../types'
 
 const execPromise = promisify(exec)
 

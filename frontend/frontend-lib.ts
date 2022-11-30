@@ -1,4 +1,5 @@
-import { EventType, type LPTE, type LPTEvent, Registration } from '../core/eventbus/LPTE'
+import { Registration } from '../core/eventbus/Registration'
+import { EventType, type LPTEvent, type LPTE } from '../types'
 import decode from 'jwt-decode'
 
 // Setup toasts
