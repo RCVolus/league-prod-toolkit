@@ -160,7 +160,8 @@ function verifyEPClient(req: Request, res: Response, next: NextFunction): void {
     req.path.endsWith('.css') ||
     req.path.endsWith('.png') ||
     req.path.endsWith('.jpg') ||
-    req.path.endsWith('.svg')
+    req.path.endsWith('.svg') || 
+    req.path.endsWith('.ttf')
   ) {
     return next()
   }
