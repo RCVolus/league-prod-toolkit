@@ -15,7 +15,7 @@ if ((window as any).toastr !== undefined) {
 class FrontendRegistration extends Registration {
   isOnce: boolean = false
 
-  getSubscribeEvent(): LPTEvent {
+  getSubscribeEvent (): LPTEvent {
     return {
       meta: {
         namespace: 'lpte',
@@ -30,7 +30,7 @@ class FrontendRegistration extends Registration {
   }
 }
 
-function randomId(): string {
+function randomId (): string {
   const uint32 = window.crypto.getRandomValues(new Uint32Array(1))[0]
   return uint32.toString(16)
 }
@@ -44,7 +44,7 @@ class LPTEService implements LPTE {
   registrations: FrontendRegistration[] = []
   readyHandler?: () => void
 
-  constructor(backend: string) {
+  constructor (backend: string) {
     this.backend = backend
     this.websocket = new WebSocket(backend)
 
@@ -59,11 +59,11 @@ class LPTEService implements LPTE {
     this._connect()
   }
 
-  _log(msg: string): void {
+  _log (msg: string): void {
     console.log(`[LPTE] ${msg}`)
   }
 
-  _onSocketOpen(): void {
+  _onSocketOpen (): void {
     this._log('Websocket connected')
 
     // redo any registrations, in case this is a reconnect
@@ -76,16 +76,16 @@ class LPTEService implements LPTE {
     }
   }
 
-  _onSocketClose(): void {
+  _onSocketClose (): void {
     this._log('Websocket closed, attempting reconnect in 500ms')
     setTimeout(this._reconnect, 500)
   }
 
-  _onSocketError(e: Event): void {
+  _onSocketError (e: Event): void {
     this._log(`Websocket error: ${JSON.stringify(e)}`)
   }
 
-  _onSocketMessage(e: any): void {
+  _onSocketMessage (e: any): void {
     const event: LPTEvent = JSON.parse(e.data)
 
     this.registrations
@@ -98,19 +98,19 @@ class LPTEService implements LPTE {
       })
   }
 
-  _reconnect(): void {
+  _reconnect (): void {
     this.websocket = new WebSocket(this.backend)
     this._connect()
   }
 
-  _connect(): void {
+  _connect (): void {
     this.websocket.onopen = this._onSocketOpen
     this.websocket.onclose = this._onSocketClose
     this.websocket.onerror = this._onSocketError
     this.websocket.onmessage = this._onSocketMessage
   }
 
-  onready(handler: () => void): void {
+  onready (handler: () => void): void {
     if (this.websocket.readyState === this.websocket.OPEN) {
       handler()
     } else {
@@ -118,7 +118,7 @@ class LPTEService implements LPTE {
     }
   }
 
-  unregisterHandler(handler: (event: LPTEvent) => void): void {
+  unregisterHandler (handler: (event: LPTEvent) => void): void {
     setTimeout(() => {
       this.registrations = this.registrations.filter(
         (registration) => registration.handle !== handler
@@ -126,7 +126,7 @@ class LPTEService implements LPTE {
     }, 1000)
   }
 
-  on(
+  on (
     namespace: string,
     type: string,
     handler: (event: LPTEvent) => void,
@@ -140,15 +140,15 @@ class LPTEService implements LPTE {
     this.websocket.send(JSON.stringify(registration.getSubscribeEvent()))
   }
 
-  unregister(namespace: string, type: string): void {
+  unregister (namespace: string, type: string): void {
     this._log('Unregister is currently not supported')
   }
 
-  emit(event: LPTEvent): void {
+  emit (event: LPTEvent): void {
     this.websocket.send(JSON.stringify(event))
   }
 
-  async request(event: LPTEvent, timeout: number = 5000): Promise<LPTEvent> {
+  async request (event: LPTEvent, timeout: number = 5000): Promise<LPTEvent> {
     const reply = `${event.meta.type}-${randomId()}`
     event.meta.reply = reply
     event.meta.channelType = EventType.REQUEST
@@ -164,7 +164,7 @@ class LPTEService implements LPTE {
     }
   }
 
-  async await(
+  async await (
     namespace: string,
     type: string,
     timeout: number = 5000
@@ -202,7 +202,7 @@ const wsUrl = `ws${location.origin.startsWith('https://') ? 's' : ''}://${
 }/eventbus`
 const backend = apiKey !== null ? `${wsUrl}?apikey=${apiKey}` : wsUrl
 
-function getApiKey(): string | null {
+function getApiKey (): string | null {
   if (getCookie('auth_disabled') === 'true') {
     return null
   }
@@ -221,11 +221,11 @@ function getApiKey(): string | null {
   return null
 }
 
-function getWebServerPort(): string {
+function getWebServerPort (): string {
   return `${location.host}`
 }
 
-function getCookie(cname: string): string {
+function getCookie (cname: string): string {
   const name = `${cname}=`
   const decodedCookie = decodeURIComponent(document.cookie)
   const ca = decodedCookie.split(';')

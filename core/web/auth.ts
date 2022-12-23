@@ -14,7 +14,7 @@ const allowedKeys: Set<string> = new Set()
 
 let config: any
 
-export async function runAuth(
+export async function runAuth (
   server: Express,
   wss: WebSocket.Server
 ): Promise<void> {
@@ -65,7 +65,7 @@ export async function runAuth(
   await getKeys()
 }
 
-async function getKeys(): Promise<void> {
+async function getKeys (): Promise<void> {
   const keys = await LPTEService.request({
     meta: {
       type: 'request',
@@ -137,8 +137,8 @@ LPTEService.on('auth', 'remove-key', (e) => {
   })
 })
 
-function verifyWSClient(
-  info: { origin: string; secure: boolean; req: IncomingMessage },
+function verifyWSClient (
+  info: { origin: string, secure: boolean, req: IncomingMessage },
   done: (
     res: boolean,
     code?: number,
@@ -153,7 +153,7 @@ function verifyWSClient(
   return done(true)
 }
 
-function verifyEPClient(req: Request, res: Response, next: NextFunction): void {
+function verifyEPClient (req: Request, res: Response, next: NextFunction): void {
   if (req.path.startsWith('/login')) return next()
   if (
     req.path.endsWith('.js') ||
@@ -172,7 +172,7 @@ function verifyEPClient(req: Request, res: Response, next: NextFunction): void {
   return next()
 }
 
-function verify(url?: string, cookies?: any): boolean {
+function verify (url?: string, cookies?: any): boolean {
   const queryString = url?.split('?')[1]
 
   if (queryString !== undefined) {
@@ -204,7 +204,7 @@ function verify(url?: string, cookies?: any): boolean {
   return false
 }
 
-async function login(req: Request, res: Response): Promise<void> {
+async function login (req: Request, res: Response): Promise<void> {
   const { apiKey } = req.body
 
   if (apiKey === undefined) {
@@ -258,7 +258,7 @@ async function login(req: Request, res: Response): Promise<void> {
     .redirect('/')
 }
 
-function logout(req: Request, res: Response): void {
+function logout (req: Request, res: Response): void {
   const decoded = jwt.decode(req.cookies.access_token)
 
   if (decoded !== null && typeof decoded !== 'string') {

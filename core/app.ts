@@ -26,7 +26,7 @@ log.info('| |__| (_) | |___    | | (_) | (_) | |   <| | |_ ')
 log.info('|_____\\___/|_____|   |_|\\___/ \\___/|_|_|\\_\\_|\\__|')
 log.info('')
 
-const checkVersion = async () => {
+const checkVersion = async (): Promise<any> => {
   const res = await axios.get('https://prod-toolkit-latest.himyu.workers.dev/')
 
   if (res.status !== 200) {

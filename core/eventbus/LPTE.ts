@@ -75,7 +75,7 @@ export class Registration {
   namespace: string
   handle: (event: LPTEvent) => void
 
-  constructor(
+  constructor (
     namespace: string,
     type: string,
     handler: (event: LPTEvent) => void

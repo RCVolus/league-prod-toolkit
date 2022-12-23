@@ -8,7 +8,7 @@ export default (globalContext: any): Router => {
     res.render('index', {
       ...globalContext,
       title: 'Home',
-      version: version
+      version
     })
   })
 

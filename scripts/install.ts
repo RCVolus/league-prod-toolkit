@@ -13,18 +13,18 @@ import { version } from '../package.json'
 const execPromise = promisify(exec)
 
 if (process.argv.includes('-plugins')) {
-  ;(async () => {
+  ;void (async () => {
     await installPlugins()
     await run()
   })()
 } else if (process.argv.includes('-install')) {
-  run()
+  void run()
 }
 
 /**
  * get all available plugins modules and themes for the prod tool
  */
-export async function getAll(): Promise<Asset[]> {
+export async function getAll (): Promise<Asset[]> {
   let assets: Asset[] = []
   try {
     const url = 'https://sweet-pond-bc97.tatrix42.workers.dev/'
@@ -44,7 +44,7 @@ export async function getAll(): Promise<Asset[]> {
  * downloads a single module plugin or theme
  * @param asset to download
  */
-export async function download(asset: Asset): Promise<void> {
+export async function download (asset: Asset): Promise<void> {
   const spinner = createSpinner(`downloading ${asset.name}`)
   spinner.start()
 
@@ -118,7 +118,7 @@ export async function download(asset: Asset): Promise<void> {
   })
 }
 
-async function run(): Promise<void> {
+async function run (): Promise<void> {
   const available = await getAll()
 
   const install = available.filter((a) => {
@@ -130,7 +130,7 @@ async function run(): Promise<void> {
   }
 }
 
-async function installPlugins(): Promise<void> {
+async function installPlugins (): Promise<void> {
   const available = await getAll()
 
   for (const asset of available) {

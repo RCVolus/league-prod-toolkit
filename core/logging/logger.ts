@@ -7,19 +7,19 @@ const customFormat = winston.format.printf(
   ({ level, message, label, timestamp }) =>
     `${timestamp as string} [${level.padEnd(15)}] ${`\u001b[95m${
       label as string
-    }\u001b[39m`.padEnd(22)}: ${message}`
+    }\u001b[39m`.padEnd(22)}: ${message as string}`
 )
 
 export class EventbusTransport extends Transport {
   lpte?: LPTE
 
-  constructor(opts: any = {}) {
+  constructor (opts: any = {}) {
     super(opts)
 
     this.log = this.log.bind(this)
   }
 
-  log(info: any, callback: () => void): void {
+  log (info: any, callback: () => void): void {
     if ((info.level.includes('error') as boolean) && this.lpte != null) {
       this.lpte.emit({
         meta: {

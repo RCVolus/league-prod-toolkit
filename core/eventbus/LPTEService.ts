@@ -23,15 +23,15 @@ export class LPTEService implements LPTE {
   registrations: Registration[] = []
   eventHistory: LPTEvent[] = []
 
-  constructor() {
+  constructor () {
     this.await = this.await.bind(this)
   }
 
-  initialize(): void {
+  initialize (): void {
     log.info('Initialized event bus.')
   }
 
-  on(namespace: string, type: string, handler: (e: LPTEvent) => void): void {
+  on (namespace: string, type: string, handler: (e: LPTEvent) => void): void {
     const registration = new Registration(namespace, type, handler)
     this.registrations.push(registration)
 
@@ -40,7 +40,7 @@ export class LPTEService implements LPTE {
     )
   }
 
-  once(namespace: string, type: string, handler: (e: LPTEvent) => void): void {
+  once (namespace: string, type: string, handler: (e: LPTEvent) => void): void {
     const wrappedHandler = (e: LPTEvent): void => {
       log.debug(`Wrapped handler called for ${namespace}/${type}`)
       this.unregisterHandler(wrappedHandler)
@@ -49,7 +49,7 @@ export class LPTEService implements LPTE {
     this.on(namespace, type, wrappedHandler)
   }
 
-  async request(
+  async request (
     event: LPTEvent,
     timeout = 5000
   ): Promise<LPTEvent | undefined> {
@@ -82,7 +82,7 @@ export class LPTEService implements LPTE {
     }
   }
 
-  async await(
+  async await (
     namespace: string,
     type: string,
     timeout = 5000
@@ -117,14 +117,14 @@ export class LPTEService implements LPTE {
     })
   }
 
-  unregister(namespace: string, type: string): void {
+  unregister (namespace: string, type: string): void {
     this.registrations = this.registrations.filter(
       (registration) =>
         registration.namespace !== namespace && registration.type !== type
     )
   }
 
-  unregisterHandler(handler: (event: LPTEvent) => void): void {
+  unregisterHandler (handler: (event: LPTEvent) => void): void {
     setTimeout(() => {
       this.registrations = this.registrations.filter(
         (registration) => registration.handle !== handler
@@ -132,7 +132,7 @@ export class LPTEService implements LPTE {
     }, 1000)
   }
 
-  emit(event: LPTEvent): void {
+  emit (event: LPTEvent): void {
     if (!isValidEvent(event)) {
       return
     }
@@ -179,7 +179,7 @@ export class LPTEService implements LPTE {
     }, 0)
   }
 
-  forPlugin(plugin: Plugin): LPTE {
+  forPlugin (plugin: Plugin): LPTE {
     const enrichEvent = (event: LPTEvent): LPTEvent => {
       return {
         ...event,

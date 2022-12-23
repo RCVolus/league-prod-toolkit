@@ -13,7 +13,7 @@ const progress = (plugin: string): MultiBar => {
     return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}.${milliSeconds}Z`
   }
 
-  function formatter(options: Options, params: Params, payload: any): string {
+  function formatter (options: Options, params: Params, payload: any): string {
     const percent = Math.round((params.value / params.total) * 100)
 
     const length = 20
