@@ -41,6 +41,7 @@
     "zip-lib": "^0.7.3"
   },
   "devDependencies": {
+    "@types/axios": "^0.14.0",
     "@types/cli-progress": "^3.9.2",
     "@types/cookie-parser": "^1.4.2",
     "@types/express": "^4.17.13",
