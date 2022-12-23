@@ -33,7 +33,7 @@ jobs:
         run: npm ci
 
       - name: Run linter
-        run: npm lint
+        run: npm run lint
 
       - name: Run Prettier
-        run: npm prettier
+        run: npm run prettier
