@@ -62,5 +62,5 @@
     // "emitDecoratorMetadata": true,         /* Enables experimental support for emitting type metadata for decorators. */
   },
   "include": ["core", "frontend", "utils", "scripts"],
-  "exclude": ["dist"]
+  "exclude": ["dist", "docs"]
 }
