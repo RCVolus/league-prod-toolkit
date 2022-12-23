@@ -13,7 +13,8 @@ module.exports = {
     '**/modules/*',
     '**/dist/*',
     '**/build/*',
-    '**/types/*'
+    '**/types/*',
+    '**/docs/*'
   ],
   rules: {
     '@typescript-eslint/no-misused-promises': 'off'
