@@ -8,7 +8,7 @@
     "postbuild": "copyfiles core/web/views/**.* core/web/public/**.* dist",
     "start": "node --trace-warnings dist/core/app.js",
     "tsc": "tsc",
-    "lint": "eslint ./** --fix",
+    "lint": "eslint \"**/*.{ts,tsx}\" --fix",
     "prettier": "prettier --write --ignore-unknown ./**",
     "setuphooks": "git config --local core.hooksPath .hooks",
     "hooks:pre-commit": "npm run lint && npm run build"
