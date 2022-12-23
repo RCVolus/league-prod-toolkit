@@ -4,3 +4,4 @@
 *.jpg
 **/build/*
 **/dist/*
+**/.github/*

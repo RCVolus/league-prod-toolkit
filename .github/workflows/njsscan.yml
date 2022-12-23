@@ -10,10 +10,10 @@ name: njsscan sarif
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ['main']
   pull_request:
     # The branches below must be a subset of the branches above
-    branches: [ "main" ]
+    branches: ['main']
 
 permissions:
   contents: read
@@ -27,14 +27,14 @@ jobs:
     runs-on: ubuntu-latest
     name: njsscan code scanning
     steps:
-    - name: Checkout the code
-      uses: actions/checkout@v3
-    - name: nodejsscan scan
-      id: njsscan
-      uses: ajinabraham/njsscan-action@d58d8b2f26322cd35a9efb8003baac517f226d81
-      with:
-        args: '. --sarif --output results.sarif || true'
-    - name: Upload njsscan report
-      uses: github/codeql-action/upload-sarif@v2
-      with:
-        sarif_file: results.sarif
+      - name: Checkout the code
+        uses: actions/checkout@v3
+      - name: nodejsscan scan
+        id: njsscan
+        uses: ajinabraham/njsscan-action@d58d8b2f26322cd35a9efb8003baac517f226d81
+        with:
+          args: '. --sarif --output results.sarif || true'
+      - name: Upload njsscan report
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: results.sarif
