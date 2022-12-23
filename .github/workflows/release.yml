@@ -24,7 +24,7 @@ jobs:
           npm run build
 
       - name: Archive production artifacts
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: build
           path: |
@@ -58,7 +58,7 @@ jobs:
         run: zip -r prod-toolkit.zip LICENSE README.md package.json package-lock.json install.bat start.bat riot-api-key.bat auth.bat scripts/* dist/* modules
 
       - name: Upload Zip
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: prod-toolkit
           path: prod-toolkit.zip
