@@ -27,7 +27,9 @@ log.info('|_____\\___/|_____|   |_|\\___/ \\___/|_|_|\\_\\_|\\__|')
 log.info('')
 
 const checkVersion = async (): Promise<any> => {
-  const res = await axios.get('https://prod-toolkit-latest.himyu.workers.dev/')
+  const res = await axios.get('https://prod-toolkit-latest.himyu.workers.dev/', {
+    headers: { 'Accept-Encoding': 'gzip,deflate,compress' }
+  })
 
   if (res.status !== 200) {
     return log.warn('The current version could not be checked')
