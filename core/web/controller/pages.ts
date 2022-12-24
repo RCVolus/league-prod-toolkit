@@ -29,8 +29,8 @@ export default (globalContext: GlobalContext): Router => {
         fileContent = await readFile(join(absolutePath, 'index.html'), {
           encoding: 'utf8'
         })
-      } catch (e) {
-        res.status(500).send(e)
+      } catch (e: any) {
+        res.status(500).send(e.message)
         console.error(e)
         return
       }
