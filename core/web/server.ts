@@ -1,5 +1,5 @@
 import express from 'express'
-import { join } from 'path'
+import { join, relative, isAbsolute } from 'path'
 import { createServer } from 'http'
 import * as WebSocket from 'ws'
 import cookieParser from 'cookie-parser'
@@ -7,9 +7,11 @@ import logging from '../logging'
 import globalContext from './globalContext'
 import getController from './controller'
 import { handleClient } from './ws'
+import svc from '../modules/ModuleService'
 import { runAuth } from './auth'
 import fileUpload, { UploadedFile } from 'express-fileupload'
 import { urlencoded } from 'body-parser'
+import rateLimit from 'express-rate-limit'
 
 /**
  * App Variables
@@ -18,6 +20,16 @@ const log = logging('server')
 const app = express()
 const port = process.env.PORT ?? '3003'
 const server = createServer(app)
+
+const limiter = rateLimit({
+  windowMs: 1 * 60 * 1000,
+  max: 200,
+  standardHeaders: true,
+  legacyHeaders: false
+})
+
+// Apply the rate limiting middleware to all requests
+app.use(limiter)
 
 /**
  * App Configuration
@@ -90,11 +102,22 @@ app.post('/upload', async (req, res) => {
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
   const file = req.files?.file as UploadedFile | undefined
   if (file === undefined) {
-    return res.status(500).send()
+    return res.status(400).send()
+  }
+  if (!file.mimetype.startsWith('image')) {
+    return res.status(400).send()
+  }
+
+  const filename = file.name
+  const uploadPath = join(__dirname, '..', '..', '..', 'modules', req.body.path, filename)
+  const relativePath = relative(svc.getModulePath(), uploadPath)
+
+  if (relativePath.startsWith('..') || isAbsolute(relativePath)) {
+    return res.status(403).send()
   }
 
   await file.mv(
-    join(__dirname, '..', '..', '..', 'modules', req.body.path, file.name)
+    uploadPath
   )
 
   res.send({
