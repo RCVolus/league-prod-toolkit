@@ -89,6 +89,7 @@ export class LPTEService implements LPTE {
   ): Promise<LPTEvent> {
     return await new Promise((resolve, reject) => {
       let wasHandled = false
+      timeout = timeout > 60000 ? 60000 : timeout < 1000 ? 1000 : timeout
 
       const handler = (e: LPTEvent): void => {
         if (wasHandled) {
