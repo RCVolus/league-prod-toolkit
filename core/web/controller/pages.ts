@@ -5,13 +5,13 @@ import svc from '../../modules/ModuleService'
 import { readFile } from 'fs/promises'
 import { pathExists } from 'fs-extra'
 import { GlobalContext } from '../globalContext'
-import { check } from 'express-validator'
+import escape from 'validator/lib/escape'
 
 export default (globalContext: GlobalContext): Router => {
   const router = Router()
 
-  router.get('/:page*', check('page'), async (req, res) => {
-    const anyParams = req.params
+  router.get('/:page*', async (req, res) => {
+    const anyParams = req.params as any
     const page = globalContext.module_pages.filter(
       (p) => p.id === anyParams?.page
     )[0]
@@ -19,7 +19,7 @@ export default (globalContext: GlobalContext): Router => {
     if (page === undefined) {
       return res
         .status(404)
-        .send(`No page found with name ${anyParams?.page as string}`)
+        .send(`No page found with name ${escape(anyParams?.page)}`)
     }
 
     const relativePath = anyParams?.[0] !== '' ? anyParams?.[0] : '/'

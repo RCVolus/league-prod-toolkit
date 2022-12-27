@@ -4,13 +4,13 @@ import { pathExists } from 'fs-extra'
 import svc from '../../modules/ModuleService'
 import send from 'send'
 import { GlobalContext } from '../globalContext'
-import { check } from 'express-validator'
+import escape from 'validator/lib/escape'
 
 export default (globalContext: GlobalContext): Router => {
   const router = Router()
 
-  router.get('/:serve*', check('serve'), async (req, res) => {
-    const anyParams = req.params
+  router.get('/:serve*', async (req, res) => {
+    const anyParams = req.params as any
     const serve = globalContext.module_serves.filter(
       (p) => p.id === anyParams?.serve
     )[0]
@@ -18,7 +18,7 @@ export default (globalContext: GlobalContext): Router => {
     if (serve === undefined) {
       return res
         .status(404)
-        .send(`No serve found with name ${anyParams?.serve as string}`)
+        .send(`No serve found with name ${escape(anyParams?.serve)}`)
     }
 
     const relativePath = anyParams?.[0] !== '' ? anyParams?.[0] : '/'
