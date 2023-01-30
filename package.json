@@ -61,7 +61,7 @@
     "copyfiles": "^2.2.0",
     "eslint": "^8.31.0",
     "eslint-config-standard-with-typescript": "^33.0.0",
-    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^6.1.1",
     "nodemon": "^2.0.4",
