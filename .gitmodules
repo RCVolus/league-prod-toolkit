@@ -90,6 +90,10 @@
 	path = modules/module-vmix
 	url = https://github.com/rcv-prod-toolkit/module-vmix.git
 	branch = main
+[submodule "modules/module-league-prm"]
+	path = modules/module-league-prm
+	url = https://github.com/rcv-prod-toolkit/module-league-prm.git
+	branch = main
 [submodule "types"]
 	path = types
 	url = https://github.com/rcv-prod-toolkit/types.git
