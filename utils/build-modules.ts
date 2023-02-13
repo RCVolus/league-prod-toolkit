@@ -35,10 +35,16 @@ const main = async (): Promise<void> => {
           pkgJson.devDependencies !== undefined) &&
         !process.argv.includes('ni')
       ) {
+        console.log('installing ' + folderName)
+
         // run install
-        await execPromise('npm ci', {
-          cwd: currentModulePath
-        })
+        try {
+          await execPromise('npm ci', {
+            cwd: currentModulePath
+          })
+        } catch (e) {
+          console.error(`Failed to install module: ${pkgJson.name}, ${e}`)
+        }
 
         console.log('installed ' + folderName)
       }
