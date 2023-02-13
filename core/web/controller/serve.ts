@@ -3,7 +3,7 @@ import { join, relative, isAbsolute } from 'path'
 import { pathExists } from 'fs-extra'
 import svc from '../../modules/ModuleService'
 import send from 'send'
-import { GlobalContext } from '../globalContext'
+import { type GlobalContext } from '../globalContext'
 import escape from 'validator/lib/escape'
 
 export default (globalContext: GlobalContext): Router => {

@@ -1,16 +1,16 @@
 import LPTEService from '../eventbus/LPTEService'
-import { IncomingMessage } from 'http'
-import WebSocket from 'ws'
+import { type IncomingMessage } from 'http'
+import type WebSocket from 'ws'
 import uuidAPIKey from 'uuid-apikey'
 import logging from '../logging'
-import { OutgoingHttpHeaders } from 'http2'
-import { Express, NextFunction, Request, Response } from 'express'
+import { type OutgoingHttpHeaders } from 'http2'
+import { type Express, type NextFunction, type Request, type Response } from 'express'
 import jwt from 'jsonwebtoken'
 import ModuleType from '../modules/ModuleType'
 
 const log = logging('auth')
 
-const allowedKeys: Set<string> = new Set()
+const allowedKeys = new Set<string>()
 
 let config: any
 
@@ -147,14 +147,14 @@ function verifyWSClient (
   ) => void
 ): void {
   if (!verify(info.req.url)) {
-    return done(false, 403, 'authentication failed')
+    done(false, 403, 'authentication failed'); return
   }
 
-  return done(true)
+  done(true)
 }
 
 function verifyEPClient (req: Request, res: Response, next: NextFunction): void {
-  if (req.path.startsWith('/login')) return next()
+  if (req.path.startsWith('/login')) { next(); return }
   if (
     req.path.endsWith('.js') ||
     req.path.endsWith('.css') ||
@@ -163,13 +163,13 @@ function verifyEPClient (req: Request, res: Response, next: NextFunction): void 
     req.path.endsWith('.svg') ||
     req.path.endsWith('.ttf')
   ) {
-    return next()
+    next(); return
   }
   if (!verify(req.url, req.cookies)) {
-    return res.status(403).redirect('/login')
+    res.status(403).redirect('/login'); return
   }
 
-  return next()
+  next()
 }
 
 function verify (url?: string, cookies?: any): boolean {
@@ -251,7 +251,7 @@ async function login (req: Request, res: Response): Promise<void> {
     expiresIn: cKey.expiring !== -1 ? cKey.expiring - cTime : '1d'
   })
 
-  return res
+  res
     .clearCookie('auth_disabled')
     .cookie('access_token', token)
     .status(200)

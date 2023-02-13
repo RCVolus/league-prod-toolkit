@@ -1,7 +1,7 @@
-import winston, { Logger } from 'winston'
+import winston, { type Logger } from 'winston'
 import Transport from 'winston-transport'
 
-import { LPTE } from '../eventbus/LPTE'
+import { type LPTE } from '../eventbus/LPTE'
 
 const customFormat = winston.format.printf(
   ({ level, message, label, timestamp }) =>

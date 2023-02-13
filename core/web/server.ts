@@ -9,7 +9,7 @@ import getController from './controller'
 import { handleClient } from './ws'
 import svc from '../modules/ModuleService'
 import { runAuth } from './auth'
-import fileUpload, { UploadedFile } from 'express-fileupload'
+import fileUpload, { type UploadedFile } from 'express-fileupload'
 import { urlencoded } from 'body-parser'
 import rateLimit from 'express-rate-limit'
 

@@ -6,7 +6,7 @@ import { exec } from 'child_process'
 import { extract } from 'zip-lib'
 import { readJSON, remove } from 'fs-extra'
 import { createSpinner } from 'nanospinner'
-import { Asset } from '../core/modules/Module'
+import { type Asset } from '../core/modules/Module'
 import { satisfies } from 'semver'
 import { version } from '../package.json'
 
@@ -68,7 +68,7 @@ export async function download (asset: Asset): Promise<void> {
   const tmpPath = join(cwd, asset.name + '-tmp')
   const packagePath = join(tmpPath, 'package.json')
 
-  return await new Promise((resolve, reject) => {
+  await new Promise((resolve, reject) => {
     dl.data.pipe(createWriteStream(savePath))
     dl.data.on('end', async () => {
       spinner.update({
@@ -91,7 +91,7 @@ export async function download (asset: Asset): Promise<void> {
         })
         await remove(savePath)
         await remove(tmpPath)
-        return reject(
+        reject(
           new Error(
             `The prod-tool (v${version}) has not the required version ${
               requiredVersion as string

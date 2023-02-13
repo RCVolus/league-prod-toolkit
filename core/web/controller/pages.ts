@@ -4,7 +4,7 @@ import send from 'send'
 import svc from '../../modules/ModuleService'
 import { readFile } from 'fs/promises'
 import { pathExists } from 'fs-extra'
-import { GlobalContext } from '../globalContext'
+import { type GlobalContext } from '../globalContext'
 import escape from 'validator/lib/escape'
 
 export default (globalContext: GlobalContext): Router => {

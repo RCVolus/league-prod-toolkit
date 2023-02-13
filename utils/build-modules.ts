@@ -42,8 +42,8 @@ const main = async (): Promise<void> => {
           await execPromise('npm ci', {
             cwd: currentModulePath
           })
-        } catch (e) {
-          console.error(`Failed to install module: ${pkgJson.name}, ${e}`)
+        } catch (e: any) {
+          console.error(`Failed to install module: ${pkgJson.name}, ${e as string}`)
         }
 
         console.log('installed ' + folderName)
@@ -65,7 +65,7 @@ const main = async (): Promise<void> => {
               console.log('start building ' + folderName)
               console.log(stdout)
               if (error !== null || stderr !== '') {
-                return console.log(error ?? stderr)
+                console.log(error ?? stderr); return
               }
               console.log('finished building ' + folderName)
               resolve()

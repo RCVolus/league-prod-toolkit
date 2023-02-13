@@ -1,4 +1,4 @@
-import cliProgress, { MultiBar, Options, Params } from 'cli-progress'
+import cliProgress, { type MultiBar, type Options, type Params } from 'cli-progress'
 
 const progress = (plugin: string): MultiBar => {
   const currentDate = (): string => {

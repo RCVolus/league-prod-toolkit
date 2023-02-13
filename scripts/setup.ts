@@ -4,7 +4,7 @@ import inquirer from 'inquirer'
 import { createSpinner } from 'nanospinner'
 import { randomBytes } from 'crypto'
 import { download, getAll } from './install'
-import { Asset } from '../core/modules/Module'
+import { type Asset } from '../core/modules/Module'
 import uuidAPIKey from 'uuid-apikey'
 
 const getApiKey = async (): Promise<string> => {
