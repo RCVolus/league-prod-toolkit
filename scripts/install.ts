@@ -113,7 +113,7 @@ export async function download (asset: Asset): Promise<void> {
           text: `${asset.name} installed`
         })
 
-        resolve()
+        resolve(undefined)
       }
     })
   })
