@@ -6,7 +6,7 @@ import { exec } from 'child_process'
 import { extract } from 'zip-lib'
 import { readJSON, remove } from 'fs-extra'
 import { createSpinner } from 'nanospinner'
-import { type Asset } from '../core/modules/Module'
+import type { Asset } from '../core/modules/Module'
 import { satisfies } from 'semver'
 import { version } from '../package.json'
 
@@ -112,7 +112,7 @@ export async function download (asset: Asset): Promise<void> {
         spinner.success({
           text: `${asset.name} installed`
         })
-        
+
         resolve(undefined)
       }
     })
