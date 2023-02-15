@@ -1,4 +1,4 @@
-import { Router } from 'express'
+import { type Router } from 'express'
 
 import modules from './modules'
 import home from './home'
@@ -11,9 +11,7 @@ import keys from './keys'
 
 export default (
   globalContext: any
-): {
-  [name: string]: Router
-} => ({
+): Record<string, Router> => ({
   '/': home(globalContext),
   '/modules': modules(globalContext),
   '/plugins': plugins(globalContext),

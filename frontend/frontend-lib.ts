@@ -1,4 +1,4 @@
-import { EventType, LPTE, LPTEvent, Registration } from '../core/eventbus/LPTE'
+import { EventType, type LPTE, type LPTEvent, Registration } from '../core/eventbus/LPTE'
 import decode from 'jwt-decode'
 
 // Setup toasts
@@ -67,8 +67,7 @@ class LPTEService implements LPTE {
     this._log('Websocket connected')
 
     // redo any registrations, in case this is a reconnect
-    this.registrations.forEach((reg) =>
-      this.websocket.send(JSON.stringify(reg.getSubscribeEvent()))
+    this.registrations.forEach((reg) => { this.websocket.send(JSON.stringify(reg.getSubscribeEvent())) }
     )
 
     if (this.readyHandler !== undefined) {

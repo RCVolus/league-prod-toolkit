@@ -1,4 +1,4 @@
-import ModuleType from '../modules/ModuleType'
+import type ModuleType from '../modules/ModuleType'
 
 export enum EventType {
   BROADCAST = 'BROADCAST',
@@ -27,7 +27,7 @@ export interface LPTEvent {
   meta: LPTEventMeta
 
   [name: string]: any
-  replay?: (data: { [name: string]: any }) => void
+  replay?: (data: Record<string, any>) => void
 }
 
 export interface LPTE {

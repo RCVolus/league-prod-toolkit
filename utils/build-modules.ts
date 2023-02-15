@@ -35,10 +35,16 @@ const main = async (): Promise<void> => {
           pkgJson.devDependencies !== undefined) &&
         !process.argv.includes('ni')
       ) {
+        console.log('installing ' + folderName)
+
         // run install
-        await execPromise('npm ci', {
-          cwd: currentModulePath
-        })
+        try {
+          await execPromise('npm ci', {
+            cwd: currentModulePath
+          })
+        } catch (e: any) {
+          console.error(`Failed to install module: ${pkgJson.name}, ${e as string}`)
+        }
 
         console.log('installed ' + folderName)
       }
@@ -59,7 +65,7 @@ const main = async (): Promise<void> => {
               console.log('start building ' + folderName)
               console.log(stdout)
               if (error !== null || stderr !== '') {
-                return console.log(error ?? stderr)
+                console.log(error ?? stderr); return
               }
               console.log('finished building ' + folderName)
               resolve()

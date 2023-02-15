@@ -1,5 +1,5 @@
-import * as WebSocket from 'ws'
-import { EventType, LPTEvent } from '../eventbus/LPTE'
+import type * as WebSocket from 'ws'
+import { EventType, type LPTEvent } from '../eventbus/LPTE'
 
 import LPTEService, { isValidEvent } from '../eventbus/LPTEService'
 import log from '../logging'
