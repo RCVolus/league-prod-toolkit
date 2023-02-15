@@ -68,7 +68,7 @@ export async function download (asset: Asset): Promise<void> {
   const tmpPath = join(cwd, asset.name + '-tmp')
   const packagePath = join(tmpPath, 'package.json')
 
-  await new Promise((resolve, reject) => {
+  await new Promise<void>((resolve, reject) => {
     dl.data.pipe(createWriteStream(savePath))
     dl.data.on('end', async () => {
       spinner.update({
@@ -112,7 +112,8 @@ export async function download (asset: Asset): Promise<void> {
         spinner.success({
           text: `${asset.name} installed`
         })
-        resolve()
+        
+        resolve(undefined)
       }
     })
   })
