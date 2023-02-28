@@ -27,7 +27,7 @@ if (process.argv.includes('-plugins')) {
 export async function getAll (): Promise<Asset[]> {
   let assets: Asset[] = []
   try {
-    const url = 'https://sweet-pond-bc97.tatrix42.workers.dev/'
+    const url = 'https://modules.prod-toolkit.com/'
     const req = await axios.get(url)
 
     if (req.status !== 200) return []
