@@ -33,9 +33,14 @@ const getServer = async (): Promise<string> => {
       'LA1',
       'LA2',
       'NA1',
-      'OC1',
       'TR1',
-      'RU'
+      'RU',
+      'OC1',
+      'PH2',
+      'SG2',
+      'TH2',
+      'TW2',
+      'VN2'
     ]
   })
 
