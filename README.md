@@ -36,6 +36,7 @@ Screens showing postgame stats
 - Gold graph
 
 ## Valorant Features
+**Status 13.03.2023: VALORANT features are currently not maintained. While we focus on League, we will not actively support Valorant Features of the toolkit.**
 
 ### Pregame
 
