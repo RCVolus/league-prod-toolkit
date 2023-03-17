@@ -1,0 +1,7 @@
+docs
+.vscode
+.hooks
+.github
+Architecture.drawio
+Architecture.png
+*.md
