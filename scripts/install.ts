@@ -45,6 +45,7 @@ export async function getAll (): Promise<Asset[]> {
  * @param asset to download
  */
 export async function download (asset: Asset): Promise<void> {
+  console.log(`Downloading ${asset.name}`)
   const spinner = createSpinner(`downloading ${asset.name}`)
   spinner.start()
 
@@ -55,6 +56,7 @@ export async function download (asset: Asset): Promise<void> {
 
   if (dl.status !== 200) {
     spinner.error({ text: dl.statusText })
+    console.log(`Downloading ${asset.name} failed: ${dl.statusText} - ${dl.data as string}`)
     return
   }
   let cwd = join(__dirname, '..', '..', 'modules')
