@@ -25,7 +25,6 @@ jobs:
         run: |
           npm ci
           npm run build
-
       - name: Archive production artifacts
         uses: actions/upload-artifact@v3
         with:
@@ -43,7 +42,6 @@ jobs:
             !dist/*.ts
             !dist/utils
             !dist/utils/*
-
   create-zip:
     name: 'Create Zip File'
     needs: [build]
