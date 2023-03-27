@@ -51,7 +51,7 @@
     "@types/inquirer": "^9.0.3",
     "@types/jsonwebtoken": "^9.0.1",
     "@types/minimist": "^1.2.0",
-    "@types/node": "^18.15.1",
+    "@types/node": "^18.15.10",
     "@types/send": "^0.17.1",
     "@types/uniqid": "^5.3.0",
     "@types/validator": "^13.7.13",
