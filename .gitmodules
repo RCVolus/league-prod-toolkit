@@ -98,3 +98,6 @@
 	path = types
 	url = https://github.com/rcv-prod-toolkit/types.git
 	branch = main
+[submodule "modules/module-valorant-ingame"]
+	path = modules/module-valorant-ingame
+	url = https://github.com/rcv-prod-toolkit/module-valorant-in-game.git
