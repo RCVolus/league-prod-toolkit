@@ -74,10 +74,12 @@
 	path = modules/module-league-champselect-tent
 	url = https://github.com/rcv-prod-toolkit/module-league-champselect-tent.git
 	branch = main
+	update = none
 [submodule "modules/module-league-champselect-ace"]
 	path = modules/module-league-champselect-ace
 	url = https://github.com/rcv-prod-toolkit/module-league-champselect-ace.git
 	branch = main
+	update = none
 [submodule "modules/module-twitch"]
 	path = modules/module-twitch
 	url = https://github.com/rcv-prod-toolkit/module-twitch.git
@@ -101,3 +103,4 @@
 [submodule "modules/module-valorant-ingame"]
 	path = modules/module-valorant-ingame
 	url = https://github.com/rcv-prod-toolkit/module-valorant-in-game.git
+	update = none
