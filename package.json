@@ -31,7 +31,7 @@
     "minimist": "^1.2.8",
     "nanospinner": "^1.1.0",
     "pug": "^3.0.0",
-    "semver": "^7.3.8",
+    "semver": "^7.5.0",
     "send": "^0.18.0",
     "toastr": "^2.1.4",
     "tslib": "^2.5.0",
