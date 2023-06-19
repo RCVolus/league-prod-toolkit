@@ -1,21 +1,17 @@
 import minimist from 'minimist'
 import { lt } from 'semver'
 import { version } from '../package.json'
+import logger, { eventbusTransport } from './logging'
+import { runServer } from './web/server'
+import moduleService from './modules/ModuleService'
+import lpteService from './eventbus/LPTEService'
+import axios from 'axios'
 
 const argv = minimist(process.argv.slice(2))
 
 if (argv.loglevel !== undefined) {
   process.env.LOGLEVEL = argv.loglevel
 }
-
-// This is needed so the logger can be set up in correct loglevel from the very beginning
-/* eslint-disable */
-import logger, { eventbusTransport } from './logging'
-import { runServer } from './web/server'
-import moduleService from './modules/ModuleService'
-import lpteService from './eventbus/LPTEService'
-import axios from 'axios'
-/* eslint-enable */
 
 const log = logger('main')
 
