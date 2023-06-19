@@ -19,6 +19,7 @@
 ### Ingame
 
 - Custom Scoreboard
+- Leader boards for Gold and Level + XP
 - Animations for level ups and item purchases
 - Animations for events (Baron | Dragons | Herald)
 - Custom killfeed
