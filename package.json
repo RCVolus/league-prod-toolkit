@@ -25,7 +25,7 @@
     "fs-extra": "^11.1.1",
     "inquirer": "^8.2.5",
     "jquery": "^3.7.0",
-    "jsonwebtoken": "^9.0.0",
+    "jsonwebtoken": "^9.0.1",
     "jspath": "^0.4.0",
     "jwt-decode": "^3.1.2",
     "minimist": "^1.2.8",
