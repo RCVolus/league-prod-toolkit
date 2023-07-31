@@ -57,7 +57,7 @@ export class LPTEService implements LPTE {
     event.meta.reply = reply
     event.meta.channelType = EventType.REQUEST
 
-    event.replay = (data) => {
+    event.reply = (data) => {
       this.emit({
         meta: {
           type: reply,
@@ -67,6 +67,8 @@ export class LPTEService implements LPTE {
         ...data
       })
     }
+    // TODO deprecate and remove this
+    event.replay = event.reply
 
     this.emit(event)
 

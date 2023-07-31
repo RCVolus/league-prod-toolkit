@@ -104,3 +104,6 @@
 	path = modules/module-valorant-ingame
 	url = https://github.com/rcv-prod-toolkit/module-valorant-in-game.git
 	update = none
+[submodule "modules/plugin-state"]
+	path = modules/plugin-state
+	url = https://github.com/rcv-prod-toolkit/plugin-state.git
