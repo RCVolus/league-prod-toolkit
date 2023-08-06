@@ -12,9 +12,9 @@ export default (globalContext: GlobalContext): Router => {
 
   router.get('/:page*', async (req, res) => {
     const anyParams = req.params as any
-    const page = globalContext.module_pages.filter(
+    const page = globalContext.module_pages.find(
       (p) => p.id === anyParams?.page
-    )[0]
+    )
 
     if (page === undefined) {
       return res
@@ -24,6 +24,16 @@ export default (globalContext: GlobalContext): Router => {
 
     const relativePath = anyParams?.[0] !== '' ? anyParams?.[0] : '/'
     const absolutePath = join(page.sender.path, page.frontend, relativePath)
+
+    const relativeCheck = relative(svc.getModulePath(), absolutePath)
+
+    if (relativeCheck.startsWith('..') || isAbsolute(relativeCheck)) {
+      return res.status(400).send()
+    }
+
+    if (!(await pathExists(absolutePath))) {
+      return res.status(404).send()
+    }
 
     if (relativePath === '/') {
       let fileContent
@@ -43,16 +53,6 @@ export default (globalContext: GlobalContext): Router => {
         pageName: page.id
       })
     } else {
-      const relativeCheck = relative(svc.getModulePath(), absolutePath)
-
-      if (relativeCheck.startsWith('..') || isAbsolute(relativeCheck)) {
-        return res.status(400).send()
-      }
-
-      if (!(await pathExists(absolutePath))) {
-        return res.status(404).send()
-      }
-
       send(req, absolutePath).pipe(res)
     }
   })
