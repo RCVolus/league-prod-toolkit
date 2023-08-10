@@ -101,7 +101,7 @@ export async function download (asset: Asset): Promise<void> {
           )
         )
       } else {
-        await extract(savePath, folderPath, { overwrite: true })
+        await extract(savePath, folderPath)
 
         if (!asset.name.startsWith('theme')) {
           spinner.update({ text: `installing dependency for ${asset.name}` })
