@@ -5,21 +5,20 @@ import { type LPTE } from '../eventbus/LPTE'
 
 const customFormat = winston.format.printf(
   ({ level, message, label, timestamp }) =>
-    `${timestamp as string} [${level.padEnd(15)}] ${`\u001b[95m${
-      label as string
-    }\u001b[39m`.padEnd(22)}: ${message as string}`
+    `${timestamp as string} [${level.padEnd(15)}] ${`\u001b[95m${label as string
+      }\u001b[39m`.padEnd(22)}: ${message as string}`
 )
 
 export class EventbusTransport extends Transport {
   lpte?: LPTE
 
-  constructor (opts: any = {}) {
+  constructor(opts: any = {}) {
     super(opts)
 
     this.log = this.log.bind(this)
   }
 
-  log (info: any, callback: () => void): void {
+  log(info: any, callback: () => void): void {
     if ((info.level.includes('error') as boolean) && this.lpte != null) {
       this.lpte.emit({
         meta: {
@@ -40,21 +39,35 @@ eventbusTransport.setMaxListeners(100)
 
 const createLogger = (label: string): Logger =>
   winston.createLogger({
-    level: process.env.LOGLEVEL !== null ? process.env.LOGLEVEL : 'info',
-    format: winston.format.combine(
-      winston.format.timestamp(),
-      winston.format.colorize(),
-      customFormat
-    ),
+    level: process.env.LOGLEVEL ?? 'info',
     defaultMeta: { label },
     transports: [
-      //
-      // - Write to all logs with level `info` and below to `combined.log`
-      // - Write all logs error (and below) to `error.log`.
-      //
-      // new winston.transports.File({ filename: 'error.log', level: 'error' }),
-      // new winston.transports.File({ filename: 'combined.log' })
-      new winston.transports.Console(),
+      new winston.transports.File({
+        filename: 'logs/error.log',
+        level: 'error',
+        zippedArchive: true,
+        format: winston.format.combine(
+          winston.format.timestamp(),
+          winston.format.printf(info => `${info.timestamp as string} [${info.level}] ${info.label as string}: ${info.message as string}`
+          )
+        )
+      }),
+      new winston.transports.File({
+        filename: 'logs/logs.log',
+        zippedArchive: true,
+        format: winston.format.combine(
+          winston.format.timestamp(),
+          winston.format.printf(info => `${info.timestamp as string} [${info.level}] ${info.label as string}: ${info.message as string}`
+          )
+        )
+      }),
+      new winston.transports.Console({
+        format: winston.format.combine(
+          winston.format.timestamp(),
+          winston.format.colorize(),
+          customFormat
+        )
+      }),
       eventbusTransport
     ]
   })
