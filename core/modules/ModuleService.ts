@@ -61,10 +61,15 @@ export class ModuleService {
       const activeIndex = this.activePlugins.findIndex(
         (a) => a.module.getName() === e.name
       )
+      const moduleIndex = this.modules.findIndex(
+        (a) => a.getName() === e.name
+      )
       const active = this.activePlugins[activeIndex]
 
       if (active.module.asset !== undefined) {
         this.activePlugins.splice(activeIndex, 1)
+        this.modules.splice(moduleIndex, 1)
+        
         await this.install(active.module.asset)
 
         log.info(`plugin ${e.name as string} was updated`)
@@ -279,6 +284,7 @@ export class ModuleService {
         this.assets.findIndex((a) => a.name === asset.name),
         1
       )
+      module.asset = asset
       this.modules.push(module)
 
       log.info(`${asset.name} was successfully installed`)
