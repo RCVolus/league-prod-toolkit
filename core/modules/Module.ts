@@ -1,13 +1,12 @@
 import { join } from 'path'
 import { Logger } from 'winston'
-
 import ModuleType from './ModuleType'
 import lpteService from '../eventbus/LPTEService'
 import logger from '../logging'
 import { LPTE } from '../eventbus/LPTE'
 import { MultiBar } from 'cli-progress'
 import progress from '../logging/progress'
-import { gt, gtr } from 'semver'
+import { gt } from 'semver'
 
 export interface PackageJson {
   name: string
@@ -189,7 +188,7 @@ export class Plugin {
 
     // Execute main (and wrap it in a try / catch, so there cannot be an exception bubbling up)
     try {
-      const response = main(this.context)
+      const response: void | Promise<void> | undefined = main(this.context)
 
       if (response !== undefined && typeof response.catch === 'function') {
         response.catch((e: any) => handleError(e))
