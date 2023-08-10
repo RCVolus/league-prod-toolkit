@@ -58,12 +58,15 @@ export class ModuleService {
     })
 
     LPTEService.on('lpt', 'update-plugin', async (e) => {
-      const active = this.activePlugins.find(
+      const activeIndex = this.activePlugins.findIndex(
         (a) => a.module.getName() === e.name
       )
+      const active = this.activePlugins[activeIndex]
 
-      if (active?.module.asset !== undefined) {
-        await download(active.module.asset)
+      if (active.module.asset !== undefined) {
+        this.activePlugins.splice(activeIndex, 1)
+        await this.install(active.module.asset)
+
         log.info(`plugin ${e.name as string} was updated`)
 
         return LPTEService.emit({
@@ -92,6 +95,7 @@ export class ModuleService {
       if (asset !== undefined) {
         try {
           await this.install(asset)
+
           return LPTEService.emit({
             meta: {
               namespace: 'lpt',
