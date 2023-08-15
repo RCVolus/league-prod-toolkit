@@ -37,7 +37,7 @@
     "tslib": "^2.6.1",
     "uniqid": "^5.3.0",
     "uuid-apikey": "^1.5.3",
-    "validator": "^13.9.0",
+    "validator": "^13.11.0",
     "winston": "^3.10.0",
     "ws": "^8.13.0",
     "zip-lib": "^0.7.3"
@@ -54,7 +54,7 @@
     "@types/node": "^20.4.8",
     "@types/send": "^0.17.1",
     "@types/uniqid": "^5.3.0",
-    "@types/validator": "^13.7.17",
+    "@types/validator": "^13.11.1",
     "@types/ws": "^8.5.5",
     "@typescript-eslint/eslint-plugin": "^5.61.0",
     "copy-webpack-plugin": "^11.0.0",
