@@ -9,7 +9,7 @@ router.post('/events/ingest', (req, res) => {
   res.status(200).send({})
 })
 
-router.get('/events/shortcut/ingest/:namespace/:type', (req, res) => {
+router.post('/events/shortcut/ingest/:namespace/:type', (req, res) => {
   lpte.emit({
     meta: {
       namespace: req.params.namespace,
