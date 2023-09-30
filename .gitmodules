@@ -103,4 +103,15 @@
 [submodule "modules/module-valorant-ingame"]
 	path = modules/module-valorant-ingame
 	url = https://github.com/rcv-prod-toolkit/module-valorant-in-game.git
+	branch = main
+	update = none
+[submodule "modules/module-cs-gsi"]
+	path = modules/module-cs-gsi
+	url = https://github.com/rcv-prod-toolkit/module-cs-gsi.git
+	branch = main
+	update = none
+[submodule "modules/module-atem"]
+	path = modules/module-atem
+	url = https://github.com/rcv-prod-toolkit/module-atem.git
+	branch = main
 	update = none
