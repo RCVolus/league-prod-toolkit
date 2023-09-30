@@ -9,7 +9,7 @@ router.post('/events/ingest', (req, res) => {
   res.status(200).send({})
 })
 
-router.post('/events/shortcut/ingest/:namespace/:type', (req, res) => {
+router.get('/events/shortcut/ingest/:namespace/:type', (req, res) => {
   lpte.emit({
     meta: {
       namespace: req.params.namespace,
@@ -17,6 +17,18 @@ router.post('/events/shortcut/ingest/:namespace/:type', (req, res) => {
       version: 1
     },
     ...req.query
+  })
+  res.status(200).send({})
+})
+
+router.post('/events/shortcut/ingest/:namespace/:type', (req, res) => {
+  lpte.emit({
+    meta: {
+      namespace: req.params.namespace,
+      type: req.params.type,
+      version: 1
+    },
+    ...req.body
   })
   res.status(200).send({})
 })
