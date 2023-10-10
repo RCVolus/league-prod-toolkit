@@ -43,7 +43,7 @@
     "zip-lib": "^0.7.3"
   },
   "devDependencies": {
-    "@types/cli-progress": "^3.9.2",
+    "@types/cli-progress": "^3.11.3",
     "@types/cookie-parser": "^1.4.4",
     "@types/express": "^4.17.17",
     "@types/express-fileupload": "^1.2.2",
