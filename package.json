@@ -39,7 +39,7 @@
     "uuid-apikey": "^1.5.3",
     "validator": "^13.11.0",
     "winston": "^3.10.0",
-    "ws": "^8.13.0",
+    "ws": "^8.14.2",
     "zip-lib": "^0.7.3"
   },
   "devDependencies": {
@@ -55,7 +55,7 @@
     "@types/send": "^0.17.1",
     "@types/uniqid": "^5.3.0",
     "@types/validator": "^13.11.2",
-    "@types/ws": "^8.5.5",
+    "@types/ws": "^8.5.7",
     "@typescript-eslint/eslint-plugin": "^5.61.0",
     "copy-webpack-plugin": "^11.0.0",
     "copyfiles": "^2.2.0",
