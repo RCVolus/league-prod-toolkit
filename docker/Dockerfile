@@ -21,6 +21,9 @@ ADD docker/entrypoint.js package.json ./
 RUN npm i --production
 RUN mkdir ./modules
 
+# Install default plugins and theme
+RUN node ./dist/scripts/install.js -plugins theme-default
+
 # See setup script for further explanation of these options
 # https://github.com/RCVolus/league-prod-toolkit/blob/main/scripts/setup.ts
 ENV RIOT_API_KEY=RGAPI-SECRETKEY

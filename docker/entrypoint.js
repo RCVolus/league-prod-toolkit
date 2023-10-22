@@ -20,11 +20,6 @@ const onExit = (childProcess) => {
 }
 
 const main = async () => {
-  const installChildProcess = spawn('node', ['dist/scripts/install.js', '-plugins', 'theme-default'],
-    { stdio: [process.stdin, process.stdout, process.stderr], cwd: '/app' })
-
-  await onExit(installChildProcess)
-
   // Write config file with environment variables
   const file = require('./modules/plugin-config/config.dist.json')
   file['plugin-webapi'].apiKey = process.env.RIOT_API_KEY
