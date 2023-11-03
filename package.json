@@ -53,7 +53,7 @@
     "@types/minimist": "^1.2.3",
     "@types/node": "^20.8.7",
     "@types/send": "^0.17.3",
-    "@types/uniqid": "^5.3.0",
+    "@types/uniqid": "^5.3.3",
     "@types/validator": "^13.11.5",
     "@types/ws": "^8.5.7",
     "@typescript-eslint/eslint-plugin": "^5.61.0",
