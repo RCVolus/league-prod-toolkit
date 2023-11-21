@@ -236,7 +236,7 @@ async function getActionLink(namespace: string, type: string, params?: Record<st
     urlParams.set('apikey', apiKey)
   }
 
-  const url = `${protocol}://${host}/api/events/shortcut/ingest/${namespace}/${type}?${urlParams.toString()}`
+  const url = `${protocol}//${host}/api/events/shortcut/ingest/${namespace}/${type}?${urlParams.toString()}`
   await navigator.clipboard.writeText(url)
 }
 
