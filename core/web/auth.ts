@@ -100,7 +100,7 @@ LPTEService.on('auth', 'add-key', (e) => {
     },
     collection: 'key',
     data: {
-      apiKey: `RCVPT-${apiKey as string}`,
+      apiKey: `RCVPT-${apiKey}`,
       description: e.description,
       expiring: (e.neverExpires as boolean)
         ? -1
@@ -108,7 +108,7 @@ LPTEService.on('auth', 'add-key', (e) => {
     }
   })
 
-  allowedKeys.add(`RCVPT-${apiKey as string}`)
+  allowedKeys.add(`RCVPT-${apiKey}`)
 
   LPTEService.emit({
     meta: {

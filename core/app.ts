@@ -6,8 +6,9 @@ import moduleService from './modules/ModuleService.js'
 import lpteService from './eventbus/LPTEService.js'
 import axios from 'axios'
 import { readJSON } from 'fs-extra/esm'
-
-const { version } = await readJSON('../package.json')
+import { fileURLToPath } from 'url';
+import { join } from 'path'
+const __dirname = fileURLToPath(new URL('.', import.meta.url));
 
 const argv = minimist(process.argv.slice(2))
 
@@ -24,6 +25,8 @@ log.info('| |__| (_) | |___    | | (_) | (_) | |   <| | |_ ')
 log.info('|_____\\___/|_____|   |_|\\___/ \\___/|_|_|\\_\\_|\\__|')
 log.info('')
 
+const {version} = await readJSON(join(__dirname, '..', 'package.json'))
+
 const checkVersion = async (): Promise<any> => {
   const res = await axios.get('https://prod-toolkit-latest.himyu.workers.dev/', {
     headers: { 'Accept-Encoding': 'gzip,deflate,compress' }
@@ -33,7 +36,7 @@ const checkVersion = async (): Promise<any> => {
     return log.warn('The current version could not be checked')
   }
 
-  if (lt(version, res.data.tag_name)) {
+  if (lt(version as string, res.data.tag_name)) {
     log.info('='.repeat(50))
     log.info(`There is a new version available: ${res.data.tag_name as string}`)
     log.info('='.repeat(50))

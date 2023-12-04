@@ -34,7 +34,7 @@ const askQuestions = async (): Promise<void> => {
   file.auth = {
     enabled: auth,
     secreteKey: auth ? randomBytes(48).toString('hex') : '',
-    'super-api-key': auth ? `RCVPT-${uuidAPIKey.default.create().apiKey as string}` : ''
+    'super-api-key': auth ? `RCVPT-${uuidAPIKey.default.create().apiKey}` : ''
   }
 
   const spinner = createSpinner('Saving config')

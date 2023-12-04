@@ -5,7 +5,7 @@ import { readFileSync } from 'fs'
 import { createServer } from 'http'
 import { createServer as createSecureServer } from 'https'
 import type { Server } from 'https'
-import WebSocket from 'ws'
+import { WebSocketServer, WebSocket } from 'ws'
 import cookieParser from 'cookie-parser'
 import logging from '../logging/logger.js'
 import globalContext from './globalContext.js'
@@ -14,8 +14,10 @@ import { handleClient } from './ws.js'
 import svc from '../modules/ModuleService.js'
 import { runAuth } from './auth.js'
 import fileUpload, { type UploadedFile } from 'express-fileupload'
-import { urlencoded } from 'body-parser'
+import bodyParser from 'body-parser'
 import rateLimit from 'express-rate-limit'
+import { fileURLToPath } from 'url';
+const __dirname = fileURLToPath(new URL('.', import.meta.url));
 
 /**
  * App Variables
@@ -31,17 +33,17 @@ const keyPath = join(__dirname, '..', '..', '/cert/key.pem')
 const certPath = join(__dirname, '..', '..', '/cert/cert.pem')
 
 let secureServer: Server | undefined
-export let swss: WebSocket.Server | undefined
+export let swss: WebSocketServer | undefined
 
 if (await pathExists(keyPath) && await pathExists(certPath)) {
   const options = {
-    key: readFileSync(join(__dirname, '..', '..', '/cert/key.pem')),
-    cert: readFileSync(join(__dirname, '..', '..', '/cert/cert.pem'))
+    key: readFileSync(keyPath),
+    cert: readFileSync(certPath)
   }
 
   secureServer = createSecureServer(options, app)
 
-  swss = new WebSocket.Server({
+  swss = new WebSocketServer({
     server: secureServer,
     path: '/eventbus'
   })
@@ -85,13 +87,13 @@ app.use(
 )
 
 app.use(express.json())
-app.use(urlencoded({ extended: true }))
+app.use(bodyParser.urlencoded({ extended: true }))
 app.use(cookieParser())
 
 /**
  * Websocket Server
  */
-export const wss = new WebSocket.Server({
+export const wss = new WebSocketServer({
   server,
   path: '/eventbus'
 })

@@ -8,8 +8,10 @@ import { readJSON, remove } from 'fs-extra/esm'
 import { createSpinner } from 'nanospinner'
 import type { Asset } from '../core/modules/Module.js'
 import { satisfies } from 'semver'
+import { fileURLToPath } from 'url';
+const __dirname = fileURLToPath(new URL('.', import.meta.url));
 
-const { version } = await readJSON('../package.json')
+const { version } = await readJSON(join(__dirname, '../package.json'))
 
 const execPromise = promisify(exec)
 

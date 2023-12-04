@@ -1,13 +1,16 @@
 import { Stats } from 'fs'
 import { readdir, stat } from 'fs/promises'
 import { join } from 'path'
-
 import LPTEService from '../eventbus/LPTEService.js'
 import logging from '../logging/index.js'
 import Module, { Plugin, PluginStatus, Asset, PackageJson } from './Module.js'
 import ModuleType from './ModuleType.js'
 import { EventType } from '../eventbus/LPTE.js'
 import { download, getAll } from '../../scripts/install.js'
+import { fileURLToPath } from 'url';
+import { readJSON } from 'fs-extra/esm'
+
+const __dirname = fileURLToPath(new URL('.', import.meta.url));
 
 const readdirPromise = readdir
 const statPromise = stat
@@ -165,8 +168,8 @@ export class ModuleService {
     )
 
     // Launch plugins
-    this.activePlugins.forEach((plugin) => {
-      plugin.initialize()
+    this.activePlugins.forEach(async (plugin) => {
+      await plugin.initialize()
     })
   }
 
@@ -232,7 +235,7 @@ export class ModuleService {
     }
 
     // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const packageJson = require(packageJsonPath) as PackageJson
+    const packageJson = await readJSON(packageJsonPath) as PackageJson
 
     const index = this.assets.findIndex((a) => a.name === packageJson.name)
     let asset
