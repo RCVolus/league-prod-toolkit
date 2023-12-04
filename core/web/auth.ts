@@ -1,12 +1,12 @@
-import LPTEService from '../eventbus/LPTEService'
+import LPTEService from '../eventbus/LPTEService.js'
 import { type IncomingMessage } from 'http'
 import type WebSocket from 'ws'
 import uuidAPIKey from 'uuid-apikey'
-import logging from '../logging'
+import logging from '../logging/index.js'
 import { type OutgoingHttpHeaders } from 'http2'
 import { type Express, type NextFunction, type Request, type Response } from 'express'
 import jwt from 'jsonwebtoken'
-import ModuleType from '../modules/ModuleType'
+import ModuleType from '../modules/ModuleType.js'
 
 const log = logging('auth')
 
@@ -16,7 +16,8 @@ let config: any
 
 export async function runAuth (
   server: Express,
-  wss: WebSocket.Server
+  wss: WebSocket.Server,
+  swss?: WebSocket.Server
 ): Promise<void> {
   const configReq = await LPTEService.request({
     meta: {
@@ -51,6 +52,9 @@ export async function runAuth (
   log.info('=========================')
 
   wss.options.verifyClient = verifyWSClient
+
+  if (swss !== undefined) swss.options.verifyClient = verifyWSClient
+
   server.all('*', verifyEPClient)
 
   server.get('/login', (_req, res) => {
@@ -86,7 +90,7 @@ async function getKeys (): Promise<void> {
 }
 
 LPTEService.on('auth', 'add-key', (e) => {
-  const { apiKey } = uuidAPIKey.create()
+  const { apiKey } = uuidAPIKey.default.create()
 
   LPTEService.emit({
     meta: {
@@ -96,7 +100,7 @@ LPTEService.on('auth', 'add-key', (e) => {
     },
     collection: 'key',
     data: {
-      apiKey: 'RCVPT-' + apiKey,
+      apiKey: `RCVPT-${apiKey}`,
       description: e.description,
       expiring: (e.neverExpires as boolean)
         ? -1
@@ -104,7 +108,7 @@ LPTEService.on('auth', 'add-key', (e) => {
     }
   })
 
-  allowedKeys.add('RCVPT-' + apiKey)
+  allowedKeys.add(`RCVPT-${apiKey}`)
 
   LPTEService.emit({
     meta: {

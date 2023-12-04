@@ -1,10 +1,10 @@
 import { Router } from 'express'
 import { join, relative, isAbsolute } from 'path'
-import { pathExists } from 'fs-extra'
-import svc from '../../modules/ModuleService'
+import { pathExists } from 'fs-extra/esm'
+import svc from '../../modules/ModuleService.js'
 import send from 'send'
-import { type GlobalContext } from '../globalContext'
-import escape from 'validator/lib/escape'
+import { type GlobalContext } from '../globalContext.js'
+import validator from 'validator'
 
 export default (globalContext: GlobalContext): Router => {
   const router = Router()
@@ -18,7 +18,7 @@ export default (globalContext: GlobalContext): Router => {
     if (serve === undefined) {
       return res
         .status(404)
-        .send(`No serve found with name ${escape(anyParams?.serve)}`)
+        .send(`No serve found with name ${validator.default.escape(anyParams?.serve)}`)
     }
 
     const relativePath = anyParams?.[0] !== '' ? anyParams?.[0] : '/'

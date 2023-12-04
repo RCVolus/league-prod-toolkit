@@ -1,7 +1,9 @@
-const path = require('path')
-const CopyWebpackPlugin = require('copy-webpack-plugin')
+import path from 'path';
+import CopyWebpackPlugin from 'copy-webpack-plugin';
+import { fileURLToPath } from "url";
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-module.exports = {
+export default {
   mode: 'development',
   devtool: 'inline-source-map',
   entry: {
@@ -12,7 +14,10 @@ module.exports = {
     filename: '[name]-bundle.js'
   },
   resolve: {
-    extensions: ['.ts', '.tsx', '.js']
+    extensions: ['.ts', '.tsx', '.js'],
+    extensionAlias: {
+      '.js': ['.ts', '.js'],
+    }
   },
   module: {
     rules: [

@@ -1,5 +1,11 @@
 import { Router } from 'express'
-import { version } from '../../../package.json'
+import { readJSON } from 'fs-extra/esm'
+import { fileURLToPath } from 'url'
+import { join } from 'path'
+// eslint-disable-next-line @typescript-eslint/naming-convention
+const __dirname = fileURLToPath(new URL('.', import.meta.url))
+
+const { version } = await readJSON(join(__dirname, '../../../package.json'))
 
 export default (globalContext: any): Router => {
   const router = Router()

@@ -1,4 +1,4 @@
-import { writeJSON } from 'fs-extra'
+import { writeJSON } from 'fs-extra/esm'
 import { join } from 'path'
 import inquirer from 'inquirer'
 import { createSpinner } from 'nanospinner'
@@ -34,7 +34,7 @@ const askQuestions = async (): Promise<void> => {
   file.auth = {
     enabled: auth,
     secreteKey: auth ? randomBytes(48).toString('hex') : '',
-    'super-api-key': auth ? 'RCVPT-' + uuidAPIKey.create().apiKey : ''
+    'super-api-key': auth ? `RCVPT-${uuidAPIKey.default.create().apiKey}` : ''
   }
 
   const spinner = createSpinner('Saving config')

@@ -1,4 +1,4 @@
-import lpte from '../eventbus/LPTEService'
+import lpte from '../eventbus/LPTEService.js'
 
 export interface PageDefintion {
   name: string

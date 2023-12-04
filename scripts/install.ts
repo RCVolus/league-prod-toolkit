@@ -4,11 +4,15 @@ import { promisify } from 'util'
 import { join } from 'path'
 import { exec } from 'child_process'
 import { extract } from 'zip-lib'
-import { readJSON, remove } from 'fs-extra'
+import { readJSON, remove } from 'fs-extra/esm'
 import { createSpinner } from 'nanospinner'
-import type { Asset } from '../core/modules/Module'
+import type { Asset } from '../core/modules/Module.js'
 import { satisfies } from 'semver'
-import { version } from '../package.json'
+import { fileURLToPath } from 'url'
+// eslint-disable-next-line @typescript-eslint/naming-convention
+const __dirname = fileURLToPath(new URL('.', import.meta.url))
+
+const { version } = await readJSON(join(__dirname, '../package.json'))
 
 const execPromise = promisify(exec)
 

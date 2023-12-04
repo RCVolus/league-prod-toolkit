@@ -17,7 +17,8 @@ module.exports = {
     '**/docs/*'
   ],
   rules: {
-    '@typescript-eslint/no-misused-promises': 'off'
+    '@typescript-eslint/no-misused-promises': 'off',
+    "@typescript-eslint/unbound-method": "off"
   },
   parserOptions: {
     project: './tsconfig.json'

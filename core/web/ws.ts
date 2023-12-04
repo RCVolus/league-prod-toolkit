@@ -1,12 +1,12 @@
-import type * as WebSocket from 'ws'
-import { EventType, type LPTEvent } from '../eventbus/LPTE'
+import type { WebSocket } from 'ws'
+import { EventType, type LPTEvent } from '../eventbus/LPTE.js'
+import LPTEService, { isValidEvent } from '../eventbus/LPTEService.js'
+import log from '../logging/logger.js'
 
-import LPTEService, { isValidEvent } from '../eventbus/LPTEService'
-import log from '../logging'
 const logger = log('ws')
 
 export const handleClient = (socket: WebSocket): void => {
-  socket.on('message', (e: string) => {
+  socket.on('message', async (e: string) => {
     const event = JSON.parse(e) as LPTEvent
 
     if (!isValidEvent(event)) {
@@ -45,7 +45,7 @@ export const handleClient = (socket: WebSocket): void => {
       }
     }
     if (event.meta.channelType === EventType.REQUEST) {
-      return LPTEService.request(event)
+      return await LPTEService.request(event)
     }
 
     LPTEService.emit(event)

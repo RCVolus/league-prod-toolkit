@@ -1,12 +1,13 @@
 import { join } from 'path'
 import { Logger } from 'winston'
-import ModuleType from './ModuleType'
-import lpteService from '../eventbus/LPTEService'
-import logger from '../logging'
-import { LPTE } from '../eventbus/LPTE'
+import ModuleType from './ModuleType.js'
+import lpteService from '../eventbus/LPTEService.js'
+import logger from '../logging/index.js'
+import { LPTE } from '../eventbus/LPTE.js'
 import { MultiBar } from 'cli-progress'
-import progress from '../logging/progress'
+import progress from '../logging/progress.js'
 import { gt } from 'semver'
+import { pathToFileURL } from 'url'
 
 export interface PackageJson {
   name: string
@@ -112,15 +113,15 @@ export enum PluginStatus {
 
 export class PluginContext {
   log: Logger
-  require: (file: string) => any
+  require: (file: string) => Promise<any>
   LPTE: LPTE
   plugin: Plugin
   progress: MultiBar
 
   constructor(plugin: Plugin) {
     this.log = logger(plugin.getModule().getName())
-    this.require = (file: string) =>
-      require(join(plugin.getModule().getFolder(), file))
+    this.require = async (file: string) =>
+      await import(join(plugin.getModule().getFolder(), file))
     this.LPTE = lpteService.forPlugin(plugin)
     this.plugin = plugin
     this.progress = progress(plugin.module.getName())
@@ -160,7 +161,7 @@ export class Plugin {
     }
   }
 
-  initialize(): void {
+  async initialize(): Promise<void> {
     // Craft context
     this.context = new PluginContext(this)
 
@@ -179,8 +180,8 @@ export class Plugin {
 
     let main
     try {
-      // eslint-disable-next-line
-      main = require(join(this.getModule().getFolder(), mainFile))
+      const mainURL = pathToFileURL(join(this.getModule().getFolder(), mainFile))
+      main = await import(mainURL.href)
     } catch (e) {
       handleError(e)
       return
@@ -188,7 +189,7 @@ export class Plugin {
 
     // Execute main (and wrap it in a try / catch, so there cannot be an exception bubbling up)
     try {
-      const response: void | Promise<void> | undefined = main(this.context)
+      const response: void | Promise<void> | undefined = main.default(this.context)
 
       if (response !== undefined && typeof response.catch === 'function') {
         response.catch((e: any) => handleError(e))

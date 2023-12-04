@@ -1,13 +1,13 @@
 import { type Router } from 'express'
 
-import modules from './modules'
-import home from './home'
-import plugins from './plugins'
-import events from './events'
-import api from './api'
-import pages from './pages'
-import serve from './serve'
-import keys from './keys'
+import modules from './modules.js'
+import home from './home.js'
+import plugins from './plugins.js'
+import events from './events.js'
+import api from './api.js'
+import pages from './pages.js'
+import serve from './serve.js'
+import keys from './keys.js'
 
 export default (
   globalContext: any

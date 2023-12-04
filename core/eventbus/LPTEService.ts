@@ -1,16 +1,15 @@
-import { type LPTE, type LPTEvent, EventType, Registration } from './LPTE'
-import logger from '../logging'
-import { type Plugin } from '../modules/Module'
-import ModuleType from '../modules/ModuleType'
-import { wsClients } from '../web/server'
+import { type LPTE, type LPTEvent, EventType, Registration } from './LPTE.js'
+import logger from '../logging/index.js'
+import { type Plugin } from '../modules/Module.js'
+import ModuleType from '../modules/ModuleType.js'
+import { wsClients } from '../web/server.js'
 import uniqid from 'uniqid'
 
 const log = logger('lpte-svc')
 
 export const isValidEvent = (event: LPTEvent): boolean => {
   if (
-    event.meta === undefined ||
-    event.meta.namespace === undefined ||
+    event.meta?.namespace === undefined ||
     event.meta.type === undefined
   ) {
     return false
