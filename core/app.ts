@@ -1,11 +1,13 @@
 import minimist from 'minimist'
 import { lt } from 'semver'
-import { version } from '../package.json'
-import logger, { eventbusTransport } from './logging'
-import { runServer } from './web/server'
-import moduleService from './modules/ModuleService'
-import lpteService from './eventbus/LPTEService'
+import logger, { eventbusTransport } from './logging/logger.js'
+import { runServer } from './web/server.js'
+import moduleService from './modules/ModuleService.js'
+import lpteService from './eventbus/LPTEService.js'
 import axios from 'axios'
+import { readJSON } from 'fs-extra/esm'
+
+const { version } = await readJSON('../package.json')
 
 const argv = minimist(process.argv.slice(2))
 

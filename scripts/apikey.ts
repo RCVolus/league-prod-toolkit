@@ -1,4 +1,4 @@
-import { writeJSON } from 'fs-extra'
+import { writeJSON } from 'fs-extra/esm'
 import { join } from 'path'
 import inquirer from 'inquirer'
 import { createSpinner } from 'nanospinner'

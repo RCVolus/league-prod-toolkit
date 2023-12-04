@@ -1,6 +1,6 @@
 import { Router } from 'express'
 
-import lpteService from '../../eventbus/LPTEService'
+import lpteService from '../../eventbus/LPTEService.js'
 
 export default (globalContext: any): Router => {
   const router = Router()

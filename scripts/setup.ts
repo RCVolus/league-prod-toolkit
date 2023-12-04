@@ -1,10 +1,10 @@
 import { join } from 'path'
-import { writeJSON } from 'fs-extra'
+import { writeJSON } from 'fs-extra/esm'
 import inquirer from 'inquirer'
 import { createSpinner } from 'nanospinner'
 import { randomBytes } from 'crypto'
-import { download, getAll } from './install'
-import { type Asset } from '../core/modules/Module'
+import { download, getAll } from './install.js'
+import { type Asset } from '../core/modules/Module.js'
 import uuidAPIKey from 'uuid-apikey'
 
 const getApiKey = async (): Promise<string> => {
@@ -174,7 +174,7 @@ const askQuestions = async (): Promise<void> => {
   file.auth = {
     enabled: auth,
     secreteKey: auth ? randomBytes(48).toString('hex') : '',
-    'super-api-key': auth ? 'RCVPT-' + uuidAPIKey.create().apiKey : ''
+    'super-api-key': auth ? `RCVPT-${uuidAPIKey.default.create().apiKey}` : ''
   }
 
   const spinner = createSpinner('Saving config')

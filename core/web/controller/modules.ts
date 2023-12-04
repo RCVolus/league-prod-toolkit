@@ -1,6 +1,6 @@
 import { Router } from 'express'
 
-import moduleService from '../../modules/ModuleService'
+import moduleService from '../../modules/ModuleService.js'
 
 export default (globalContext: any): Router => {
   const router = Router()

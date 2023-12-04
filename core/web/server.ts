@@ -1,14 +1,18 @@
 import express from 'express'
 import { join, relative, isAbsolute } from 'path'
+import { pathExists } from 'fs-extra/esm'
+import { readFileSync } from 'fs'
 import { createServer } from 'http'
-import * as WebSocket from 'ws'
+import { createServer as createSecureServer } from 'https'
+import type { Server } from 'https'
+import WebSocket from 'ws'
 import cookieParser from 'cookie-parser'
-import logging from '../logging'
-import globalContext from './globalContext'
-import getController from './controller'
-import { handleClient } from './ws'
-import svc from '../modules/ModuleService'
-import { runAuth } from './auth'
+import logging from '../logging/logger.js'
+import globalContext from './globalContext.js'
+import getController from './controller/index.js'
+import { handleClient } from './ws.js'
+import svc from '../modules/ModuleService.js'
+import { runAuth } from './auth.js'
 import fileUpload, { type UploadedFile } from 'express-fileupload'
 import { urlencoded } from 'body-parser'
 import rateLimit from 'express-rate-limit'
@@ -18,8 +22,30 @@ import rateLimit from 'express-rate-limit'
  */
 const log = logging('server')
 const app = express()
+
 const port = process.env.PORT ?? '3003'
 const server = createServer(app)
+
+const sslPort = process.env.SSL_PORT ?? '3004'
+const keyPath = join(__dirname, '..', '..', '/cert/key.pem')
+const certPath = join(__dirname, '..', '..', '/cert/cert.pem')
+
+let secureServer: Server | undefined
+export let swss: WebSocket.Server | undefined
+
+if (await pathExists(keyPath) && await pathExists(certPath)) {
+  const options = {
+    key: readFileSync(join(__dirname, '..', '..', '/cert/key.pem')),
+    cert: readFileSync(join(__dirname, '..', '..', '/cert/cert.pem'))
+  }
+
+  secureServer = createSecureServer(options, app)
+
+  swss = new WebSocket.Server({
+    server: secureServer,
+    path: '/eventbus'
+  })
+}
 
 const limiter = rateLimit({
   windowMs: 1 * 60 * 1000,
@@ -83,6 +109,17 @@ wss.on('connection', (socket: WebSocket, _requests) => {
 
   handleClient(socket)
 })
+swss?.on('connection', (socket: WebSocket, _requests) => {
+  wsClients.push(socket)
+  log.debug('Websocket client connected')
+
+  socket.on('close', () => {
+    wsClients = wsClients.filter((client) => client !== socket)
+    log.debug('Websocket client disconnected')
+  })
+
+  handleClient(socket)
+})
 
 /**
  * Uploads
@@ -136,7 +173,7 @@ app.post('/upload', async (req, res) => {
  */
 export const runServer = async (): Promise<void> => {
   // eslint-disable-next-line @typescript-eslint/no-floating-promises
-  await runAuth(app, wss)
+  await runAuth(app, wss, swss)
 
   /**
    * Routes
@@ -148,5 +185,8 @@ export const runServer = async (): Promise<void> => {
 
   server.listen(port, () => {
     log.info(`Listening for requests on http://localhost:${port}`)
+  })
+  secureServer?.listen(sslPort, () => {
+    log.info(`Listening for requests on https://localhost:${sslPort}`)
   })
 }

@@ -1,11 +1,12 @@
 {
   "name": "league-prod-toolkit-core",
   "version": "1.8.0",
+  "type": "module",
   "scripts": {
     "build": "tsc && webpack",
     "build:modules": "node dist/utils/build-modules.js",
     "update": "node dist/utils/update.js",
-    "postbuild": "copyfiles core/web/views/**.* core/web/public/**.* dist",
+    "postbuild": "copyfiles cert/**.pem core/web/views/**.* core/web/public/**.* dist",
     "start": "node --trace-warnings dist/core/app.js",
     "tsc": "tsc",
     "lint": "eslint \"**/*.{ts,tsx}\" --fix",

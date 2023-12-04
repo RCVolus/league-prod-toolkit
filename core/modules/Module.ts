@@ -1,11 +1,11 @@
 import { join } from 'path'
 import { Logger } from 'winston'
-import ModuleType from './ModuleType'
-import lpteService from '../eventbus/LPTEService'
-import logger from '../logging'
-import { LPTE } from '../eventbus/LPTE'
+import ModuleType from './ModuleType.js'
+import lpteService from '../eventbus/LPTEService.js'
+import logger from '../logging/index.js'
+import { LPTE } from '../eventbus/LPTE.js'
 import { MultiBar } from 'cli-progress'
-import progress from '../logging/progress'
+import progress from '../logging/progress.js'
 import { gt } from 'semver'
 
 export interface PackageJson {

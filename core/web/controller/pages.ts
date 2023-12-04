@@ -1,11 +1,11 @@
 import { Router } from 'express'
 import { join, relative, isAbsolute } from 'path'
 import send from 'send'
-import svc from '../../modules/ModuleService'
+import svc from '../../modules/ModuleService.js'
 import { readFile } from 'fs/promises'
-import { pathExists } from 'fs-extra'
-import { type GlobalContext } from '../globalContext'
-import escape from 'validator/lib/escape'
+import { pathExists } from 'fs-extra/esm'
+import { type GlobalContext } from '../globalContext.js'
+import validator from 'validator'
 
 export default (globalContext: GlobalContext): Router => {
   const router = Router()
@@ -19,7 +19,7 @@ export default (globalContext: GlobalContext): Router => {
     if (page === undefined) {
       return res
         .status(404)
-        .send(`No page found with name ${escape(anyParams?.page)}`)
+        .send(`No page found with name ${validator.default.escape(anyParams?.page)}`)
     }
 
     const relativePath = anyParams?.[0] !== '' ? anyParams?.[0] : '/'

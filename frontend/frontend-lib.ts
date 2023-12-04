@@ -1,4 +1,4 @@
-import { EventType, type LPTE, type LPTEvent, Registration } from '../core/eventbus/LPTE'
+import { EventType, type LPTE, type LPTEvent, Registration } from '../core/eventbus/LPTE.js'
 import decode from 'jwt-decode'
 
 // Setup toasts
@@ -212,7 +212,7 @@ function getApiKey(): string | null {
   const cookieKey = getCookie('access_token')
 
   if (cookieKey !== '') {
-    const decoded = decode<any>(cookieKey)
+    const decoded = decode.default<any>(cookieKey)
     return decoded.apiKey
   }
 

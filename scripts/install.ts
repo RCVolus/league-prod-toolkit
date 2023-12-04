@@ -4,11 +4,12 @@ import { promisify } from 'util'
 import { join } from 'path'
 import { exec } from 'child_process'
 import { extract } from 'zip-lib'
-import { readJSON, remove } from 'fs-extra'
+import { readJSON, remove } from 'fs-extra/esm'
 import { createSpinner } from 'nanospinner'
-import type { Asset } from '../core/modules/Module'
+import type { Asset } from '../core/modules/Module.js'
 import { satisfies } from 'semver'
-import { version } from '../package.json'
+
+const { version } = await readJSON('../package.json')
 
 const execPromise = promisify(exec)
 

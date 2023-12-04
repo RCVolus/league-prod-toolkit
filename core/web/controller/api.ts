@@ -1,6 +1,6 @@
 import { Router } from 'express'
 
-import lpte from '../../eventbus/LPTEService'
+import lpte from '../../eventbus/LPTEService.js'
 
 const router = Router()
 

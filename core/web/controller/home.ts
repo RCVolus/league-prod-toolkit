@@ -1,5 +1,7 @@
 import { Router } from 'express'
-import { version } from '../../../package.json'
+import { readJSON } from 'fs-extra/esm'
+
+const { version } = await readJSON('../../../package.json')
 
 export default (globalContext: any): Router => {
   const router = Router()

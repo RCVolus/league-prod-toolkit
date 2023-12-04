@@ -2,12 +2,12 @@ import { Stats } from 'fs'
 import { readdir, stat } from 'fs/promises'
 import { join } from 'path'
 
-import LPTEService from '../eventbus/LPTEService'
-import logging from '../logging'
-import Module, { Plugin, PluginStatus, Asset, PackageJson } from './Module'
-import ModuleType from './ModuleType'
-import { EventType } from '../eventbus/LPTE'
-import { download, getAll } from '../../scripts/install'
+import LPTEService from '../eventbus/LPTEService.js'
+import logging from '../logging/index.js'
+import Module, { Plugin, PluginStatus, Asset, PackageJson } from './Module.js'
+import ModuleType from './ModuleType.js'
+import { EventType } from '../eventbus/LPTE.js'
+import { download, getAll } from '../../scripts/install.js'
 
 const readdirPromise = readdir
 const statPromise = stat
