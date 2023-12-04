@@ -77,7 +77,6 @@ class LPTEService implements LPTE {
 
   _onSocketClose (): void {
     this._log('Websocket closed, attempting reconnect in 500ms')
-    // eslint-disable-next-line @typescript-eslint/unbound-method
     setTimeout(this._reconnect, 500)
   }
 
@@ -104,13 +103,9 @@ class LPTEService implements LPTE {
   }
 
   _connect (): void {
-    // eslint-disable-next-line @typescript-eslint/unbound-method
     this.websocket.onopen = this._onSocketOpen
-    // eslint-disable-next-line @typescript-eslint/unbound-method
     this.websocket.onclose = this._onSocketClose
-    // eslint-disable-next-line @typescript-eslint/unbound-method
     this.websocket.onerror = this._onSocketError
-    // eslint-disable-next-line @typescript-eslint/unbound-method
     this.websocket.onmessage = this._onSocketMessage
   }
 
