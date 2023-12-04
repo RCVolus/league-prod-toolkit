@@ -6,9 +6,10 @@ import moduleService from './modules/ModuleService.js'
 import lpteService from './eventbus/LPTEService.js'
 import axios from 'axios'
 import { readJSON } from 'fs-extra/esm'
-import { fileURLToPath } from 'url';
+import { fileURLToPath } from 'url'
 import { join } from 'path'
-const __dirname = fileURLToPath(new URL('.', import.meta.url));
+// eslint-disable-next-line @typescript-eslint/naming-convention
+const __dirname = fileURLToPath(new URL('.', import.meta.url))
 
 const argv = minimist(process.argv.slice(2))
 
@@ -25,7 +26,7 @@ log.info('| |__| (_) | |___    | | (_) | (_) | |   <| | |_ ')
 log.info('|_____\\___/|_____|   |_|\\___/ \\___/|_|_|\\_\\_|\\__|')
 log.info('')
 
-const {version} = await readJSON(join(__dirname, '..', 'package.json'))
+const { version } = await readJSON(join(__dirname, '..', 'package.json'))
 
 const checkVersion = async (): Promise<any> => {
   const res = await axios.get('https://prod-toolkit-latest.himyu.workers.dev/', {

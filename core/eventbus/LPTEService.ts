@@ -9,8 +9,7 @@ const log = logger('lpte-svc')
 
 export const isValidEvent = (event: LPTEvent): boolean => {
   if (
-    event.meta === undefined ||
-    event.meta.namespace === undefined ||
+    event.meta?.namespace === undefined ||
     event.meta.type === undefined
   ) {
     return false
@@ -203,7 +202,9 @@ export class LPTEService implements LPTE {
         // Enrich with sender information
         this.emit(enrichEvent(event))
       },
+      // eslint-disable-next-line @typescript-eslint/unbound-method
       on: this.on,
+      // eslint-disable-next-line @typescript-eslint/unbound-method
       unregister: this.unregister,
       request: async (
         event: LPTEvent,
@@ -212,6 +213,7 @@ export class LPTEService implements LPTE {
         // Enrich with sender information
         return await this.request(enrichEvent(event), timeout)
       },
+      // eslint-disable-next-line @typescript-eslint/unbound-method
       await: this.await
     }
   }

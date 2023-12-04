@@ -17,7 +17,7 @@ let config: any
 export async function runAuth (
   server: Express,
   wss: WebSocket.Server,
-  swss?: WebSocket.Server,
+  swss?: WebSocket.Server
 ): Promise<void> {
   const configReq = await LPTEService.request({
     meta: {

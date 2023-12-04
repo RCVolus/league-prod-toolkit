@@ -5,7 +5,7 @@ import { readFileSync } from 'fs'
 import { createServer } from 'http'
 import { createServer as createSecureServer } from 'https'
 import type { Server } from 'https'
-import { WebSocketServer, WebSocket } from 'ws'
+import { WebSocketServer, type WebSocket } from 'ws'
 import cookieParser from 'cookie-parser'
 import logging from '../logging/logger.js'
 import globalContext from './globalContext.js'
@@ -16,8 +16,9 @@ import { runAuth } from './auth.js'
 import fileUpload, { type UploadedFile } from 'express-fileupload'
 import bodyParser from 'body-parser'
 import rateLimit from 'express-rate-limit'
-import { fileURLToPath } from 'url';
-const __dirname = fileURLToPath(new URL('.', import.meta.url));
+import { fileURLToPath } from 'url'
+// eslint-disable-next-line @typescript-eslint/naming-convention
+const __dirname = fileURLToPath(new URL('.', import.meta.url))
 
 /**
  * App Variables
