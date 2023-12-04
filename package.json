@@ -55,7 +55,7 @@
     "@types/send": "^0.17.3",
     "@types/uniqid": "^5.3.4",
     "@types/validator": "^13.11.5",
-    "@types/ws": "^8.5.7",
+    "@types/ws": "^8.5.10",
     "@typescript-eslint/eslint-plugin": "^5.61.0",
     "copy-webpack-plugin": "^11.0.0",
     "copyfiles": "^2.2.0",
