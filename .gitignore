@@ -5,3 +5,4 @@ logs/
 core-build/
 cache/
 .DS_Store
+cert/**
