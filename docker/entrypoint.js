@@ -20,7 +20,7 @@ const onExit = (childProcess) => {
 }
 
 const editConfig = async () => {
-  const file = require('/app/modules/plugin-config/config.json')
+  const file = require('./modules/plugin-config/config.json')
 
   file.auth = {
     enabled: process.env.AUTH !== 'false',
@@ -38,12 +38,12 @@ const editConfig = async () => {
     server: file['plugin-webapi'].server ?? process.env.server 
   }
 
-  await writeJSON('/app/modules/plugin-config/config.json', file, { spaces: 2 })
+  await writeJSON('modules/plugin-config/config.json', file, { spaces: 2 })
 }
 
 const createConfig = async () => {
   // Write config file with environment variables
-  const file = require('/app/modules/plugin-config/config.dist.json')
+  const file = require('./modules/plugin-config/config.dist.json')
   file['plugin-webapi'].apiKey = process.env.RIOT_API_KEY
   file['plugin-webapi'].server = process.env.SERVER
 
@@ -55,11 +55,11 @@ const createConfig = async () => {
       process.env.AUTH !== 'false' ? 'RCVPT-' + uuidAPIKey.create().apiKey : ''
   }
 
-  await writeJSON('/app/modules/plugin-config/config.json', file, { spaces: 2 })
+  await writeJSON('modules/plugin-config/config.json', file, { spaces: 2 })
 }
 
 const main = async () => {
-  const checkFile = await exists('/app/modules/plugin-config/config.json')
+  const checkFile = await exists('modules/plugin-config/config.json')
 
   if (checkFile) {
     await editConfig()
