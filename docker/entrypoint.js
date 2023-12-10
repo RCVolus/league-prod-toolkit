@@ -21,8 +21,6 @@ const onExit = (childProcess) => {
 
 const editConfig = async () => {
   const file = require('/app/modules/plugin-config/config.json')
-  file['plugin-webapi'].apiKey = process.env.RIOT_API_KEY
-  file['plugin-webapi'].server = process.env.SERVER
 
   file.auth = {
     enabled: process.env.AUTH !== 'false',
@@ -34,6 +32,10 @@ const editConfig = async () => {
       file.auth['super-api-key'] ?? process.env.AUTH !== 'false'
         ? 'RCVPT-' + uuidAPIKey.create().apiKey
         : ''
+  }
+  file['plugin-webapi'] = {
+    apiKey: file.['plugin-webapi'].apiKey ?? process.env.RIOT_API_KEY,
+    server: file.['plugin-webapi'].server ?? process.env.server 
   }
 
   await writeJSON('/app/modules/plugin-config/config.json', file, { spaces: 2 })
