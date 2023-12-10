@@ -34,8 +34,8 @@ const editConfig = async () => {
         : ''
   }
   file['plugin-webapi'] = {
-    apiKey: file.['plugin-webapi'].apiKey ?? process.env.RIOT_API_KEY,
-    server: file.['plugin-webapi'].server ?? process.env.server 
+    apiKey: file['plugin-webapi'].apiKey ?? process.env.RIOT_API_KEY,
+    server: file['plugin-webapi'].server ?? process.env.server 
   }
 
   await writeJSON('/app/modules/plugin-config/config.json', file, { spaces: 2 })
