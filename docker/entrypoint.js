@@ -38,7 +38,11 @@ const editConfig = async () => {
     server: file['plugin-webapi'].server ?? process.env.server 
   }
 
-  await writeJSON('modules/plugin-config/config.json', file, { spaces: 2 })
+  try {
+    await writeJSON('modules/plugin-config/config.json', file, { spaces: 2 })
+  } catch (error) {
+    console.error(error)
+  }
 }
 
 const createConfig = async () => {
@@ -55,7 +59,11 @@ const createConfig = async () => {
       process.env.AUTH !== 'false' ? 'RCVPT-' + uuidAPIKey.create().apiKey : ''
   }
 
-  await writeJSON('modules/plugin-config/config.json', file, { spaces: 2 })
+  try {
+    await writeJSON('modules/plugin-config/config.json', file, { spaces: 2 })
+  } catch (error) {
+    console.error(error)
+  }
 }
 
 const main = async () => {
