@@ -78,7 +78,7 @@ export async function download (asset: Asset): Promise<void> {
       })
       await extract(savePath, tmpPath)
 
-      let requiredVersion
+      let requiredVersion: string | undefined
 
       if (existsSync(packagePath)) {
         requiredVersion = (await readJSON(packagePath))?.toolkit?.toolkitVersion
@@ -86,7 +86,7 @@ export async function download (asset: Asset): Promise<void> {
 
       if (
         requiredVersion !== undefined &&
-        !satisfies(version, requiredVersion)
+        !satisfies(version, `>=${requiredVersion}`)
       ) {
         spinner.error({
           text: `${asset.name} could not be installed`
