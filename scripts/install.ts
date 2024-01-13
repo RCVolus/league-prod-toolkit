@@ -7,7 +7,7 @@ import { extract } from 'zip-lib'
 import { readJSON, remove } from 'fs-extra'
 import { createSpinner } from 'nanospinner'
 import type { Asset } from '../core/modules/Module'
-import { satisfies } from 'semver'
+import { satisfies, coerce } from 'semver'
 import { version } from '../package.json'
 
 const execPromise = promisify(exec)
@@ -86,7 +86,7 @@ export async function download (asset: Asset): Promise<void> {
 
       if (
         requiredVersion !== undefined &&
-        !satisfies(version, `>=${requiredVersion}`)
+        !satisfies(version, requiredVersion)
       ) {
         spinner.error({
           text: `${asset.name} could not be installed`
@@ -95,9 +95,7 @@ export async function download (asset: Asset): Promise<void> {
         await remove(tmpPath)
         reject(
           new Error(
-            `The prod-tool (v${version}) has not the required version ${
-              requiredVersion as string
-            }`
+            `The prod-tool (v${version}) has not the required version ${requiredVersion}`
           )
         )
       } else {
