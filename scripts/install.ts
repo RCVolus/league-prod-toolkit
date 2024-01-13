@@ -7,7 +7,7 @@ import { extract } from 'zip-lib'
 import { readJSON, remove } from 'fs-extra'
 import { createSpinner } from 'nanospinner'
 import type { Asset } from '../core/modules/Module'
-import { satisfies, coerce } from 'semver'
+import { satisfies } from 'semver'
 import { version } from '../package.json'
 
 const execPromise = promisify(exec)
