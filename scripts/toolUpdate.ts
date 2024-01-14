@@ -8,6 +8,10 @@ import { remove } from 'fs-extra'
 import { createSpinner } from 'nanospinner'
 import { lt } from 'semver'
 import type { ReleaseType } from '../types/release'
+import { exec } from 'child_process'
+import { promisify } from 'util'
+
+const execPromise = promisify(exec)
 
 const checkVersion = async (): Promise<ReleaseType | undefined> => {
   const res = await axios.get<ReleaseType>('https://prod-toolkit-latest.himyu.workers.dev/', {
@@ -29,7 +33,7 @@ const installUpdateConfirm = async (): Promise<boolean> => {
     type: 'confirm',
     name: 'install',
     message: 'Do you want to install the newest version?',
-    default: false
+    default: true
   })
 
   return install.install
@@ -71,7 +75,7 @@ async function installUpdate(version: ReleaseType): Promise<void> {
 
       resolve(undefined)
     })
-    dl.data.on('error', (e) => {
+    dl.data.on('error', (e: any) => {
       reject(e)
     })
   })
@@ -97,7 +101,24 @@ async function run(): Promise<void> {
     return
   }
 
-  await installUpdate(updateAvailable)
+  try {
+    await installUpdate(updateAvailable)
+  } catch (error) {
+    console.error(error)
+    return
+  }
+
+  try {
+    const output = await execPromise('npm i --production')
+
+    console.log(output.stdout)
+
+    if (output.stderr !== '') {
+      console.error(output.stderr)
+    }
+  } catch (error) {
+    console.error(error)
+  }
 }
 
 void run()
