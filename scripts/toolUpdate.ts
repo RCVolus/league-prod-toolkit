@@ -7,7 +7,7 @@ import { extract } from 'zip-lib'
 import { remove } from 'fs-extra'
 import { createSpinner } from 'nanospinner'
 import { lt } from 'semver'
-import type { ReleaseType } from '../types/release'
+import type { ReleaseType } from './release'
 import { exec } from 'child_process'
 import { promisify } from 'util'
 
