@@ -21,7 +21,7 @@
     "cookie-parser": "^1.4.6",
     "express": "^4.19.2",
     "express-fileupload": "^1.4.3",
-    "express-rate-limit": "^7.1.5",
+    "express-rate-limit": "^7.2.0",
     "fs-extra": "^11.2.0",
     "inquirer": "^8.2.6",
     "jquery": "^3.7.1",
