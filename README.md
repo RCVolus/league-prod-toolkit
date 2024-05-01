@@ -18,12 +18,14 @@
 
 ### Ingame
 
+**A lot of these features are impacted by the removal of the LiveEvents API and the introduction of Vanguard. Level ups, item purchases, the killfeed and inhibitor timers should still work.**
+
 - Custom Scoreboard
 - Leader boards for Gold and Level + XP
 - Animations for level ups and item purchases
 - Animations for events (Baron | Dragons | Herald)
 - Custom killfeed
-- Power-Play timer for Baron ann Elder Dragon
+- Power-Play timer for Baron and Elder Dragon
 - Inhibitor timers
 
 ### Postgame
