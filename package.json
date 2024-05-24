@@ -39,7 +39,7 @@
     "uuid-apikey": "^1.5.3",
     "validator": "^13.11.0",
     "winston": "^3.13.0",
-    "ws": "^8.16.0",
+    "ws": "^8.17.0",
     "zip-lib": "^1.0.4"
   },
   "devDependencies": {
