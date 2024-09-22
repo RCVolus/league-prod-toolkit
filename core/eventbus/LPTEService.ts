@@ -4,8 +4,11 @@ import { type Plugin } from '../modules/Module'
 import ModuleType from '../modules/ModuleType'
 import { wsClients } from '../web/server'
 import uniqid from 'uniqid'
+import inquirer, { type ConfirmQuestion, type Answers, type QuestionCollection } from 'inquirer'
+import { TimeoutConfirmPrompt } from '../logging/timeoutPrompt'
 
 const log = logger('lpte-svc')
+inquirer.registerPrompt('timeout-confirm', TimeoutConfirmPrompt);
 
 export const isValidEvent = (event: LPTEvent): boolean => {
   if (
@@ -23,15 +26,15 @@ export class LPTEService implements LPTE {
   registrations: Registration[] = []
   eventHistory: LPTEvent[] = []
 
-  constructor () {
+  constructor() {
     this.await = this.await.bind(this)
   }
 
-  initialize (): void {
+  initialize(): void {
     log.info('Initialized event bus.')
   }
 
-  on (namespace: string, type: string, handler: (e: LPTEvent) => void): void {
+  on(namespace: string, type: string, handler: (e: LPTEvent) => void): void {
     const registration = new Registration(namespace, type, handler)
     this.registrations.push(registration)
 
@@ -40,7 +43,7 @@ export class LPTEService implements LPTE {
     )
   }
 
-  once (namespace: string, type: string, handler: (e: LPTEvent) => void): void {
+  once(namespace: string, type: string, handler: (e: LPTEvent) => void): void {
     const wrappedHandler = (e: LPTEvent): void => {
       log.debug(`Wrapped handler called for ${namespace}/${type}`)
       this.unregisterHandler(wrappedHandler)
@@ -49,7 +52,7 @@ export class LPTEService implements LPTE {
     this.on(namespace, type, wrappedHandler)
   }
 
-  async request (
+  async request(
     event: LPTEvent,
     timeout = 5000
   ): Promise<LPTEvent | undefined> {
@@ -82,7 +85,7 @@ export class LPTEService implements LPTE {
     }
   }
 
-  async await (
+  async await(
     namespace: string,
     type: string,
     timeout = 5000
@@ -118,14 +121,14 @@ export class LPTEService implements LPTE {
     })
   }
 
-  unregister (namespace: string, type: string): void {
+  unregister(namespace: string, type: string): void {
     this.registrations = this.registrations.filter(
       (registration) =>
         registration.namespace !== namespace && registration.type !== type
     )
   }
 
-  unregisterHandler (handler: (event: LPTEvent) => void): void {
+  unregisterHandler(handler: (event: LPTEvent) => void): void {
     setTimeout(() => {
       this.registrations = this.registrations.filter(
         (registration) => registration.handle !== handler
@@ -133,7 +136,7 @@ export class LPTEService implements LPTE {
     }, 1000)
   }
 
-  emit (event: LPTEvent): void {
+  emit(event: LPTEvent): void {
     if (!isValidEvent(event)) {
       return
     }
@@ -180,7 +183,33 @@ export class LPTEService implements LPTE {
     }, 0)
   }
 
-  forPlugin (plugin: Plugin): LPTE {
+  /**
+   * Emits a prompt in the console, and waits for a response (or until timeout)
+   * @param prompt the prompt to send
+   * @param timeout the amount of ms to wait until rejecting the promise because of timeout
+   * @returns answer given by user or default
+   */
+  async prompt <T extends Answers = Answers>(prompt: {
+    questions: QuestionCollection<T>
+    initialAnswers?: Partial<T> | undefined
+  }): Promise<T>
+  async prompt <T extends Answers = Answers>(prompt: {
+    questions: ConfirmQuestion<T>
+    initialAnswers?: Partial<T> | undefined
+  }, timeout: number): Promise<T>
+  async prompt<T extends Answers = Answers>(prompt: { questions: QuestionCollection<T>, initialAnswers?: Partial<T> | undefined }, timeout?: number): Promise<T> {
+    if (timeout === undefined) {
+      return await inquirer.prompt(prompt.questions, prompt.initialAnswers)
+    } else {
+      // @ts-expect-error custom type not implemented
+      return await inquirer.prompt({
+        ...prompt.questions,
+        type: 'timeout-confirm'
+      }, prompt.initialAnswers)
+    }
+  }
+
+  forPlugin(plugin: Plugin): LPTE {
     const enrichEvent = (event: LPTEvent): LPTEvent => {
       return {
         ...event,
@@ -212,7 +241,8 @@ export class LPTEService implements LPTE {
         // Enrich with sender information
         return await this.request(enrichEvent(event), timeout)
       },
-      await: this.await
+      await: this.await,
+      prompt: this.prompt
     }
   }
 }

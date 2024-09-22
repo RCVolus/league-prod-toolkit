@@ -1,3 +1,4 @@
+import { Answers, QuestionCollection } from 'inquirer'
 import { EventType, type LPTE, type LPTEvent, Registration } from '../core/eventbus/LPTE'
 import decode from 'jwt-decode'
 
@@ -192,6 +193,11 @@ class LPTEService implements LPTE {
         reject(new Error('request timed out'))
       }, timeout)
     })
+  }
+
+  async prompt (prompt: { questions: QuestionCollection<any>, initialAnswers?: Partial<any> | undefined }, timeout?: number): Promise<any> {
+    this._log('Unregister is currently not supported')
+    return undefined
   }
 }
 
