@@ -14,11 +14,11 @@ export class TimeoutConfirmPrompt extends ConfirmPrompt {
     // @ts-expect-error arg spread
     super(...args)
     this.opt.timeoutTips = t => `(${t}s)`
-    this.opt.timeout = this.opt.timeout ?? 10
+    this.opt.timeout = this.opt.timeout !== undefined ? this.opt.timeout / 1000 : 10
   }
 
   _run (cb: (...args: any) => void): void {
-    this.timeout = this.opt.timeout ?? 10
+    this.timeout = this.opt.timeout !== undefined ? this.opt.timeout / 1000 : 10
     const timerId = setInterval(() => {
       this.timeout -= 1
       if (this.timeout === 0) {
