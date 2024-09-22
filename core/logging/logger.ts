@@ -12,13 +12,13 @@ const customFormat = winston.format.printf(
 export class EventbusTransport extends Transport {
   lpte?: LPTE
 
-  constructor(opts: any = {}) {
+  constructor (opts: any = {}) {
     super(opts)
 
     this.log = this.log.bind(this)
   }
 
-  log(info: any, callback: () => void): void {
+  log (info: any, callback: () => void): void {
     if ((info.level.includes('error') as boolean) && this.lpte != null) {
       this.lpte.emit({
         meta: {

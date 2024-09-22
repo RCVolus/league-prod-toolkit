@@ -6,7 +6,7 @@ import log from '../logging'
 const logger = log('ws')
 
 export const handleClient = (socket: WebSocket): void => {
-  socket.on('message', (e: string) => {
+  socket.on('message', async (e: string) => {
     const event = JSON.parse(e) as LPTEvent
 
     if (!isValidEvent(event)) {
@@ -45,7 +45,7 @@ export const handleClient = (socket: WebSocket): void => {
       }
     }
     if (event.meta.channelType === EventType.REQUEST) {
-      return LPTEService.request(event)
+      return await LPTEService.request(event)
     }
 
     LPTEService.emit(event)

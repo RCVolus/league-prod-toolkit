@@ -39,7 +39,7 @@ const installUpdateConfirm = async (): Promise<boolean> => {
   return install.install
 }
 
-async function installUpdate(version: ReleaseType): Promise<void> {
+async function installUpdate (version: ReleaseType): Promise<void> {
   const spinner = createSpinner(`Downloading ${version.tag_name}`)
   spinner.start()
 
@@ -81,7 +81,7 @@ async function installUpdate(version: ReleaseType): Promise<void> {
   })
 }
 
-async function run(): Promise<void> {
+async function run (): Promise<void> {
   const updateAvailable = await checkVersion()
 
   if (updateAvailable === undefined) {
