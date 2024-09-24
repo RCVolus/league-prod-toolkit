@@ -115,3 +115,6 @@
 	url = https://github.com/rcv-prod-toolkit/module-atem.git
 	branch = main
 	update = none
+[submodule "modules/module-league-fearless"]
+	path = modules/module-league-fearless
+	url = https://github.com/rcv-prod-toolkit/module-league-fearless.git
