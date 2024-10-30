@@ -118,3 +118,8 @@
 [submodule "modules/module-league-fearless"]
 	path = modules/module-league-fearless
 	url = https://github.com/rcv-prod-toolkit/module-league-fearless.git
+[submodule "modules/module-league-champselect-led-wall"]
+	path = modules/module-league-champselect-led-wall
+	url = https://github.com/rcv-prod-toolkit/module-league-champselect-led-wall.git
+	branch = main
+	update = none
