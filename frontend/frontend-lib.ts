@@ -39,7 +39,7 @@ function randomId (): string {
 /**
  * This is the frontend library that is compatible with the backend syntax. It connects via websocket.
  */
-class LPTEService implements LPTE {
+export class LPTEService implements LPTE {
   backend: string
   websocket: WebSocket
   registrations: FrontendRegistration[] = []
@@ -225,8 +225,27 @@ function getApiKey (): string | null {
   return null
 }
 
+/**
+ *
+ * @deprecated will be replaced with getServerURL for better use
+ */
 function getWebServerPort (): string {
   return `${location.host}`
+}
+
+function getServerURL (): string {
+  const protocol = location.protocol
+  const host = location.host
+
+  return `${protocol}//${host}`
+}
+
+function getModuleURL (): string {
+  const protocol = location.protocol
+  const host = location.host
+  const path = location.pathname
+
+  return `${protocol}//${host}${path}`
 }
 
 async function getActionLink (namespace: string, type: string, params?: Record<string, string>): Promise<void> {
@@ -264,10 +283,12 @@ function getCookie (cname: string): string {
   return ''
 }
 
-; (window as any).LPTE = new LPTEService(backend)
-; (window as any).apiKey = apiKey
-; (window as any).constants = {
+window.LPTE = new LPTEService(backend)
+window.apiKey = apiKey
+window.constants = {
   getApiKey,
+  getServerURL,
+  getModuleURL,
   getWebServerPort
 }
-; (window as any).getActionLink = getActionLink
+window.getActionLink = getActionLink
