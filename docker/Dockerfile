@@ -5,7 +5,7 @@ WORKDIR /app
 ADD package.json package-lock.json ./
 RUN npm ci
 
-ADD tsconfig.json webpack.config.js ./
+ADD tsconfig.json webpack.config.js index.d.ts ./
 ADD core ./core
 ADD frontend ./frontend
 ADD utils ./utils
