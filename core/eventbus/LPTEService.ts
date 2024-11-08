@@ -204,6 +204,7 @@ export class LPTEService implements LPTE {
       // @ts-expect-error custom type not implemented
       return await inquirer.prompt({
         ...prompt.questions,
+        timeout,
         type: 'timeout-confirm'
       }, prompt.initialAnswers)
     }

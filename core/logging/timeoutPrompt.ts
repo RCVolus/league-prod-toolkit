@@ -18,7 +18,7 @@ export class TimeoutConfirmPrompt extends ConfirmPrompt {
   }
 
   _run (cb: (...args: any) => void): void {
-    this.timeout = this.opt.timeout !== undefined ? this.opt.timeout / 1000 : 10
+    this.timeout = this.opt.timeout !== undefined ? this.opt.timeout : 10
     const timerId = setInterval(() => {
       this.timeout -= 1
       if (this.timeout === 0) {
