@@ -29,5 +29,6 @@ RUN node ./dist/scripts/install.js -plugins theme-default
 ENV RIOT_API_KEY=RGAPI-SECRETKEY
 ENV SERVER=EUW1
 ENV AUTH=true
+ENV DBPATH=modules/plugin-database/data/league-prod-toolkit
 
 ENTRYPOINT [ "/app/entrypoint.js" ]
