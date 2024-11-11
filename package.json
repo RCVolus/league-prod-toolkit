@@ -40,7 +40,7 @@
     "validator": "^13.12.0",
     "winston": "^3.15.0",
     "ws": "^8.18.0",
-    "zip-lib": "^1.0.4"
+    "zip-lib": "^1.0.5"
   },
   "devDependencies": {
     "@types/cli-progress": "^3.11.6",
