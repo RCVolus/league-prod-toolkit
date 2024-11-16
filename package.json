@@ -29,7 +29,7 @@
     "jspath": "^0.4.0",
     "jwt-decode": "^3.1.2",
     "minimist": "^1.2.8",
-    "nanospinner": "^1.1.0",
+    "nanospinner": "^1.2.0",
     "pug": "^3.0.3",
     "semver": "^7.6.3",
     "send": "^1.1.0",
@@ -38,9 +38,9 @@
     "uniqid": "^5.3.0",
     "uuid-apikey": "^1.5.3",
     "validator": "^13.12.0",
-    "winston": "^3.15.0",
+    "winston": "^3.17.0",
     "ws": "^8.18.0",
-    "zip-lib": "^1.0.4"
+    "zip-lib": "^1.0.5"
   },
   "devDependencies": {
     "@types/cli-progress": "^3.11.6",
@@ -51,7 +51,7 @@
     "@types/inquirer": "^9.0.7",
     "@types/jsonwebtoken": "^9.0.7",
     "@types/minimist": "^1.2.5",
-    "@types/node": "^22.7.5",
+    "@types/node": "^22.9.0",
     "@types/send": "^0.17.4",
     "@types/uniqid": "^5.3.4",
     "@types/validator": "^13.12.2",
