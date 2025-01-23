@@ -18,7 +18,8 @@
 
 ### Ingame
 
-**A lot of these features are impacted by the removal of the LiveEvents API and the introduction of Vanguard. Level ups, item purchases, the killfeed and inhibitor timers should still work.**
+> [!IMPORTANT]
+> **A lot of these features are impacted by the removal of the LiveEvents API and the introduction of Vanguard. Level ups, item purchases, the killfeed and inhibitor timers should still work.**
 
 - Custom Scoreboard
 - Leader boards for Gold and Level + XP
