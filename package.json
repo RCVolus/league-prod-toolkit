@@ -64,7 +64,7 @@
     "eslint-plugin-import": "^2.31.0",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^6.6.0",
-    "nodemon": "^3.1.9",
+    "nodemon": "^3.1.10",
     "prettier": "^3.6.2",
     "ts-loader": "^9.5.2",
     "typescript": "^5.8.3",
