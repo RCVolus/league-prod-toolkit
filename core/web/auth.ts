@@ -35,7 +35,7 @@ export async function runAuth (
   const authActive = config.enabled as boolean
 
   if (!authActive) {
-    server.all('*', (req, res, next) => {
+    server.all('{*path}', (req, res, next) => {
       res.cookie('auth_disabled', true)
       next()
     })
@@ -51,7 +51,7 @@ export async function runAuth (
   log.info('=========================')
 
   wss.options.verifyClient = verifyWSClient
-  server.all('*', verifyEPClient)
+  server.all('{*path}', verifyEPClient)
 
   server.get('/login', (_req, res) => {
     res.render('login', {

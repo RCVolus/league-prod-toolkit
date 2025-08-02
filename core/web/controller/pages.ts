@@ -10,8 +10,8 @@ import escape from 'validator/lib/escape'
 export default (globalContext: GlobalContext): Router => {
   const router = Router()
 
-  router.get('/:page*', async (req, res) => {
-    const anyParams = req.params as any
+  router.get(['/:page{/*ext}'], async (req, res) => {
+    const anyParams = req.params
     const page = globalContext.module_pages.find(
       (p) => p.id === anyParams?.page
     )
@@ -22,7 +22,7 @@ export default (globalContext: GlobalContext): Router => {
         .send(`No page found with name ${escape(anyParams?.page)}`)
     }
 
-    const relativePath = anyParams?.[0] !== '' ? anyParams?.[0] : '/'
+    const relativePath = anyParams.ext?.[0] !== '' && anyParams.ext?.[0] !== undefined ? anyParams.ext?.[0] : '/'
     const absolutePath = join(page.sender.path, page.frontend, relativePath)
 
     const relativeCheck = relative(svc.getModulePath(), absolutePath)

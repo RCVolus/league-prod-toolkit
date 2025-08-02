@@ -9,8 +9,8 @@ import escape from 'validator/lib/escape'
 export default (globalContext: GlobalContext): Router => {
   const router = Router()
 
-  router.get('/:serve*', async (req, res) => {
-    const anyParams = req.params as any
+  router.get(['/:serve{/*ext}'], async (req, res) => {
+    const anyParams = req.params
     const serve = globalContext.module_serves.filter(
       (p) => p.id === anyParams?.serve
     )[0]
@@ -21,7 +21,7 @@ export default (globalContext: GlobalContext): Router => {
         .send(`No serve found with name ${escape(anyParams?.serve)}`)
     }
 
-    const relativePath = anyParams?.[0] !== '' ? anyParams?.[0] : '/'
+    const relativePath = anyParams.ext?.[0] !== '' && anyParams.ext?.[0] !== undefined ? anyParams.ext?.[0] : '/'
     const absolutePath = join(serve.sender.path, serve.frontend, relativePath)
 
     const relativeCheck = relative(svc.getModulePath(), absolutePath)
