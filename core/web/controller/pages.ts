@@ -22,7 +22,7 @@ export default (globalContext: GlobalContext): Router => {
         .send(`No page found with name ${escape(anyParams?.page)}`)
     }
 
-    const relativePath = anyParams.ext?.[0] !== '' && anyParams.ext?.[0] !== undefined ? anyParams.ext?.[0] : '/'
+    const relativePath = anyParams.ext !== undefined && anyParams.ext.length !== 0 ? Array.from(anyParams.ext).join('/') : '/'
     const absolutePath = join(page.sender.path, page.frontend, relativePath)
 
     const relativeCheck = relative(svc.getModulePath(), absolutePath)
