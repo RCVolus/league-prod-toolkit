@@ -27,6 +27,7 @@ export interface ToolkitConfig {
   needsBuild?: boolean
   toolkitVersion?: string
   dependencies?: string[]
+  disabled?: boolean
 }
 
 export interface Asset {
