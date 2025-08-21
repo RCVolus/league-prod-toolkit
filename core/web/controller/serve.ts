@@ -21,7 +21,13 @@ export default (globalContext: GlobalContext): Router => {
         .send(`No serve found with name ${escape(anyParams?.serve)}`)
     }
 
-    const relativePath = anyParams.ext !== undefined && anyParams.ext.length !== 0 ? Array.from(anyParams.ext).join('/') : ''
+    const ext = anyParams.ext;
+    const relativePath = Array.isArray(ext)
+      ? ext.join("/")
+      : typeof ext === "string"
+        ? ext
+        : "";
+
     const absolutePath = join(serve.sender.path, serve.frontend, relativePath)
 
     const relativeCheck = relative(svc.getModulePath(), absolutePath)
