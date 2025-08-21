@@ -234,6 +234,13 @@ export class ModuleService {
     // eslint-disable-next-line @typescript-eslint/no-var-requires
     const packageJson = require(packageJsonPath) as PackageJson
 
+    if (packageJson.toolkit.disabled) {
+      log.warn(
+        `Skipping ${packageJson.name} because it is disabled`
+      )
+      return null
+    }
+
     const index = this.assets.findIndex((a) => a.name === packageJson.name)
     let asset
     if (index !== -1) {
